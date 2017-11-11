@@ -1,4 +1,4 @@
-import { post } from '../utils/request';
+import { post, postImg } from '../utils/request';
 import { API_DOMAIN } from '../utils/config';
 
 export function loadDataUniversityDataSet(param) {
@@ -17,10 +17,17 @@ export function deleteDataUniversity(param) {
   });
 }
 
-
 export function createDataUniversity(param) {
   return new Promise((resolve, reject) => {
-    post(`${API_DOMAIN}/admin/data/dataUniversity/createDataUniversity`, param).then((data) => {
+    post(`${API_DOMAIN}admin/data/dataUniversity/createDataUniversity`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+export function uploadBadge(param) {
+  return new Promise((resolve, reject) => {
+    postImg(`${API_DOMAIN}admin/data/dataUniversity/uploadBadge`, param).then((data) => {
       resolve(data);
     });
   });

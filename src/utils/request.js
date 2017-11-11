@@ -98,6 +98,34 @@ export function post(url, params = '') {
   }));
 }
 
+// 上传图片请求
+export function postImg(url,params=''){
+  let headers = new Headers();
+  //headers.set('Content-Type','multipart/form-data; boundary=----WebKitFormBoundary4I9QTerA7b4BBalV');
+  headers.set('X-Requested-With', 'XMLHttpRequest');
+
+  return new Promise(((resolve, reject) => {
+    fetch(url, {
+      method: 'post',
+      mode: 'cors',
+      credentials: 'include',
+      headers,
+      body: params,
+    }).then((response) => {
+      return response.json();
+    }).then((responseData) => {
+      const checkCodeResult = checkCode(responseData.statusCode, responseData.message);
+      if (checkCodeResult.code === 200) {
+        resolve(responseData);
+      } else {
+        reject(checkCodeResult.message);
+      }
+    }).catch((err) => {
+      reject(err);
+    });
+  }));
+}
+
 // 获取登录验证码
 export function getCaptcha(getDate) {
   fetch(`${API_DOMAIN}api/auth/captcha`, {

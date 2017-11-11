@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { API_DOMAIN } from '../../../utils/config';
 import { Form, Col, Row, Switch, Button, Select, Dropdown, Menu, Upload, Icon, Input} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import { createDataUniversity, uploadBadge } from '../../../service/university';
+import { createDataUniversity } from '../../../service/university';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -15,9 +14,16 @@ class New extends Component {
     }
   }
 
+  testSubmit = () => {
+    console.log(UE.getEditor('content').getContent())
+  }
+
   normFile = (e) => {
     console.log('Upload event:', e);
-    return e.file.response.data.image;
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
   }
 
   handleSubmit = (e) => {
@@ -30,6 +36,7 @@ class New extends Component {
 
     formdata.firstRate ? formdata.firstRate = 1 : formdata.firstRate = 0;
 
+    formdata.badge = './img/666';
     console.log(formdata);
 
     createDataUniversity(formdata).then(data => {
@@ -103,14 +110,9 @@ class New extends Component {
                 valuePropName: 'fileList',
                 getValueFromEvent: this.normFile,
               })(
-                <Upload
-                  name="file"
-                  action={`${API_DOMAIN}admin/data/dataUniversity/uploadBadge`}
-                  listType="picture"
-                  withCredentials={true}
-                >
+                <Upload name="logo" action="/" listType="picture">
                   <Button>
-                    <Icon type="upload" /> 点击上传
+                    <Icon type="upload" /> Click to upload
                   </Button>
                 </Upload>
               )}
@@ -303,7 +305,7 @@ class New extends Component {
               {...formItemLayout}
               label="特色专业"
             >
-                <UEditor id="specialProfession" height="200" />
+              <UEditor id="specialProfession" height="200" />
             </FormItem>
           </Col>
           <Col span={24}>
