@@ -16,3 +16,12 @@ export function deleteDataUniversity(param) {
     });
   });
 }
+
+
+export function createDataUniversity(param) {
+  return new Promise((resolve, reject) => {
+    post(`${API_DOMAIN}/admin/data/dataUniversity/createDataUniversity`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}

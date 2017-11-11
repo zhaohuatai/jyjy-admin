@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Tabs, Table, Pagination } from 'antd';
-import UEditor from '../../../components/editor/UEditor';
 import {loadDataUniversityDataSet, deleteDataUniversity} from '../../../service/university';
 import Filter from './Filter';
+import New from './New';
 
 const TabPane = Tabs.TabPane;
 
@@ -55,9 +55,6 @@ class School extends Component {
   }
 
 
-  testSubmit = () => {
-    console.log(UE.getEditor('content').getContent())
-  }
 
   // 勾选记录
   onSelectChange = (selectedRowKeys) => {
@@ -113,8 +110,7 @@ class School extends Component {
             <Pagination style={{ marginTop: '10px' }} showQuickJumper defaultCurrent={1} current={table_cur_page} defaultPageSize={20} total={table_total} onChange={this.onChangeTablePage} />,
           </TabPane>
           <TabPane tab="新建" key="2">
-            <UEditor id="content" height="200" />
-            <button onClick={this.testSubmit}>保存</button>
+            <New/>
           </TabPane>
         </Tabs>
 
