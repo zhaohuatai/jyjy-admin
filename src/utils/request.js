@@ -48,6 +48,9 @@ export function get(url, params = '') {
       const checkCodeResult = checkCode(responseData.statusCode);
       if (checkCodeResult.code === 200) {
         resolve(responseData);
+      } else {
+        message.error(checkCodeResult.re_message);
+        reject(checkCodeResult.re_message);
       }
     }).catch((err) => {
       reject(err);
