@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import style from './setting.scss';
-import {loadDicSysconfigDataSet} from '../../http';
+import {loadDicSysconfigDataSet} from '../../service/auth';
 import { Tabs } from 'antd';
 import Sysconfig from './Sysconfig';
 

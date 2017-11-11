@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import NumberCard from './numberCard';
 import { Row, Col, Card} from 'antd';
 import Trend from './Trend';
-import {loadOrdersListCount, loadProductListCount, loadMemberCount,loadSumPayFee} from '../../http';
+import {loadOrdersListCount, loadProductListCount, loadMemberCount,loadSumPayFee} from '../../service/auth';
 
 import mockdata from '../../mock';
 

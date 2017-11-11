@@ -4,7 +4,7 @@ import { hashHistory} from 'react-router';
 import { Layout, Menu, Breadcrumb, Icon ,Footer} from 'antd';
 import IndexHeader from './Header';
 import style from './Layout.scss';
-import {loadCategoryTree} from '../../http';
+import {loadCategoryTree} from '../../service/auth';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;

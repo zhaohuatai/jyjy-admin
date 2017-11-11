@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import style from './menu.scss';
 import { message, Tabs , Table, Button, Dropdown, Menu, Pagination, Input, Col, Row, RangePicker, Icon} from 'antd';
-import {loadProduct,checkProduct,setProductIsHot,loadAuthMenuList} from '../../../http';
+import {loadProduct,checkProduct,setProductIsHot,loadAuthMenuList, removeAuthMenu} from '../../../service/auth';
 import ProductFilter from './Filter';
 import Item from './Item';
 import ItemAdd from './ItemAdd';
@@ -74,7 +74,9 @@ class AuthMenu extends Component {
 	//操作
 	handleAction=(key)=>{
 		switch (key) {
-			case 'delete':break;
+			case 'delete': removeAuthMenu({ ids: this.state.selectedRowKeys[0]}, data => {
+				console.log(data);
+			});
 			default:
 				break;
 		}

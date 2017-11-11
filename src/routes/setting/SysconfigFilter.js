@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Input, Col, Row, DatePicker, Button, Select, Dropdown, Menu, Icon} from 'antd';
 import NewSysconifg from './NewSysconifg';
 import style from './setting.scss';
-import {createCategory} from '../../http';
+import {createCategory} from '../../service/auth';
 
 const Option = Select.Option;
 

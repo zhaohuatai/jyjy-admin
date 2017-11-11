@@ -5,7 +5,7 @@ import md5 from 'blueimp-md5';
 import { Form, Icon, Input, Button, Checkbox, message} from 'antd';
 import {sitename} from '../../utils/config';
 import {API_DOMAIN} from '../../config';
-import {doWebLogin} from '../../http';
+import {doWebLogin} from '../../service/auth';
 import {doLogin} from '../../action';
 
 import style from './loginform.scss'

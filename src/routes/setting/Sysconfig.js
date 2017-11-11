@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import style from './setting.scss';
-import {loadDicSysconfigDataSet,loadDicSysconfig, updateDicSysconfig} from '../../http';
+import {loadDicSysconfigDataSet,loadDicSysconfig, updateDicSysconfig} from '../../service/auth';
 import {Table, Button, Dropdown, Menu, Pagination, Input, Col, Row, RangePicker, Icon,message} from 'antd';
 import SysconfigFilter from './SysconfigFilter';
 import SysconifgUpdate from './SysconifgUpdate';

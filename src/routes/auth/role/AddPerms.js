@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Modal,Transfer} from 'antd';
-import {loadAuthPermissionList} from '../../../http';
+import {loadAuthPermissionList} from '../../../service/auth';
 
 function hasErrors(fieldsError) {
 	return Object.keys(fieldsError).some(field => fieldsError[field]);

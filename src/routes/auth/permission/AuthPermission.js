@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import style from './menu.scss';
 import { message, Tabs , Table, Button, Dropdown, Menu, Pagination, Input, Col, Row, RangePicker, Icon} from 'antd';
-import {loadAuthPermissionList} from '../../../http';
+import {loadAuthPermissionList} from '../../../service/auth';
 import ProductFilter from './Filter';
 import Item from './Item';
 import ItemAdd from './ItemAdd';

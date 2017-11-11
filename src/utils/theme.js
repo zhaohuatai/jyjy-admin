@@ -12,4 +12,3 @@ module.exports = {
     sky: '#c1e0fc',
   },
 };
-  

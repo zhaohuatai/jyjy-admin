@@ -3,7 +3,7 @@ import {
   Form, Select, InputNumber, Switch, Radio, Input,Row,Col,message,
   Slider, Button, Upload, Icon,Modal
 } from 'antd';
-import {loadAuthAppList,addRole} from '../../../http';
+import {loadAuthAppList,addRole} from '../../../service/auth';
 
 const FormItem = Form.Item;
 const Option = Select.Option;

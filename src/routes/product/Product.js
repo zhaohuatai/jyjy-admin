@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import style from './product.scss';
 import { message, Tabs , Table, Button, Dropdown, Menu, Pagination, Input, Col, Row, RangePicker, Icon,notification} from 'antd';
-import {loadProduct,checkProduct,setProductIsHot,loadMember,setProductOffShelf} from '../../http';
+import {loadProduct,checkProduct,setProductIsHot,loadMember,setProductOffShelf} from '../../service/auth';
 import ProductFilter from './ProductFilter';
 import ProductItem from './ProductItem';
 

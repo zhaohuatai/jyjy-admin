@@ -4,7 +4,7 @@ import {
   Slider, Button, Upload, Icon,Modal
 } from 'antd';
 import md5 from 'blueimp-md5';
-import {changePwd,loadAuthRoleList} from '../../../http';
+import {changePwd,loadAuthRoleList} from '../../../service/auth';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
