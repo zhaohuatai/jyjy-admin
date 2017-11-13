@@ -3,6 +3,7 @@ import { API_DOMAIN } from '../../../utils/config';
 import { Form, Col, Row, Switch, Button, Select, Dropdown, Menu, Upload, Icon, Input} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
 import { createDataUniversity, uploadBadge } from '../../../service/university';
+import { loadProvinceList } from '../../../service/dic';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -11,13 +12,42 @@ class New extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      province:[]
+      provinceList:[]
     }
+  }
+
+
+  componentDidMount() {
+    loadProvinceList({}).then(data => {
+      this.setState({ provinceList: data.data.provinceList})
+    })
+  }
+
+
+  testSubmit = () => {
+    console.log(UE.getEditor('content').getContent())
   }
 
   normFile = (e) => {
     console.log('Upload event:', e);
-    return e.file.response.data.image;
+    if (Array.isArray(e)) {
+      return e.file;
+    }
+    return e && e.fileList;
+  }
+
+  handleUploadImage = e => {
+    console.log(e);
+
+    const formData = new FormData();
+
+    formData.append('file', e.file);
+
+    // You can use any AJAX library you like
+    uploadBadge(formData).then( data => {
+      console.log(data);
+      return e;
+    });
   }
 
   handleSubmit = (e) => {
@@ -31,6 +61,7 @@ class New extends Component {
     formdata.firstRate ? formdata.firstRate = 1 : formdata.firstRate = 0;
 
     console.log(formdata);
+    formdata.badge = formdata.badge[0].response.data.image;
 
     createDataUniversity(formdata).then(data => {
       console.log(data);
@@ -78,18 +109,20 @@ class New extends Component {
               {...formItemLayout}
               label="选择省份"
             >
-              {getFieldDecorator('province',{
+              {getFieldDecorator('provinceCode',{
                 initialValue: '',
                 rules: [
                 ]
               })(
                 <Select
                   placeholder="选择省份"
-                  onChange={this.handleSelectChange}
                   style={{width: '200px'}}
                 >
-                  <Option value="male">male</Option>
-                  <Option value="female">female</Option>
+                  {
+                    this.state.provinceList.map(item => {
+                      return <Option key={item.id} value={item.code}>{item.name}</Option>
+                    })
+                  }
                 </Select>
               )}
             </FormItem>
@@ -176,7 +209,7 @@ class New extends Component {
               {...formItemLayout}
               label="学校地址"
             >
-              {getFieldDecorator('name',{
+              {getFieldDecorator('location',{
                 initialValue: '',
                 rules: [
                 ]

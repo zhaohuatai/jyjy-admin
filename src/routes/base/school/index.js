@@ -97,6 +97,7 @@ class School extends Component {
               doSearch={this.handleSearch}
               doRefresh={()=>this.handleRefresh({page: this.state.table_cur_page})}
               doDelete={this.handleDelete}
+
             />
             <Table
               dataSource={this.state.university}

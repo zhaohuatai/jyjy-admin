@@ -15,8 +15,8 @@ const checkCode = (statusCode, re_message) => {
   // 返回码判断
   switch (statusCode) {
     case 300: return { code: statusCode, re_message };
-    case 301: hashHistory.push('/weblogin'); break;
-    case 4010: hashHistory.push('/weblogin'); break;
+    case 301: hashHistory.push('/login'); break;
+    case 4010: hashHistory.push('/login'); break;
     case 4011: return { code: statusCode, re_message };
     case 4004: return { code: statusCode, re_message }; // 非vip
     case 500: return { code: statusCode, re_message };
