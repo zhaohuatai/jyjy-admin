@@ -36,20 +36,6 @@ class New extends Component {
     return e && e.fileList;
   }
 
-  handleUploadImage = e => {
-    console.log(e);
-
-    const formData = new FormData();
-
-    formData.append('file', e.file);
-
-    // You can use any AJAX library you like
-    uploadBadge(formData).then( data => {
-      console.log(data);
-      return e;
-    });
-  }
-
   handleSubmit = (e) => {
     let formdata = this.props.form.getFieldsValue();
     formdata = { ...formdata,

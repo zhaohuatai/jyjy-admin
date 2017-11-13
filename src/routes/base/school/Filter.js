@@ -30,6 +30,7 @@ class Filter extends Component {
       case 'search' : this.props.doSearch(this.props.form.getFieldsValue()); break;
       case 'refresh' : this.props.doRefresh(); break;
       case 'delete' : this.props.doDelete(); break;
+      case 'update' : this.props.doUpdate(); break;
       default : break;
     }
   }

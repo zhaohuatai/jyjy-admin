@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Tabs, Table, Pagination } from 'antd';
-import {loadDataUniversityDataSet, deleteDataUniversity} from '../../../service/university';
+import {loadDataUniversityDataSet, deleteDataUniversity, loadDataUniversity} from '../../../service/university';
 import Filter from './Filter';
 import New from './New';
+import Update from './Update';
 
 const TabPane = Tabs.TabPane;
 
@@ -14,7 +15,7 @@ const table_columns = [
   { title: '更新时间', dataIndex: 'updateTime', key: 'updateTime'},
   { title: '备注', dataIndex: 'remark', key: 'remark'},
   { title: '博士点数', dataIndex: 'doctor', key: 'doctor'},
-  { title: 'Age', dataIndex: 'badge', key: 'badge'},
+  { title: '校徽', dataIndex: 'badge', key: 'badge'},
   { title: '省份', dataIndex: 'province', key: 'province'},
   { title: '学校层次', dataIndex: 'stage', key: 'stage'},
   { title: '招生电话', dataIndex: 'phone', key: 'phone'},
@@ -34,10 +35,12 @@ class School extends Component {
     this.state = {
       university: [],
       table_loading: false,
-      TableselectedRowKeys: [],
+      selectedRowKeys: [],
       table_cur_page: 1,
       table_total: 0,
-      searchform:{}
+      searchform:{},
+      update_display: false,
+      update_data:{},
     };
   }
 
@@ -53,8 +56,6 @@ class School extends Component {
       this.setState({university: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false })
     })
   }
-
-
 
   // 勾选记录
   onSelectChange = (selectedRowKeys) => {
@@ -81,11 +82,18 @@ class School extends Component {
     deleteDataUniversity(this.state.selectedRowKeys[0]);
   }
 
+  // 更新
+  handleUpdate = () => {
+    loadDataUniversity({id: this.state.selectedRowKeys[0]}).then(data => {
+      this.setState({ update_data: data.data.dataUniversity, update_display: true })
+    })
+  }
+
   render() {
-    const { table_loading, TableselectedRowKeys, table_cur_page, table_total } = this.state;
+    const { table_loading, selectedRowKeys, table_cur_page, table_total } = this.state;
 
     const rowSelection = {
-      TableselectedRowKeys,
+      selectedRowKeys,
       onChange: this.onSelectChange,
     };
 
@@ -97,6 +105,7 @@ class School extends Component {
               doSearch={this.handleSearch}
               doRefresh={()=>this.handleRefresh({page: this.state.table_cur_page})}
               doDelete={this.handleDelete}
+              doUpdate={this.handleUpdate}
 
             />
             <Table
@@ -115,6 +124,7 @@ class School extends Component {
           </TabPane>
         </Tabs>
 
+        <Update show={this.state.update_display} data={this.state.update_data} onCancel={()=>this.setState({update_display: false})}/>
       </div>
     );
   }
