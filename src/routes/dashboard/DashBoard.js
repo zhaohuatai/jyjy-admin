@@ -26,21 +26,6 @@ class Dashboard extends Component {
   }
 
   componentDidMount(){
-    loadOrdersListCount({},data=>{
-      this.setState({orders:data.data.ordersCount});
-    });
-
-    loadProductListCount({},data=>{
-      this.setState({products:data.data.productCount});
-    });
-
-    loadMemberCount({}, data=>{
-      this.setState({users:data.data.memberCount});
-    });
-
-    loadSumPayFee({orderStatusList:'5,8,9'}, data=>{
-      this.setState({bank:data.data.SumPayFee});
-    });
   }
 
   render() {

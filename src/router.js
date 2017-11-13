@@ -3,6 +3,8 @@ import { Router, Route, hashHistory, IndexRoute } from 'react-router';
 import App from './routes/App';
 import Dashboard from './routes/dashboard/Dashboard';
 import School from './routes/base/school';
+import Career from './routes/base/career';
+import Profession from './routes/base/profession';
 import Login from './routes/login/Login';
 import AuthMenu from './routes/auth/menu/AuthMenu';
 import AuthPermission from './routes/auth/permission/AuthPermission';
@@ -20,6 +22,8 @@ const Routers = () => (
 
       <Route path="/base">
         <Route path="school" component={School} />
+        <Route path="career" component={Career} />
+        <Route path="profession" component={Profession} />
       </Route>
       <Route path="/auth">
         <Route path="menu" component={AuthMenu} />
