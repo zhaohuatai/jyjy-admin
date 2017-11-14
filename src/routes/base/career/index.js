@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Tabs, Table, Pagination } from 'antd';
-import {loadDataUniversityDataSet, deleteDataUniversity, loadDataUniversity} from '../../../service/university';
+import {loadDataCareerDataSet, deleteDataUniversity, loadDataUniversity} from '../../../service/career';
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';

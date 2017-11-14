@@ -1,1 +1,1 @@
-export const API_DOMAIN = 'http://172.25.253.3/';
+export const API_DOMAIN = 'http://yxyz.kingmon.cn/';
