@@ -60,7 +60,7 @@ class Filter extends Component {
               {getFieldDecorator('name',{
                 initialValue: ''
               })(
-                <Input addonBefore='校名' size='default' />
+                <Input addonBefore='名称' size='default' />
               )}
             </FormItem>
           </Col>

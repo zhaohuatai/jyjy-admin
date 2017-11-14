@@ -4,6 +4,7 @@ import {loadDataUniversityDataSet, deleteDataUniversity, loadDataUniversity} fro
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';
+import Detail from './Detail';
 
 const TabPane = Tabs.TabPane;
 
@@ -41,6 +42,8 @@ class School extends Component {
       searchform:{},
       update_display: false,
       update_data:{},
+      detail_display: false,
+      detail_data:{},
     };
   }
 
@@ -89,6 +92,13 @@ class School extends Component {
     })
   }
 
+  // 显示详情
+  handleShowDetail = (record) => {
+    loadDataUniversity({id: record.id}).then(data => {
+      this.setState({ detail_data: data.data.dataUniversity, detail_display: true })
+    })
+  }
+
   render() {
     const { table_loading, selectedRowKeys, table_cur_page, table_total } = this.state;
 
@@ -116,6 +126,7 @@ class School extends Component {
               loading={table_loading}
               bordered
               rowSelection={rowSelection}
+              onRowClick={this.handleShowDetail}
             />
             <Pagination style={{ marginTop: '10px' }} showQuickJumper defaultCurrent={1} current={table_cur_page} defaultPageSize={20} total={table_total} onChange={this.onChangeTablePage} />,
           </TabPane>
@@ -125,6 +136,7 @@ class School extends Component {
         </Tabs>
 
         <Update show={this.state.update_display} data={this.state.update_data} onCancel={()=>this.setState({update_display: false})}/>
+        <Detail show={this.state.detail_display} data={this.state.detail_data} onCancel={()=>this.setState({detail_display: false})}/>
       </div>
     );
   }
