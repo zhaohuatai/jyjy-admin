@@ -11,6 +11,7 @@ import AuthPermission from './routes/auth/permission/AuthPermission';
 import AuthRole from './routes/auth/role/AuthRole';
 import AuthUser from './routes/auth/user/AuthUser';
 import AuthApplication from './routes/auth/application/AuthApplication';
+import Slide from './routes/slide';
 
 import { checkLogin } from './utils/utils';
 
@@ -25,6 +26,9 @@ const Routers = () => (
         <Route path="career" component={Career} />
         <Route path="profession" component={Profession} />
       </Route>
+
+      <Route path="slide" component={Slide} />
+
       <Route path="/auth">
         <Route path="menu" component={AuthMenu} />
         <Route path="permission" component={AuthPermission} />
