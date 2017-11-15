@@ -17,7 +17,6 @@ class Ueditor extends Component{
 
   initEditor() {
     const { initValue, id} = this.props;
-    console.log(initValue)
 
     const ueEditor = UE.getEditor(this.props.id);
     const self = this;
@@ -26,7 +25,9 @@ class Ueditor extends Component{
         UE.delEditor(id);
         self.initEditor();
       }
-      ueEditor.setContent(initValue);
+      if(initValue){
+        ueEditor.setContent(initValue);
+      }
     })
   }
   render(){

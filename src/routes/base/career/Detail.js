@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
-import { API_DOMAIN } from '../../../utils/config';
-import { Form, Col, Row, Switch, Button, Select, Dropdown, Menu, Upload, Icon, Input, Modal,Collapse} from 'antd';
-import UEditor from '../../../components/editor/UEditor';
-import { updateDataUniversity } from '../../../service/university';
-import { loadProvinceList } from '../../../service/dic';
+import { Form, Col, Row, Modal,Collapse} from 'antd';
 
 const FormItem = Form.Item;
-const Option = Select.Option;
 const Panel = Collapse.Panel;
 
 class New extends Component {
@@ -17,44 +12,8 @@ class New extends Component {
     }
   }
 
-  componentDidMount() {
-    loadProvinceList({}).then(data => {
-      this.setState({ provinceList: data.data.provinceList})
-    })
-  }
-
-  normFile = (e) => {
-    console.log('Upload event:', e);
-    if (Array.isArray(e)) {
-      return e.file;
-    }
-    return e && e.fileList;
-  }
-
-  handleSubmit = (e) => {
-    let formdata = this.props.form.getFieldsValue();
-    formdata = { ...formdata,
-      faculty: UE.getEditor('update_faculty').getContent(),
-      specialProfession: UE.getEditor('update_specialProfession').getContent(),
-      introduction: UE.getEditor('update_introduction').getContent(),
-    };
-
-    formdata.firstRate ? formdata.firstRate = 1 : formdata.firstRate = 0;
-    formdata.id = this.props.data.id;
-
-    console.log(formdata);
-    if(formdata.badge){
-      formdata.badge = formdata.badge[0].response.data.image;
-    }
-
-    updateDataUniversity(formdata).then(data => {
-      console.log(data);
-    })
-  }
-
   render() {
-    const { getFieldDecorator } = this.props.form;
-    const { categoryName, back, course, definition, duty, fore, intro, money, moral, qualify, skill, tools } = this.props.data;
+    const { categoryName, name, back, course, definition, duty, fore, intro, money, moral, qualify, skill, tools, claim, local } = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -69,10 +28,6 @@ class New extends Component {
         marginBottom: '8px'
       }
     };
-
-    let provinceMenu = (
-      this.state
-    )
 
     return(
       <Modal
@@ -232,10 +187,34 @@ class New extends Component {
               </Collapse>
             </FormItem>
           </Col>
+          <Col span={24}>
+            <FormItem
+              {...formItemLayout}
+              label="要求"
+            >
+              <Collapse>
+                <Panel header="点击查看详情" key="1">
+                  <div dangerouslySetInnerHTML={{ __html: claim }} />
+                </Panel>
+              </Collapse>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem
+              {...formItemLayout}
+              label="工作地点"
+            >
+              <Collapse>
+                <Panel header="点击查看详情" key="1">
+                  <div dangerouslySetInnerHTML={{ __html: local }} />
+                </Panel>
+              </Collapse>
+            </FormItem>
+          </Col>
         </Row>
       </Modal>
     )
   }
 }
 
-export default Form.create()(New);;
+export default New

@@ -24,3 +24,19 @@ export function deleteDataCareer(param) {
     });
   });
 }
+
+export function loadDataCareerCategoryDataSet(param) {
+  return new Promise((resolve, reject) => {
+    post(`${API_DOMAIN}admin/data/dataCareerCategory/loadDataCareerCategoryDataSet`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+export function createDataCareer(param) {
+  return new Promise((resolve, reject) => {
+    post(`${API_DOMAIN}admin/data/dataCareer/createDataCareer`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
