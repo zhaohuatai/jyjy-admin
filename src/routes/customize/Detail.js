@@ -14,7 +14,7 @@ class New extends Component {
   }
 
   render() {
-    const { imgUrl, title, content, } = this.props.data;
+    const { title, content} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -49,23 +49,14 @@ class New extends Component {
           </Col>
           <Col span={24}>
             <FormItem
-              {...formItemLayout}
-              label="分类"
-            >
-              <img style={{ width: '100px', height: '100px' }} src={`${API_DOMAIN}${imgUrl}`} />
-            </FormItem>
-          </Col >
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="内容"
+                {...formItemLayout}
+                label="内容"
             >
               <Collapse>
                 <Panel header="点击查看详情" key="1">
                   <div dangerouslySetInnerHTML={{ __html: content }} />
                 </Panel>
               </Collapse>
-
             </FormItem>
           </Col>
 

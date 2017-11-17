@@ -69,7 +69,7 @@ class School extends Component {
   // 切换页码
   onChangeTablePage = (currentPage) => {
     this.setState({table_loading:true, table_cur_page: currentPage});
-    let searchform = this.state.searchform;
+    let searchform = this.state.search_form;
     searchform.page = currentPage;
     this.handleRefresh(searchform)
   }

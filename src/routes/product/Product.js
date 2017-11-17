@@ -56,7 +56,7 @@ class Product extends Component {
 	//切换页码
 	onChangePage=(currentPage)=>{
 
-			let searchform = this.state.searchform;
+			let searchform = this.state.search_form;
 
 			searchform.rows = this.state.pageRows;
 			searchform.page = currentPage;
@@ -89,7 +89,7 @@ class Product extends Component {
     this.setState({loading:true,selectedRowKeys:[]});
 
     this.setState({currentPage:1},()=>{
-      let params = this.state.searchform;
+      let params = this.state.search_form;
       loadProduct(params, data=>{
         let waitup_count = 0;
         data.data.dataSet.rows.map(item=>{
@@ -116,7 +116,7 @@ class Product extends Component {
     //   this.setState({loading:true,selectedRowKeys:[]});
     //
   	// 	this.setState({currentPage:1},()=>{
-  	// 		let params = this.state.searchform;
+  	// 		let params = this.state.search_form;
   	// 		loadProduct(params, data=>{
   	// 			this.setState({
   	// 				dataSource:data.data.dataSet.rows,
@@ -138,7 +138,7 @@ class Product extends Component {
 		searchform.rows = this.state.pageRows;
 		searchform.page = 1;
 
-		this.setState({currentPage:1, searchform:searchform});
+		this.setState({currentPage:1, search_form:searchform});
 
 		console.log(searchform);
 

@@ -12,6 +12,7 @@ import AuthRole from './routes/auth/role/AuthRole';
 import AuthUser from './routes/auth/user/AuthUser';
 import AuthApplication from './routes/auth/application/AuthApplication';
 import Slide from './routes/slide';
+import Customize from './routes/customize';
 
 import { checkLogin } from './utils/utils';
 
@@ -28,6 +29,8 @@ const Routers = () => (
       </Route>
 
       <Route path="slide" component={Slide} />
+
+      <Route path="customize" component={Customize} />
 
       <Route path="/auth">
         <Route path="menu" component={AuthMenu} />

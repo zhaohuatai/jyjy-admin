@@ -34,7 +34,7 @@ class AuthApplication extends Component {
 	//切换页码
 	onChangePage=(currentPage)=>{
 
-			let searchform = this.state.searchform;
+			let searchform = this.state.search_form;
 
 			searchform.rows = this.state.pageRows;
 			searchform.page = currentPage;
