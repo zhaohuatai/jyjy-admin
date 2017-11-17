@@ -39,7 +39,7 @@ class Customize extends Component {
   handleRefresh = (params) => {
     this.setState({ table_loading: true });
     loadPubCustomizeDataSet(params).then(data => {
-      this.setState({slide: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false })
+      this.setState({course: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false })
     })
   }
 
@@ -96,7 +96,7 @@ class Customize extends Component {
 
             />
             <Table
-              dataSource={this.state.slide}
+              dataSource={this.state.course}
               columns={table_columns}
               pagination={false}
               rowKey={record => record.id+''}

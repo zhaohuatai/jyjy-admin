@@ -13,8 +13,8 @@ import AuthUser from './routes/auth/user/AuthUser';
 import AuthApplication from './routes/auth/application/AuthApplication';
 import Slide from './routes/slide';
 import Customize from './routes/customize';
-
 import { checkLogin } from './utils/utils';
+import Course from './routes/service/course';
 
 const Routers = () => (
   <Router history={hashHistory}>
@@ -27,6 +27,8 @@ const Routers = () => (
         <Route path="career" component={Career} />
         <Route path="profession" component={Profession} />
       </Route>
+
+      <Route path="/course" component={Course} />
 
       <Route path="slide" component={Slide} />
 

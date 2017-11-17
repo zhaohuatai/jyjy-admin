@@ -43,7 +43,7 @@ class School extends Component {
   handleRefresh = (params) => {
     this.setState({ table_loading: true });
     loadPubSlideDataSet(params).then(data => {
-      this.setState({slide: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false })
+      this.setState({course: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false })
     })
   }
 
@@ -108,7 +108,7 @@ class School extends Component {
 
             />
             <Table
-              dataSource={this.state.slide}
+              dataSource={this.state.course}
               columns={table_columns}
               pagination={false}
               rowKey={record => record.id+''}
