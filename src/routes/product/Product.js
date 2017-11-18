@@ -39,7 +39,7 @@ class Product extends Component {
 	}
 
   componentDidMount(){
-    this.handleRefresh();
+    this.handleRefresh({status: '1'});
     let intervalId = setInterval(this.handleRefresh,600000);
     this.setState({intervalId: intervalId});
 	}
@@ -159,7 +159,7 @@ class Product extends Component {
 		},data=>{
 			if(data.statusCode==200){
 				message.success('操作成功');
-				this.handleRefresh();
+				this.handleRefresh({status: '1'});
 			}else{
 				message.error('操作失败');
 			}
@@ -182,7 +182,7 @@ class Product extends Component {
 			  setProductIsHot({isHot:1,productId:this.state.selectedRowKeys[0]},data=>{
 					if(data.statusCode==200){
 						message.success('操作成功');
-						this.handleRefresh();
+						this.handleRefresh({status: '1'});
 					}else{
 						message.error('操作失败');
 					}
@@ -192,7 +192,7 @@ class Product extends Component {
 				setProductIsHot({isHot:0,productId:this.state.selectedRowKeys[0]},data=>{
 					if(data.statusCode==200){
 						message.success('操作成功');
-						this.handleRefresh();
+						this.handleRefresh({status: '1'});
 					}else{
 						message.error('操作失败');
 					}
@@ -202,7 +202,7 @@ class Product extends Component {
 			  checkProduct({productId:this.state.selectedRowKeys[0],status:6},data=>{
 					if(data.statusCode==200){
 						message.success('操作成功');
-						this.handleRefresh();
+						this.handleRefresh({status: '1'});
 					}else{
 						message.error('操作失败');
 					}
@@ -212,7 +212,7 @@ class Product extends Component {
 			  checkProduct({productId:this.state.selectedRowKeys[0],status:5},data=>{
 					if(data.statusCode==200){
 						message.success('操作成功');
-						this.handleRefresh();
+						this.handleRefresh({status: '1'});
 					}else{
 						message.error('操作失败');
 					}
@@ -222,7 +222,7 @@ class Product extends Component {
 			  setProductOffShelf({productId:this.state.selectedRowKeys[0]},data=>{
 					if(data.statusCode==200){
 						message.success('操作成功');
-						this.handleRefresh();
+						this.handleRefresh({status: '1'});
 					}else{
 						message.error('操作失败');
 					}

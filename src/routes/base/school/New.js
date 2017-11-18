@@ -69,7 +69,7 @@ class New extends Component {
 
     return(
       <div>
-        <Row type='flex' style={{ marginBottom: '10px'}}>
+        <Row type='flex' style={{ marginBottom: '5px'}}>
           <Col span={24}>
             <FormItem
               {...formItemLayout}

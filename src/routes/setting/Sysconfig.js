@@ -27,7 +27,7 @@ class Sysconfig extends Component {
 	}
 
   componentDidMount(){
-    this.handleRefresh();
+    this.handleRefresh({status: '1'});
 	}
 
 	//选择列
@@ -91,7 +91,7 @@ class Sysconfig extends Component {
 				if(data.statusCode ==200){
 					message.success('操作成功');
 					this.setState({visible_update:false});
-					this.handleRefresh();
+					this.handleRefresh({status: '1'});
 				}
 			})
 

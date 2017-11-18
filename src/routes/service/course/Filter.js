@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { Form, Col, Row, Button, Select, Dropdown, Menu, Icon, Input} from 'antd';
+import React, {Component} from 'react';
+import {Form, Col, Row, Button, Select, Dropdown, Menu, Icon, Input} from 'antd';
 
 const Option = Select.Option;
 const FormItem = Form.Item;
 
 class Filter extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       search_form: {}
     };
   }
@@ -17,26 +17,35 @@ class Filter extends Component {
     this.props.doSearch(form);
   }
 
-  // 清空搜索条件
-  handleClean=()=>{
-    this.props.cleanform();
-  }
-
   //  触发操作
-  handleActionClick=({ item, key, keyPath })=>{
+  handleActionClick = ({item, key, keyPath}) => {
     console.log(key);
     switch (key) {
-      case 'clean' : this.props.form.resetFields(); break;
-      case 'search' : this.props.doSearch(this.props.form.getFieldsValue()); break;
-      case 'refresh' : this.props.doRefresh(); break;
-      case 'delete' : this.props.doDelete(); break;
-      case 'update' : this.props.doUpdate(); break;
-      default : break;
+      case 'clean' :
+        this.props.form.resetFields();
+        break;
+      case 'search' :
+        this.props.doSearch(this.props.form.getFieldsValue());
+        break;
+      case 'refresh' :
+        this.props.doRefresh();
+        break;
+      case 'delete' :
+        this.props.doDelete();
+        break;
+      case 'update' :
+        this.props.doUpdate();
+        break;
+      case 'recycle' :
+        this.props.doRecycle();
+        break;
+      default :
+        break;
     }
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
+    const {getFieldDecorator} = this.props.form;
 
     const menu = (
       <Menu onClick={this.handleActionClick}>
@@ -54,13 +63,13 @@ class Filter extends Component {
 
     return (
       <div>
-        <Row type='flex' justify='end' style={{ marginBottom: '10px'}}>
-          <Col span={4} pull={16}>
+        <Row type='flex' justify='end' style={{marginBottom: '5px'}}>
+          <Col span={4} pull={12}>
             <FormItem>
-              {getFieldDecorator('title',{
+              {getFieldDecorator('title', {
                 initialValue: ''
               })(
-                <Input addonBefore='标题' size='default' />
+                <Input addonBefore='标题' size='default'/>
               )}
             </FormItem>
           </Col>
@@ -72,11 +81,17 @@ class Filter extends Component {
           </Col>
 
           <Col span={2}>
-            <Dropdown  overlay={menu}>
+            <Dropdown overlay={menu}>
               <Button>
-                操作 <Icon type="down" />
+                操作 <Icon type="down"/>
               </Button>
             </Dropdown>
+          </Col>
+
+          <Col span={2}>
+            <Button onClick={() => this.handleActionClick({key: 'recycle'})}>
+              <Icon type="info-circle-o"/> 回收站
+            </Button>
           </Col>
         </Row>
       </div>

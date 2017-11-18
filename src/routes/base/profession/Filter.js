@@ -31,6 +31,7 @@ class Filter extends Component {
       case 'refresh' : this.props.doRefresh(); break;
       case 'delete' : this.props.doDelete(); break;
       case 'update' : this.props.doUpdate(); break;
+      case 'recycle' : this.props.doRecycle(); break;
       default : break;
     }
   }
@@ -54,8 +55,8 @@ class Filter extends Component {
 
     return (
       <div>
-        <Row type='flex' justify='end' style={{ marginBottom: '10px'}}>
-          <Col span={4} pull={16}>
+        <Row type='flex' justify='end' style={{ marginBottom: '5px'}}>
+          <Col span={4} pull={14}>
             <FormItem>
               {getFieldDecorator('name',{
                 initialValue: ''
@@ -77,6 +78,12 @@ class Filter extends Component {
                 操作 <Icon type="down" />
               </Button>
             </Dropdown>
+          </Col>
+
+          <Col span={2}>
+            <Button onClick={() => this.handleActionClick({key: 'recycle'})}>
+              <Icon type="info-circle-o"/> 回收站
+            </Button>
           </Col>
         </Row>
       </div>

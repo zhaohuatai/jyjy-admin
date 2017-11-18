@@ -56,7 +56,7 @@ class New extends Component {
     const { getFieldDecorator } = this.props.form;
     const { attached, badge, establishTime, faculty, academicianNum,
       firstRate, introduction, location, masterNum,
-      name, phone, provinceCode, province, rank,
+      name, phone, province, rank,
       remark, doctor, specialProfession, stage, studentNum, type } = this.props.data;
 
     const formItemLayout = {
@@ -85,7 +85,7 @@ class New extends Component {
         footer={null}
         width={'80%'}
       >
-        <Row type='flex' style={{ marginBottom: '10px'}}>
+        <Row type='flex' style={{ marginBottom: '5px'}}>
           <Col span={24}>
             <FormItem
               {...formItemLayout}

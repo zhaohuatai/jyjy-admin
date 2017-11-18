@@ -3,7 +3,8 @@ import {Tabs, Table, Pagination} from 'antd';
 import Filter from './Filter';
 import Update from './Update';
 import Detail from './Detail';
-import {loadServiceCourseDataSet} from "../../../service/course";
+import {loadServiceCourse, loadServiceCourseDataSet} from "../../../service/course";
+import New from "./New";
 
 const TabPane = Tabs.TabPane;
 
@@ -17,7 +18,7 @@ const table_columns = [
   {title: '会员价格', dataIndex: 'priceVIP', key: 'priceVIP'},
   {title: '留言数', dataIndex: 'consultationCount', key: 'consultationCount'},
   {title: '收藏数', dataIndex: 'favoriteCount', key: 'favoriteCount'},
-  {title: '学习人数', dataIndex: 'learningCountActual', key: 'learningCountActual'},
+  {title: '实际学习人数', dataIndex: 'learningCountActual', key: 'learningCountActual'},
   {title: '免费', dataIndex: 'freePay', key: 'freePay'},
   {title: '置顶', dataIndex: 'isTop', key: 'isTop'},
   {title: '显示顺序', dataIndex: 'showIndex', key: 'showIndex'},
@@ -38,11 +39,12 @@ class Course extends Component {
       update_data: {},
       detail_display: false,
       detail_data: {},
+      recycle_data: false,
     };
   }
 
   componentDidMount() {
-    this.handleRefresh();
+    this.handleRefresh({status: '1'});
   }
 
   // 获取数据
@@ -58,7 +60,6 @@ class Course extends Component {
     this.setState({selectedRowKeys});
   }
 
-
   // 切换页码
   onChangeTablePage = (currentPage) => {
     this.setState({table_loading: true, table_cur_page: currentPage});
@@ -70,20 +71,23 @@ class Course extends Component {
   // 搜索
   handleSearch = (values) => {
     this.setState({table_cur_page: 1});
-    this.handleRefresh(values)
+    if(this.state.recycle_data){
+      this.handleRefresh(values.push('status', '2'))
+    }
+    this.handleRefresh(values.push('status', '1'))
   }
 
   // 更新
   handleUpdate = () => {
-    loadPubCustomize({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.setState({update_data: data.data.pubCustomize, update_display: true})
+    loadServiceCourse({id: this.state.selectedRowKeys[0]}).then(data => {
+      this.setState({update_data: data.data.serviceCourse, update_display: true})
     })
   }
 
   // 显示详情
   handleShowDetail = (record) => {
-    loadPubCustomize({id: record.id}).then(data => {
-      this.setState({detail_data: data.data.pubCustomize, detail_display: true})
+    loadServiceCourse({id: record.id}).then(data => {
+      this.setState({detail_data: data.data.serviceCourse, detail_display: true})
     })
   }
 
@@ -101,7 +105,8 @@ class Course extends Component {
           <TabPane tab="课程列表" key="1">
             <Filter
               doSearch={this.handleSearch}
-              doRefresh={() => this.handleRefresh({page: this.state.table_cur_page})}
+              doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
+              doRecycle={() => {this.handleRefresh({page: this.state.table_cur_page, status: '2'}); this.setState({recycle_data: true})}}
               doUpdate={this.handleUpdate}
 
             />

@@ -47,7 +47,7 @@ class New extends Component {
         footer={null}
         width={'80%'}
       >
-        <Row type='flex' style={{ marginBottom: '10px'}}>
+        <Row type='flex' style={{ marginBottom: '5px'}}>
           <Col span={24}>
             <FormItem
               {...formItemLayout}

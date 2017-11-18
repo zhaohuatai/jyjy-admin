@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, hashHistory, IndexRoute } from 'react-router';
+import {Router, Route, hashHistory, IndexRoute} from 'react-router';
 import App from './routes/App';
 import Dashboard from './routes/dashboard/Dashboard';
 import School from './routes/base/school';
@@ -13,37 +13,48 @@ import AuthUser from './routes/auth/user/AuthUser';
 import AuthApplication from './routes/auth/application/AuthApplication';
 import Slide from './routes/slide';
 import Customize from './routes/customize';
-import { checkLogin } from './utils/utils';
-import Course from './routes/service/course';
+import {checkLogin} from './utils/utils';
+import Course from './routes/service/course/index';
 
 const Routers = () => (
   <Router history={hashHistory}>
     <Route path="/" onEnter={checkLogin} component={App}>
-      <IndexRoute component={Dashboard} />
-      <Route path="/dashboard" component={Dashboard} />
+      <IndexRoute component={Dashboard}/>
+      <Route path="/dashboard" component={Dashboard}/>
 
       <Route path="/base">
-        <Route path="school" component={School} />
-        <Route path="career" component={Career} />
-        <Route path="profession" component={Profession} />
+        <Route path="school" component={School}/>
+        <Route path="career" component={Career}/>
+        <Route path="profession" component={Profession}/>
       </Route>
 
-      <Route path="/course" component={Course} />
+      <Route path="/service">
 
-      <Route path="slide" component={Slide} />
+        <Route path="course" component={Course}>
+          {/*<Route path="item" component={CourseItem}/>*/}
+          {/*<Route path="category" component={CourseCategory}/>*/}
+        </Route>
 
-      <Route path="customize" component={Customize} />
+        {/*<Route path="entrance" component={entrance}>*/}
+          {/*<Route path="category" component={entranceCategory}/>*/}
+          {/*<Route path="appointment" component={entranceAppointment}/>*/}
+        {/*</Route>*/}
+      </Route>
+
+      <Route path="slide" component={Slide}/>
+
+      <Route path="customize" component={Customize}/>
 
       <Route path="/auth">
-        <Route path="menu" component={AuthMenu} />
-        <Route path="permission" component={AuthPermission} />
-        <Route path="user" component={AuthUser} />
-        <Route path="application" component={AuthApplication} />
-        <Route path="role" component={AuthRole} />
+        <Route path="menu" component={AuthMenu}/>
+        <Route path="permission" component={AuthPermission}/>
+        <Route path="user" component={AuthUser}/>
+        <Route path="application" component={AuthApplication}/>
+        <Route path="role" component={AuthRole}/>
       </Route>
     </Route>
 
-    <Route path="/login" component={Login} />
+    <Route path="/login" component={Login}/>
   </Router>
 );
 

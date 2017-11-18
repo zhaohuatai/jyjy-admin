@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import { Form, Col, Row, Switch, Button, Select, Dropdown, Menu, Upload, Icon, Input} from 'antd';
+import React, {Component} from 'react';
+import {Form, Col, Row, Switch, Button, Select, Dropdown, Menu, Upload, Icon, Input} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import { createDataCareer, loadDataCareerCategoryDataSet } from '../../../service/career';
+import {loadServiceCourseCategoryDataSet} from "../../../service/courseCategory";
+import {createServiceCourse} from "../../../service/course";
 
 const FormItem = Form.Item;
 
@@ -9,70 +10,78 @@ class New extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      categoryList:[]
+      categoryList: []
     }
   }
 
   componentDidMount() {
-    loadDataCareerCategoryDataSet({rows: 100}).then(data => {
-      this.setState({ categoryList: data.data.dataSet.rows})
+    loadServiceCourseCategoryDataSet({rows: 100}).then(data => {
+      this.setState({categoryList: data.data.dataSet.rows})
     })
   }
 
   handleSubmit = (e) => {
-    let formdata = this.props.form.getFieldsValue();
-    formdata = { ...formdata,
+    let form_data = this.props.form.getFieldsValue();
+    form_data = {
+      ...form_data,
 
     };
 
-    console.log(formdata);
+    console.log(form_data);
 
-    createDataCareer(formdata).then(data => {
+    createServiceCourse(form_data).then(data => {
       console.log(data);
     })
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
+    const {getFieldDecorator} = this.props.form;
 
     const formItemLayout = {
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 4 },
+        xs: {span: 24},
+        sm: {span: 4},
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 14 },
+        xs: {span: 24},
+        sm: {span: 14},
       },
     };
 
-    return(
+    return (
       <div>
-        <Row type='flex' style={{ marginBottom: '10px'}}>
+        <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="校名"
+              label="课程名"
             >
-              {getFieldDecorator('name',{
+              {getFieldDecorator('name', {
                 initialValue: '',
                 rules: [
-                  { required: true, message: '请输入名称' },
+                  {required: true, message: '请输入名称'},
                 ]
               })(
-                <Input />
+                <Input/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="选择分类"
-            >
-              {getFieldDecorator('categoryId',{
+            <FormItem {...formItemLayout} label="描述">
+              {getFieldDecorator('hint', {
+                initialValue: '',
+                rules: []
+              })(
+                <Input/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="选择分类">
+              {getFieldDecorator('categoryId', {
                 initialValue: '',
                 rules: [
-                  { required: true, message: '请选择分类' },
+                  {required: true, message: '请选择分类'},
                 ]
               })(
                 <Select
@@ -87,127 +96,84 @@ class New extends Component {
                 </Select>
               )}
             </FormItem>
-          </Col >
+          </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="备注"
-            >
-              {getFieldDecorator('remark',{
-                initialValue: '',
+            <FormItem {...formItemLayout} label="介绍">
+              <UEditor id="introduction" height="200"/>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="是否免费">
+              {getFieldDecorator('freePay', {
+                valuePropName: 'checked',
+                rules: []
               })(
-                <Input />
+                <Switch />
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="学历要求"
-            >
-                <UEditor id="career_back" height="200" />
+            <FormItem {...formItemLayout} label="普通价格">
+              {getFieldDecorator('price', {
+                initialValue: '',
+                rules: []
+              })(
+                <Input/>
+              )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="主要课程"
-            >
-              <UEditor id="career_course" height="200" />
+            <FormItem {...formItemLayout} label="会员价格">
+              {getFieldDecorator('priceVIP', {
+                initialValue: '',
+                rules: []
+              })(
+                <Input/>
+              )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="职业定义"
-            >
-              <UEditor id="career_definition" height="200" />
+            <FormItem {...formItemLayout} label="前台显示学习数">
+              {getFieldDecorator('learningCount', {
+                initialValue: '',
+                rules: []
+              })(
+                <Input/>
+              )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="工作内容"
-            >
-              <UEditor id="career_duty" height="200" />
+            <FormItem {...formItemLayout} label="是否置顶">
+              {getFieldDecorator('isTop', {
+                valuePropName: 'checked',
+                rules: []
+              })(
+                <Switch/>
+              )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="个人发展路径"
-            >
-              <UEditor id="career_fore" height="200" />
+            <FormItem {...formItemLayout} label="显示顺序">
+              {getFieldDecorator('showIndex', {
+                initialValue: '',
+                rules: []
+              })(
+                <Input/>
+              )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="简介"
-            >
-              <UEditor id="career_intro" height="200" />
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="薪酬结构"
-            >
-              <UEditor id="career_money" height="200" />
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="主要职责"
-            >
-              <UEditor id="career_moral" height="200" />
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="资格"
-            >
-              <UEditor id="career_qualify" height="200" />
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="技能"
-            >
-              <UEditor id="career_skill" height="200" />
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="工具"
-            >
-              <UEditor id="career_tools" height="200" />
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="要求"
-            >
-              <UEditor id="career_claim" height="200" />
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="工作地点"
-            >
-              <UEditor id="career_local" height="200" />
+            <FormItem {...formItemLayout} label="备注">
+              {getFieldDecorator('remark', {
+                initialValue: '',
+                rules: []
+              })(
+                <Input/>
+              )}
             </FormItem>
           </Col>
         </Row>
-        <FormItem
-          wrapperCol={{ span: 12, offset: 4 }}
-        >
+        <FormItem wrapperCol={{span: 12, offset: 4}}>
           <Button type="primary" onClick={this.handleSubmit}>创建</Button>
         </FormItem>
       </div>
@@ -215,4 +181,5 @@ class New extends Component {
   }
 }
 
-export default Form.create()(New);;
+export default Form.create()(New);
+;

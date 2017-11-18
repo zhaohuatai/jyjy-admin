@@ -9,7 +9,7 @@ import Detail from './Detail';
 const TabPane = Tabs.TabPane;
 
 const table_columns = [
-  { title: 'id', dataIndex: 'id', key: 'id'},
+  { title: '序号', dataIndex: 'id', key: 'id'},
   { title: '名称', dataIndex: 'name', key: 'name'},
   { title: '院士人数', dataIndex: 'academicianNum', key: 'academicianNum'},
   { title: '省份编码', dataIndex: 'provinceCode', key: 'provinceCode'},
@@ -27,7 +27,6 @@ const table_columns = [
   { title: '双一流', dataIndex: 'firstRate', key: 'firstRate'},
   { title: '硕士点数', dataIndex: 'masterNum', key: 'masterNum'},
   { title: '学生数', dataIndex: 'studentNum', key: 'studentNum'},
-  { title: '状态', dataIndex: 'status', key: 'status'},
 ]
 
 class School extends Component {
@@ -44,12 +43,13 @@ class School extends Component {
       update_data:{},
       detail_display: false,
       detail_data:{},
+      recycle_data: false,
     };
   }
 
 
   componentDidMount() {
-    this.handleRefresh();
+    this.handleRefresh({status: '1'});
   }
 
   // 获取数据
@@ -77,7 +77,10 @@ class School extends Component {
   // 搜索
   handleSearch = (values) => {
     this.setState({table_cur_page: 1});
-    this.handleRefresh(values)
+    if(this.state.recycle_data){
+      this.handleRefresh(values.push('status', '2'))
+    }
+    this.handleRefresh(values.push('status', '1'))
   }
 
   // 删除记录
@@ -113,7 +116,8 @@ class School extends Component {
           <TabPane tab="学校列表" key="1">
             <Filter
               doSearch={this.handleSearch}
-              doRefresh={()=>this.handleRefresh({page: this.state.table_cur_page})}
+              doRefresh={()=>this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
+              doRecycle={() => {this.handleRefresh({page: this.state.table_cur_page, status: '2'}); this.setState({recycle_data: true})}}
               doDelete={this.handleDelete}
               doUpdate={this.handleUpdate}
 

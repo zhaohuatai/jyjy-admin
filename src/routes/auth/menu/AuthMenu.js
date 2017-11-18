@@ -23,7 +23,7 @@ class AuthMenu extends Component {
 	}
 	
   componentDidMount(){
-		this.handleRefresh();
+		this.handleRefresh({status: '1'});
 		loadAuthMenuList({},data=>{
 			this.setState({
 				dataSource:data.rows,
