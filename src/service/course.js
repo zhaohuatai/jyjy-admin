@@ -48,3 +48,45 @@ export function uploadCover(param) {
     });
   });
 }
+
+
+// course-item
+export function loadServiceCourseItemDataSet(param) {
+  return new Promise((resolve) => {
+    post(`${API_DOMAIN}admin/course/serviceCourseItem/loadServiceCourseItemDataSet`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+export function loadServiceCourseItem(param) {
+  return new Promise((resolve) => {
+    post(`${API_DOMAIN}admin/course/serviceCourseItem/loadServiceCourseItem`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+export function createServiceCourseItem(param) {
+  return new Promise((resolve) => {
+    post(`${API_DOMAIN}admin/course/serviceCourseItem/createServiceCourseItem`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+export function deleteServiceCourseItem(param) {
+  return new Promise((resolve) => {
+    post(`${API_DOMAIN}admin/course/serviceCourseItem/deleteServiceCourseItem`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+export function loadUploadVideoAuth(param) {
+  return new Promise((resolve) => {
+    post(`${API_DOMAIN}admin/course/serviceCourseItem/loadUploadVideoAuth`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}

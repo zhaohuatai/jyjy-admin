@@ -14,7 +14,8 @@ import AuthApplication from './routes/auth/application/AuthApplication';
 import Slide from './routes/slide';
 import Customize from './routes/customize';
 import {checkLogin} from './utils/utils';
-import Course from './routes/service/course/index';
+import Course from './routes/course/course/index';
+import CourseItem from './routes/course/courseitem';
 
 const Routers = () => (
   <Router history={hashHistory}>
@@ -28,18 +29,16 @@ const Routers = () => (
         <Route path="profession" component={Profession}/>
       </Route>
 
-      <Route path="/service">
-
-        <Route path="course" component={Course}>
-          {/*<Route path="item" component={CourseItem}/>*/}
-          {/*<Route path="category" component={CourseCategory}/>*/}
-        </Route>
-
-        {/*<Route path="entrance" component={entrance}>*/}
-          {/*<Route path="category" component={entranceCategory}/>*/}
-          {/*<Route path="appointment" component={entranceAppointment}/>*/}
-        {/*</Route>*/}
+      <Route path="course">
+        <Route path="course" component={Course}/>
+        <Route path="item" component={CourseItem}/>
+        {/*<Route path="category" component={CourseCategory}/>*/}
       </Route>
+
+      {/*<Route path="entrance" component={entrance}>*/}
+      {/*<Route path="category" component={entranceCategory}/>*/}
+      {/*<Route path="appointment" component={entranceAppointment}/>*/}
+      {/*</Route>*/}
 
       <Route path="slide" component={Slide}/>
 

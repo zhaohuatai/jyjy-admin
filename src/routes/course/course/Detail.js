@@ -37,14 +37,6 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="封面"
-            >
-              <img style={{width: '100px', height: '100px'}} src={`${coverUrl}`}/>
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
               label="课程名"
             >
               <p>{name}</p>
