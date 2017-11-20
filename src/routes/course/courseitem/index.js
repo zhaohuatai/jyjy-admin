@@ -88,14 +88,14 @@ class School extends Component {
   // 更新
   handleUpdate = () => {
     loadServiceCourseItem({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.setState({update_data: data.data.pubSlide, update_display: true})
+      this.setState({update_data: data.data.serviceCourseItem, update_display: true})
     })
   }
 
   // 显示详情
   handleShowDetail = (record) => {
     loadServiceCourseItem({id: record.id}).then(data => {
-      this.setState({detail_data: data.data.pubSlide, detail_display: true})
+      this.setState({detail_data: data.data.serviceCourseItem, detail_display: true})
     })
   }
 

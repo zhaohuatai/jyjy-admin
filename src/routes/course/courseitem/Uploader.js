@@ -39,8 +39,6 @@ class New extends Component {
         // uploader.resumeUploadWithAuth(uploadAuth);
       }
     });
-
-
   }
 
   normFile = (e) => {

@@ -90,3 +90,11 @@ export function loadUploadVideoAuth(param) {
     });
   });
 }
+
+export function updateServiceCourseItem(param) {
+  return new Promise((resolve) => {
+    post(`${API_DOMAIN}admin/course/serviceCourseItem/updateServiceCourseItem`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}

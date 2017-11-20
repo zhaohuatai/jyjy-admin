@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { API_DOMAIN } from '../../../utils/config';
-import { Form, Col, Row, Switch, Button, Select, Dropdown, Menu, Upload, Icon, Input, Modal} from 'antd';
+import { Form, Col, Row, Switch, Button, Select, Dropdown, Menu, Upload, Icon, Input, Modal, message} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import { updateDataUniversity } from '../../../service/university';
+import { updateServiceCourseItem, loadUploadVideoAuth } from '../../../service/course';
 import { loadProvinceList } from '../../../service/dic';
+import {IMG_DOMAIN} from "../../../config";
+import '../../../utils/aliupload/aliyun-sdk';
+import '../../../utils/aliupload/vod-sdk-upload';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -12,14 +15,40 @@ class New extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      provinceList:[]
+      fileList: [],
+      uploading: false,
+
     }
   }
 
   componentDidMount() {
-    loadProvinceList({}).then(data => {
-      this.setState({ provinceList: data.data.provinceList})
-    })
+    let _this = this;
+    var uploader = new VODUpload({
+      // 开始上传
+      'onUploadstarted': function (uploadInfo) {
+        console.log("onUploadStarted:" + uploadInfo.file.name + ", endpoint:" + uploadInfo.endpoint + ", bucket:" + uploadInfo.bucket + ", object:" + JSON.stringify(uploadInfo.object));
+        console.log(uploader);
+        this.uploader.setUploadAuthAndAddress(uploadInfo, 'eyJTZWN1cml0eVRva2VuIjoiQ0FJU3pBUjFxNkZ0NUIyeWZTaklyYWZBZWMzeW1hVkt3byt1VkZUM29Gb2ZlczVCZ3ZQSjJ6ejJJSHBLZVhkdUFlQVhzL28wbW1oWjcvWVlsclVxRzhFZUhoV2NOWkVwdGNzSHExNzdKcGZadjh1ODRZQURpNUNqUVk4VHBNdHVuNTI4V2Y3d2FmK0FVQm5HQ1RtZDVNY1lvOWJUY1RHbFFDWnVXLy90b0pWN2I5TVJjeENsWkQ1ZGZybC9MUmRqcjhsbzF4R3pVUEcyS1V6U24zYjNCa2hsc1JZZTcyUms4dmFIeGRhQXpSRGNnVmJtcUpjU3ZKK2pDNEM4WXM5Z0c1MTlYdHlwdm9weGJiR1Q4Q05aNXo5QTlxcDlrTTQ5L2l6YzdQNlFIMzViNFJpTkw4L1o3dFFOWHdoaWZmb2JIYTlZcmZIZ21OaGx2dkRTajQzdDF5dFZPZVpjWDBha1E1dTdrdTdaSFArb0x0OGphWXZqUDNQRTNyTHBNWUx1NFQ0OFpYVVNPRHREWWNaRFVIaHJFazRSVWpYZEk2T2Y4VXJXU1FDN1dzcjIxN290ZzdGeXlrM3M4TWFIQWtXTFg3U0IyRHdFQjRjNGFFb2tWVzRSeG5lelc2VUJhUkJwYmxkN0JxNmNWNWxPZEJSWm9LK0t6UXJKVFg5RXoycExtdUQ2ZS9MT3M3b0RWSjM3V1p0S3l1aDRZNDlkNFU4clZFalBRcWl5a1QwdEZncGZUSzFSemJQbU5MS205YmFCMjUvelcrUGREZTBkc1Znb0xGS0twaUdXRzNSTE5uK3p0Sjl4YUZ6ZG9aeUlrL1dWcTh3NVQxRjJ2SUFCWEZyQUs0aHV0azQ4OGFDOTZGT044ZVB1VlRmbzNCSmhxb2FEb2RZZnRCTTZKNjM0MjdMTmhGT0U0aXpNTzV0ZXNkek1SV2hpVFM2d2YzRkUyLzJJamhvRjNVdGJ6VHpxWlU1UHVnblBqampvTFpSTGlPYjM3M2RGRTdwVnArUFVjRDZwNVY1OEV1aU81N3NicUUyVnVoU2xrSjBhZ0FHWVN3VWt6VXBsclo5YTJ0U1hYTUJ3SWMzOTFjSzRocU9qaVF0ZGhERFpKcGtzYlFWbEFNdHdQbGFOY2QrQ0d4VjN1emFXRnBXWWNOaGZPUCsrYjdwMk1CMnU1UU42MG1lVU44M0VmT05qM21vYU1pc1VJQUdlK2lTcmwvRjExWm1sT1dJVGNZdkc0RFFGSFBCOGN0TmczajNZaTUrT2JMSUVKdU1ScVlvVk5BPT0iLCJBY2Nlc3NLZXlJZCI6IlNUUy5MZHUyd0Z0emt1TUVWckZEWkp2QW1tNmI5IiwiQWNjZXNzS2V5U2VjcmV0IjoiQ0N2WGlNa3FCSzNoSEtvRHpzdEx6VkN4TVhXZHVIQ1JVYzlXRU5tQUp6NmUiLCJFeHBpcmF0aW9uIjoiMjcyMiJ9', 'eyJFbmRwb2ludCI6Imh0dHBzOi8vb3NzLWNuLXNoYW5naGFpLmFsaXl1bmNzLmNvbSIsIkJ1Y2tldCI6ImluLTIwMTcxMTA3MTcyMDI4NjkzLTI2a3F6MnpjZ28iLCJGaWxlTmFtZSI6InZpZGVvLzE5MThGMDg3LTE1RkQ3ODdERkQ1LTAwMDYtOUVBQi1BQkUtRTQwQ0MubXA0In0=');
+        //_this.setAuth();
+      },
+      // 文件上传成功
+      'onUploadSucceed': function (uploadInfo) {
+        console.log("onUploadSucceed: " + uploadInfo.file.name + ", endpoint:" + uploadInfo.endpoint + ", bucket:" + uploadInfo.bucket + ", object:" + JSON.stringify(uploadInfo.object));
+      },
+      // 文件上传失败
+      'onUploadFailed': function (uploadInfo, code, message) {
+        console.log("onUploadFailed: file:" + uploadInfo.file.name + ",code:" + code + ", message:" + JSON.stringify(message));
+      },
+      // 文件上传进度，单位：字节
+      'onUploadProgress': function (uploadInfo, totalSize, uploadedSize) {
+        console.log("onUploadProgress:file:" + uploadInfo.file.name + ", fileSize:" + totalSize + ", percent:" + Math.ceil(uploadedSize * 100 / totalSize) + "%");
+      },
+      // 上传凭证超时
+      'onUploadTokenExpired': function () {
+        console.log("onUploadTokenExpired");
+        // uploader.resumeUploadWithAuth(uploadAuth);
+      }
+    });
   }
 
   normFile = (e) => {
@@ -33,30 +62,78 @@ class New extends Component {
   handleSubmit = (e) => {
     let formdata = this.props.form.getFieldsValue();
     formdata = { ...formdata,
-      faculty: UE.getEditor('update_faculty').getContent(),
-      specialProfession: UE.getEditor('update_specialProfession').getContent(),
       introduction: UE.getEditor('update_introduction').getContent(),
     };
 
-    formdata.firstRate ? formdata.firstRate = 1 : formdata.firstRate = 0;
+    formdata.freePay ? formdata.freePay = 1 : formdata.freePay = 0;
     formdata.id = this.props.data.id;
 
     console.log(formdata);
-    if(formdata.badge){
-      formdata.badge = formdata.badge[0].response.data.image;
+
+    if(formdata.coverUrl){
+      formdata.coverUrl = formdata.coverUrl[0].response.data.image;
     }
 
-    updateDataUniversity(formdata).then(data => {
+    updateServiceCourseItem(formdata).then(data => {
       console.log(data);
     })
   }
 
+
+  handleChangeVideo = (e) => {
+
+  }
+
+  setAuth = () => {
+    let file = this.state.fileList[0];
+
+
+    loadUploadVideoAuth({
+      courseItemId: 1,
+      vedioName: file.name,
+      vedioTitle: file.name,
+      vedioTags: file.name,
+      vedioDesc: file.name,
+    }).then(data => {
+
+      this.uploader.setUploadAuthAndAddress(data.data.aliVideoAuthDto.uploadAuth, data.data.aliVideoAuthDto.uploadAddress);
+      console.log(this.uploader);
+
+    }).catch(err => {
+      message.warn(err);
+    });
+  }
+
+  doUpload = () => {
+
+    // let file = this.state.fileList[0];
+    //
+    // loadUploadVideoAuth({
+    //   courseItemId: 1,
+    //   vedioName: file.name,
+    //   vedioTitle: file.name,
+    //   vedioTags: file.name,
+    //   vedioDesc: file.name,
+    // }).then(data => {
+    //   this.uploader.setUploadAuthAndAddress(data.data.aliVideoAuthDto.uploadAuth, data.data.aliVideoAuthDto.uploadAddress);
+    //   this.uploader.startUpload()
+    //
+    // }).catch(err => {
+    //   message.warn(err);
+    // });
+
+    this.uploader.startUpload()
+
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { attached, badge, establishTime, faculty, academicianNum,
-      firstRate, introduction, location, masterNum,
-      name, phone, provinceCode, province, rank,
-      remark, doctor, specialProfession, stage, studentNum, type } = this.props.data;
+    const {
+      freePay, coverUrl, name, courseId, introduction,
+      presenterName, remark, videoAliId, videoDesc, price, priceVIP,
+      videoName, videoSize, videoTags, videoTime,
+      videoTitle, videoUrl
+    } = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -73,9 +150,34 @@ class New extends Component {
       this.state
     )
 
+    const props = {
+      action: '//jsonplaceholder.typicode.com/posts/',
+      onRemove: (file) => {
+        this.setState(({ fileList }) => {
+          const index = fileList.indexOf(file);
+          const newFileList = fileList.slice();
+          newFileList.splice(index, 1);
+          return {
+            fileList: newFileList,
+          };
+        });
+      },
+      beforeUpload: (file) => {
+        let userData = '{"Vod":{"UserData":"{"IsShowWaterMark":"false","Priority":"7"}"}}';
+
+        this.uploader.addFile(file, null, null, null, userData);
+
+        this.setState(({ fileList }) => ({
+          fileList: [...fileList, file],
+        }));
+        return false;
+      },
+      fileList: this.state.fileList,
+    };
+
     return(
       <Modal
-        title="更新高校信息"
+        title="更新"
         visible={this.props.show}
         onCancel={this.props.onCancel}
         footer={null}
@@ -85,12 +187,12 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="校名"
+              label="节次名称"
             >
               {getFieldDecorator('name',{
                 initialValue: name,
                 rules: [
-                  { required: true, message: '请输入学校名称' },
+                  { required: true, message: '请输入节次名称' },
                 ]
               })(
                 <Input size='default' />
@@ -100,38 +202,16 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="选择省份"
-            >
-              {getFieldDecorator('provinceCode',{
-                initialValue: provinceCode,
-                rules: [
-                ]
-              })(
-                <Select
-                  placeholder="选择省份"
-                  style={{width: '200px'}}
-                >
-                  {
-                    this.state.provinceList.map(item => {
-                      return <Option key={item.id} value={item.code}>{item.name}</Option>
-                    })
-                  }
-                </Select>
-              )}
-            </FormItem>
-          </Col >
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
               label="校徽图片"
             >
-              {getFieldDecorator('badge', {
+              <img src={`${IMG_DOMAIN}${coverUrl}`} style={{width: '100px', height: '100px'}} />
+              {getFieldDecorator('coverUrl', {
                 valuePropName: 'fileList',
                 getValueFromEvent: this.normFile,
               })(
                 <Upload
                   name="file"
-                  action={`${API_DOMAIN}admin/data/dataUniversity/uploadBadge`}
+                  action={`${API_DOMAIN}admin/course/serviceCourseItem/uploadCover`}
                   listType="picture"
                   withCredentials={true}
                 >
@@ -145,11 +225,11 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="是否双一流"
+              label="是否免费"
             >
               {getFieldDecorator('firstRate',{
                 valuePropName: 'checked',
-                initialValue: firstRate ? true : false,
+                initialValue: freePay ? true : false,
               })(
                 <Switch />
               )}
@@ -158,10 +238,10 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="学校层次"
+              label="课程id"
             >
               {getFieldDecorator('stage',{
-                initialValue: stage,
+                initialValue: courseId,
                 rules: [
                 ]
               })(
@@ -172,10 +252,10 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="办学类型"
+              label="主讲人"
             >
               {getFieldDecorator('type',{
-                initialValue: type,
+                initialValue: presenterName,
                 rules: [
                 ]
               })(
@@ -186,10 +266,10 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="招生办电话"
+              label="普通价格"
             >
               {getFieldDecorator('phone',{
-                initialValue: phone,
+                initialValue: price,
                 rules: [
                 ]
               })(
@@ -200,10 +280,10 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="学校地址"
+              label="会员价格"
             >
               {getFieldDecorator('location',{
-                initialValue: location,
+                initialValue: priceVIP,
                 rules: [
                 ]
               })(
@@ -214,10 +294,35 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="博士点数"
+              label="课程视频"
+            >
+              <Upload {...props}>
+                <Button>
+                  <Icon type="upload" /> 选择文件
+                </Button>
+              </Upload>
+              <Button onClick={this.setAuth}>
+                设置auth
+              </Button>
+              <Button
+                className="upload-demo-start"
+                type="primary"
+                onClick={this.doUpload}
+                disabled={this.state.fileList.length === 0}
+                loading={this.state.uploading}
+              >
+                {this.state.uploading ? 'Uploading' : 'Start Upload' }
+              </Button>
+
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem
+              {...formItemLayout}
+              label="阿里视频id"
             >
               {getFieldDecorator('doctor',{
-                initialValue: doctor,
+                initialValue: videoAliId,
                 rules: [
                 ]
               })(
@@ -228,10 +333,10 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="硕士点数"
+              label="视频描述"
             >
               {getFieldDecorator('masterNum',{
-                initialValue: masterNum,
+                initialValue: videoDesc,
                 rules: [
                 ]
               })(
@@ -242,10 +347,10 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="院士人数"
+              label="视频名称"
             >
               {getFieldDecorator('academicianNum',{
-                initialValue: academicianNum,
+                initialValue: videoName,
                 rules: [
                 ]
               })(
@@ -256,10 +361,10 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="学生人数"
+              label="视频大小"
             >
               {getFieldDecorator('studentNum',{
-                initialValue: studentNum,
+                initialValue: videoSize,
                 rules: [
                 ]
               })(
@@ -270,10 +375,10 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="院校排名"
+              label="视频标签"
             >
               {getFieldDecorator('rank',{
-                initialValue: rank,
+                initialValue: videoTags,
                 rules: [
                 ]
               })(
@@ -284,10 +389,10 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="建校时间"
+              label="视频时间"
             >
               {getFieldDecorator('establishTime',{
-                initialValue: establishTime,
+                initialValue: videoTime,
                 rules: [
                 ]
               })(
@@ -298,10 +403,10 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="学校隶属"
+              label="视频标题"
             >
               {getFieldDecorator('attached',{
-                initialValue: attached,
+                initialValue: videoTitle,
                 rules: [
                 ]
               })(
@@ -312,40 +417,23 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="备注"
+              label="视频地址"
             >
-              {getFieldDecorator('remark',{
-                initialValue: remark,
+              {getFieldDecorator('attached',{
+                initialValue: videoUrl,
                 rules: [
                 ]
               })(
                 <Input size='default' />
               )}
             </FormItem>
-
           </Col>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="特色专业"
+              label="简介"
             >
-              <UEditor id="update_specialProfession" height="200" initValue={specialProfession} />
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="学校简介"
-            >
-              <UEditor id="update_introduction" height="200" initValue={introduction} />
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="师资力量"
-            >
-              <UEditor id="update_faculty" height="200" initValue={faculty} />
+              <UEditor id="update_specialProfession" height="200" initValue={introduction} />
             </FormItem>
           </Col>
         </Row>

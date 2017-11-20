@@ -128,7 +128,8 @@ class New extends Component {
           >
             <Switch checked={freePay}/>
           </FormItem>
-        </Col><Col span={24}>
+          </Col>
+          <Col span={24}>
           <FormItem
             {...formItemLayout}
             label="置顶"
