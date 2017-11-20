@@ -64,7 +64,7 @@ class Filter extends Component {
     return (
       <div>
         <Row type='flex' justify='end' style={{marginBottom: '5px'}}>
-          <Col span={4} pull={12}>
+          <Col span={4} pull={14}>
             <FormItem>
               {getFieldDecorator('title', {
                 initialValue: ''

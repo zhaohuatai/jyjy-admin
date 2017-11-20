@@ -49,7 +49,6 @@ export function uploadCover(param) {
   });
 }
 
-
 // course-item
 export function loadServiceCourseItemDataSet(param) {
   return new Promise((resolve) => {

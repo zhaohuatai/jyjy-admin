@@ -1,35 +1,41 @@
-import React, { Component } from 'react';
-import { API_DOMAIN } from '../../../utils/config';
-import { Form, Col, Row, Switch, Button, Select, Dropdown, Menu, Upload, Icon, Input, Modal, message} from 'antd';
+import React, {Component} from 'react';
+import {API_DOMAIN} from '../../../utils/config';
+import {Form, Col, Row, Switch, Button, Select, Dropdown, Menu, Upload, Icon, Input, Modal, message} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import { updateServiceCourseItem, loadUploadVideoAuth } from '../../../service/course';
-import { loadProvinceList } from '../../../service/dic';
+import {updateServiceCourseItem, loadUploadVideoAuth, loadServiceCourseDataSet} from '../../../service/course';
 import {IMG_DOMAIN} from "../../../config";
 import '../../../utils/aliupload/aliyun-sdk';
 import '../../../utils/aliupload/vod-sdk-upload';
+import {loadMemberTeacherDataSet} from "../../../service/member";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
 
-class New extends Component {
+class Update extends Component {
   constructor(props) {
     super(props);
+    this.uploader = {};
     this.state = {
       fileList: [],
+      courseList: [],
+      presenterList :[],
       uploading: false,
-
     }
   }
 
   componentDidMount() {
-    let _this = this;
-    var uploader = new VODUpload({
+    loadServiceCourseDataSet({rows: 100}).then(data => {
+      this.setState({courseList: data.data.dataSet.rows})
+    });
+
+    loadMemberTeacherDataSet({rows: 100}).then(data => {
+      this.setState({presenterList: data.data.dataSet.rows})
+    })
+
+    this.uploader = new VODUpload({
       // 开始上传
       'onUploadstarted': function (uploadInfo) {
         console.log("onUploadStarted:" + uploadInfo.file.name + ", endpoint:" + uploadInfo.endpoint + ", bucket:" + uploadInfo.bucket + ", object:" + JSON.stringify(uploadInfo.object));
-        console.log(uploader);
-        this.uploader.setUploadAuthAndAddress(uploadInfo, 'eyJTZWN1cml0eVRva2VuIjoiQ0FJU3pBUjFxNkZ0NUIyeWZTaklyYWZBZWMzeW1hVkt3byt1VkZUM29Gb2ZlczVCZ3ZQSjJ6ejJJSHBLZVhkdUFlQVhzL28wbW1oWjcvWVlsclVxRzhFZUhoV2NOWkVwdGNzSHExNzdKcGZadjh1ODRZQURpNUNqUVk4VHBNdHVuNTI4V2Y3d2FmK0FVQm5HQ1RtZDVNY1lvOWJUY1RHbFFDWnVXLy90b0pWN2I5TVJjeENsWkQ1ZGZybC9MUmRqcjhsbzF4R3pVUEcyS1V6U24zYjNCa2hsc1JZZTcyUms4dmFIeGRhQXpSRGNnVmJtcUpjU3ZKK2pDNEM4WXM5Z0c1MTlYdHlwdm9weGJiR1Q4Q05aNXo5QTlxcDlrTTQ5L2l6YzdQNlFIMzViNFJpTkw4L1o3dFFOWHdoaWZmb2JIYTlZcmZIZ21OaGx2dkRTajQzdDF5dFZPZVpjWDBha1E1dTdrdTdaSFArb0x0OGphWXZqUDNQRTNyTHBNWUx1NFQ0OFpYVVNPRHREWWNaRFVIaHJFazRSVWpYZEk2T2Y4VXJXU1FDN1dzcjIxN290ZzdGeXlrM3M4TWFIQWtXTFg3U0IyRHdFQjRjNGFFb2tWVzRSeG5lelc2VUJhUkJwYmxkN0JxNmNWNWxPZEJSWm9LK0t6UXJKVFg5RXoycExtdUQ2ZS9MT3M3b0RWSjM3V1p0S3l1aDRZNDlkNFU4clZFalBRcWl5a1QwdEZncGZUSzFSemJQbU5MS205YmFCMjUvelcrUGREZTBkc1Znb0xGS0twaUdXRzNSTE5uK3p0Sjl4YUZ6ZG9aeUlrL1dWcTh3NVQxRjJ2SUFCWEZyQUs0aHV0azQ4OGFDOTZGT044ZVB1VlRmbzNCSmhxb2FEb2RZZnRCTTZKNjM0MjdMTmhGT0U0aXpNTzV0ZXNkek1SV2hpVFM2d2YzRkUyLzJJamhvRjNVdGJ6VHpxWlU1UHVnblBqampvTFpSTGlPYjM3M2RGRTdwVnArUFVjRDZwNVY1OEV1aU81N3NicUUyVnVoU2xrSjBhZ0FHWVN3VWt6VXBsclo5YTJ0U1hYTUJ3SWMzOTFjSzRocU9qaVF0ZGhERFpKcGtzYlFWbEFNdHdQbGFOY2QrQ0d4VjN1emFXRnBXWWNOaGZPUCsrYjdwMk1CMnU1UU42MG1lVU44M0VmT05qM21vYU1pc1VJQUdlK2lTcmwvRjExWm1sT1dJVGNZdkc0RFFGSFBCOGN0TmczajNZaTUrT2JMSUVKdU1ScVlvVk5BPT0iLCJBY2Nlc3NLZXlJZCI6IlNUUy5MZHUyd0Z0emt1TUVWckZEWkp2QW1tNmI5IiwiQWNjZXNzS2V5U2VjcmV0IjoiQ0N2WGlNa3FCSzNoSEtvRHpzdEx6VkN4TVhXZHVIQ1JVYzlXRU5tQUp6NmUiLCJFeHBpcmF0aW9uIjoiMjcyMiJ9', 'eyJFbmRwb2ludCI6Imh0dHBzOi8vb3NzLWNuLXNoYW5naGFpLmFsaXl1bmNzLmNvbSIsIkJ1Y2tldCI6ImluLTIwMTcxMTA3MTcyMDI4NjkzLTI2a3F6MnpjZ28iLCJGaWxlTmFtZSI6InZpZGVvLzE5MThGMDg3LTE1RkQ3ODdERkQ1LTAwMDYtOUVBQi1BQkUtRTQwQ0MubXA0In0=');
-        //_this.setAuth();
       },
       // 文件上传成功
       'onUploadSucceed': function (uploadInfo) {
@@ -60,48 +66,24 @@ class New extends Component {
   }
 
   handleSubmit = (e) => {
-    let formdata = this.props.form.getFieldsValue();
-    formdata = { ...formdata,
-      introduction: UE.getEditor('update_introduction').getContent(),
+    let formData = this.props.form.getFieldsValue();
+    formData = {
+      ...formData,
+      introduction: UE.getEditor('update_courseItemIntroduction').getContent(),
     };
 
-    formdata.freePay ? formdata.freePay = 1 : formdata.freePay = 0;
-    formdata.id = this.props.data.id;
+    formData.id = this.props.data.id;
+    formData.freePay ? formData.freePay = 0 : formData.freePay = 1;
+    formData.isTop ? formData.isTop = 1 : formData.freePay = 0;
 
-    console.log(formdata);
-
-    if(formdata.coverUrl){
-      formdata.coverUrl = formdata.coverUrl[0].response.data.image;
+    if (formData.coverUrl) {
+      formData.coverUrl = formData.coverUrl[0].response.data.image;
     }
 
-    updateServiceCourseItem(formdata).then(data => {
-      console.log(data);
+    updateServiceCourseItem(formData).then(data => {
+      this.props.onCancel();
+      this.props.form.resetFields();
     })
-  }
-
-
-  handleChangeVideo = (e) => {
-
-  }
-
-  setAuth = () => {
-    let file = this.state.fileList[0];
-
-
-    loadUploadVideoAuth({
-      courseItemId: 1,
-      vedioName: file.name,
-      vedioTitle: file.name,
-      vedioTags: file.name,
-      vedioDesc: file.name,
-    }).then(data => {
-
-      this.uploader.setUploadAuthAndAddress(data.data.aliVideoAuthDto.uploadAuth, data.data.aliVideoAuthDto.uploadAddress);
-      console.log(this.uploader);
-
-    }).catch(err => {
-      message.warn(err);
-    });
   }
 
   doUpload = () => {
@@ -127,33 +109,29 @@ class New extends Component {
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
+    const {getFieldDecorator} = this.props.form;
     const {
       freePay, coverUrl, name, courseId, introduction,
       presenterName, remark, videoAliId, videoDesc, price, priceVIP,
-      videoName, videoSize, videoTags, videoTime,
+      videoName, videoSize, videoTags, videoTime, itemOrder,
       videoTitle, videoUrl
     } = this.props.data;
 
     const formItemLayout = {
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 4 },
+        xs: {span: 24},
+        sm: {span: 4},
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 18 },
+        xs: {span: 24},
+        sm: {span: 18},
       },
     };
 
-    let provinceMenu = (
-      this.state
-    )
-
-    const props = {
+    const uploadProps = {
       action: '//jsonplaceholder.typicode.com/posts/',
       onRemove: (file) => {
-        this.setState(({ fileList }) => {
+        this.setState(({fileList}) => {
           const index = fileList.indexOf(file);
           const newFileList = fileList.slice();
           newFileList.splice(index, 1);
@@ -167,7 +145,18 @@ class New extends Component {
 
         this.uploader.addFile(file, null, null, null, userData);
 
-        this.setState(({ fileList }) => ({
+        loadUploadVideoAuth({
+          courseItemId: this.props.data.id,
+          videoName: file.name,
+          videoTitle: file.name,
+          videoTags: file.name,
+          videoDesc: file.name,
+        }).then(data => {
+          console.log(data);
+          this.uploader.setUploadAuthAndAddress(data.data.aliVideoAuthDto.uploadAuth, data.data.aliVideoAuthDto.uploadAddress);
+        });
+
+        this.setState(({fileList}) => ({
           fileList: [...fileList, file],
         }));
         return false;
@@ -175,271 +164,207 @@ class New extends Component {
       fileList: this.state.fileList,
     };
 
-    return(
-      <Modal
-        title="更新"
-        visible={this.props.show}
-        onCancel={this.props.onCancel}
-        footer={null}
-        width={'80%'}
-      >
-        <Row type='flex' style={{ marginBottom: '5px'}}>
+    return (
+      <Modal title="更新" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
+        <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="节次名称"
-            >
-              {getFieldDecorator('name',{
+            <FormItem{...formItemLayout} label="小节名称">
+              {getFieldDecorator('name', {
                 initialValue: name,
                 rules: [
-                  { required: true, message: '请输入节次名称' },
+                  {required: true, message: '请输入小节名称'},
                 ]
               })(
-                <Input size='default' />
+                <Input size='default'/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="校徽图片"
-            >
-              <img src={`${IMG_DOMAIN}${coverUrl}`} style={{width: '100px', height: '100px'}} />
-              {getFieldDecorator('coverUrl', {
-                valuePropName: 'fileList',
-                getValueFromEvent: this.normFile,
+            <FormItem {...formItemLayout} label="描述">
+              {getFieldDecorator('hint', {
+                initialValue: '',
+                rules: []
               })(
-                <Upload
-                  name="file"
-                  action={`${API_DOMAIN}admin/course/serviceCourseItem/uploadCover`}
-                  listType="picture"
-                  withCredentials={true}
-                >
-                  <Button>
-                    <Icon type="upload" /> 点击上传
-                  </Button>
-                </Upload>
+                <Input/>
               )}
             </FormItem>
-          </Col >
+          </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="是否免费"
-            >
-              {getFieldDecorator('firstRate',{
-                valuePropName: 'checked',
-                initialValue: freePay ? true : false,
-              })(
-                <Switch />
-              )}
-            </FormItem>
-          </Col >
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="课程id"
-            >
-              {getFieldDecorator('stage',{
+            <FormItem{...formItemLayout} label="所属课程">
+              {getFieldDecorator('stage', {
                 initialValue: courseId,
                 rules: [
+                  {required: true, message: '请选择所属课程'},
                 ]
               })(
-                <Input size='default' />
+                <Select placeholder="选择所属课程" style={{width: '200px'}}>
+                  {
+                    this.state.courseList.map(item => {
+                      return <Option key={item.id} value={`${item.id}`}>{item.name}</Option>
+                    })
+                  }
+                </Select>
               )}
             </FormItem>
-          </Col >
+          </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="主讲人"
-            >
-              {getFieldDecorator('type',{
+            <FormItem{...formItemLayout} label="主讲人">
+              {getFieldDecorator('type', {
                 initialValue: presenterName,
                 rules: [
+                  {required: true, message: '请选择主讲人'},
                 ]
               })(
-                <Input size='default' />
+                <Select placeholder="选择主讲人" style={{width: '200px'}}>
+                  {
+                    this.state.presenterList.map(item => {
+                      return <Option key={item.id} value={`${item.id}`}>{item.name}</Option>
+                    })
+                  }
+                </Select>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="普通价格"
-            >
-              {getFieldDecorator('phone',{
+            <FormItem{...formItemLayout} label="免费课程">
+              {getFieldDecorator('freePay', {
+                valuePropName: 'checked',
+                initialValue: !!freePay,
+              })(
+                <Switch checkedChildren={<Icon type="check" />} unCheckedChildren={<Icon type="cross" />} />
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="普通价格">
+              {getFieldDecorator('phone', {
                 initialValue: price,
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input size='default'/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="会员价格"
-            >
-              {getFieldDecorator('location',{
+            <FormItem{...formItemLayout} label="会员价格">
+              {getFieldDecorator('location', {
                 initialValue: priceVIP,
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input size='default'/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="课程视频"
-            >
-              <Upload {...props}>
+            <FormItem{...formItemLayout} label="课程视频">
+              <Upload {...uploadProps}>
                 <Button>
-                  <Icon type="upload" /> 选择文件
+                  <Icon type="upload"/> 选择文件
                 </Button>
               </Upload>
-              <Button onClick={this.setAuth}>
-                设置auth
+              <Button type="primary" onClick={this.doUpload} disabled={this.state.fileList.length === 0}
+                      loading={this.state.uploading}>
+                {this.state.uploading ? '正在上传...' : '开始上传'}
               </Button>
-              <Button
-                className="upload-demo-start"
-                type="primary"
-                onClick={this.doUpload}
-                disabled={this.state.fileList.length === 0}
-                loading={this.state.uploading}
-              >
-                {this.state.uploading ? 'Uploading' : 'Start Upload' }
-              </Button>
-
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="阿里视频id"
-            >
-              {getFieldDecorator('doctor',{
-                initialValue: videoAliId,
-                rules: [
-                ]
-              })(
-                <Input size='default' />
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="视频描述"
-            >
-              {getFieldDecorator('masterNum',{
+            <FormItem{...formItemLayout} label="视频描述">
+              {getFieldDecorator('masterNum', {
                 initialValue: videoDesc,
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input size='default'/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="视频名称"
-            >
-              {getFieldDecorator('academicianNum',{
+            <FormItem{...formItemLayout} label="视频名称">
+              {getFieldDecorator('academicianNum', {
                 initialValue: videoName,
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input size='default'/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="视频大小"
-            >
-              {getFieldDecorator('studentNum',{
+            <FormItem{...formItemLayout} label="视频大小">
+              {getFieldDecorator('studentNum', {
                 initialValue: videoSize,
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input size='default'/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="视频标签"
-            >
-              {getFieldDecorator('rank',{
+            <FormItem{...formItemLayout} label="视频标签">
+              {getFieldDecorator('rank', {
                 initialValue: videoTags,
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input size='default'/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="视频时间"
-            >
-              {getFieldDecorator('establishTime',{
+            <FormItem{...formItemLayout} label="视频时间">
+              {getFieldDecorator('establishTime', {
                 initialValue: videoTime,
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input size='default'/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="视频标题"
-            >
-              {getFieldDecorator('attached',{
+            <FormItem{...formItemLayout} label="视频标题">
+              {getFieldDecorator('attached', {
                 initialValue: videoTitle,
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input size='default'/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="视频地址"
-            >
-              {getFieldDecorator('attached',{
+            <FormItem{...formItemLayout} label="视频地址">
+              {getFieldDecorator('attached', {
                 initialValue: videoUrl,
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input size='default'/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="简介"
-            >
-              <UEditor id="update_specialProfession" height="200" initValue={introduction} />
+            <FormItem{...formItemLayout} label="课程介绍">
+              <UEditor id="update_courseItemIntroduction" height="200" initValue={introduction}/>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="显示顺序">
+              {getFieldDecorator('itemOrder', {
+                initialValue: itemOrder,
+                rules: []
+              })(
+                <Input/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="备注">
+              {getFieldDecorator('remark', {
+                initialValue: remark,
+                rules: []
+              })(
+                <Input/>
+              )}
             </FormItem>
           </Col>
         </Row>
-        <FormItem
-          wrapperCol={{ span: 12, offset: 4 }}
-        >
+        <FormItem wrapperCol={{span: 12, offset: 4}}>
           <Button type="primary" onClick={this.handleSubmit}>提交更新</Button>
         </FormItem>
       </Modal>
@@ -447,4 +372,4 @@ class New extends Component {
   }
 }
 
-export default Form.create()(New);;
+export default Form.create()(Update);

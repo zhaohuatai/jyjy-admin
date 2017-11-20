@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { API_DOMAIN } from '../../../utils/config';
 import { Form, Col, Row, Switch, Button, Select, Dropdown, Menu, Upload, Icon, Input} from 'antd';
-import { loadUploadVideoAuth, createServiceCourseItem } from '../../../service/course';
+import {loadUploadVideoAuth, createServiceCourseItem, loadServiceCourseDataSet} from '../../../service/course';
+import {loadMemberTeacherDataSet} from "../../../service/member";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -9,20 +10,32 @@ const Option = Select.Option;
 class New extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      courseList: [],
+      presenterList :[]
+    }
   }
 
+  componentDidMount() {
+    loadServiceCourseDataSet({rows: 100}).then(data => {
+      this.setState({courseList: data.data.dataSet.rows})
+    });
 
-  handleSubmit = (e) => {
-    let formdata = this.props.form.getFieldsValue();
-
-    formdata.freePay ? formdata.firstRate = 1 : formdata.firstRate = 0;
-    console.log(formdata);
-
-    createServiceCourseItem(formdata).then(data => {
-      //this.props.form.resetFields();
-      console.log(data);
+    loadMemberTeacherDataSet({rows: 100}).then(data => {
+      this.setState({presenterList: data.data.dataSet.rows})
     })
   }
+
+  handleSubmit = (e) => {
+    let formData = this.props.form.getFieldsValue();
+
+    formData.freePay ? formData.freePay = 0 : formData.freePay = 1;
+
+    createServiceCourseItem(formData).then(data => {
+      this.props.onCancel();
+      this.props.form.resetFields();
+    })
+  };
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -42,112 +55,119 @@ class New extends Component {
       <div>
         <Row type='flex' style={{ marginBottom: '5px'}}>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="课程"
-            >
-              {getFieldDecorator('courseId',{
+            <FormItem{...formItemLayout} label="小节名称">
+              {getFieldDecorator('name', {
                 initialValue: '',
                 rules: [
-                  { required: true, message: '请输入课程' },
+                  {required: true, message: '请输入小节名称'},
                 ]
               })(
-                <Input />
+                <Input size='default'/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="章节标题"
-            >
-              {getFieldDecorator('name',{
+            <FormItem {...formItemLayout} label="描述">
+              {getFieldDecorator('hint', {
                 initialValue: '',
-                rules: [
-                  { required: true, message: '请输入标题' },
-                ]
+                rules: []
               })(
-                <Input />
+                <Input/>
               )}
             </FormItem>
           </Col>
-
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="价格"
-            >
-              {getFieldDecorator('price',{
+            <FormItem{...formItemLayout} label="所属课程">
+              {getFieldDecorator('stage', {
                 initialValue: '',
                 rules: [
-                  { required: true, message: '请输入标题' },
+                  {required: true, message: '请选择所属课程'},
                 ]
               })(
-                <Input type='number'/>
+                <Select placeholder="选择所属课程" style={{width: '200px'}}>
+                  {
+                    this.state.courseList.map(item => {
+                      return <Option key={item.id} value={`${item.id}`}>{item.name}</Option>
+                    })
+                  }
+                </Select>
               )}
             </FormItem>
           </Col>
-
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="会员价"
-            >
-              {getFieldDecorator('priceVIP',{
+            <FormItem{...formItemLayout} label="主讲人">
+              {getFieldDecorator('type', {
                 initialValue: '',
                 rules: [
-                  { required: true, message: '请输入标题' },
+                  {required: true, message: '请选择主讲人'},
                 ]
               })(
-                <Input type='number'/>
+                <Select placeholder="选择主讲人" style={{width: '200px'}}>
+                  {
+                    this.state.presenterList.map(item => {
+                      return <Option key={item.id} value={`${item.id}`}>{item.name}</Option>
+                    })
+                  }
+                </Select>
               )}
             </FormItem>
           </Col>
-
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="是否免费"
-            >
-              {getFieldDecorator('freePay',{
+            <FormItem{...formItemLayout} label="免费课程">
+              {getFieldDecorator('freePay', {
                 valuePropName: 'checked',
-                initialValue: false,
               })(
-                <Switch />
-              )}
-            </FormItem>
-          </Col >
-
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="权重"
-            >
-              {getFieldDecorator('showIndex',{
-                initialValue: '',
-              })(
-                <Input type='number' />
+                <Switch checkedChildren={<Icon type="check" />} unCheckedChildren={<Icon type="cross" />} />
               )}
             </FormItem>
           </Col>
-
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="主讲人姓名"
-            >
-              {getFieldDecorator('presenterName',{
+            <FormItem{...formItemLayout} label="普通价格">
+              {getFieldDecorator('phone', {
                 initialValue: '',
+                rules: []
               })(
-                <Input />
+                <Input size='default'/>
               )}
             </FormItem>
           </Col>
-
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="会员价格">
+              {getFieldDecorator('location', {
+                initialValue: '',
+                rules: []
+              })(
+                <Input size='default'/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="课程介绍">
+              <UEditor id="update_courseItemIntroduction" height="200"/>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="显示顺序">
+              {getFieldDecorator('itemOrder', {
+                initialValue: '',
+                rules: []
+              })(
+                <Input/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="备注">
+              {getFieldDecorator('remark', {
+                initialValue: '',
+                rules: []
+              })(
+                <Input/>
+              )}
+            </FormItem>
+          </Col>
         </Row>
-        <FormItem
-          wrapperCol={{ span: 12, offset: 4 }}
-        >
+        <FormItem wrapperCol={{ span: 12, offset: 4 }}>
           <Button type="primary" onClick={this.handleSubmit}>创建</Button>
         </FormItem>
       </div>

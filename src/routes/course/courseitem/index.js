@@ -9,20 +9,16 @@ import Detail from './Detail';
 const TabPane = Tabs.TabPane;
 
 const table_columns = [
-  {title: 'id', dataIndex: 'id', key: 'id'},
+  {title: '序号', dataIndex: 'id', key: 'id'},
   {title: '标题', dataIndex: 'name', key: 'title'},
-  {title: '所属课程id', dataIndex: 'courseId', key: 'courseId'},
-  {title: '备注', dataIndex: 'remark', key: 'remark'},
+  {title: '所属课程', dataIndex: 'courseId', key: 'courseId'},
   {title: '描述', dataIndex: 'hint', key: 'hint'},
   {title: '节次', dataIndex: 'itemOrder', key: 'itemOrder'},
   {title: '主讲人', dataIndex: 'presenterName', key: 'presenterName'},
+  {title: '费用', dataIndex: 'freePay', key: 'freePay', render: (text) => text === 1 ? '收费' : '免费' },
   {title: '普通价格', dataIndex: 'price', key: 'price'},
   {title: '会员价', dataIndex: 'priceVIP', key: 'priceVip'},
-  {title: '创建者', dataIndex: 'creator', key: 'creator'},
-  {title: '是否免费', dataIndex: 'freePay', key: 'freePay', render: (text) => text == 1 ? '是' : '否' },
-  {title: '状态', dataIndex: 'status', key: 'status'},
-  {title: '创建时间', dataIndex: 'createTime', key: 'createTime'},
-  {title: '更新时间', dataIndex: 'updateTime', key: 'updateTime'},
+  {title: '备注', dataIndex: 'remark', key: 'remark'},
 ]
 
 class School extends Component {
@@ -34,7 +30,7 @@ class School extends Component {
       selectedRowKeys: [],
       table_cur_page: 1,
       table_total: 0,
-      searchform: {},
+      search_form: {},
       update_display: false,
       update_data: {},
       detail_display: false,
@@ -64,9 +60,9 @@ class School extends Component {
   // 切换页码
   onChangeTablePage = (currentPage) => {
     this.setState({table_loading: true, table_cur_page: currentPage});
-    let searchform = this.state.search_form;
-    searchform.page = currentPage;
-    this.handleRefresh(searchform)
+    let searchForm = this.state.search_form;
+    searchForm.page = currentPage;
+    this.handleRefresh(searchForm)
   }
 
   // 搜索
@@ -110,7 +106,7 @@ class School extends Component {
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
         <Tabs defaultActiveKey="1">
-          <TabPane tab="课程章节列表" key="1">
+          <TabPane tab="课程小节列表" key="1">
             <Filter
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}

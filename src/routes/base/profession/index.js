@@ -38,7 +38,7 @@ class School extends Component {
       selectedRowKeys: [],
       table_cur_page: 1,
       table_total: 0,
-      searchform:{},
+      search_form:{},
       update_display: false,
       update_data:{},
       detail_display: false,

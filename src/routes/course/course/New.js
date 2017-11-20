@@ -21,15 +21,18 @@ class New extends Component {
   }
 
   handleSubmit = (e) => {
-    let form_data = this.props.form.getFieldsValue();
-    form_data = {
-      ...form_data,
+    let formData = this.props.form.getFieldsValue();
+    formData = {
+      ...formData,
 
     };
 
-    console.log(form_data);
+    formData.freePay ? formData.freePay = 0 : formData.freePay = 1;
+    formData.isTop ? formData.isTop = 1 : formData.freePay = 0;
 
-    createServiceCourse(form_data).then(data => {
+    console.log(formData);
+
+    createServiceCourse(formData).then(data => {
       console.log(data);
     })
   }
@@ -108,7 +111,7 @@ class New extends Component {
                 valuePropName: 'checked',
                 rules: []
               })(
-                <Switch />
+                <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
               )}
             </FormItem>
           </Col>
@@ -148,7 +151,7 @@ class New extends Component {
                 valuePropName: 'checked',
                 rules: []
               })(
-                <Switch/>
+                <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
               )}
             </FormItem>
           </Col>
