@@ -16,6 +16,8 @@ import Customize from './routes/customize';
 import {checkLogin} from './utils/utils';
 import Course from './routes/course/course/index';
 import CourseItem from './routes/course/courseitem';
+import Column from './routes/column/column';
+import ColumnItem from './routes/column/columnitem';
 
 const Routers = () => (
   <Router history={hashHistory}>
@@ -32,6 +34,12 @@ const Routers = () => (
       <Route path="course">
         <Route path="course" component={Course}/>
         <Route path="item" component={CourseItem}/>
+        {/*<Route path="category" component={CourseCategory}/>*/}
+      </Route>
+
+      <Route path="column">
+        <Route path="column" component={Column}/>
+        <Route path="item" component={ColumnItem}/>
         {/*<Route path="category" component={CourseCategory}/>*/}
       </Route>
 
