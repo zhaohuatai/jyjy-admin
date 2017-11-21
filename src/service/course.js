@@ -90,6 +90,14 @@ export function loadUploadVideoAuth(param) {
   });
 }
 
+export function reloadUploadVideoAuth(param) {
+  return new Promise((resolve) => {
+    post(`${API_DOMAIN}admin/course/serviceCourseItem/reloadUploadVideoAuth`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
 export function updateServiceCourseItem(param) {
   return new Promise((resolve) => {
     post(`${API_DOMAIN}admin/course/serviceCourseItem/updateServiceCourseItem`, param).then((data) => {

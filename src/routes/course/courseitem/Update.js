@@ -1,15 +1,18 @@
 import React, {Component} from 'react';
-import {API_DOMAIN} from '../../../utils/config';
 import {Form, Col, Row, Switch, Button, Select, Dropdown, Menu, Upload, Icon, Input, Modal, message} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import {updateServiceCourseItem, loadUploadVideoAuth, loadServiceCourseDataSet} from '../../../service/course';
-import {IMG_DOMAIN} from "../../../config";
-import '../../../utils/aliupload/aliyun-sdk';
-import '../../../utils/aliupload/vod-sdk-upload';
+import {
+  updateServiceCourseItem,
+  loadUploadVideoAuth,
+  loadServiceCourseDataSet,
+  reloadUploadVideoAuth
+} from '../../../service/course';
+
+import '../../../utils/aliupload/aliyun-sdk.min';
+import '../../../utils/aliupload/vod-sdk-upload-1.0.6.min';
 import {loadMemberTeacherDataSet} from "../../../service/member";
 
 const FormItem = Form.Item;
-const Option = Select.Option;
 
 class Update extends Component {
   constructor(props) {
@@ -18,8 +21,9 @@ class Update extends Component {
     this.state = {
       fileList: [],
       courseList: [],
-      presenterList :[],
+      presenterList: [],
       uploading: false,
+      videoId: {},
     }
   }
 
@@ -30,12 +34,23 @@ class Update extends Component {
 
     loadMemberTeacherDataSet({rows: 100}).then(data => {
       this.setState({presenterList: data.data.dataSet.rows})
-    })
+    });
 
+    let _this = this;
     this.uploader = new VODUpload({
       // 开始上传
       'onUploadstarted': function (uploadInfo) {
-        console.log("onUploadStarted:" + uploadInfo.file.name + ", endpoint:" + uploadInfo.endpoint + ", bucket:" + uploadInfo.bucket + ", object:" + JSON.stringify(uploadInfo.object));
+        loadUploadVideoAuth({
+          courseItemId: _this.props.data.id,
+          videoName: uploadInfo.file.name + '.mp4',
+          videoTitle: uploadInfo.file.name + '.mp4',
+          videoTags: uploadInfo.file.name + '.mp4',
+          videoDesc: uploadInfo.file.name + '.mp4',
+        }).then(data => {
+          _this.state.videoId = data.data.aliVideoAuthDto.videoId;
+          _this.uploader.setUploadAuthAndAddress(uploadInfo, data.data.aliVideoAuthDto.uploadAuth, data.data.aliVideoAuthDto.uploadAddress);
+          console.log("onUploadStarted:" + uploadInfo.file.name + ", endpoint:" + uploadInfo.endpoint + ", bucket:" + uploadInfo.bucket + ", object:" + uploadInfo.object);
+        });
       },
       // 文件上传成功
       'onUploadSucceed': function (uploadInfo) {
@@ -52,9 +67,14 @@ class Update extends Component {
       // 上传凭证超时
       'onUploadTokenExpired': function () {
         console.log("onUploadTokenExpired");
-        // uploader.resumeUploadWithAuth(uploadAuth);
+        reloadUploadVideoAuth({
+          videoId: _this.videoId,
+        }).then(data => {
+          _this.uploader.resumeUploadWithAuth(data.data.aliVideoAuth);
+        })
       }
     });
+    this.uploader.init();
   }
 
   normFile = (e) => {
@@ -87,26 +107,8 @@ class Update extends Component {
   }
 
   doUpload = () => {
-
-    // let file = this.state.fileList[0];
-    //
-    // loadUploadVideoAuth({
-    //   courseItemId: 1,
-    //   vedioName: file.name,
-    //   vedioTitle: file.name,
-    //   vedioTags: file.name,
-    //   vedioDesc: file.name,
-    // }).then(data => {
-    //   this.uploader.setUploadAuthAndAddress(data.data.aliVideoAuthDto.uploadAuth, data.data.aliVideoAuthDto.uploadAddress);
-    //   this.uploader.startUpload()
-    //
-    // }).catch(err => {
-    //   message.warn(err);
-    // });
-
-    this.uploader.startUpload()
-
-  }
+    this.uploader.startUpload();
+  };
 
   render() {
     const {getFieldDecorator} = this.props.form;
@@ -144,17 +146,6 @@ class Update extends Component {
         let userData = '{"Vod":{"UserData":"{"IsShowWaterMark":"false","Priority":"7"}"}}';
 
         this.uploader.addFile(file, null, null, null, userData);
-
-        loadUploadVideoAuth({
-          courseItemId: this.props.data.id,
-          videoName: file.name,
-          videoTitle: file.name,
-          videoTags: file.name,
-          videoDesc: file.name,
-        }).then(data => {
-          console.log(data);
-          this.uploader.setUploadAuthAndAddress(data.data.aliVideoAuthDto.uploadAuth, data.data.aliVideoAuthDto.uploadAddress);
-        });
 
         this.setState(({fileList}) => ({
           fileList: [...fileList, file],
@@ -229,9 +220,10 @@ class Update extends Component {
             <FormItem{...formItemLayout} label="免费课程">
               {getFieldDecorator('freePay', {
                 valuePropName: 'checked',
-                initialValue: !!freePay,
+                initialValue: !freePay,
               })(
-                <Switch checkedChildren={<Icon type="check" />} unCheckedChildren={<Icon type="cross" />} />
+                <Switch checkedChildren={<Icon type="check"/>}
+                        unCheckedChildren={<Icon type="cross"/>}/>
               )}
             </FormItem>
           </Col>
