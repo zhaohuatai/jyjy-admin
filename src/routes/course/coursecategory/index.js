@@ -82,7 +82,7 @@ class Course extends Component {
   //删除
   handleDelete = () => {
     deleteServiceCourseCategory({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.handleRefresh({status: 1});
+      this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
     })
   }
 

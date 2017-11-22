@@ -36,7 +36,7 @@ class School extends Component {
 
   // 删除记录
   handleDelete = () => {
-    deleteDataUniversity(this.state.selectedRowKeys[0]).then(data => {
+    deleteDataUniversity({id: this.state.selectedRowKeys[0]}).then(data => {
       this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
     });
   }
