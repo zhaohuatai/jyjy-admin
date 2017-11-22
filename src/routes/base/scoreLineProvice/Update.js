@@ -119,7 +119,7 @@ class New extends Component {
               })(
                 <Select placeholder="选择批次" style={{width: '200px'}}>
                   {
-                    this.state.universityList.map(item => {
+                    this.state.batchList.map(item => {
                       return <Option value={item.itemCode}>{item.itemValue}</Option>
                     })
                   }

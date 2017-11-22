@@ -5,7 +5,6 @@ import {loadDicData} from "../../../service/dic";
 import {createDataScoreLine} from "../../../service/scoreLine";
 
 const FormItem = Form.Item;
-const Option = Select.Option;
 
 class New extends Component {
   handleSubmit = (e) => {
@@ -16,7 +15,7 @@ class New extends Component {
     createDataScoreLine(formData).then(data => {
       this.props.form.resetFields();
       message.success("创建成功！");
-    }).catch((e) =>{
+    }).catch((e) => {
       message.error(e);
     })
   }
@@ -66,7 +65,7 @@ class New extends Component {
               {getFieldDecorator('universityId', {
                 initialValue: '',
                 rules: [{
-                  required: true, message:'请选择'
+                  required: true, message: '请选择'
                 }]
               })(
                 <Select placeholder="选择学校" style={{width: '200px'}}>
@@ -84,7 +83,7 @@ class New extends Component {
               {getFieldDecorator('liberalScienceCode', {
                 initialValue: '',
                 rules: [{
-                  required: true, message:'请选择'
+                  required: true, message: '请选择'
                 }]
               })(
                 <Select placeholder="选择分科" style={{width: '200px'}}>
@@ -102,7 +101,7 @@ class New extends Component {
               {getFieldDecorator('years', {
                 initialValue: '',
                 rules: [{
-                  required: true, message:'请填写年份'
+                  required: true, message: '请填写年份'
                 }]
               })(
                 <Input size='default'/>
@@ -114,7 +113,7 @@ class New extends Component {
               {getFieldDecorator('batchCode', {
                 initialValue: '',
                 rules: [{
-                  required: true, message:'请选择'
+                  required: true, message: '请选择'
                 }]
               })(
                 <Select placeholder="选择批次" style={{width: '200px'}}>
@@ -177,4 +176,3 @@ class New extends Component {
 }
 
 export default Form.create()(New);
-;
