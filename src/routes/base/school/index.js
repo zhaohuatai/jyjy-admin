@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Pagination, Table, Tabs} from 'antd';
+import {Pagination, Table, Tabs, message} from 'antd';
 import {deleteDataUniversity, loadDataUniversity, loadDataUniversityDataSet} from '../../../service/base';
 import Filter from './Filter';
 import New from './New';
@@ -57,6 +57,7 @@ class School extends Component {
 
   // 勾选记录
   onSelectChange = (selectedRowKeys) => {
+    console.log(selectedRowKeys);
     this.setState({ selectedRowKeys });
   }
 
@@ -78,7 +79,10 @@ class School extends Component {
 
   // 删除记录
   handleDelete = () => {
-    deleteDataUniversity(this.state.selectedRowKeys[0]);
+    deleteDataUniversity({id: this.state.selectedRowKeys[0]}).then(data=>{
+      message.success(data.message);
+      this.handleRefresh({status: '1'});
+    });
   }
 
   // 更新

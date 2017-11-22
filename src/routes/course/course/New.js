@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Icon, Input, message, Row, Select, Switch} from 'antd';
+import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, Upload} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import {loadServiceCourseCategoryDataSet} from "../../../service/courseCategory";
-import {createServiceCourse} from "../../../service/course";
+import {loadServiceCourseCategoryDataSet, createServiceCourse} from "../../../service/course";
+import { loadMemberTeacherDataSet } from  '../../../service/memberTeacher';
+import { API_DOMAIN} from "../../../config";
 
 const FormItem = Form.Item;
 
@@ -10,7 +11,8 @@ class New extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      categoryList: []
+      categoryList: [],
+      teacher_list: []
     }
   }
 
@@ -18,6 +20,16 @@ class New extends Component {
     loadServiceCourseCategoryDataSet({rows: 100}).then(data => {
       this.setState({categoryList: data.data.dataSet.rows})
     })
+    loadMemberTeacherDataSet({rows: 100}).then(data => {
+      this.setState({teacher_list: data.data.dataSet.rows})
+    })
+  }
+
+  normFile = (e) => {
+    if (Array.isArray(e)) {
+      return e.file;
+    }
+    return e && e.fileList;
   }
 
   handleSubmit = (e) => {
@@ -28,9 +40,13 @@ class New extends Component {
     };
 
     formData.freePay ? formData.freePay = 0 : formData.freePay = 1;
-    formData.isTop ? formData.isTop = 1 : formData.freePay = 0;
+    formData.isTop ? formData.isTop = 1 : formData.isTop = 0;
 
     console.log(formData);
+
+    if (formData.coverUrl) {
+      formData.coverUrl = formData.coverUrl[0].response.data.image;
+    }
 
     createServiceCourse(formData).then(data => {
       this.props.form.resetFields();
@@ -96,6 +112,24 @@ class New extends Component {
                 >
                   {
                     this.state.categoryList.map(item => {
+                      return <Option key={item.id} value={`${item.id}`}>{item.categoryName}</Option>
+                    })
+                  }
+                </Select>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="选择主讲人">
+              {getFieldDecorator('presenterId', {
+                initialValue: '',
+              })(
+                <Select
+                  placeholder="选择分类"
+                  style={{width: '200px'}}
+                >
+                  {
+                    this.state.teacher_list.map(item => {
                       return <Option key={item.id} value={`${item.id}`}>{item.name}</Option>
                     })
                   }
@@ -104,8 +138,26 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem {...formItemLayout} label="介绍">
-              <UEditor id="introduction" height="200"/>
+            <FormItem
+              {...formItemLayout}
+              label="校徽图片"
+            >
+              {getFieldDecorator('coverUrl', {
+                valuePropName: 'fileList',
+                getValueFromEvent: this.normFile,
+                initialValue: '',
+              })(
+                <Upload
+                  name="file"
+                  action={`${API_DOMAIN}admin/course/serviceCourse/uploadCover`}
+                  listType="picture"
+                  withCredentials={true}
+                >
+                  <Button>
+                    <Icon type="upload"/> 点击上传
+                  </Button>
+                </Upload>
+              )}
             </FormItem>
           </Col>
           <Col span={24}>
@@ -114,7 +166,7 @@ class New extends Component {
                 valuePropName: 'checked',
                 rules: []
               })(
-                <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
+                <Switch />
               )}
             </FormItem>
           </Col>
@@ -139,8 +191,18 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem {...formItemLayout} label="前台显示学习数">
+            <FormItem {...formItemLayout} label="前台显示学习人数">
               {getFieldDecorator('learningCount', {
+                initialValue: '',
+                rules: []
+              })(
+                <Input/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="实际学习人数">
+              {getFieldDecorator('learningCountActual', {
                 initialValue: '',
                 rules: []
               })(
@@ -152,9 +214,9 @@ class New extends Component {
             <FormItem {...formItemLayout} label="是否置顶">
               {getFieldDecorator('isTop', {
                 valuePropName: 'checked',
-                rules: []
+                initialValue: false,
               })(
-                <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
+                <Switch />
               )}
             </FormItem>
           </Col>
@@ -176,6 +238,11 @@ class New extends Component {
               })(
                 <Input/>
               )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="介绍">
+              <UEditor id="introduction" height="200"/>
             </FormItem>
           </Col>
         </Row>

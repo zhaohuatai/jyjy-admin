@@ -3,7 +3,7 @@ import {Pagination, Table, Tabs} from 'antd';
 import Filter from './Filter';
 import Update from './Update';
 import Detail from './Detail';
-import {loadServiceCourse, loadServiceCourseDataSet} from "../../../service/course";
+import {loadServiceCourse, loadServiceCourseDataSet, deleteServiceCourse} from "../../../service/course";
 import New from "./New";
 
 const TabPane = Tabs.TabPane;
@@ -82,6 +82,13 @@ class Course extends Component {
     })
   }
 
+  //删除
+  handleDelete = () => {
+    deleteServiceCourse({id: this.state.selectedRowKeys[0]}).then(data => {
+      this.handleRefresh({status: 1});
+    })
+  }
+
   // 显示详情
   handleShowDetail = (record) => {
     loadServiceCourse({id: record.id}).then(data => {
@@ -106,6 +113,7 @@ class Course extends Component {
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
               doRecycle={() => {this.handleRefresh({page: this.state.table_cur_page, status: '2'}); this.setState({recycle_data: true})}}
               doUpdate={this.handleUpdate}
+              doDelete={this.handleDelete}
 
             />
             <Table

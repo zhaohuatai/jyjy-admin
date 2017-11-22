@@ -56,7 +56,6 @@ class School extends Component {
     this.setState({selectedRowKeys});
   }
 
-
   // 切换页码
   onChangeTablePage = (currentPage) => {
     this.setState({table_loading: true, table_cur_page: currentPage});
