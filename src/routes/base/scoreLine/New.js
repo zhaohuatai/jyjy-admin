@@ -89,7 +89,7 @@ class New extends Component {
                 <Select placeholder="选择分科" style={{width: '200px'}}>
                   {
                     this.state.liberalScienceList.map(item => {
-                      return <Option value={item.itemCode}>{item.itemValue}</Option>
+                      return <Option key={item.id} value={item.itemCode}>{item.itemValue}</Option>
                     })
                   }
                 </Select>
@@ -119,7 +119,7 @@ class New extends Component {
                 <Select placeholder="选择批次" style={{width: '200px'}}>
                   {
                     this.state.universityList.map(item => {
-                      return <Option value={item.itemCode}>{item.itemValue}</Option>
+                      return <Option key={item.id} value={item.itemCode}>{item.itemValue}</Option>
                     })
                   }
                 </Select>
