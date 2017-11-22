@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { API_DOMAIN } from '../../utils/config';
-import { Form, Col, Row, Switch, Button, Select, Dropdown, Menu, Upload, Icon, Input} from 'antd';
+import React, {Component} from 'react';
+import {API_DOMAIN} from '../../utils/config';
+import {Button, Col, Form, Icon, Input, message, Row, Select, Upload} from 'antd';
 import UEditor from '../../components/editor/UEditor';
-import { createPubSlide } from '../../service/slide';
+import {createPubSlide} from '../../service/slide';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -21,15 +21,19 @@ class New extends Component {
   }
 
   handleSubmit = (e) => {
-    let formdata = this.props.form.getFieldsValue();
-    formdata = { ...formdata,
+    let formData = this.props.form.getFieldsValue();
+    formData = {
+      ...formData,
       content: UE.getEditor('slide_content').getContent(),
     };
 
-    formdata.imgUrl = formdata.imgUrl[0].response.data.image;
+    formData.imgUrl = formData.imgUrl[0].response.data.image;
 
-    createPubSlide(formdata).then(data => {
+    createPubSlide(formData).then(data => {
       this.props.form.resetFields();
+      message.success("创建成功！");
+    }).catch((e) => {
+      message.error(e);
     })
   }
 

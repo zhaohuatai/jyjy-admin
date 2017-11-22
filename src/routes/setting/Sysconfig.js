@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import style from './setting.scss';
-import {loadDicSysconfigDataSet,loadDicSysconfig, updateDicSysconfig} from '../../service/auth';
-import {Table, Button, Dropdown, Menu, Pagination, Input, Col, Row, RangePicker, Icon,message} from 'antd';
+import {loadDicSysconfig, loadDicSysconfigDataSet, updateDicSysconfig} from '../../service/auth';
+import {message, RangePicker, Table, Tabs} from 'antd';
 import SysconfigFilter from './SysconfigFilter';
 import SysconifgUpdate from './SysconifgUpdate';
-import { Tabs } from 'antd';
+
 const TabPane = Tabs.TabPane;
 
 class Sysconfig extends Component {
@@ -149,11 +149,11 @@ class Sysconfig extends Component {
         />
 
 				<SysconifgUpdate
-					ref={this.saveUpdateFormRef}
-				  visible={this.state.visible_update}
-					onCancel={()=>this.setState({visible_update:false})}
+          ref={this.saveUpdateFormRef}
+          visible={this.state.visible_update}
+          onCancel={()=>this.setState({visible_update:false})}
           onCreate={this.handleUpdateSysconfig}
-					formdata={this.state.cur_config_update_data}
+          formData={this.state.cur_config_update_data}
 				/>
       </div>
     );

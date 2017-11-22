@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Form, Col, Row, Button, Input, Modal} from 'antd';
+import React, {Component} from 'react';
+import {Button, Col, Form, Input, message, Modal, Row} from 'antd';
 import UEditor from '../../components/editor/UEditor';
 import {updatePubCustomize} from "../../service/customize";
 
@@ -19,8 +19,11 @@ class New extends Component {
     formData.id = this.props.data.id;
 
     updatePubCustomize(formData).then(data => {
-      this.props.onCancel();
       this.props.form.resetFields();
+      this.props.oncancel();
+      message.success("更新成功！");
+    }).catch((e) => {
+      message.error(e);
     })
   }
 

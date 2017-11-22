@@ -1,8 +1,5 @@
-import React, { Component } from 'react';
-import {
-  Form, Select, InputNumber, Switch, Radio, Input,Row,Col,
-  Slider, Button, Upload, Icon,Modal
-} from 'antd';
+import React, {Component} from 'react';
+import {Button, Col, Form, Icon, Input, InputNumber, Modal, Radio, Row, Select, Switch} from 'antd';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -135,7 +132,7 @@ class Item extends Component {
               valuePropName: 'enabled' ,
               initialValue:true,
             })(
-              <Switch />
+              <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
             )}
           </FormItem>
 

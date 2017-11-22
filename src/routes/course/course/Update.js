@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Form, Col, Row, Button, Input, Modal, Select} from 'antd';
+import {Button, Col, Form, Input, message, Modal, Row, Select} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
 import {updatePubCustomize} from "../../../service/customize";
 import {loadMemberTeacherDataSet} from "../../../service/member";
@@ -33,8 +33,11 @@ class New extends Component {
     formData.isTop ? formData.isTop = 1 : formData.freePay = 0;
 
     updatePubCustomize(formData).then(data => {
-      this.props.onCancel();
       this.props.form.resetFields();
+      this.props.oncancel();
+      message.success("更新成功！");
+    }).catch((e) => {
+      message.error(e);
     })
   }
 

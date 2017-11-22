@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { API_DOMAIN } from '../../utils/config';
-import { Form, Col, Row, Switch, Button, Select, Dropdown, Menu, Upload, Icon, Input, Modal} from 'antd';
+import React, {Component} from 'react';
+import {API_DOMAIN} from '../../utils/config';
+import {Button, Col, Form, Icon, Input, message, Modal, Row, Select, Switch, Upload} from 'antd';
 import UEditor from '../../components/editor/UEditor';
-import { updateDataUniversity } from '../../service/university';
-import { loadProvinceList } from '../../service/dic';
+import {updateDataUniversity} from '../../service/university';
+import {loadProvinceList} from '../../service/dic';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -31,23 +31,28 @@ class New extends Component {
   }
 
   handleSubmit = (e) => {
-    let formdata = this.props.form.getFieldsValue();
-    formdata = { ...formdata,
+    let formData = this.props.form.getFieldsValue();
+    formData = {
+      ...formData,
       faculty: UE.getEditor('update_faculty').getContent(),
       specialProfession: UE.getEditor('update_specialProfession').getContent(),
       introduction: UE.getEditor('update_introduction').getContent(),
     };
 
-    formdata.firstRate ? formdata.firstRate = 1 : formdata.firstRate = 0;
-    formdata.id = this.props.data.id;
+    formData.firstRate ? formData.firstRate = 1 : formData.firstRate = 0;
+    formData.id = this.props.data.id;
 
-    console.log(formdata);
-    if(formdata.badge){
-      formdata.badge = formdata.badge[0].response.data.image;
+    console.log(formData);
+    if (formData.badge) {
+      formData.badge = formData.badge[0].response.data.image;
     }
 
-    updateDataUniversity(formdata).then(data => {
-      console.log(data);
+    updateDataUniversity(formData).then(data => {
+      this.props.form.resetFields();
+      this.props.oncancel();
+      message.success("更新成功！");
+    }).catch((e) => {
+      message.error(e);
     })
   }
 
@@ -151,7 +156,7 @@ class New extends Component {
                 valuePropName: 'checked',
                 initialValue: firstRate ? true : false,
               })(
-                <Switch />
+                <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
               )}
             </FormItem>
           </Col >

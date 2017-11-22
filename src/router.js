@@ -1,5 +1,5 @@
 import React from 'react';
-import {Router, Route, hashHistory, IndexRoute} from 'react-router';
+import {hashHistory, IndexRoute, Route, Router} from 'react-router';
 import App from './routes/App';
 import Dashboard from './routes/dashboard/Dashboard';
 import School from './routes/base/school';
@@ -18,6 +18,8 @@ import Course from './routes/course/course/index';
 import CourseItem from './routes/course/courseitem';
 import Column from './routes/column/column';
 import ColumnItem from './routes/column/columnitem';
+import ScoreLine from "./routes/base/scoreLine/index";
+import ScoreLineProvince from "./routes/base/scoreLineProvice/index";
 
 const Routers = () => (
   <Router history={hashHistory}>
@@ -29,18 +31,19 @@ const Routers = () => (
         <Route path="school" component={School}/>
         <Route path="career" component={Career}/>
         <Route path="profession" component={Profession}/>
+        <Route path="scoreline" component={ScoreLine}/>
+        <Route path="scoreline-province" component={ScoreLineProvince}/>
       </Route>
 
       <Route path="course">
-        <Route path="course" component={Course}/>
-        <Route path="item" component={CourseItem}/>
-        {/*<Route path="category" component={CourseCategory}/>*/}
+        <Route path="course-list" component={Course}/>
+        <Route path="course-item" component={CourseItem}/>
+        {/*<Route path="course-category" component={CourseCategory}/>*/}
       </Route>
 
       <Route path="column">
-        <Route path="column" component={Column}/>
-        <Route path="item" component={ColumnItem}/>
-        {/*<Route path="category" component={CourseCategory}/>*/}
+        <Route path="column-list" component={Column}/>
+        <Route path="column-item" component={ColumnItem}/>
       </Route>
 
       {/*<Route path="entrance" component={entrance}>*/}

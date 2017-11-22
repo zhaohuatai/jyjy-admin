@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Tabs, Table, Pagination } from 'antd';
-import {loadDataCareerDataSet, deleteDataCareer, loadDataCareer} from '../../../service/career';
+import React, {Component} from 'react';
+import {Pagination, Table, Tabs} from 'antd';
+import {deleteDataCareer, loadDataCareer, loadDataCareerDataSet} from '../../../service/career';
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';
@@ -56,18 +56,16 @@ class School extends Component {
   // 切换页码
   onChangeTablePage = (currentPage) => {
     this.setState({table_loading:true, table_cur_page: currentPage});
-    let searchform = this.state.search_form;
-    searchform.page = currentPage;
-    this.handleRefresh(searchform)
+    let searchForm = this.state.search_form;
+    searchForm.page = currentPage;
+    this.handleRefresh(searchForm)
   }
 
   // 搜索
   handleSearch = (values) => {
     this.setState({table_cur_page: 1});
-    if(this.state.recycle_data){
-      this.handleRefresh(values.push('status', '2'))
-    }
-    this.handleRefresh(values.push('status', '1'))
+    values['status'] = (this.state.recycle_data ? 2 : 1);
+    this.handleRefresh(values);
   }
 
   // 删除记录

@@ -1,9 +1,6 @@
-import React, { Component } from 'react';
-import {
-  Form, Select, InputNumber, Switch, Radio, Input,Row,Col,message,
-  Slider, Button, Upload, Icon,Modal, Tag
-} from 'antd';
-import {updateRole,loadAuthAppList,removePermsFromRole} from '../../../service/auth';
+import React, {Component} from 'react';
+import {Button, Col, Form, Icon, Input, message, Modal, Radio, Row, Select, Switch, Tag} from 'antd';
+import {loadAuthAppList, removePermsFromRole, updateRole} from '../../../service/auth';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -130,7 +127,7 @@ class Item extends Component {
               initialValue: data.enabled,
               valuePropName:'checked'
             })(
-              <Switch />
+              <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
             )}
           </FormItem>
 

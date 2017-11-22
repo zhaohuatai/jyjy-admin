@@ -1,26 +1,43 @@
-import React, { Component } from 'react';
-import { API_DOMAIN } from '../../../utils/config';
-import { Form, Col, Row, Switch, Button, Select, Dropdown, Menu, Upload, Icon, Input} from 'antd';
+import React, {Component} from 'react';
+import {API_DOMAIN} from '../../../utils/config';
+import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, Upload} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import { createDataUniversity, uploadBadge } from '../../../service/university';
-import { loadProvinceList } from '../../../service/dic';
+import {createDataUniversity} from '../../../service/university';
+import {loadProvinceList} from '../../../service/dic';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
 
 class New extends Component {
+  handleSubmit = (e) => {
+    let formData = this.props.form.getFieldsValue();
+    formData = {
+      ...formData,
+      faculty: UE.getEditor('faculty').getContent(),
+      specialProfession: UE.getEditor('specialProfession').getContent(),
+      introduction: UE.getEditor('introduction').getContent(),
+    };
+
+    formData.firstRate ? formData.firstRate = 1 : formData.firstRate = 0;
+
+    console.log(formData);
+    if (formData.badge) {
+      formData.badge = formData.badge[0].response.data.image;
+    }
+
+    createDataUniversity(formData).then(data => {
+      this.props.form.resetFields();
+      message.success("创建成功！");
+    }).catch((e) => {
+      message.error(e);
+    })
+  }
+
   constructor(props) {
     super(props);
     this.state = {
-      provinceList:[]
+      provinceList: []
     }
-  }
-
-
-  componentDidMount() {
-    loadProvinceList({}).then(data => {
-      this.setState({ provinceList: data.data.provinceList})
-    })
   }
 
   normFile = (e) => {
@@ -31,74 +48,56 @@ class New extends Component {
     return e && e.fileList;
   }
 
-  handleSubmit = (e) => {
-    let formdata = this.props.form.getFieldsValue();
-    formdata = { ...formdata,
-      faculty: UE.getEditor('faculty').getContent(),
-      specialProfession: UE.getEditor('specialProfession').getContent(),
-      introduction: UE.getEditor('introduction').getContent(),
-    };
-
-    formdata.firstRate ? formdata.firstRate = 1 : formdata.firstRate = 0;
-
-    console.log(formdata);
-    formdata.badge = formdata.badge[0].response.data.image;
-
-    createDataUniversity(formdata).then(data => {
-      console.log(data);
+  componentDidMount() {
+    loadProvinceList({}).then(data => {
+      this.setState({provinceList: data.data.provinceList})
     })
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
+    const {getFieldDecorator} = this.props.form;
 
     const formItemLayout = {
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 4 },
+        xs: {span: 24},
+        sm: {span: 4},
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 14 },
+        xs: {span: 24},
+        sm: {span: 14},
       },
     };
 
-    let provinceMenu = (
-      this.state
-    )
-
-    return(
+    return (
       <div>
-        <Row type='flex' style={{ marginBottom: '5px'}}>
+        <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
               label="校名"
             >
-              {getFieldDecorator('name',{
+              {getFieldDecorator('name', {
                 initialValue: '',
                 rules: [
-                  { required: true, message: '请输入学校名称' },
+                  {required: true, message: '请输入学校名称'},
                 ]
               })(
-                <Input size='default' />
+                <Input size='default'/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="选择省份"
+              label="所在省份"
             >
-              {getFieldDecorator('provinceCode',{
+              {getFieldDecorator('provinceCode', {
                 initialValue: '',
                 rules: [
+                  {required: true, message: '请选择所在省份'},
                 ]
               })(
-                <Select
-                  placeholder="选择省份"
-                  style={{width: '200px'}}
-                >
+                <Select placeholder="选择省份" style={{width: '200px'}}>
                   {
                     this.state.provinceList.map(item => {
                       return <Option key={item.id} value={item.code}>{item.name}</Option>
@@ -107,7 +106,7 @@ class New extends Component {
                 </Select>
               )}
             </FormItem>
-          </Col >
+          </Col>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
@@ -124,50 +123,48 @@ class New extends Component {
                   withCredentials={true}
                 >
                   <Button>
-                    <Icon type="upload" /> 点击上传
+                    <Icon type="upload"/> 点击上传
                   </Button>
                 </Upload>
               )}
             </FormItem>
-          </Col >
+          </Col>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="是否双一流"
+              label="双一流"
             >
-              {getFieldDecorator('firstRate',{
+              {getFieldDecorator('firstRate', {
                 valuePropName: 'checked',
                 initialValue: false,
               })(
-                <Switch />
+                <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
               )}
             </FormItem>
-          </Col >
+          </Col>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
               label="学校层次"
             >
-              {getFieldDecorator('stage',{
+              {getFieldDecorator('stage', {
                 initialValue: '',
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input size='default'/>
               )}
             </FormItem>
-          </Col >
+          </Col>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
               label="办学类型"
             >
-              {getFieldDecorator('type',{
+              {getFieldDecorator('type', {
                 initialValue: '',
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input size='default'/>
               )}
             </FormItem>
           </Col>
@@ -176,12 +173,11 @@ class New extends Component {
               {...formItemLayout}
               label="招生办电话"
             >
-              {getFieldDecorator('phone',{
+              {getFieldDecorator('phone', {
                 initialValue: '',
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input size='default'/>
               )}
             </FormItem>
           </Col>
@@ -190,12 +186,11 @@ class New extends Component {
               {...formItemLayout}
               label="学校地址"
             >
-              {getFieldDecorator('location',{
+              {getFieldDecorator('location', {
                 initialValue: '',
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input size='default'/>
               )}
             </FormItem>
           </Col>
@@ -204,12 +199,11 @@ class New extends Component {
               {...formItemLayout}
               label="博士点数"
             >
-              {getFieldDecorator('doctor',{
+              {getFieldDecorator('doctor', {
                 initialValue: '',
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input size='default'/>
               )}
             </FormItem>
           </Col>
@@ -218,12 +212,11 @@ class New extends Component {
               {...formItemLayout}
               label="硕士点数"
             >
-              {getFieldDecorator('masterNum',{
+              {getFieldDecorator('masterNum', {
                 initialValue: '',
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input size='default'/>
               )}
             </FormItem>
           </Col>
@@ -232,12 +225,11 @@ class New extends Component {
               {...formItemLayout}
               label="院士人数"
             >
-              {getFieldDecorator('academicianNum',{
+              {getFieldDecorator('academicianNum', {
                 initialValue: '',
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input size='default'/>
               )}
             </FormItem>
           </Col>
@@ -246,12 +238,11 @@ class New extends Component {
               {...formItemLayout}
               label="学生人数"
             >
-              {getFieldDecorator('studentNum',{
+              {getFieldDecorator('studentNum', {
                 initialValue: '',
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input size='default'/>
               )}
             </FormItem>
           </Col>
@@ -260,12 +251,11 @@ class New extends Component {
               {...formItemLayout}
               label="院校排名"
             >
-              {getFieldDecorator('rank',{
+              {getFieldDecorator('rank', {
                 initialValue: '',
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input size='default'/>
               )}
             </FormItem>
           </Col>
@@ -274,12 +264,11 @@ class New extends Component {
               {...formItemLayout}
               label="建校时间"
             >
-              {getFieldDecorator('establishTime',{
+              {getFieldDecorator('establishTime', {
                 initialValue: '',
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input size='default'/>
               )}
             </FormItem>
           </Col>
@@ -288,36 +277,20 @@ class New extends Component {
               {...formItemLayout}
               label="学校隶属"
             >
-              {getFieldDecorator('attached',{
+              {getFieldDecorator('attached', {
                 initialValue: '',
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input size='default'/>
               )}
             </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="备注"
-            >
-              {getFieldDecorator('remark',{
-                initialValue: '',
-                rules: [
-                ]
-              })(
-                <Input size='default' />
-              )}
-            </FormItem>
-
           </Col>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
               label="特色专业"
             >
-                <UEditor id="specialProfession" height="200" />
+              <UEditor id="specialProfession" height="200"/>
             </FormItem>
           </Col>
           <Col span={24}>
@@ -325,21 +298,27 @@ class New extends Component {
               {...formItemLayout}
               label="学校简介"
             >
-              <UEditor id="introduction" height="200" />
+              <UEditor id="introduction" height="200"/>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="师资力量"
-            >
-              <UEditor id="faculty" height="200" />
+            <FormItem{...formItemLayout} label="师资力量">
+              <UEditor id="faculty" height="200"/>
             </FormItem>
           </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="备注">
+              {getFieldDecorator('remark', {
+                initialValue: '',
+                rules: []
+              })(
+                <Input size='default'/>
+              )}
+            </FormItem>
+
+          </Col>
         </Row>
-        <FormItem
-          wrapperCol={{ span: 12, offset: 4 }}
-        >
+        <FormItem wrapperCol={{span: 12, offset: 4}}>
           <Button type="primary" onClick={this.handleSubmit}>创建</Button>
         </FormItem>
       </div>
@@ -347,4 +326,5 @@ class New extends Component {
   }
 }
 
-export default Form.create()(New);;
+export default Form.create()(New);
+;

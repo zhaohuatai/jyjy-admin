@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {Form, Col, Row, Switch, Button, Select, Dropdown, Menu, Upload, Icon, Input, Modal, message} from 'antd';
+import {Button, Col, Form, Icon, Input, message, Modal, Row, Select, Switch, Upload} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
 import {
-  updateServiceCourseItem,
-  loadUploadVideoAuth,
   loadServiceCourseDataSet,
-  reloadUploadVideoAuth
+  loadUploadVideoAuth,
+  reloadUploadVideoAuth,
+  updateServiceCourseItem
 } from '../../../service/course';
 
 import '../../../utils/aliupload/aliyun-sdk.min';
@@ -101,8 +101,11 @@ class Update extends Component {
     }
 
     updateServiceCourseItem(formData).then(data => {
-      this.props.onCancel();
       this.props.form.resetFields();
+      this.props.oncancel();
+      message.success("更新成功！");
+    }).catch((e) => {
+      message.error(e);
     })
   }
 

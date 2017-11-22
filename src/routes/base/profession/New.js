@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { API_DOMAIN } from '../../../utils/config';
-import { Form, Col, Row, Switch, Button, Select, Dropdown, Menu, Upload, Icon, Input} from 'antd';
+import React, {Component} from 'react';
+import {API_DOMAIN} from '../../../utils/config';
+import {Button, Col, Form, Icon, Input, message, Row, Select, Upload} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import { createDataUniversity, uploadBadge } from '../../../service/university';
-import { loadProvinceList } from '../../../service/dic';
+import {createDataUniversity} from '../../../service/university';
+import {loadProvinceList} from '../../../service/dic';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -37,20 +37,24 @@ class New extends Component {
   }
 
   handleSubmit = (e) => {
-    let formdata = this.props.form.getFieldsValue();
-    formdata = { ...formdata,
+    let formData = this.props.form.getFieldsValue();
+    formData = {
+      ...formData,
       faculty: UE.getEditor('faculty').getContent(),
       specialProfession: UE.getEditor('specialProfession').getContent(),
       introduction: UE.getEditor('introduction').getContent(),
     };
 
-    formdata.firstRate ? formdata.firstRate = 1 : formdata.firstRate = 0;
+    formData.firstRate ? formData.firstRate = 1 : formData.firstRate = 0;
 
-    console.log(formdata);
-    formdata.badge = formdata.badge[0].response.data.image;
+    console.log(formData);
+    formData.badge = formData.badge[0].response.data.image;
 
-    createDataUniversity(formdata).then(data => {
-      console.log(data);
+    createDataUniversity(formData).then(data => {
+      this.props.form.resetFields();
+      message.success("创建成功！");
+    }).catch((e) => {
+      message.error(e);
     })
   }
 
@@ -144,7 +148,7 @@ class New extends Component {
                 valuePropName: 'checked',
                 initialValue: false,
               })(
-                <Switch />
+                <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
               )}
             </FormItem>
           </Col >

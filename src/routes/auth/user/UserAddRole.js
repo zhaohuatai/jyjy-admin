@@ -1,8 +1,5 @@
-import React, { Component } from 'react';
-import {
-  Form, Select, InputNumber, Switch, Radio, Input,Row,Col,
-  Slider, Button, Upload, Icon,Modal
-} from 'antd';
+import React, {Component} from 'react';
+import {Button, Form, Icon, Input, InputNumber, Modal, Radio, Select, Switch} from 'antd';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -77,7 +74,7 @@ class UserAddRole extends Component {
               valuePropName: 'checked' ,
               initialValue:true,
             })(
-              <Switch />
+              <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
             )}
           </FormItem>
 

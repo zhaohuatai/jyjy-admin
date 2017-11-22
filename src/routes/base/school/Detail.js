@@ -1,9 +1,6 @@
-import React, { Component } from 'react';
-import { API_DOMAIN } from '../../../utils/config';
-import { Form, Col, Row, Switch, Button, Select, Dropdown, Menu, Upload, Icon, Input, Modal,Collapse} from 'antd';
-import UEditor from '../../../components/editor/UEditor';
-import { updateDataUniversity } from '../../../service/university';
-import { loadProvinceList } from '../../../service/dic';
+import React, {Component} from 'react';
+import {API_DOMAIN} from '../../../utils/config';
+import {Col, Collapse, Form, Modal, Row, Select, Switch} from 'antd';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -13,43 +10,7 @@ class New extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      provinceList:[]
     }
-  }
-
-  componentDidMount() {
-    loadProvinceList({}).then(data => {
-      this.setState({ provinceList: data.data.provinceList})
-    })
-  }
-
-  normFile = (e) => {
-    console.log('Upload event:', e);
-    if (Array.isArray(e)) {
-      return e.file;
-    }
-    return e && e.fileList;
-  }
-
-  handleSubmit = (e) => {
-    let formdata = this.props.form.getFieldsValue();
-    formdata = { ...formdata,
-      faculty: UE.getEditor('update_faculty').getContent(),
-      specialProfession: UE.getEditor('update_specialProfession').getContent(),
-      introduction: UE.getEditor('update_introduction').getContent(),
-    };
-
-    formdata.firstRate ? formdata.firstRate = 1 : formdata.firstRate = 0;
-    formdata.id = this.props.data.id;
-
-    console.log(formdata);
-    if(formdata.badge){
-      formdata.badge = formdata.badge[0].response.data.image;
-    }
-
-    updateDataUniversity(formdata).then(data => {
-      console.log(data);
-    })
   }
 
   render() {
@@ -73,24 +34,11 @@ class New extends Component {
       }
     };
 
-    let provinceMenu = (
-      this.state
-    )
-
     return(
-      <Modal
-        title="更新高校信息"
-        visible={this.props.show}
-        onCancel={this.props.onCancel}
-        footer={null}
-        width={'80%'}
-      >
+      <Modal title="高校信息" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
         <Row type='flex' style={{ marginBottom: '5px'}}>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="校名"
-            >
+            <FormItem{...formItemLayout} label="校名">
               <p>{name}</p>
             </FormItem>
           </Col>

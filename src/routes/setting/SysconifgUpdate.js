@@ -1,11 +1,11 @@
 import React from 'react';
-import ReactQuill from 'react-quill';
-import { Button, Modal, Form, Input, Radio } from 'antd';
+import {Form, Input, Modal} from 'antd';
+
 const FormItem = Form.Item;
 
 const SysconifgUpdate = Form.create()(
   (props) => {
-    const { visible, onCancel, onCreate, form , formdata} = props;
+    const {visible, onCancel, onCreate, form, formData} = props;
     const { getFieldDecorator } = form;
     return (
       <Modal
@@ -20,7 +20,7 @@ const SysconifgUpdate = Form.create()(
           <FormItem label="id">
             {getFieldDecorator('id', {
               rules: [{ required: true, message: '请输入名 配置码' }],
-              initialValue:formdata.id
+              initialValue: formData.id
             })(
               <Input readOnly/>
             )}
@@ -29,7 +29,7 @@ const SysconifgUpdate = Form.create()(
           <FormItem label="名称">
             {getFieldDecorator('confName', {
               rules: [{ required: true, message: '请输入名称' }],
-              initialValue:formdata.confName
+              initialValue: formData.confName
             })(
               <Input />
             )}
@@ -38,7 +38,7 @@ const SysconifgUpdate = Form.create()(
           <FormItem label="值">
             {getFieldDecorator('confValue', {
               rules: [{ required: true, message: '请输入名 值' }],
-              initialValue:formdata.confValue
+              initialValue: formData.confValue
             })(
               <Input />
             )}
@@ -47,7 +47,7 @@ const SysconifgUpdate = Form.create()(
           <FormItem label="配置码">
             {getFieldDecorator('confCode', {
               rules: [{ required: true, message: '请输入名 配置码' }],
-              initialValue:formdata.confCode
+              initialValue: formData.confCode
             })(
               <Input />
             )}
@@ -56,7 +56,7 @@ const SysconifgUpdate = Form.create()(
           <FormItem label="状态">
             {getFieldDecorator('status', {
               rules: [{ required: true, message: '请输入名 状态' }],
-              initialValue:formdata.status
+              initialValue: formData.status
             })(
               <Input />
             )}

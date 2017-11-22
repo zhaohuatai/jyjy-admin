@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
-import { API_DOMAIN } from '../../../utils/config';
-import { Form, Col, Row, Switch, Button, Select, Dropdown, Menu, Upload, Icon, Input} from 'antd';
+import React, {Component} from 'react';
+import {Button, Col, Form, Input, message, Row, Select} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import { createDataCareer, loadDataCareerCategoryDataSet } from '../../../service/career';
-import { loadProvinceList } from '../../../service/dic';
+import {createDataCareer, loadDataCareerCategoryDataSet} from '../../../service/career';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -23,8 +21,9 @@ class New extends Component {
   }
 
   handleSubmit = (e) => {
-    let formdata = this.props.form.getFieldsValue();
-    formdata = { ...formdata,
+    let formData = this.props.form.getFieldsValue();
+    formData = {
+      ...formData,
       back: UE.getEditor('career_back').getContent(),
       course: UE.getEditor('career_course').getContent(),
       definition: UE.getEditor('career_definition').getContent(),
@@ -40,10 +39,13 @@ class New extends Component {
       local: UE.getEditor('career_local').getContent(),
     };
 
-    console.log(formdata);
+    console.log(formData);
 
-    createDataCareer(formdata).then(data => {
-      console.log(data);
+    createDataCareer(formData).then(data => {
+      this.props.form.resetFields();
+      message.success("创建成功！");
+    }).catch((e) => {
+      message.error(e);
     })
   }
 

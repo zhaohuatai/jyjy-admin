@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import style from './menu.scss';
-import { message, Tabs , Table, Button, Dropdown, Menu, Pagination, Input, Col, Row, RangePicker, Icon} from 'antd';
-import {loadProduct,checkProduct,setProductIsHot,loadAuthMenuList, removeAuthMenu} from '../../../service/auth';
+import {Pagination, RangePicker, Table} from 'antd';
+import {loadAuthMenuList, loadProduct, removeAuthMenu} from '../../../service/auth';
 import ProductFilter from './Filter';
 import Item from './Item';
 import ItemAdd from './ItemAdd';
@@ -41,12 +41,12 @@ class AuthMenu extends Component {
 	//切换页码
 	onChangePage=(currentPage)=>{
 
-			let searchform = this.state.search_form;
+    let searchForm = this.state.search_form;
 
-			searchform.rows = this.state.pageRows;
-			searchform.page = currentPage;
+    searchForm.rows = this.state.pageRows;
+    searchForm.page = currentPage;
 
-			loadProduct(searchform, data=>{
+    loadProduct(searchForm, data => {
 				this.setState({
 					dataSource:data.data.dataSet.rows,
 					loading:false,

@@ -1,9 +1,7 @@
 import 'whatwg-fetch';
 import {hashHistory} from 'react-router';
-import store from '../store';
-import {doMessage} from '../action';
 import {API_DOMAIN} from '../config';
-import { message } from 'antd';
+import {message} from 'antd';
 
 /**
  * 状态码错误名称
@@ -47,7 +45,7 @@ Http.get = (url,params='')=>{
       response.json();})
       .then((responseData) => {
         let checkCodeResult = checkCode(responseData.statusCode);
-        if(checkCodeResult.code == 200){
+        if (checkCodeResult.code && checkCodeResult.code === 200) {
           resolve(responseData);
         }else{
           //触发store action 弹出提示框

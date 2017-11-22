@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Form, Col, Row, Switch, Button, Select, Dropdown, Menu, Upload, Icon, Input} from 'antd';
+import {Button, Col, Form, Icon, Input, message, Row, Select, Switch} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
 import {loadServiceCourseCategoryDataSet} from "../../../service/courseCategory";
 import {createServiceCourse} from "../../../service/course";
@@ -33,7 +33,10 @@ class New extends Component {
     console.log(formData);
 
     createServiceCourse(formData).then(data => {
-      console.log(data);
+      this.props.form.resetFields();
+      message.success("创建成功！");
+    }).catch((e) => {
+      message.error(e);
     })
   }
 

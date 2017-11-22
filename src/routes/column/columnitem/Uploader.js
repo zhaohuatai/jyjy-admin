@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { API_DOMAIN } from '../../../utils/config';
-import { Form, Col, Row, Switch, Button, Select, Dropdown, Menu, Upload, Icon, Input} from 'antd';
-import { loadUploadVideoAuth, createServiceCourseItem } from '../../../service/course';
+import React, {Component} from 'react';
+import {API_DOMAIN} from '../../../utils/config';
+import {Col, Form, Icon, Input, message, Row, Select, Upload} from 'antd';
+import {createServiceCourseItem, loadUploadVideoAuth} from '../../../service/course';
 import '../../../utils/aliupload/aliyun-sdk';
 import '../../../utils/aliupload/vod-sdk-upload';
 
@@ -50,15 +50,19 @@ class New extends Component {
   }
 
   handleSubmit = (e) => {
-    let formdata = this.props.form.getFieldsValue();
-    formdata = { ...formdata,
+    let formData = this.props.form.getFieldsValue();
+    formData = {
+      ...formData,
       content: UE.getEditor('slide_content').getContent(),
     };
 
-    formdata.imgUrl = formdata.imgUrl[0].response.data.image;
+    formData.imgUrl = formData.imgUrl[0].response.data.image;
 
-    createServiceCourseItem(formdata).then(data => {
+    createServiceCourseItem(formData).then(data => {
       this.props.form.resetFields();
+      message.success("创建成功！");
+    }).catch((e) => {
+      message.error(e);
     })
   }
 

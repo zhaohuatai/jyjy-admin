@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { API_DOMAIN } from '../../../utils/config';
-import { Form, Col, Row, Switch, Button, Select, Dropdown, Menu, Upload, Icon, Input} from 'antd';
-import {loadUploadVideoAuth, createServiceCourseItem, loadServiceCourseDataSet} from '../../../service/course';
+import React, {Component} from 'react';
+import {Button, Col, Form, Icon, Input, message, Row, Select, Switch} from 'antd';
+import {createServiceCourseItem, loadServiceCourseDataSet} from '../../../service/course';
 import {loadMemberTeacherDataSet} from "../../../service/member";
 
 const FormItem = Form.Item;
@@ -32,8 +31,10 @@ class New extends Component {
     formData.freePay ? formData.freePay = 0 : formData.freePay = 1;
 
     createServiceCourseItem(formData).then(data => {
-      this.props.onCancel();
       this.props.form.resetFields();
+      message.success("创建成功！");
+    }).catch((e) => {
+      message.error(e);
     })
   };
 

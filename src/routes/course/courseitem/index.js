@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Tabs, Table, Pagination} from 'antd';
-import {loadServiceCourseItemDataSet, deleteServiceCourseItem, loadServiceCourseItem} from '../../../service/course';
+import {Pagination, Table, Tabs} from 'antd';
+import {deleteServiceCourseItem, loadServiceCourseItem, loadServiceCourseItemDataSet} from '../../../service/course';
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';
@@ -68,10 +68,8 @@ class School extends Component {
   // 搜索
   handleSearch = (values) => {
     this.setState({table_cur_page: 1});
-    if(this.state.recycle_data){
-      this.handleRefresh(values.push('status', '2'))
-    }
-    this.handleRefresh(values.push('status', '1'))
+    values['status'] = (this.state.recycle_data ? 2 : 1);
+    this.handleRefresh(values);
   }
 
   // 删除记录
