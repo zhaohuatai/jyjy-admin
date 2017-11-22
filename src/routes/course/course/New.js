@@ -1,19 +1,37 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, Upload} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import {createServiceCourse, loadServiceCourseCategoryDataSet} from "../../../service/course";
+import {createServiceCourse,loadServiceCourseCategoryDataSet, createServiceCourse} from "../../../service/course";
 import {loadMemberTeacherDataSet} from '../../../service/memberTeacher';
 import {API_DOMAIN} from "../../../config";
 
 const FormItem = Form.Item;
 
 class New extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      categoryList: [],
+      teacher_list: []
+    }
+  }
+
+  componentDidMount() {
+    loadServiceCourseCategoryDataSet({rows: 100}).then(data => {
+      this.setState({categoryList: data.data.dataSet.rows})
+    })
+    loadMemberTeacherDataSet({rows: 100}).then(data => {
+      this.setState({teacher_list: data.data.dataSet.rows})
+    })
+  }
+
   normFile = (e) => {
     if (Array.isArray(e)) {
       return e.file;
     }
     return e && e.fileList;
   }
+
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
     formData = {
@@ -35,23 +53,6 @@ class New extends Component {
       message.success("创建成功！");
     }).catch((e) => {
       message.error(e);
-    })
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      categoryList: [],
-      teacher_list: []
-    }
-  }
-
-  componentDidMount() {
-    loadServiceCourseCategoryDataSet({rows: 100}).then(data => {
-      this.setState({categoryList: data.data.dataSet.rows})
-    })
-    loadMemberTeacherDataSet({rows: 100}).then(data => {
-      this.setState({teacher_list: data.data.dataSet.rows})
     })
   }
 
@@ -165,7 +166,7 @@ class New extends Component {
                 valuePropName: 'checked',
                 rules: []
               })(
-                <Switch/>
+                <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
               )}
             </FormItem>
           </Col>
@@ -200,22 +201,12 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem {...formItemLayout} label="实际学习人数">
-              {getFieldDecorator('learningCountActual', {
-                initialValue: '',
-                rules: []
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
             <FormItem {...formItemLayout} label="是否置顶">
               {getFieldDecorator('isTop', {
                 valuePropName: 'checked',
                 initialValue: false,
               })(
-                <Switch/>
+                <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
               )}
             </FormItem>
           </Col>

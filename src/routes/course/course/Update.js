@@ -1,44 +1,13 @@
 import React, {Component} from 'react';
 import {API_DOMAIN} from '../../../utils/config';
-import {Button, Col, Form, Icon, Input, message, Modal, Row, Select, Switch, Upload} from 'antd';
+import {Button, Col, Form, Input, message, Modal, Row, Select} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
 import {loadServiceCourseCategoryDataSet, updateServiceCourse} from "../../../service/course";
 import {loadMemberTeacherDataSet} from '../../../service/memberTeacher';
 
 const FormItem = Form.Item;
-const Option = Select.Option;
 
 class New extends Component {
-  normFile = (e) => {
-    console.log('Upload event:', e);
-    if (Array.isArray(e)) {
-      return e.file;
-    }
-    return e && e.fileList;
-  }
-  handleSubmit = (e) => {
-    let formData = this.props.form.getFieldsValue();
-    formData = {
-      ...formData,
-    };
-
-    formData.freePay ? formData.freePay = 0 : formData.freePay = 1;
-    formData.isTop ? formData.isTop = 1 : formData.isTop = 0;
-
-    console.log(formData);
-
-    if (formData.coverUrl) {
-      formData.coverUrl = formData.coverUrl[0].response.data.image;
-    }
-
-    updateServiceCourse(formData).then(data => {
-      this.props.form.resetFields();
-      message.success("创建成功！");
-    }).catch((e) => {
-      message.error(e);
-    })
-  }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -56,8 +25,42 @@ class New extends Component {
     })
   }
 
+  normFile = (e) => {
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+      return e.file;
+    }
+    return e && e.fileList;
+  }
+
+  handleSubmit = (e) => {
+    let formData = this.props.form.getFieldsValue();
+    formData = {
+      ...formData,
+      update_customizeContent: UE.getEditor('update_courseIntroduction').getContent(),
+    };
+
+    formData.id = this.props.data.id;
+    formData.freePay ? formData.freePay = 0 : formData.freePay = 1;
+    formData.isTop ? formData.isTop = 1 : formData.isTop = 0;
+
+    console.log(formData);
+
+    if (formData.coverUrl) {
+      formData.coverUrl = formData.coverUrl[0].response.data.image;
+    }
+
+    updateServiceCourse(formData).then(data => {
+      this.props.form.resetFields();
+      this.props.oncancel();
+      message.success("更新成功！");
+    }).catch((e) => {
+      message.error(e);
+    })
+  }
+
   render() {
-    const {getFieldDecorator} = this.props.form;
+    const { getFieldDecorator } = this.props.form;
     const {
       name, hint, categoryId, presenterId, introduction, price, priceVIP, consultationCount,
       learningCount, learningCountActual, favoriteCount, coverUrl, freePay, remark, isTop, showIndex
@@ -65,12 +68,12 @@ class New extends Component {
 
     const formItemLayout = {
       labelCol: {
-        xs: {span: 24},
-        sm: {span: 4},
+        xs: { span: 24 },
+        sm: { span: 4 },
       },
       wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 18},
+        xs: { span: 24 },
+        sm: { span: 18 },
       },
     };
 
@@ -78,20 +81,11 @@ class New extends Component {
       this.state
     )
 
-    return (
-      <Modal
-        title="更新高校信息"
-        visible={this.props.show}
-        onCancel={this.props.onCancel}
-        footer={null}
-        width={'80%'}
-      >
-        <Row type='flex' style={{marginBottom: '5px'}}>
+    return(
+      <Modal title="更新高校信息" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
+        <Row type='flex' style={{ marginBottom: '5px'}}>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="课程名"
-            >
+            <FormItem{...formItemLayout} label="课程名">
               {getFieldDecorator('name', {
                 initialValue: name,
                 rules: [
@@ -181,7 +175,7 @@ class New extends Component {
                 initialValue: freePay ? true : false,
                 rules: []
               })(
-                <Switch/>
+                <Switch />
               )}
             </FormItem>
           </Col>
@@ -231,7 +225,7 @@ class New extends Component {
                 valuePropName: 'checked',
                 initialValue: isTop ? true : false,
               })(
-                <Switch/>
+                <Switch />
               )}
             </FormItem>
           </Col>
@@ -261,9 +255,7 @@ class New extends Component {
             </FormItem>
           </Col>
         </Row>
-        <FormItem
-          wrapperCol={{span: 12, offset: 4}}
-        >
+        <FormItem wrapperCol={{span: 12, offset: 4}}>
           <Button type="primary" onClick={this.handleSubmit}>提交更新</Button>
         </FormItem>
       </Modal>
@@ -272,4 +264,3 @@ class New extends Component {
 }
 
 export default Form.create()(New);
-;

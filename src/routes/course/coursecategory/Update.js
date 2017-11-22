@@ -1,0 +1,95 @@
+import React, {Component} from 'react';
+import {Button, Col, Form, Input, message, Row } from 'antd';
+import { updateServiceCourseCategory } from "../../../service/course";
+
+const FormItem = Form.Item;
+
+class New extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      categoryList: [],
+      teacher_list: []
+    }
+  }
+
+  componentDidMount() {
+
+  }
+
+  handleSubmit = (e) => {
+    let formData = this.props.form.getFieldsValue();
+
+    updateServiceCourseCategory(formData).then(data => {
+      this.props.form.resetFields();
+      message.success("创建成功！");
+    }).catch((e) => {
+      message.error(e);
+    })
+  }
+
+  render() {
+    const {getFieldDecorator} = this.props.form;
+    const {
+      categoryName, remark, showIndex
+    } = this.props.data;
+
+    const formItemLayout = {
+      labelCol: {
+        xs: {span: 24},
+        sm: {span: 4},
+      },
+      wrapperCol: {
+        xs: {span: 24},
+        sm: {span: 14},
+      },
+    };
+
+    return (
+      <div>
+        <Row type='flex' style={{marginBottom: '5px'}}>
+          <Col span={24}>
+            <FormItem
+              {...formItemLayout}
+              label="课程名"
+            >
+              {getFieldDecorator('categoryName', {
+                initialValue: categoryName,
+                rules: [
+                  {required: true, message: '请输入名称'},
+                ]
+              })(
+                <Input/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="显示顺序">
+              {getFieldDecorator('showIndex', {
+                initialValue: showIndex,
+                rules: []
+              })(
+                <Input type='number'/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="备注">
+              {getFieldDecorator('remark', {
+                initialValue: remark,
+                rules: []
+              })(
+                <Input/>
+              )}
+            </FormItem>
+          </Col>
+        </Row>
+        <FormItem wrapperCol={{span: 12, offset: 4}}>
+          <Button type="primary" onClick={this.handleSubmit}>创建</Button>
+        </FormItem>
+      </div>
+    )
+  }
+}
+
+export default Form.create()(New);
