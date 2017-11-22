@@ -4,11 +4,7 @@ import Filter from './Filter';
 import New from './New';
 import Update from './Update';
 import Detail from './Detail';
-import {
-  deleteDataScoreLine,
-  loadDataScoreLineProvince,
-  loadDataScoreLineProvinceDataSet
-} from "../../../service/scoreLine";
+import {deleteDataScoreLine, loadDataScoreLineProvince, loadDataScoreLineProvinceDataSet} from "../../../service/base";
 
 const TabPane = Tabs.TabPane;
 
@@ -72,6 +68,7 @@ class ScoreLineProvince extends Component {
       recycle_data: false,
     };
   }
+
   // 更新
   handleUpdate = () => {
     loadDataScoreLineProvince({id: this.state.selectedRowKeys[0]}).then(data => {

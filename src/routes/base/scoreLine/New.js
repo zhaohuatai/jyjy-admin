@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Input, message, Row, Select} from 'antd';
-import {loadDataUniversityDataSet} from '../../../service/base'
+import {createDataScoreLine, loadDataUniversityDataSet} from '../../../service/base'
 import {loadDicData} from "../../../service/dic";
-import {createDataScoreLine} from "../../../service/scoreLine";
 
 const FormItem = Form.Item;
 

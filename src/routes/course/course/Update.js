@@ -3,7 +3,7 @@ import {API_DOMAIN} from '../../../utils/config';
 import {Button, Col, Form, Input, message, Modal, Row, Select} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
 import {loadServiceCourseCategoryDataSet, updateServiceCourse} from "../../../service/course";
-import {loadMemberTeacherDataSet} from '../../../service/memberTeacher';
+import {loadMemberTeacherDataSet} from '../../../service/member';
 
 const FormItem = Form.Item;
 

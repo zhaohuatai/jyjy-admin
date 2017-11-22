@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Input, message, Modal, Row, Select} from 'antd';
 import {loadDicData, loadProvinceList} from '../../../service/dic';
-import {updateDataScoreLineProvince} from "../../../service/scoreLine";
+import {updateDataScoreLineProvince} from "../../../service/base";
 
 const FormItem = Form.Item;
 

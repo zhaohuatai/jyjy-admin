@@ -4,7 +4,7 @@ import Filter from './Filter';
 import New from './New';
 import Update from './Update';
 import Detail from './Detail';
-import {deleteDataScoreLine, loadDataScoreLine, loadDataScoreLineDataSet} from "../../../service/scoreLine";
+import {deleteDataScoreLine, loadDataScoreLine, loadDataScoreLineDataSet} from "../../../service/base";
 
 const TabPane = Tabs.TabPane;
 
