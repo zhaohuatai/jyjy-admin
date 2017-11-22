@@ -26,8 +26,23 @@ class Sysconfig extends Component {
     };
 	}
 
-  componentDidMount(){
-    this.handleRefresh({status: '1'});
+  handleUpdateSysconfig = () => {
+    const form = this.form;
+    form.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+      updateDicSysconfig(values, data => {
+        if (data.statusCode == 200) {
+          message.success('操作成功');
+          this.setState({visible_update: false});
+          this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
+        }
+      })
+
+      form.resetFields();
+      this.setState({visible: false});
+    });
 	}
 
 	//选择列
@@ -81,23 +96,8 @@ class Sysconfig extends Component {
 		}
 	}
 
-	handleUpdateSysconfig=()=>{
-		const form = this.form;
-		form.validateFields((err, values) => {
-      if (err) {
-        return;
-      }
-			updateDicSysconfig(values,data=>{
-				if(data.statusCode ==200){
-					message.success('操作成功');
-					this.setState({visible_update:false});
-					this.handleRefresh({status: '1'});
-				}
-			})
-
-      form.resetFields();
-      this.setState({ visible: false });
-    });
+  componentDidMount() {
+    this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
 	}
 
 	saveUpdateFormRef = (form) => {

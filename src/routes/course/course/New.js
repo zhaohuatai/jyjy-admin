@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, Upload} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import {createServiceCourse,loadServiceCourseCategoryDataSet, createServiceCourse} from "../../../service/course";
+import {createServiceCourse, loadServiceCourseCategoryDataSet} from "../../../service/course";
 import {loadMemberTeacherDataSet} from '../../../service/memberTeacher';
 import {API_DOMAIN} from "../../../config";
 

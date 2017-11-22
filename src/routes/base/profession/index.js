@@ -38,8 +38,11 @@ class Profession extends Component {
     })
   }
 
-  componentDidMount() {
-    this.handleRefresh({status: '1'});
+  // 删除记录
+  handleDelete = () => {
+    deleteDataProfession({id: this.state.selectedRowKeys[0]}).then(data => {
+      this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
+    });
   }
 
   // 勾选记录
@@ -53,11 +56,9 @@ class Profession extends Component {
     searchForm.page = currentPage;
     this.handleRefresh(searchForm)
   }
-  // 删除记录
-  handleDelete = () => {
-    deleteDataProfession(this.state.selectedRowKeys[0]).then(data => {
-      this.handleRefresh({status: '1'});
-    });
+
+  componentDidMount() {
+    this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
   }
 
   // 搜索
@@ -112,9 +113,9 @@ class Profession extends Component {
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
               doRecycle={() => {
-                if(this.state.recycle_data){
-                  this.handleRefresh({status: '1'});
-                }else{
+                if (this.state.recycle_data) {
+                  this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
+                } else {
                   this.handleRefresh({status: '2'});
                 }
                 this.setState({recycle_data: !this.state.recycle_data});

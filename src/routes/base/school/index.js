@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Pagination, Table, Tabs, message} from 'antd';
+import {Pagination, Table, Tabs} from 'antd';
 import {deleteDataUniversity, loadDataUniversity, loadDataUniversityDataSet} from '../../../service/base';
 import Filter from './Filter';
 import New from './New';
@@ -34,8 +34,11 @@ class School extends Component {
   }
 
 
-  componentDidMount() {
-    this.handleRefresh({status: '1'});
+  // 删除记录
+  handleDelete = () => {
+    deleteDataUniversity(this.state.selectedRowKeys[0]).then(data => {
+      this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
+    });
   }
 
   constructor(props) {
@@ -76,11 +79,8 @@ class School extends Component {
     this.handleRefresh(values);
   }
 
-  // 删除记录
-  handleDelete = () => {
-    deleteDataUniversity(this.state.selectedRowKeys[0]).then(data => {
-      this.handleRefresh({status: '1'});
-    });
+  componentDidMount() {
+    this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
   }
 
   // 更新
@@ -114,7 +114,7 @@ class School extends Component {
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
               doRecycle={() => {
                 if(this.state.recycle_data){
-                  this.handleRefresh({status: '1'});
+                  this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
                 }else{
                   this.handleRefresh({status: '2'});
                 }

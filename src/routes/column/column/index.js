@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Tabs, Table, Pagination} from 'antd';
+import {Pagination, Table, Tabs} from 'antd';
 import Filter from './Filter';
 import Update from './Update';
 import Detail from './Detail';
-import {loadColumnChannel, loadColumnChannelDataSet, deleteColumnChannel} from "../../../service/column";
+import {deleteColumnChannel, loadColumnChannel, loadColumnChannelDataSet} from "../../../service/column";
 import New from "./New";
 
 const TabPane = Tabs.TabPane;
@@ -44,8 +44,11 @@ class Course extends Component {
     };
   }
 
-  componentDidMount() {
-    this.handleRefresh({status: '1'});
+  //删除
+  handleDelete = () => {
+    deleteColumnChannel({id: this.state.selectedRowKeys[0]}).then(data => {
+      this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
+    });
   }
 
   // 获取数据
@@ -83,11 +86,8 @@ class Course extends Component {
     })
   }
 
-  //删除
-  handleDelete = () => {
-    deleteColumnChannel({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.handleRefresh({status: '1'});
-    });
+  componentDidMount() {
+    this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
   }
 
   // 显示详情

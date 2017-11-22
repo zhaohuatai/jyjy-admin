@@ -47,8 +47,8 @@ class ScoreLine extends Component {
   }
   // 删除记录
   handleDelete = () => {
-    deleteDataScoreLine(this.state.selectedRowKeys[0]).then(data => {
-      this.handleRefresh({status: '1'});
+    deleteDataScoreLine({id: this.state.selectedRowKeys[0]}).then(data => {
+      this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
     });
   }
   // 更新
@@ -82,7 +82,7 @@ class ScoreLine extends Component {
   }
 
   componentDidMount() {
-    this.handleRefresh({status: '1'});
+    this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
   }
 
   render() {
@@ -101,9 +101,9 @@ class ScoreLine extends Component {
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
               doRecycle={() => {
-                if(this.state.recycle_data){
-                  this.handleRefresh({status: '1'});
-                }else{
+                if (this.state.recycle_data) {
+                  this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
+                } else {
                   this.handleRefresh({status: '2'});
                 }
                 this.setState({recycle_data: !this.state.recycle_data});

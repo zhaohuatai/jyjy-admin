@@ -5,19 +5,6 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 
 class Filter extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      search_form: {},
-      recycleStr: true
-    };
-  }
-
-  doSearch = () => {
-    let form = this.state;
-    this.props.doSearch(form);
-  }
-
   //  触发操作
   handleActionClick = ({item, key, keyPath}) => {
     console.log(key);
@@ -44,6 +31,19 @@ class Filter extends Component {
       default :
         break;
     }
+  }
+
+  doSearch = () => {
+    let form = this.state;
+    this.props.doSearch(form);
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      search_form: {},
+      recycleStr: true
+    };
   }
 
   render() {
@@ -92,7 +92,7 @@ class Filter extends Component {
 
           <Col span={2}>
             <Button onClick={() => this.handleActionClick({key: 'recycle'})}>
-              <Icon type="info-circle-o"/> {this.state.recycleStr? "回收站": "返回"}
+              <Icon type="info-circle-o"/> {this.state.recycleStr ? "回收站" : "返回"}
             </Button>
           </Col>
         </Row>

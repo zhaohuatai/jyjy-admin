@@ -3,7 +3,7 @@ import {Pagination, Table, Tabs} from 'antd';
 import Filter from './Filter';
 import Update from './Update';
 import Detail from './Detail';
-import {loadServiceCourse, loadServiceCourseDataSet, deleteServiceCourse} from "../../../service/course";
+import {deleteServiceCourse, loadServiceCourse, loadServiceCourseDataSet} from "../../../service/course";
 import New from "./New";
 
 const TabPane = Tabs.TabPane;
@@ -44,7 +44,7 @@ class Course extends Component {
   }
 
   componentDidMount() {
-    this.handleRefresh({status: '1'});
+    this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
   }
 
   // 获取数据
@@ -112,9 +112,9 @@ class Course extends Component {
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
               doRecycle={() => {
-                if(this.state.recycle_data){
-                  this.handleRefresh({status: '1'});
-                }else{
+                if (this.state.recycle_data) {
+                  this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
+                } else {
                   this.handleRefresh({status: '2'});
                 }
                 this.setState({recycle_data: !this.state.recycle_data});

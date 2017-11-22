@@ -1,10 +1,7 @@
-import React, { Component } from 'react';
-import {
-  Form, Select, InputNumber, Switch, Radio, Input,Row,Col,message,
-  Slider, Button, Upload, Icon,Modal
-} from 'antd';
+import React, {Component} from 'react';
+import {Button, Form, Input, message, Modal, Radio, Select} from 'antd';
 import md5 from 'blueimp-md5';
-import {createAccount,loadAuthRoleList} from '../../../service/auth';
+import {createAccount, loadAuthRoleList} from '../../../service/auth';
 
 const FormItem = Form.Item;
 const Option = Select.Option;

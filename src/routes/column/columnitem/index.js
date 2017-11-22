@@ -39,8 +39,11 @@ class School extends Component {
     };
   }
 
-  componentDidMount() {
-    this.handleRefresh({status: '1'});
+  // 删除记录
+  handleDelete = () => {
+    deleteServiceCourseItem({id: this.state.selectedRowKeys[0]}).then(data => {
+      this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
+    });
   }
 
   // 获取数据
@@ -72,11 +75,8 @@ class School extends Component {
     this.handleRefresh(values);
   }
 
-  // 删除记录
-  handleDelete = () => {
-    deleteServiceCourseItem({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.handleRefresh({status: '1'});
-    });
+  componentDidMount() {
+    this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
   }
 
   // 更新
@@ -109,9 +109,9 @@ class School extends Component {
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
               doRecycle={() => {
-                if(this.state.recycle_data){
-                  this.handleRefresh({status: '1'});
-                }else{
+                if (this.state.recycle_data) {
+                  this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
+                } else {
                   this.handleRefresh({status: '2'});
                 }
                 this.setState({recycle_data: !this.state.recycle_data});

@@ -26,9 +26,35 @@ class School extends Component {
     })
   }
 
-  componentDidMount() {
-    this.handleRefresh({status: '1'});
-  }
+  // 勾选记录
+  onSelectChange = (selectedRowKeys) => {
+    this.setState({selectedRowKeys});
+  };
+  // 切换页码
+  onChangeTablePage = (currentPage) => {
+    this.setState({table_loading: true, table_cur_page: currentPage});
+    let searchForm = this.state.search_form;
+    searchForm.page = currentPage;
+    this.handleRefresh(searchForm)
+  };
+  // 删除记录
+  handleDelete = () => {
+    deleteDataCareer({id: this.state.selectedRowKeys[0]}).then(data => {
+      this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
+    });
+  };
+  // 搜索
+  handleSearch = (values) => {
+    this.setState({table_cur_page: 1});
+    values['status'] = (this.state.recycle_data ? 2 : 1);
+    this.handleRefresh(values);
+  };
+  // 更新
+  handleUpdate = () => {
+    loadDataCareer({id: this.state.selectedRowKeys[0]}).then(data => {
+      this.setState({update_data: data.data.dataCareer, update_display: true})
+    })
+  };
 
   constructor(props) {
     super(props);
@@ -47,46 +73,15 @@ class School extends Component {
     };
   }
 
-  // 勾选记录
-  onSelectChange = (selectedRowKeys) => {
-    this.setState({selectedRowKeys});
-  }
-
-
-  // 切换页码
-  onChangeTablePage = (currentPage) => {
-    this.setState({table_loading: true, table_cur_page: currentPage});
-    let searchForm = this.state.search_form;
-    searchForm.page = currentPage;
-    this.handleRefresh(searchForm)
-  }
-
-  // 搜索
-  handleSearch = (values) => {
-    this.setState({table_cur_page: 1});
-    values['status'] = (this.state.recycle_data ? 2 : 1);
-    this.handleRefresh(values);
-  }
-
-  // 删除记录
-  handleDelete = () => {
-    deleteDataCareer(this.state.selectedRowKeys[0]).then(data => {
-      this.handleRefresh({status: '1'});
-    });
-  }
-
-  // 更新
-  handleUpdate = () => {
-    loadDataCareer({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.setState({update_data: data.data.dataCareer, update_display: true})
-    })
-  }
-
   // 显示详情
   handleShowDetail = (record) => {
     loadDataCareer({id: record.id}).then(data => {
       this.setState({detail_data: data.data.dataCareer, detail_display: true})
     })
+  }
+
+  componentDidMount() {
+    this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
   }
 
   render() {
@@ -105,9 +100,9 @@ class School extends Component {
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
               doRecycle={() => {
-                if(this.state.recycle_data){
-                  this.handleRefresh({status: '1'});
-                }else{
+                if (this.state.recycle_data) {
+                  this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
+                } else {
                   this.handleRefresh({status: '2'});
                 }
                 this.setState({recycle_data: !this.state.recycle_data});
