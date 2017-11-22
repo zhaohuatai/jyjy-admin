@@ -31,8 +31,8 @@ const Routers = () => (
         <Route path="school" component={School}/>
         <Route path="career" component={Career}/>
         <Route path="profession" component={Profession}/>
-        <Route path="scoreline" component={ScoreLine}/>
-        <Route path="scoreline-province" component={ScoreLineProvince}/>
+        <Route path="score-line" component={ScoreLine}/>
+        <Route path="score-line-province" component={ScoreLineProvince}/>
       </Route>
 
       <Route path="course">

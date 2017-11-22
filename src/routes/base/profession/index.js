@@ -18,7 +18,6 @@ const table_columns = [
   {title: '所属门类', dataIndex: 'categoryName', key: 'categoryName'},
   {title: '修业年限', dataIndex: 'revisedYears', key: 'revisedYears'},
   {title: '授予学位', dataIndex: 'degree', key: 'degree'},
-  // { title: '专业详情', dataIndex: 'detail', key: 'detail'}
   {title: '毕业5年', dataIndex: 'salary', key: 'salary'},
   {
     title: '开设院校', dataIndex: 'offer', key: 'offer', render: (text) => {
@@ -132,10 +131,10 @@ class Profession extends Component {
           <TabPane tab="新建" key="2">
             <New/>
           </TabPane>
-          <TabPane tab="学科维护" key="3">
+          <TabPane tab="学科管理" key="3">
             <Subject/>
           </TabPane>
-          <TabPane tab="门类维护" key="4">
+          <TabPane tab="门类管理" key="4">
             <Category/>
           </TabPane>
         </Tabs>

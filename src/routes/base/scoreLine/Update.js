@@ -32,7 +32,7 @@ class New extends Component {
 
   componentDidMount() {
     loadDataUniversityDataSet({}).then(data => {
-      this.setState({universityList: data.data.DataSet.rows})
+      this.setState({universityList: data.data.dataSet.rows})
     });
 
     loadDicData({code: "FK"}).then(data => {

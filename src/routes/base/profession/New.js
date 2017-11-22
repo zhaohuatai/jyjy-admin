@@ -36,11 +36,11 @@ class New extends Component {
 
   componentDidMount() {
     loadDataProfessionCategoryDataSet({}).then(data => {
-      this.setState({categoryList: data.data.DataSet.rows})
+      this.setState({categoryList: data.data.dataSet.rows})
     });
 
     loadDataProfessionSubjectDataSet({}).then(data => {
-      this.setState({subjectList: data.data.DataSet.rows})
+      this.setState({subjectList: data.data.dataSet.rows})
     });
   }
 
@@ -87,7 +87,7 @@ class New extends Component {
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="所属学科">
-              {getFieldDecorator('years', {
+              {getFieldDecorator('subjectCode', {
                 initialValue: '',
                 rules: [{
                   required: true, message: '请选择'
@@ -105,16 +105,16 @@ class New extends Component {
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="所属门类">
-              {getFieldDecorator('batchCode', {
+              {getFieldDecorator('categoryCode', {
                 initialValue: '',
                 rules: [{
                   required: true, message: '请选择'
                 }]
               })(
-                <Select placeholder="选择批次" style={{width: '200px'}}>
+                <Select placeholder="选择门类" style={{width: '200px'}}>
                   {
-                    this.state.universityList.map(item => {
-                      return <Option value={item.itemCode}>{item.itemValue}</Option>
+                    this.state.categoryList.map(item => {
+                      return <Option value={item.id}>{item.name}</Option>
                     })
                   }
                 </Select>
@@ -123,7 +123,7 @@ class New extends Component {
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="修业年限">
-              {getFieldDecorator('highest', {
+              {getFieldDecorator('revisedYears', {
                 initialValue: '',
                 rules: []
               })(
@@ -133,7 +133,7 @@ class New extends Component {
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="授予学位">
-              {getFieldDecorator('lowest', {
+              {getFieldDecorator('degree', {
                 initialValue: '',
                 rules: []
               })(
@@ -143,7 +143,7 @@ class New extends Component {
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="毕业5年薪酬">
-              {getFieldDecorator('offerNum', {
+              {getFieldDecorator('salary', {
                 initialValue: '',
                 rules: []
               })(
@@ -153,7 +153,7 @@ class New extends Component {
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="本科专业">
-              {getFieldDecorator('remark', {
+              {getFieldDecorator('offer', {
                 initialValue: '',
                 rules: []
               })(
@@ -163,21 +163,21 @@ class New extends Component {
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="专业详情">
-              {getFieldDecorator('remark', {
+              {getFieldDecorator('undergradPro', {
                 initialValue: '',
                 rules: []
               })(
-                <Input/>
+                <UEditor id="detail" height="400"/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="开设院校">
-              {getFieldDecorator('remark', {
+              {getFieldDecorator('offer', {
                 initialValue: '',
                 rules: []
               })(
-                <Input/>
+                <UEditor id="offer" height="200"/>
               )}
             </FormItem>
           </Col>

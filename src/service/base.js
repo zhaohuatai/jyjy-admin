@@ -47,7 +47,7 @@ export function updateDataProfession(param) {
 //ProfessionSubject
 export function loadDataProfessionSubject(param) {
   return new Promise((resolve, reject) => {
-    post(`${API_DOMAIN}admin/data/dataProfession/loadDataProfessionSubject`, param).then((data) => {
+    post(`${API_DOMAIN}admin/data/dataProfessionSubject/loadDataProfessionSubject`, param).then((data) => {
       resolve(data);
     });
   });
@@ -55,7 +55,7 @@ export function loadDataProfessionSubject(param) {
 
 export function loadDataProfessionSubjectDataSet(param) {
   return new Promise((resolve, reject) => {
-    post(`${API_DOMAIN}admin/data/dataProfession/loadDataProfessionSubjectDataSet`, param).then((data) => {
+    post(`${API_DOMAIN}admin/data/dataProfessionSubject/loadDataProfessionSubjectDataSet`, param).then((data) => {
       resolve(data);
     });
   });
@@ -63,7 +63,7 @@ export function loadDataProfessionSubjectDataSet(param) {
 
 export function deleteDataProfessionSubject(param) {
   return new Promise((resolve, reject) => {
-    post(`${API_DOMAIN}admin/data/dataProfession/deleteDataProfessionSubject`, param).then((data) => {
+    post(`${API_DOMAIN}admin/data/dataProfessionSubject/deleteDataProfessionSubject`, param).then((data) => {
       resolve(data);
     });
   });
@@ -71,7 +71,7 @@ export function deleteDataProfessionSubject(param) {
 
 export function createDataProfessionSubject(param) {
   return new Promise((resolve, reject) => {
-    post(`${API_DOMAIN}admin/data/dataProfession/createDataProfessionSubject`, param).then((data) => {
+    post(`${API_DOMAIN}admin/data/dataProfessionSubject/createDataProfessionSubject`, param).then((data) => {
       resolve(data);
     });
   });
@@ -79,7 +79,7 @@ export function createDataProfessionSubject(param) {
 
 export function updateDataProfessionSubject(param) {
   return new Promise((resolve, reject) => {
-    post(`${API_DOMAIN}admin/data/dataProfession/updateDataProfessionSubject`, param).then((data) => {
+    post(`${API_DOMAIN}admin/data/dataProfessionSubject/updateDataProfessionSubject`, param).then((data) => {
       resolve(data);
     });
   });
@@ -88,7 +88,7 @@ export function updateDataProfessionSubject(param) {
 //ProfessionCategory
 export function loadDataProfessionCategory(param) {
   return new Promise((resolve, reject) => {
-    post(`${API_DOMAIN}admin/data/dataProfession/loadDataProfessionCategory`, param).then((data) => {
+    post(`${API_DOMAIN}admin/data/dataProfessionSubject/loadDataProfessionCategory`, param).then((data) => {
       resolve(data);
     });
   });
@@ -96,7 +96,7 @@ export function loadDataProfessionCategory(param) {
 
 export function loadDataProfessionCategoryDataSet(param) {
   return new Promise((resolve, reject) => {
-    post(`${API_DOMAIN}admin/data/dataProfession/loadDataProfessionCategoryDataSet`, param).then((data) => {
+    post(`${API_DOMAIN}admin/data/dataProfessionCategory/loadDataProfessionCategoryDataSet`, param).then((data) => {
       resolve(data);
     });
   });
@@ -104,7 +104,7 @@ export function loadDataProfessionCategoryDataSet(param) {
 
 export function deleteDataProfessionCategory(param) {
   return new Promise((resolve, reject) => {
-    post(`${API_DOMAIN}admin/data/dataProfession/deleteDataProfessionCategory`, param).then((data) => {
+    post(`${API_DOMAIN}admin/data/dataProfessionCategory/deleteDataProfessionCategory`, param).then((data) => {
       resolve(data);
     });
   });
@@ -112,7 +112,7 @@ export function deleteDataProfessionCategory(param) {
 
 export function createDataProfessionCategory(param) {
   return new Promise((resolve, reject) => {
-    post(`${API_DOMAIN}admin/data/dataProfession/createDataProfessionCategory`, param).then((data) => {
+    post(`${API_DOMAIN}admin/data/dataProfessionCategory/createDataProfessionCategory`, param).then((data) => {
       resolve(data);
     });
   });
@@ -120,7 +120,7 @@ export function createDataProfessionCategory(param) {
 
 export function updateDataProfessionCategory(param) {
   return new Promise((resolve, reject) => {
-    post(`${API_DOMAIN}admin/data/dataProfession/updateDataProfessionCategory`, param).then((data) => {
+    post(`${API_DOMAIN}admin/data/dataProfessionCategory/updateDataProfessionCategory`, param).then((data) => {
       resolve(data);
     });
   });
