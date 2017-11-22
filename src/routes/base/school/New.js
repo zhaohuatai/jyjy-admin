@@ -13,7 +13,7 @@ class New extends Component {
     let formData = this.props.form.getFieldsValue();
     formData = {
       ...formData,
-      detail: UE.getEditor('detail').getContent(),
+      faculty: UE.getEditor('faculty').getContent(),
       specialProfession: UE.getEditor('specialProfession').getContent(),
       introduction: UE.getEditor('introduction').getContent(),
     };

@@ -16,6 +16,7 @@ import Customize from './routes/customize';
 import {checkLogin} from './utils/utils';
 import Course from './routes/course/course/index';
 import CourseItem from './routes/course/courseItem';
+import CourseCategory from './routes/course/coursecategory';
 import Column from './routes/column/column';
 import ColumnItem from './routes/column/columnitem';
 import ScoreLine from "./routes/base/scoreLine/index";
@@ -38,7 +39,7 @@ const Routers = () => (
       <Route path="course">
         <Route path="course-list" component={Course}/>
         <Route path="course-item" component={CourseItem}/>
-        {/*<Route path="course-category" component={CourseCategory}/>*/}
+        <Route path="course-category" component={CourseCategory}/>
       </Route>
 
       <Route path="column">

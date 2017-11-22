@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Icon, Input, message, Row, Select, Switch} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import {loadServiceCourseCategoryDataSet} from "../../../service/courseCategory";
 import {createServiceCourse} from "../../../service/course";
 
 const FormItem = Form.Item;

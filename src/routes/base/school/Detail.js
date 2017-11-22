@@ -16,7 +16,7 @@ class New extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { attached, badge, establishTime, faculty, academicianNum,
-      firstRate, introduction, location, masterNum,
+      firstRate, introduction, location, masterNum, hint,
       name, phone, province, rank,
       remark, doctor, specialProfession, stage, studentNum, type } = this.props.data;
 

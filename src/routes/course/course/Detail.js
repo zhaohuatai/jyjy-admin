@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Form, Col, Row, Modal, Collapse, Switch} from 'antd';
+import {Col, Collapse, Form, Modal, Row, Switch} from 'antd';
 
 const FormItem = Form.Item;
+const Panel = Collapse.Panel;
 
 class New extends Component {
 
@@ -71,7 +72,11 @@ class New extends Component {
               {...formItemLayout}
               label="介绍"
             >
-              <p>{introduction}</p>
+              <Collapse>
+                <Panel header="点击查看详情" key="1">
+                  <div dangerouslySetInnerHTML={{__html: introduction}}/>
+                </Panel>
+              </Collapse>
             </FormItem>
           </Col>
           <Col span={24}>
@@ -126,7 +131,7 @@ class New extends Component {
             {...formItemLayout}
             label="免费"
           >
-            <Switch checked={freePay}/>
+            <Switch checked={freePay ? true : false}/>
           </FormItem>
           </Col>
           <Col span={24}>
@@ -134,7 +139,7 @@ class New extends Component {
             {...formItemLayout}
             label="置顶"
           >
-            <Switch checked={isTop}/>
+            <Switch checked={isTop ? true : false}/>
           </FormItem>
         </Col><Col span={24}>
           <FormItem
