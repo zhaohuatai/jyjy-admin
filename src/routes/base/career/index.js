@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Pagination, Table, Tabs} from 'antd';
-import {deleteDataCareer, loadDataCareer, loadDataCareerDataSet} from '../../../service/career';
+import {deleteDataCareer, loadDataCareer, loadDataCareerDataSet} from '../../../service/base';
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';
@@ -18,10 +18,22 @@ const table_columns = [
 ]
 
 class School extends Component {
+  // 获取数据
+  handleRefresh = (params) => {
+    this.setState({table_loading: true});
+    loadDataCareerDataSet(params).then(data => {
+      this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
+    })
+  }
+
+  componentDidMount() {
+    this.handleRefresh({status: '1'});
+  }
+
   constructor(props) {
     super(props);
     this.state = {
-      university: [],
+      dataSet: [],
       table_loading: false,
       selectedRowKeys: [],
       table_cur_page: 1,
@@ -33,18 +45,6 @@ class School extends Component {
       detail_data:{},
       recycle_data: false,
     };
-  }
-
-  componentDidMount() {
-    this.handleRefresh({status: '1'});
-  }
-
-  // 获取数据
-  handleRefresh = (params) => {
-    this.setState({ table_loading: true });
-    loadDataCareerDataSet(params).then(data => {
-      this.setState({university: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false })
-    })
   }
 
   // 勾选记录
@@ -108,7 +108,7 @@ class School extends Component {
 
             />
             <Table
-              dataSource={this.state.university}
+              dataSource={this.state.dataSet}
               columns={table_columns}
               pagination={false}
               rowKey={record => record.id+''}

@@ -27,7 +27,7 @@ class ScoreLineProvince extends Component {
   handleRefresh = (params) => {
     this.setState({table_loading: true});
     loadDataScoreLineProvinceDataSet(params).then(data => {
-      this.setState({university: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
+      this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
     })
   }
   // 勾选记录
@@ -67,7 +67,7 @@ class ScoreLineProvince extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      university: [],
+      dataSet: [],
       table_loading: false,
       selectedRowKeys: [],
       table_cur_page: 1,
@@ -108,7 +108,7 @@ class ScoreLineProvince extends Component {
               doUpdate={this.handleUpdate}
             />
             <Table
-              dataSource={this.state.university}
+              dataSource={this.state.dataSet}
               columns={table_columns}
               pagination={false}
               rowKey={record => record.id + ''}

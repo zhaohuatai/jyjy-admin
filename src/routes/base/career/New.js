@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Input, message, Row, Select} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import {createDataCareer, loadDataCareerCategoryDataSet} from '../../../service/career';
+import {createDataCareer, loadDataCareerCategoryDataSet} from '../../../service/base';
 
 const FormItem = Form.Item;
 const Option = Select.Option;

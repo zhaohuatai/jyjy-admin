@@ -1,27 +1,18 @@
 import React, {Component} from 'react';
-import {Form, Col, Row, Button, Select, Dropdown, Menu, Icon, Input} from 'antd';
+import {Button, Col, Dropdown, Form, Icon, Input, Menu, Row, Select} from 'antd';
 
 const Option = Select.Option;
 const FormItem = Form.Item;
 
 class Filter extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      search_form: {}
-    };
-  }
-
   doSearch = () => {
     let form = this.state;
     this.props.doSearch(form);
   }
-
   // 清空搜索条件
   handleClean = () => {
     this.props.cleanform();
   }
-
   //  触发操作
   handleActionClick = ({item, key, keyPath}) => {
     console.log(key);
@@ -49,6 +40,13 @@ class Filter extends Component {
     }
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      search_form: {}
+    };
+  }
+
   render() {
     const {getFieldDecorator} = this.props.form;
 
@@ -71,10 +69,10 @@ class Filter extends Component {
         <Row type='flex' justify='end' style={{marginBottom: '5px'}}>
           <Col span={4} pull={14}>
             <FormItem>
-              {getFieldDecorator('title', {
+              {getFieldDecorator('dataSet', {
                 initialValue: ''
               })(
-                <Input addonBefore='标题' size='default'/>
+                <Input addonBefore='学校' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
               )}
             </FormItem>
           </Col>

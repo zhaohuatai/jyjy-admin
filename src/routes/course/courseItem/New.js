@@ -63,7 +63,7 @@ class New extends Component {
                   {required: true, message: '请输入小节名称'},
                 ]
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -128,7 +128,7 @@ class New extends Component {
                 initialValue: '',
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -138,7 +138,7 @@ class New extends Component {
                 initialValue: '',
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>

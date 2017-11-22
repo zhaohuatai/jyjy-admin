@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {API_DOMAIN} from '../../../utils/config';
 import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, Upload} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import {createDataUniversity} from '../../../service/university';
+import {createDataUniversity} from '../../../service/base';
 import {loadProvinceList} from '../../../service/dic';
 
 const FormItem = Form.Item;
@@ -13,7 +13,7 @@ class New extends Component {
     let formData = this.props.form.getFieldsValue();
     formData = {
       ...formData,
-      faculty: UE.getEditor('faculty').getContent(),
+      detail: UE.getEditor('detail').getContent(),
       specialProfession: UE.getEditor('specialProfession').getContent(),
       introduction: UE.getEditor('introduction').getContent(),
     };
@@ -82,7 +82,7 @@ class New extends Component {
                   {required: true, message: '请输入学校名称'},
                 ]
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -151,7 +151,7 @@ class New extends Component {
                 initialValue: '',
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -164,7 +164,7 @@ class New extends Component {
                 initialValue: '',
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -177,7 +177,7 @@ class New extends Component {
                 initialValue: '',
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -190,7 +190,7 @@ class New extends Component {
                 initialValue: '',
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -203,7 +203,7 @@ class New extends Component {
                 initialValue: '',
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -216,7 +216,7 @@ class New extends Component {
                 initialValue: '',
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -229,7 +229,7 @@ class New extends Component {
                 initialValue: '',
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -242,7 +242,7 @@ class New extends Component {
                 initialValue: '',
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -255,7 +255,7 @@ class New extends Component {
                 initialValue: '',
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -268,7 +268,7 @@ class New extends Component {
                 initialValue: '',
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -281,7 +281,7 @@ class New extends Component {
                 initialValue: '',
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -312,7 +312,7 @@ class New extends Component {
                 initialValue: '',
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
 

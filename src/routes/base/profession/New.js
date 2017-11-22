@@ -1,61 +1,47 @@
 import React, {Component} from 'react';
-import {API_DOMAIN} from '../../../utils/config';
-import {Button, Col, Form, Icon, Input, message, Row, Select, Upload} from 'antd';
-import UEditor from '../../../components/editor/UEditor';
-import {createDataUniversity} from '../../../service/university';
-import {loadProvinceList} from '../../../service/dic';
+import {Button, Col, Form, Input, message, Row, Select} from 'antd';
+import {
+  createDataProfession,
+  loadDataProfessionCategoryDataSet,
+  loadDataProfessionSubjectDataSet
+} from '../../../service/base';
 
 const FormItem = Form.Item;
-const Option = Select.Option;
 
 class New extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      provinceList:[]
-    }
-  }
-
-
-  componentDidMount() {
-    loadProvinceList({}).then(data => {
-      this.setState({ provinceList: data.data.provinceList})
-    })
-  }
-
-
-  testSubmit = () => {
-    console.log(UE.getEditor('content').getContent())
-  }
-
-  normFile = (e) => {
-    console.log('Upload event:', e);
-    if (Array.isArray(e)) {
-      return e.file;
-    }
-    return e && e.fileList;
-  }
 
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
     formData = {
       ...formData,
-      faculty: UE.getEditor('faculty').getContent(),
-      specialProfession: UE.getEditor('specialProfession').getContent(),
-      introduction: UE.getEditor('introduction').getContent(),
+      detail: UE.getEditor('detail').getContent(),
+      offer: UE.getEditor('offer').getContent(),
     };
 
-    formData.firstRate ? formData.firstRate = 1 : formData.firstRate = 0;
-
-    console.log(formData);
-    formData.badge = formData.badge[0].response.data.image;
-
-    createDataUniversity(formData).then(data => {
+    createDataProfession(formData).then(data => {
       this.props.form.resetFields();
       message.success("创建成功！");
     }).catch((e) => {
       message.error(e);
     })
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      subjectList: [],
+      categoryList: [],
+    }
+  }
+
+  componentDidMount() {
+    loadDataProfessionCategoryDataSet({}).then(data => {
+      this.setState({categoryList: data.data.DataSet.rows})
+    });
+
+    loadDataProfessionSubjectDataSet({}).then(data => {
+      this.setState({subjectList: data.data.DataSet.rows})
+    });
   }
 
   render() {
@@ -72,283 +58,141 @@ class New extends Component {
       },
     };
 
-    let provinceMenu = (
-      this.state
-    )
-
     return(
       <div>
-        <Row type='flex' style={{ marginBottom: '5px'}}>
+        <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="校名"
-            >
-              {getFieldDecorator('name',{
+            <FormItem{...formItemLayout} label="专业名称">
+              {getFieldDecorator('profession', {
                 initialValue: '',
-                rules: [
-                  { required: true, message: '请输入学校名称' },
-                ]
+                rules: [{
+                  required: true, message: '请填写'
+                }]
               })(
-                <Input size='default' />
+                <Input/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="选择省份"
-            >
-              {getFieldDecorator('provinceCode',{
+            <FormItem{...formItemLayout} label="专业代码">
+              {getFieldDecorator('liberalScienceCode', {
                 initialValue: '',
-                rules: [
-                ]
+                rules: [{
+                  required: true, message: '请填写'
+                }]
               })(
-                <Select
-                  placeholder="选择省份"
-                  style={{width: '200px'}}
-                >
+                <Input/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="所属学科">
+              {getFieldDecorator('years', {
+                initialValue: '',
+                rules: [{
+                  required: true, message: '请选择'
+                }]
+              })(
+                <Select placeholder="选择学科" style={{width: '200px'}}>
                   {
-                    this.state.provinceList.map(item => {
-                      return <Option key={item.id} value={item.code}>{item.name}</Option>
+                    this.state.subjectList.map(item => {
+                      return <Option value={item.id}>{item.name}</Option>
                     })
                   }
                 </Select>
               )}
             </FormItem>
-          </Col >
+          </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="校徽图片"
-            >
-              {getFieldDecorator('badge', {
-                valuePropName: 'fileList',
-                getValueFromEvent: this.normFile,
-              })(
-                <Upload
-                  name="file"
-                  action={`${API_DOMAIN}admin/data/dataUniversity/uploadBadge`}
-                  listType="picture"
-                  withCredentials={true}
-                >
-                  <Button>
-                    <Icon type="upload" /> 点击上传
-                  </Button>
-                </Upload>
-              )}
-            </FormItem>
-          </Col >
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="是否双一流"
-            >
-              {getFieldDecorator('firstRate',{
-                valuePropName: 'checked',
-                initialValue: false,
-              })(
-                <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
-              )}
-            </FormItem>
-          </Col >
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="学校层次"
-            >
-              {getFieldDecorator('stage',{
+            <FormItem{...formItemLayout} label="所属门类">
+              {getFieldDecorator('batchCode', {
                 initialValue: '',
-                rules: [
-                ]
+                rules: [{
+                  required: true, message: '请选择'
+                }]
               })(
-                <Input size='default' />
+                <Select placeholder="选择批次" style={{width: '200px'}}>
+                  {
+                    this.state.universityList.map(item => {
+                      return <Option value={item.itemCode}>{item.itemValue}</Option>
+                    })
+                  }
+                </Select>
               )}
             </FormItem>
-          </Col >
+          </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="办学类型"
-            >
-              {getFieldDecorator('type',{
+            <FormItem{...formItemLayout} label="修业年限">
+              {getFieldDecorator('highest', {
                 initialValue: '',
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="招生办电话"
-            >
-              {getFieldDecorator('phone',{
+            <FormItem{...formItemLayout} label="授予学位">
+              {getFieldDecorator('lowest', {
                 initialValue: '',
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="学校地址"
-            >
-              {getFieldDecorator('location',{
+            <FormItem{...formItemLayout} label="毕业5年薪酬">
+              {getFieldDecorator('offerNum', {
                 initialValue: '',
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="博士点数"
-            >
-              {getFieldDecorator('doctor',{
+            <FormItem{...formItemLayout} label="本科专业">
+              {getFieldDecorator('remark', {
                 initialValue: '',
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="硕士点数"
-            >
-              {getFieldDecorator('masterNum',{
+            <FormItem{...formItemLayout} label="专业详情">
+              {getFieldDecorator('remark', {
                 initialValue: '',
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="院士人数"
-            >
-              {getFieldDecorator('academicianNum',{
+            <FormItem{...formItemLayout} label="开设院校">
+              {getFieldDecorator('remark', {
                 initialValue: '',
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="学生人数"
-            >
-              {getFieldDecorator('studentNum',{
+            <FormItem{...formItemLayout} label="备注">
+              {getFieldDecorator('remark', {
                 initialValue: '',
-                rules: [
-                ]
+                rules: []
               })(
-                <Input size='default' />
+                <Input/>
               )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="院校排名"
-            >
-              {getFieldDecorator('rank',{
-                initialValue: '',
-                rules: [
-                ]
-              })(
-                <Input size='default' />
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="建校时间"
-            >
-              {getFieldDecorator('establishTime',{
-                initialValue: '',
-                rules: [
-                ]
-              })(
-                <Input size='default' />
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="学校隶属"
-            >
-              {getFieldDecorator('attached',{
-                initialValue: '',
-                rules: [
-                ]
-              })(
-                <Input size='default' />
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="备注"
-            >
-              {getFieldDecorator('remark',{
-                initialValue: '',
-                rules: [
-                ]
-              })(
-                <Input size='default' />
-              )}
-            </FormItem>
-
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="特色专业"
-            >
-                <UEditor id="specialProfession" height="200" />
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="学校简介"
-            >
-              <UEditor id="introduction" height="200" />
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="师资力量"
-            >
-              <UEditor id="faculty" height="200" />
             </FormItem>
           </Col>
         </Row>
-        <FormItem
-          wrapperCol={{ span: 12, offset: 4 }}
-        >
+        <FormItem wrapperCol={{span: 12, offset: 4}}>
           <Button type="primary" onClick={this.handleSubmit}>创建</Button>
         </FormItem>
       </div>

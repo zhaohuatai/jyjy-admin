@@ -169,7 +169,7 @@ class Update extends Component {
                   {required: true, message: '请输入小节名称'},
                 ]
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -236,7 +236,7 @@ class Update extends Component {
                 initialValue: price,
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -246,7 +246,7 @@ class Update extends Component {
                 initialValue: priceVIP,
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -269,7 +269,7 @@ class Update extends Component {
                 initialValue: videoDesc,
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -279,7 +279,7 @@ class Update extends Component {
                 initialValue: videoName,
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -289,7 +289,7 @@ class Update extends Component {
                 initialValue: videoSize,
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -299,7 +299,7 @@ class Update extends Component {
                 initialValue: videoTags,
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -309,7 +309,7 @@ class Update extends Component {
                 initialValue: videoTime,
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -319,7 +319,7 @@ class Update extends Component {
                 initialValue: videoTitle,
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -329,7 +329,7 @@ class Update extends Component {
                 initialValue: videoUrl,
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>

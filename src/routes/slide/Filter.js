@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Form, Col, Row, Button, Select, Dropdown, Menu, Icon, Input} from 'antd';
+import {Button, Col, Dropdown, Form, Icon, Input, Menu, Row, Select} from 'antd';
 
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -74,7 +74,7 @@ class Filter extends Component {
               {getFieldDecorator('title', {
                 initialValue: ''
               })(
-                <Input addonBefore='标题' size='default'/>
+                <Input addonBefore='标题' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
               )}
             </FormItem>
           </Col>

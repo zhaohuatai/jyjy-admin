@@ -105,7 +105,7 @@ class New extends Component {
                   required: true, message: '请填写年份'
                 }]
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -133,7 +133,7 @@ class New extends Component {
                 initialValue: scoreLine,
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -143,7 +143,7 @@ class New extends Component {
                 initialValue: remark,
                 rules: []
               })(
-                <Input size='default'/>
+                <Input/>
               )}
             </FormItem>
           </Col>

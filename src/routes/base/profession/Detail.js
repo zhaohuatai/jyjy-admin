@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {API_DOMAIN} from '../../../utils/config';
 import {Col, Collapse, Form, message, Modal, Row, Select, Switch} from 'antd';
-import {updateDataUniversity} from '../../../service/university';
+import {updateDataUniversity} from '../../../service/base';
 import {loadProvinceList} from '../../../service/dic';
 
 const FormItem = Form.Item;
@@ -34,7 +34,7 @@ class New extends Component {
     let formData = this.props.form.getFieldsValue();
     formData = {
       ...formData,
-      faculty: UE.getEditor('update_faculty').getContent(),
+      detail: UE.getEditor('update_faculty').getContent(),
       specialProfession: UE.getEditor('update_specialProfession').getContent(),
       introduction: UE.getEditor('update_introduction').getContent(),
     };

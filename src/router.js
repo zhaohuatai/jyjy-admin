@@ -15,7 +15,7 @@ import Slide from './routes/slide';
 import Customize from './routes/customize';
 import {checkLogin} from './utils/utils';
 import Course from './routes/course/course/index';
-import CourseItem from './routes/course/courseitem';
+import CourseItem from './routes/course/courseItem';
 import Column from './routes/column/column';
 import ColumnItem from './routes/column/columnitem';
 import ScoreLine from "./routes/base/scoreLine/index";

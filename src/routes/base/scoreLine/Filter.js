@@ -69,10 +69,10 @@ class Filter extends Component {
         <Row type='flex' justify='end' style={{marginBottom: '5px'}}>
           <Col span={4} pull={14}>
             <FormItem>
-              {getFieldDecorator('university', {
+              {getFieldDecorator('dataSet', {
                 initialValue: ''
               })(
-                <Input addonBefore='学校' size='default'/>
+                <Input addonBefore='学校' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
               )}
             </FormItem>
           </Col>

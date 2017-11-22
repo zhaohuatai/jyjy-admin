@@ -61,7 +61,7 @@ class New extends Component {
                 rules: [
                 ]
               })(
-                <Input size='default' />
+                <Input/>
               )}
             </FormItem>
           </Col >
