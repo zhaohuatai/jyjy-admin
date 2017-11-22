@@ -15,7 +15,7 @@ const table_columns = [
   {title: '描述', dataIndex: 'hint', key: 'hint'},
   {title: '节次', dataIndex: 'itemOrder', key: 'itemOrder'},
   {title: '主讲人', dataIndex: 'presenterName', key: 'presenterName'},
-  {title: '费用', dataIndex: 'freePay', key: 'freePay', render: (text) => text === 1 ? '收费' : '免费' },
+  {title: '费用', dataIndex: 'freePay', key: 'freePay', render: (text) => text === 1 ? '收费' : '免费'},
   {title: '普通价格', dataIndex: 'price', key: 'price'},
   {title: '会员价', dataIndex: 'priceVIP', key: 'priceVip'},
   {title: '备注', dataIndex: 'remark', key: 'remark'},
@@ -108,7 +108,14 @@ class School extends Component {
             <Filter
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
-              doRecycle={() => {this.handleRefresh({page: this.state.table_cur_page, status: '2'}); this.setState({recycle_data: true})}}
+              doRecycle={() => {
+                if(this.state.recycle_data){
+                  this.handleRefresh({status: '1'});
+                }else{
+                  this.handleRefresh({status: '2'});
+                }
+                this.setState({recycle_data: !this.state.recycle_data});
+              }}
               doDelete={this.handleDelete}
               doUpdate={this.handleUpdate}
             />

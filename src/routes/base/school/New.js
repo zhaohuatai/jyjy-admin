@@ -100,7 +100,7 @@ class New extends Component {
                 <Select placeholder="选择省份" style={{width: '200px'}}>
                   {
                     this.state.provinceList.map(item => {
-                      return <Option key={item.id} value={item.code}>{item.name}</Option>
+                      return <Select.Option key={item.id} value={`${item.code}`}>{item.name}</Select.Option>
                     })
                   }
                 </Select>

@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {Pagination, Table, Tabs} from 'antd';
 import Filter from './Filter';
+import New from './New';
 import Update from './Update';
 import Detail from './Detail';
 import {loadServiceCourseCategory, loadServiceCourseCategoryDataSet, deleteServiceCourseCategory} from "../../../service/course";
-import New from "./New";
 
 const TabPane = Tabs.TabPane;
 
@@ -104,10 +104,16 @@ class Course extends Component {
             <Filter
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
-              doRecycle={() => {this.handleRefresh({page: this.state.table_cur_page, status: '2'}); this.setState({recycle_data: true})}}
-              doUpdate={this.handleUpdate}
+              doRecycle={() => {
+                if(this.state.recycle_data){
+                  this.handleRefresh({status: '1'});
+                }else{
+                  this.handleRefresh({status: '2'});
+                }
+                this.setState({recycle_data: !this.state.recycle_data});
+              }}
               doDelete={this.handleDelete}
-
+              doUpdate={this.handleUpdate}
             />
             <Table
               dataSource={this.state.course}

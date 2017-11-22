@@ -41,6 +41,7 @@ class Profession extends Component {
   componentDidMount() {
     this.handleRefresh({status: '1'});
   }
+
   // 勾选记录
   onSelectChange = (selectedRowKeys) => {
     this.setState({selectedRowKeys});
@@ -54,7 +55,9 @@ class Profession extends Component {
   }
   // 删除记录
   handleDelete = () => {
-    deleteDataProfession(this.state.selectedRowKeys[0]);
+    deleteDataProfession(this.state.selectedRowKeys[0]).then(data => {
+      this.handleRefresh({status: '1'});
+    });
   }
 
   // 搜索
@@ -109,8 +112,12 @@ class Profession extends Component {
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
               doRecycle={() => {
-                this.handleRefresh({page: this.state.table_cur_page, status: '2'});
-                this.setState({recycle_data: true})
+                if(this.state.recycle_data){
+                  this.handleRefresh({status: '1'});
+                }else{
+                  this.handleRefresh({status: '2'});
+                }
+                this.setState({recycle_data: !this.state.recycle_data});
               }}
               doDelete={this.handleDelete}
               doUpdate={this.handleUpdate}

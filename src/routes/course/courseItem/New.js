@@ -88,7 +88,7 @@ class New extends Component {
                 <Select placeholder="选择所属课程" style={{width: '200px'}}>
                   {
                     this.state.courseList.map(item => {
-                      return <Option key={item.id} value={`${item.id}`}>{item.name}</Option>
+                      return <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
                     })
                   }
                 </Select>
@@ -106,7 +106,7 @@ class New extends Component {
                 <Select placeholder="选择主讲人" style={{width: '200px'}}>
                   {
                     this.state.presenterList.map(item => {
-                      return <Option key={item.id} value={`${item.id}`}>{item.name}</Option>
+                      return <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
                     })
                   }
                 </Select>

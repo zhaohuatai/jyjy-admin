@@ -72,7 +72,7 @@ class New extends Component {
                 <Select placeholder="选择省份" style={{width: '200px'}}>
                   {
                     this.state.provinceList.map(item => {
-                      return <Option key={item.id} value={item.code}>{item.name}</Option>
+                      return <Select.Option key={item.id} value={`${item.code}`}>{item.name}</Select.Option>
                     })
                   }
                 </Select>
@@ -90,7 +90,7 @@ class New extends Component {
                 <Select placeholder="选择分科" style={{width: '200px'}}>
                   {
                     this.state.liberalScienceList.map(item => {
-                      return <Option key={item.id} value={item.itemCode}>{item.itemValue}</Option>
+                      return <Select.Option key={item.id} value={`${item.itemCode}`}>{item.itemValue}</Select.Option>
                     })
                   }
                 </Select>
@@ -120,7 +120,7 @@ class New extends Component {
                 <Select placeholder="选择批次" style={{width: '200px'}}>
                   {
                     this.state.batchList.map(item => {
-                      return <Option key={item.id} value={item.itemCode}>{item.itemValue}</Option>
+                      return <Select.Option key={item.id} value={`${item.itemCode}`}>{item.itemValue}</Select.Option>
                     })
                   }
                 </Select>

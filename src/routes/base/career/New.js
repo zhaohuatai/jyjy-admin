@@ -98,7 +98,7 @@ class New extends Component {
                 >
                   {
                     this.state.categoryList.map(item => {
-                      return <Option key={item.id} value={`${item.id}`}>{item.name}</Option>
+                      return <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
                     })
                   }
                 </Select>

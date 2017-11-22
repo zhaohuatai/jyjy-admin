@@ -8,7 +8,8 @@ class Filter extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      search_form: {}
+      search_form: {},
+      recycleStr: true
     };
   }
 
@@ -42,6 +43,7 @@ class Filter extends Component {
         this.props.doUpdate();
         break;
       case 'recycle' :
+        this.setState({recycleStr: !this.state.recycleStr});
         this.props.doRecycle();
         break;
       default :
@@ -94,8 +96,11 @@ class Filter extends Component {
           </Col>
 
           <Col span={2}>
-            <Button onClick={() => this.handleActionClick({key: 'recycle'})}>
-              <Icon type="info-circle-o"/> 回收站
+            <Button onClick={() => {
+              this.handleActionClick({key: 'recycle'});
+            }
+            }>
+              <Icon type="info-circle-o"/> {this.state.recycleStr? "回收站": "返回"}
             </Button>
           </Col>
         </Row>

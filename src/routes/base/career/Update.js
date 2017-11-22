@@ -118,7 +118,7 @@ class New extends Component {
                 >
                   {
                     this.state.provinceList.map(item => {
-                      return <Option key={item.id} value={item.code}>{item.name}</Option>
+                      return <Select.Option key={item.id} value={`${item.code}`}>{item.name}</Select.Option>
                     })
                   }
                 </Select>

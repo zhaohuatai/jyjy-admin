@@ -98,7 +98,7 @@ class Item extends Component {
               <Select placeholder="选择角色" >
                 {
                 this.state.roles.map(item=>{
-                  return <Option key={item.id} value={item.roleCode}>{item.name}</Option>
+                  return <Select.Option key={item.id} value={`${item.roleCode}`}>{item.name}</Select.Option>
                 })
               }
               </Select>

@@ -103,7 +103,7 @@ class Item extends Component {
               <Select placeholder="选择所属应用" >
                 {
                   this.state.applist.map(item=>{
-                    return <Option key={item.id} value={item.appKey}>{item.name}</Option>
+                    return <Select.Option key={item.id} value={`${item.appKey}`}>{item.name}</Select.Option>
                   })
                 }
               </Select>

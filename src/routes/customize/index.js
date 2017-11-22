@@ -93,7 +93,14 @@ class Customize extends Component {
             <Filter
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
-              doRecycle={() => {this.handleRefresh({page: this.state.table_cur_page, status: '2'}); this.setState({recycle_data: true})}}
+              doRecycle={() => {
+                if(this.state.recycle_data){
+                  this.handleRefresh({status: '1'});
+                }else{
+                  this.handleRefresh({status: '2'});
+                }
+                this.setState({recycle_data: !this.state.recycle_data});
+              }}
               doUpdate={this.handleUpdate}
 
             />

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, Collapse, Form, Modal, Row} from 'antd';
+import {Col, Collapse, Form, Modal, Row} from 'antd';
 
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;
@@ -44,7 +44,6 @@ class Detail extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="所属门类">
               <p>{categoryName}</p>
-              )}
             </FormItem>
           </Col>
           <Col span={24}>
@@ -63,11 +62,6 @@ class Detail extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="本科专业">
-              <p>{undergradPro}</p>
-            </FormItem>
-          </Col>
-          <Col span={24}>
             <FormItem{...formItemLayout} label="专业详情">
               <Collapse>
                 <Panel header="点击查看详情" key="1">
@@ -82,20 +76,19 @@ class Detail extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
+            <FormItem{...formItemLayout} label="本科专业">
+              <p>{undergradPro}</p>
+            </FormItem>
+          </Col>
+          <Col span={24}>
             <FormItem{...formItemLayout} label="备注">
               <p>{remark}</p>
             </FormItem>
           </Col>
         </Row>
-        <FormItem
-          wrapperCol={{span: 12, offset: 4}}
-        >
-          <Button type="primary" onClick={this.handleSubmit}>提交更新</Button>
-        </FormItem>
       </Modal>
     )
   }
 }
 
 export default Form.create()(Detail);
-;

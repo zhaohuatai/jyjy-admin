@@ -60,11 +60,8 @@ class New extends Component {
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
-    const {
-      name, hint, categoryId, presenterId, introduction, price, priceVIP, consultationCount,
-      learningCount, learningCountActual, favoriteCount, coverUrl, freePay, remark, isTop, showIndex
-    } = this.props.data;
+    const {getFieldDecorator} = this.props.form;
+    const {name, categoryId, introduction, hint, presenterId, freePay, price, priceVIP, learningCount, isTop, showIndex, remark} = this.props.data;
 
     const formItemLayout = {
       labelCol: {

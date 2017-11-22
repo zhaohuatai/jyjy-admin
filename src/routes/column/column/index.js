@@ -86,8 +86,8 @@ class Course extends Component {
   //删除
   handleDelete = () => {
     deleteColumnChannel({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.handleRefresh();
-    })
+      this.handleRefresh({status: '1'});
+    });
   }
 
   // 显示详情

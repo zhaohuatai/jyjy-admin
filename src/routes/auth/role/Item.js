@@ -112,7 +112,7 @@ class Item extends Component {
               <Select placeholder="选择状态" readOnly={this.state.editable}>
               {
                 this.state.applist.map(item=>{
-                  return <Option key={item.id} value={item.appKey}>{item.name}</Option>
+                  return <Select.Option key={item.id} value={`${item.appKey}`}>{item.name}</Select.Option>
                 })
               }
               </Select>

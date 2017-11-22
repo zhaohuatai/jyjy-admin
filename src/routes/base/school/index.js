@@ -46,25 +46,24 @@ class School extends Component {
       selectedRowKeys: [],
       table_cur_page: 1,
       table_total: 0,
-      search_form:{},
+      search_form: {},
       update_display: false,
-      update_data:{},
+      update_data: {},
       detail_display: false,
-      detail_data:{},
+      detail_data: {},
       recycle_data: false,
     };
   }
 
   // 勾选记录
   onSelectChange = (selectedRowKeys) => {
-    console.log(selectedRowKeys);
     this.setState({ selectedRowKeys });
   }
 
 
   // 切换页码
   onChangeTablePage = (currentPage) => {
-    this.setState({table_loading:true, table_cur_page: currentPage});
+    this.setState({table_loading: true, table_cur_page: currentPage});
     let searchForm = this.state.search_form;
     searchForm.page = currentPage;
     this.handleRefresh(searchForm)
@@ -79,8 +78,7 @@ class School extends Component {
 
   // 删除记录
   handleDelete = () => {
-    deleteDataUniversity({id: this.state.selectedRowKeys[0]}).then(data=>{
-      message.success(data.message);
+    deleteDataUniversity(this.state.selectedRowKeys[0]).then(data => {
       this.handleRefresh({status: '1'});
     });
   }
@@ -113,8 +111,15 @@ class School extends Component {
           <TabPane tab="学校列表" key="1">
             <Filter
               doSearch={this.handleSearch}
-              doRefresh={()=>this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
-              doRecycle={() => {this.handleRefresh({page: this.state.table_cur_page, status: '2'}); this.setState({recycle_data: true})}}
+              doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
+              doRecycle={() => {
+                if(this.state.recycle_data){
+                  this.handleRefresh({status: '1'});
+                }else{
+                  this.handleRefresh({status: '2'});
+                }
+                this.setState({recycle_data: !this.state.recycle_data});
+              }}
               doDelete={this.handleDelete}
               doUpdate={this.handleUpdate}
 
@@ -123,13 +128,14 @@ class School extends Component {
               dataSource={this.state.dataSet}
               columns={table_columns}
               pagination={false}
-              rowKey={record => record.id+''}
+              rowKey={record => record.id + ''}
               loading={table_loading}
               bordered
               rowSelection={rowSelection}
               onRowClick={this.handleShowDetail}
             />
-            <Pagination style={{ marginTop: '10px' }} showQuickJumper defaultCurrent={1} current={table_cur_page} defaultPageSize={20} total={table_total} onChange={this.onChangeTablePage} />,
+            <Pagination style={{marginTop: '10px'}} showQuickJumper defaultCurrent={1} current={table_cur_page}
+                        defaultPageSize={20} total={table_total} onChange={this.onChangeTablePage}/>,
           </TabPane>
           <TabPane tab="新建" key="2">
             <New/>
