@@ -112,8 +112,8 @@ class Course extends Component {
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
               doRecycle={() => {
+                this.handleRefresh({status: this.state.recycle_data ? 1 : 2});
                 this.setState({recycle_data: !this.state.recycle_data});
-                this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
               }}
               doUpdate={this.handleUpdate}
               doDelete={this.handleDelete}

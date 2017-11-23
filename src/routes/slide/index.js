@@ -104,10 +104,8 @@ class School extends Component {
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
               doRecycle={() => {
-                console.log(this.state.recycle_data);
+                this.handleRefresh({status: this.state.recycle_data ? 1 : 2});
                 this.setState({recycle_data: !this.state.recycle_data});
-                console.log(this.state.recycle_data);
-                this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
               }}
               doDelete={this.handleDelete}
               doUpdate={this.handleUpdate}
