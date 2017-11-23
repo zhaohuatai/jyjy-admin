@@ -1,28 +1,17 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Input, message, Row} from 'antd';
+import {Button, Col, Form, Input, message, Modal, Row} from 'antd';
 import {updateServiceCourseCategory} from "../../../service/course";
 
 const FormItem = Form.Item;
 
-class New extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      categoryList: [],
-      teacher_list: []
-    }
-  }
-
-  componentDidMount() {
-
-  }
+class Update extends Component {
 
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
 
     updateServiceCourseCategory(formData).then(data => {
       this.props.form.resetFields();
-      message.success("创建成功！");
+      message.success("更新成功！");
     }).catch((e) => {
       message.error(e);
     })
@@ -46,10 +35,10 @@ class New extends Component {
     };
 
     return (
-      <div>
+      <Modal title="更新课程分类" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
         <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="课程名">
+            <FormItem{...formItemLayout} label="分类名">
               {getFieldDecorator('categoryName', {
                 initialValue: categoryName,
                 rules: [
@@ -84,9 +73,9 @@ class New extends Component {
         <FormItem wrapperCol={{span: 12, offset: 4}}>
           <Button type="primary" onClick={this.handleSubmit}>创建</Button>
         </FormItem>
-      </div>
+      </Modal>
     )
   }
 }
 
-export default Form.create()(New);
+export default Form.create()(Update);

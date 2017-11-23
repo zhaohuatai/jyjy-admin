@@ -14,12 +14,11 @@ const TabPane = Tabs.TabPane;
 
 const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
-  {title: '课程名', dataIndex: 'name', key: 'name'},
+  {title: '分类名', dataIndex: 'categoryName', key: 'name'},
   {title: '创建时间', dataIndex: 'createTime', key: 'createTime'},
   {title: '修改时间', dataIndex: 'updateTime', key: 'updateTime'},
-  {title: '备注', dataIndex: 'remark', key: 'remark'},
   {title: '显示顺序', dataIndex: 'showIndex', key: 'showIndex'},
-
+  {title: '备注', dataIndex: 'remark', key: 'remark'},
 ]
 
 class CourseCategory extends Component {

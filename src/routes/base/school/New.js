@@ -7,7 +7,6 @@ import {loadProvinceList} from '../../../service/dic';
 import LazyLoad from 'react-lazyload';
 
 const FormItem = Form.Item;
-const Option = Select.Option;
 
 class New extends Component {
   handleSubmit = (e) => {

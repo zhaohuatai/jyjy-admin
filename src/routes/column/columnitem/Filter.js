@@ -57,6 +57,16 @@ class Filter extends Component {
   render() {
     const {getFieldDecorator} = this.props.form;
 
+    const formItemLayout = {
+      labelCol: {
+        xs: {span: 24},
+        sm: {span: 4},
+      },
+      wrapperCol: {
+        xs: {span: 24},
+        sm: {span: 14},
+      },
+    };
     const menu = (
       <Menu onClick={this.handleActionClick}>
         <Menu.Item key="delete">删除</Menu.Item>
@@ -74,7 +84,7 @@ class Filter extends Component {
     return (
       <div>
         <Row type='flex' justify='end' style={{marginBottom: '5px'}}>
-          <Col span={4} pull={14}>
+          <Col span={4} pull={10}>
             <FormItem>
               {getFieldDecorator('title', {
                 initialValue: ''
@@ -84,15 +94,15 @@ class Filter extends Component {
             </FormItem>
           </Col>
 
-          <Col span={4}>
-            <FormItem>
+          <Col span={4} pull={9}>
+            <FormItem {...formItemLayout}>
               {getFieldDecorator('channelId', {
-                initialValue: 1,
+                initialValue: '',
               })(
-                <Select placeholder="选择专栏">
+                <Select placeholder="请选择专栏" style={{width: '180px'}}>
                   {
                     this.state.channelList.map(item => {
-                      return <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
+                      return <Select.Option key={item.id} value={`${item.id}`}>{item.title}</Select.Option>
                     })
                   }
                 </Select>
