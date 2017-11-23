@@ -22,7 +22,6 @@ const table_columns = [
   {title: '费用', dataIndex: 'freePay', key: 'freePay', render: (text) => text === 1 ? '收费' : '免费'},
   {title: '置顶', dataIndex: 'isTop', key: 'isTop'},
   {title: '显示顺序', dataIndex: 'showIndex', key: 'showIndex'},
-
 ]
 
 class Course extends Component {
@@ -117,7 +116,6 @@ class Course extends Component {
               }}
               doUpdate={this.handleUpdate}
               doDelete={this.handleDelete}
-
             />
             <Table
               dataSource={this.state.dataSet}

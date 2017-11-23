@@ -90,11 +90,10 @@ class Update extends Component {
     formData = {
       ...formData,
       introduction: UE.getEditor('update_courseItemIntroduction').getContent(),
+      id: this.props.data.id,
+      freePay: formData.freePay ? 0 : 1,
+      isTop: formData.isTop ? 1 : 0,
     };
-
-    formData.id = this.props.data.id;
-    formData.freePay ? formData.freePay = 0 : formData.freePay = 1;
-    formData.isTop ? formData.isTop = 1 : formData.freePay = 0;
 
     if (formData.coverUrl) {
       formData.coverUrl = formData.coverUrl[0].response.data.image;
@@ -116,7 +115,7 @@ class Update extends Component {
   render() {
     const {getFieldDecorator} = this.props.form;
     const {
-      freePay, coverUrl, name, courseId, introduction,
+      freePay, name, hint, courseId, introduction, tryVideoUrl,
       presenterName, remark, videoAliId, videoDesc, price, priceVIP,
       videoName, videoSize, videoTags, videoTime, itemOrder,
       videoTitle, videoUrl
@@ -176,7 +175,7 @@ class Update extends Component {
           <Col span={24}>
             <FormItem {...formItemLayout} label="描述">
               {getFieldDecorator('hint', {
-                initialValue: '',
+                initialValue: hint,
                 rules: []
               })(
                 <Input/>
@@ -185,7 +184,7 @@ class Update extends Component {
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="所属课程">
-              {getFieldDecorator('stage', {
+              {getFieldDecorator('courseId', {
                 initialValue: courseId,
                 rules: [
                   {required: true, message: '请选择所属课程'},
@@ -193,7 +192,7 @@ class Update extends Component {
               })(
                 <Select placeholder="选择所属课程" style={{width: '200px'}}>
                   {
-                    this.state.channelList.map(item => {
+                    this.state.courseList.map(item => {
                       return <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
                     })
                   }
@@ -225,14 +224,13 @@ class Update extends Component {
                 valuePropName: 'checked',
                 initialValue: !freePay,
               })(
-                <Switch checkedChildren={<Icon type="check"/>}
-                        unCheckedChildren={<Icon type="cross"/>}/>
+                <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="普通价格">
-              {getFieldDecorator('phone', {
+              {getFieldDecorator('price', {
                 initialValue: price,
                 rules: []
               })(
@@ -242,7 +240,7 @@ class Update extends Component {
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="会员价格">
-              {getFieldDecorator('location', {
+              {getFieldDecorator('priceVIP', {
                 initialValue: priceVIP,
                 rules: []
               })(
@@ -263,9 +261,9 @@ class Update extends Component {
               </Button>
             </FormItem>
           </Col>
-          <Col span={24}>
+          <Col span={6}>
             <FormItem{...formItemLayout} label="视频描述">
-              {getFieldDecorator('masterNum', {
+              {getFieldDecorator('videoDesc', {
                 initialValue: videoDesc,
                 rules: []
               })(
@@ -273,9 +271,9 @@ class Update extends Component {
               )}
             </FormItem>
           </Col>
-          <Col span={24}>
+          <Col span={6}>
             <FormItem{...formItemLayout} label="视频名称">
-              {getFieldDecorator('academicianNum', {
+              {getFieldDecorator('videoName', {
                 initialValue: videoName,
                 rules: []
               })(
@@ -283,7 +281,7 @@ class Update extends Component {
               )}
             </FormItem>
           </Col>
-          <Col span={24}>
+          <Col span={6}>
             <FormItem{...formItemLayout} label="视频大小">
               {getFieldDecorator('studentNum', {
                 initialValue: videoSize,
@@ -293,9 +291,9 @@ class Update extends Component {
               )}
             </FormItem>
           </Col>
-          <Col span={24}>
+          <Col span={6}>
             <FormItem{...formItemLayout} label="视频标签">
-              {getFieldDecorator('rank', {
+              {getFieldDecorator('videoTags', {
                 initialValue: videoTags,
                 rules: []
               })(
@@ -303,9 +301,9 @@ class Update extends Component {
               )}
             </FormItem>
           </Col>
-          <Col span={24}>
+          <Col span={6}>
             <FormItem{...formItemLayout} label="视频时间">
-              {getFieldDecorator('establishTime', {
+              {getFieldDecorator('videoTime', {
                 initialValue: videoTime,
                 rules: []
               })(
@@ -313,9 +311,9 @@ class Update extends Component {
               )}
             </FormItem>
           </Col>
-          <Col span={24}>
+          <Col span={6}>
             <FormItem{...formItemLayout} label="视频标题">
-              {getFieldDecorator('attached', {
+              {getFieldDecorator('videoTitle', {
                 initialValue: videoTitle,
                 rules: []
               })(
@@ -323,10 +321,10 @@ class Update extends Component {
               )}
             </FormItem>
           </Col>
-          <Col span={24}>
+          <Col span={6}>
             <FormItem{...formItemLayout} label="视频地址">
-              {getFieldDecorator('attached', {
-                initialValue: videoUrl,
+              {getFieldDecorator('tryVideoUrl', {
+                initialValue: tryVideoUrl,
                 rules: []
               })(
                 <Input/>
