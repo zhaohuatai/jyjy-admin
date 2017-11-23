@@ -107,8 +107,8 @@ class Profession extends Component {
 
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
-        <Tabs defaultActiveKey="1">
-          <TabPane tab="专业列表" key="1">
+        <Tabs defaultActiveKey="3">
+          <TabPane tab="专业列表" key="3">
             <Filter
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
@@ -132,13 +132,13 @@ class Profession extends Component {
             <Pagination style={{marginTop: '10px'}} showQuickJumper defaultCurrent={1} current={table_cur_page}
                         defaultPageSize={20} total={table_total} onChange={this.onChangeTablePage}/>,
           </TabPane>
-          <TabPane tab="新建" key="2">
+          <TabPane tab="新建" key="4">
             <New/>
           </TabPane>
-          <TabPane tab="学科管理" key="3">
+          <TabPane tab="学科管理" key="1">
             <Subject/>
           </TabPane>
-          <TabPane tab="门类管理" key="4">
+          <TabPane tab="门类管理" key="2">
             <Category/>
           </TabPane>
         </Tabs>

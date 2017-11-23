@@ -20,6 +20,8 @@ function checkCode(statusCode,message){
     default : return {code:statusCode, message:message};
     }
   }
+
+  return {code: statusCode, message: message};
 }
 
 let Http = {};
@@ -45,7 +47,7 @@ Http.get = (url,params='')=>{
       response.json();})
       .then((responseData) => {
         let checkCodeResult = checkCode(responseData.statusCode);
-        if (checkCodeResult.code && checkCodeResult.code === 200) {
+        if (checkCodeResult.code === 200) {
           resolve(responseData);
         }else{
           //触发store action 弹出提示框
@@ -90,7 +92,7 @@ Http.post = (url,params='')=>{
     }).then((responseData) => {
 
       let checkCodeResult = checkCode(responseData.statusCode,responseData.message);
-      if (checkCodeResult && checkCodeResult.code !== 200) {
+      if (checkCodeResult.code !== 200) {
         //触发store action 弹出提示框
         if(checkCodeResult.message){
           message.warning(checkCodeResult.message);

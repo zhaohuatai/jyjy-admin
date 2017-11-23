@@ -334,4 +334,3 @@ class New extends Component {
 }
 
 export default Form.create()(New);
-;

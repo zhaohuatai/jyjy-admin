@@ -11,14 +11,14 @@ class New extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      courseList: [],
+      channelList: [],
       presenterList :[]
     }
   }
 
   componentDidMount() {
     loadServiceCourseDataSet({rows: 100}).then(data => {
-      this.setState({courseList: data.data.dataSet.rows})
+      this.setState({channelList: data.data.dataSet.rows})
     });
 
     loadMemberTeacherDataSet({rows: 100}).then(data => {
@@ -88,7 +88,7 @@ class New extends Component {
               })(
                 <Select placeholder="选择所属课程" style={{width: '200px'}}>
                   {
-                    this.state.courseList.map(item => {
+                    this.state.channelList.map(item => {
                       return <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
                     })
                   }

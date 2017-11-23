@@ -12,12 +12,16 @@ class Filter extends Component {
       search_form: {},
       channelList: [],
       recycleStr: true,
+      defaultChannel: [],
     };
   }
 
   componentDidMount() {
     loadColumnChannelDataSet({rows: 100}).then(data => {
       this.setState({channelList: data.data.dataSet.rows})
+      if (data.data.dataSet.rows) {
+        this.setState({defaultChannel: data.data.dataSet.rows[0]['id']})
+      }
     })
   }
 
@@ -96,10 +100,9 @@ class Filter extends Component {
 
           <Col span={4} pull={9}>
             <FormItem {...formItemLayout}>
-              {getFieldDecorator('channelId', {
-                initialValue: '',
-              })(
-                <Select placeholder="请选择专栏" style={{width: '180px'}}>
+              {getFieldDecorator('channelId')(
+                <Select placeholder="选择专栏" style={{width: '190px'}}
+                        onChange={() => this.handleActionClick({key: 'refresh'})}>
                   {
                     this.state.channelList.map(item => {
                       return <Select.Option key={item.id} value={`${item.id}`}>{item.title}</Select.Option>
