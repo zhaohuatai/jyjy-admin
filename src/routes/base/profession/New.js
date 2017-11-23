@@ -170,7 +170,8 @@ class New extends Component {
               })(
                 <LazyLoad once>
                   <UEditor id="detail" height="400"/>
-                </LazyLoad>)}
+                </LazyLoad>
+              )}
             </FormItem>
           </Col>
           <Col span={24}>
@@ -181,7 +182,8 @@ class New extends Component {
               })(
                 <LazyLoad once>
                   <UEditor id="offer" height="200"/>
-                </LazyLoad>)}
+                </LazyLoad>
+              )}
             </FormItem>
           </Col>
           <Col span={24}>

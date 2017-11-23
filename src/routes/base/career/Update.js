@@ -336,7 +336,8 @@ class New extends Component {
             >
               <LazyLoad once>
                 <UEditor id="update_specialProfession" height="200" initValue={specialProfession}/>
-              </LazyLoad> </FormItem>
+              </LazyLoad>
+            </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
@@ -345,7 +346,8 @@ class New extends Component {
             >
               <LazyLoad once>
                 <UEditor id="update_introduction" height="200" initValue={introduction}/>
-              </LazyLoad> </FormItem>
+              </LazyLoad>
+            </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
@@ -354,7 +356,8 @@ class New extends Component {
             >
               <LazyLoad once>
                 <UEditor id="update_faculty" height="200" initValue={faculty}/>
-              </LazyLoad> </FormItem>
+              </LazyLoad>
+            </FormItem>
           </Col>
         </Row>
         <FormItem

@@ -124,7 +124,8 @@ class New extends Component {
             >
               <LazyLoad once>
                 <UEditor id="career_back" height="200"/>
-              </LazyLoad> </FormItem>
+              </LazyLoad>
+            </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
@@ -133,7 +134,8 @@ class New extends Component {
             >
               <LazyLoad once>
                 <UEditor id="career_course" height="200"/>
-              </LazyLoad> </FormItem>
+              </LazyLoad>
+            </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
@@ -142,7 +144,8 @@ class New extends Component {
             >
               <LazyLoad once>
                 <UEditor id="career_definition" height="200"/>
-              </LazyLoad> </FormItem>
+              </LazyLoad>
+            </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
@@ -151,7 +154,8 @@ class New extends Component {
             >
               <LazyLoad once>
                 <UEditor id="career_duty" height="200"/>
-              </LazyLoad> </FormItem>
+              </LazyLoad>
+            </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
@@ -160,7 +164,8 @@ class New extends Component {
             >
               <LazyLoad once>
                 <UEditor id="career_fore" height="200"/>
-              </LazyLoad> </FormItem>
+              </LazyLoad>
+            </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
@@ -169,7 +174,8 @@ class New extends Component {
             >
               <LazyLoad once>
                 <UEditor id="career_intro" height="200"/>
-              </LazyLoad> </FormItem>
+              </LazyLoad>
+            </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
@@ -178,7 +184,8 @@ class New extends Component {
             >
               <LazyLoad once>
                 <UEditor id="career_money" height="200"/>
-              </LazyLoad> </FormItem>
+              </LazyLoad>
+            </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
@@ -187,7 +194,8 @@ class New extends Component {
             >
               <LazyLoad once>
                 <UEditor id="career_moral" height="200"/>
-              </LazyLoad> </FormItem>
+              </LazyLoad>
+            </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
@@ -196,7 +204,8 @@ class New extends Component {
             >
               <LazyLoad once>
                 <UEditor id="career_qualify" height="200"/>
-              </LazyLoad> </FormItem>
+              </LazyLoad>
+            </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
@@ -205,7 +214,8 @@ class New extends Component {
             >
               <LazyLoad once>
                 <UEditor id="career_skill" height="200"/>
-              </LazyLoad> </FormItem>
+              </LazyLoad>
+            </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
@@ -214,7 +224,8 @@ class New extends Component {
             >
               <LazyLoad once>
                 <UEditor id="career_tools" height="200"/>
-              </LazyLoad> </FormItem>
+              </LazyLoad>
+            </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
@@ -223,7 +234,8 @@ class New extends Component {
             >
               <LazyLoad once>
                 <UEditor id="career_claim" height="200"/>
-              </LazyLoad> </FormItem>
+              </LazyLoad>
+            </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
@@ -232,7 +244,8 @@ class New extends Component {
             >
               <LazyLoad once>
                 <UEditor id="career_local" height="200"/>
-              </LazyLoad> </FormItem>
+              </LazyLoad>
+            </FormItem>
           </Col>
         </Row>
         <FormItem

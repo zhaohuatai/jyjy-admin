@@ -86,7 +86,8 @@ class New extends Component {
               <FormItem {...formItemLayout} label="介绍">
                 <LazyLoad once>
                   <UEditor id="update_courseIntroduction" height="200" initialValue={introduction}/>
-                </LazyLoad> </FormItem>
+                </LazyLoad>
+              </FormItem>
             </Col>
             <Col span={24}>
               <FormItem{...formItemLayout} label="主讲人">

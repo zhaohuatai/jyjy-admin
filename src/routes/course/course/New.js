@@ -234,7 +234,8 @@ class New extends Component {
             <FormItem {...formItemLayout} label="介绍">
               <LazyLoad once>
                 <UEditor id="introduction" height="200"/>
-              </LazyLoad> </FormItem>
+              </LazyLoad>
+            </FormItem>
           </Col>
         </Row>
         <FormItem wrapperCol={{span: 12, offset: 4}}>

@@ -126,7 +126,8 @@ class New extends Component {
             >
               <LazyLoad once>
                 <UEditor id="slide_content" height="200"/>
-              </LazyLoad> </FormItem>
+              </LazyLoad>
+            </FormItem>
           </Col>
         </Row>
         <FormItem
