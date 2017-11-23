@@ -21,8 +21,8 @@ class New extends Component {
     formData.firstRate ? formData.firstRate = 1 : formData.firstRate = 0;
 
     console.log(formData);
-    if (formData.badge) {
-      formData.badge = formData.badge[0].response.data.image;
+    if (formData.imgUrl) {
+      formData.imgUrl = formData.imgUrl[0].response.data.image;
     }
 
     createDataUniversity(formData).then(data => {

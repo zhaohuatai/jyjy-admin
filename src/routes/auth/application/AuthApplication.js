@@ -37,7 +37,7 @@ class AuthApplication extends Component {
     let searchForm = this.state.search_form;
 
     searchForm.rows = this.state.pageRows;
-    searchForm.page = currentPage;
+    searchForm['page'] = currentPage;
 
     loadProduct(searchForm, data => {
 				this.setState({

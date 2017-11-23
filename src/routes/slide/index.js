@@ -9,13 +9,11 @@ import Detail from './Detail';
 const TabPane = Tabs.TabPane;
 
 const table_columns = [
-  {title: 'id', dataIndex: 'id', key: 'id'},
+  {title: '序号', dataIndex: 'id', key: 'id'},
   {title: '标题', dataIndex: 'title', key: 'title'},
-  {title: '缩略图', dataIndex: 'imgUrl', key: 'imgUrl'},
-  {title: '备注', dataIndex: 'remark', key: 'remark'},
+  {title: '图片路径', dataIndex: 'imgUrl', key: 'imgUrl'},
   {title: '权重', dataIndex: 'showWeight', key: 'showWeight'},
-  {title: '创建时间', dataIndex: 'createTime', key: 'createTime'},
-  {title: '更新时间', dataIndex: 'updateTime', key: 'updateTime'},
+  {title: '备注', dataIndex: 'remark', key: 'remark'},
 ]
 
 class School extends Component {
@@ -56,12 +54,12 @@ class School extends Component {
     this.setState({selectedRowKeys});
   }
 
-
   // 切换页码
   onChangeTablePage = (currentPage) => {
     this.setState({table_loading: true, table_cur_page: currentPage});
     let searchForm = this.state.search_form;
-    searchForm.page = currentPage;
+    searchForm['page'] = currentPage;
+    searchForm['status'] = (this.state.recycle_data ? 2 : 1);
     this.handleRefresh(searchForm)
   }
 
@@ -101,12 +99,14 @@ class School extends Component {
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
         <Tabs defaultActiveKey="1">
-          <TabPane tab="职业列表" key="1">
+          <TabPane tab="幻灯片列表" key="1">
             <Filter
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
               doRecycle={() => {
+                console.log(this.state.recycle_data);
                 this.setState({recycle_data: !this.state.recycle_data});
+                console.log(this.state.recycle_data);
                 this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
               }}
               doDelete={this.handleDelete}

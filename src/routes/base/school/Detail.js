@@ -55,7 +55,7 @@ class New extends Component {
               {...formItemLayout}
               label="校徽图片"
             >
-              <img style={{width: '100px', height: '100px'}} src={`${API_DOMAIN}${badge}`} />
+              <img style={{width: '100px', height: '100px'}} src={`${API_DOMAIN}${imgUrl}`}/>
             </FormItem>
           </Col >
           <Col span={24}>

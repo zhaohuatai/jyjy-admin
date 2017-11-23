@@ -53,7 +53,8 @@ class Customize extends Component {
   onChangeTablePage = (currentPage) => {
     this.setState({table_loading: true, table_cur_page: currentPage});
     let searchForm = this.state.search_form;
-    searchForm.page = currentPage;
+    searchForm['page'] = currentPage;
+    searchForm['status'] = (this.state.recycle_data ? 2 : 1);
     this.handleRefresh(searchForm)
   }
 

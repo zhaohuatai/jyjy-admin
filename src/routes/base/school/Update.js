@@ -20,8 +20,8 @@ class New extends Component {
       id: this.props.data.id,
     }
 
-    if (formData.badge) {
-      formData.badge = formData.badge[0].response.data.image;
+    if (formData.imgUrl) {
+      formData.imgUrl = formData.imgUrl[0].response.data.image;
     }
 
     updateDataUniversity(formData).then(data => {

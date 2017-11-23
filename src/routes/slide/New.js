@@ -1,21 +1,13 @@
 import React, {Component} from 'react';
 import {API_DOMAIN} from '../../utils/config';
-import {Button, Col, Form, Icon, Input, message, Row, Select, Upload} from 'antd';
-import UEditor from '../../components/editor/UEditor';
+import {Button, Col, Form, Icon, Input, message, Row, Upload} from 'antd';
 import {createPubSlide} from '../../service/slide';
-import LazyLoad from 'react-lazy-load';
-
 
 const FormItem = Form.Item;
-const Option = Select.Option;
 
 class New extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   normFile = (e) => {
-    console.log('Upload event:', e);
     if (Array.isArray(e)) {
       return e.file;
     }
@@ -24,12 +16,10 @@ class New extends Component {
 
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
-    formData = {
-      ...formData,
-      content: UE.getEditor('slide_content').getContent(),
-    };
 
-    formData.imgUrl = formData.imgUrl[0].response.data.image;
+    if (formData.imgUrl) {
+      formData.imgUrl = formData.imgUrl[0].response.data.image;
+    }
 
     createPubSlide(formData).then(data => {
       this.props.form.resetFields();
@@ -57,10 +47,7 @@ class New extends Component {
       <div>
         <Row type='flex' style={{ marginBottom: '5px'}}>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="标题"
-            >
+            <FormItem{...formItemLayout} label="标题">
               {getFieldDecorator('title',{
                 initialValue: '',
                 rules: [
@@ -71,70 +58,41 @@ class New extends Component {
               )}
             </FormItem>
           </Col>
-
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="备注"
-            >
-              {getFieldDecorator('remark',{
-                initialValue: '',
-              })(
-                <Input />
-              )}
-            </FormItem>
-          </Col>
-
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="权重"
-            >
-              {getFieldDecorator('showWeight',{
-                initialValue: '',
-              })(
-                <Input type='number' />
-              )}
-            </FormItem>
-          </Col>
-
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="校徽图片"
-            >
+            <FormItem{...formItemLayout} label="图片">
               {getFieldDecorator('imgUrl', {
                 valuePropName: 'fileList',
                 getValueFromEvent: this.normFile,
               })(
-                <Upload
-                  name="file"
-                  action={`${API_DOMAIN}admin/pub/pubSlide/uploadImage`}
-                  listType="picture"
-                  withCredentials={true}
-                >
+                <Upload name="file" action={`${API_DOMAIN}admin/pub/pubSlide/uploadImage`} listType="picture"
+                        withCredentials={true}>
                   <Button>
                     <Icon type="upload" /> 点击上传
                   </Button>
                 </Upload>
               )}
             </FormItem>
-          </Col >
-
+          </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="学历要求"
-            >
-              <LazyLoad height={400}>
-                <UEditor id="slide_content" height="200"/>
-              </LazyLoad>
+            <FormItem{...formItemLayout} label="权重">
+              {getFieldDecorator('showWeight', {
+                initialValue: '',
+              })(
+                <Input type='number'/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="备注">
+              {getFieldDecorator('remark', {
+                initialValue: '',
+              })(
+                <Input/>
+              )}
             </FormItem>
           </Col>
         </Row>
-        <FormItem
-          wrapperCol={{ span: 12, offset: 4 }}
-        >
+        <FormItem wrapperCol={{span: 12, offset: 4}}>
           <Button type="primary" onClick={this.handleSubmit}>创建</Button>
         </FormItem>
       </div>

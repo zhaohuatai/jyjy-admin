@@ -45,8 +45,8 @@ class New extends Component {
     formData.id = this.props.data.id;
 
     console.log(formData);
-    if (formData.badge) {
-      formData.badge = formData.badge[0].response.data.image;
+    if (formData.imgUrl) {
+      formData.imgUrl = formData.imgUrl[0].response.data.image;
     }
 
     updateDataUniversity(formData).then(data => {
