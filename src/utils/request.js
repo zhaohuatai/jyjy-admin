@@ -10,18 +10,29 @@ import md5 from 'blueimp-md5';
  */
 const checkCode = (statusCode, re_message) => {
   if (statusCode === 200) {
-    return { code: statusCode, re_message: '' };
+    return {code: statusCode, re_message: ''};
   }
   // 返回码判断
   switch (statusCode) {
-    case 300: return { code: statusCode, re_message };
-    case 301: hashHistory.push('/login'); break;
-    case 4010: hashHistory.push('/login'); break;
-    case 4011: return { code: statusCode, re_message };
-    case 4004: return { code: statusCode, re_message }; // 非vip
-    case 500: return { code: statusCode, re_message };
-    default: return { code: statusCode, re_message };
+    case 300:
+      return {code: statusCode, re_message};
+    case 301:
+      hashHistory.push('/login');
+      break;
+    case 4010:
+      hashHistory.push('/login');
+      break;
+    case 4011:
+      return {code: statusCode, re_message};
+    case 4004:
+      return {code: statusCode, re_message}; // 非vip
+    case 500:
+      return {code: statusCode, re_message};
+    default:
+      return {code: statusCode, re_message};
   }
+
+  return {code: statusCode, re_message};
 };
 
 /**
@@ -46,7 +57,7 @@ export function get(url, params = '') {
       response.json();
     }).then((responseData) => {
       const checkCodeResult = checkCode(responseData.statusCode);
-      if (checkCodeResult && checkCodeResult.code === 200) {
+      if (checkCodeResult.code === 200) {
         resolve(responseData);
       } else {
         message.error(checkCodeResult.re_message);
@@ -87,7 +98,7 @@ export function post(url, params = '') {
       return response.json();
     }).then((responseData) => {
       const checkCodeResult = checkCode(responseData.statusCode, responseData.message);
-      if (checkCodeResult && checkCodeResult.code === 200) {
+      if (checkCodeResult.code === 200) {
         resolve(responseData);
       } else {
         reject(checkCodeResult.message);
@@ -99,7 +110,7 @@ export function post(url, params = '') {
 }
 
 // 上传图片请求
-export function postImg(url,params=''){
+export function postImg(url, params = '') {
   let headers = new Headers();
   //headers.set('Content-Type','multipart/form-data; boundary=----WebKitFormBoundary4I9QTerA7b4BBalV');
   headers.set('X-Requested-With', 'XMLHttpRequest');
@@ -115,7 +126,7 @@ export function postImg(url,params=''){
       return response.json();
     }).then((responseData) => {
       const checkCodeResult = checkCode(responseData.statusCode, responseData.message);
-      if (checkCodeResult && checkCodeResult.code === 200) {
+      if (checkCodeResult.code === 200) {
         resolve(responseData);
       } else {
         reject(checkCodeResult.message);

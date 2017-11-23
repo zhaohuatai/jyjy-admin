@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
-class Ueditor extends Component{
+class UEditor extends Component {
   constructor(props){
     super(props);
     this.state = {};
@@ -32,8 +32,9 @@ class Ueditor extends Component{
   }
   render(){
     return (
-      <div id={this.props.id} name="content" type="text/plain" style={{width: '100%'}}></div>
+      <div id={this.props.id} name="content" type="text/plain" style={{width: '100%'}}/>
     )
   }
 }
-export default Ueditor;
+
+export default UEditor;

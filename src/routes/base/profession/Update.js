@@ -166,13 +166,15 @@ class Update extends Component {
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="专业详情">
-              <UEditor id="detail" height="400" initValue={detail}/>
-            </FormItem>
+              <LazyLoad once>
+                <UEditor id="detail" height="400" initValue={detail}/>
+              </LazyLoad> </FormItem>
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="开设院校">
-              <UEditor id="offer" height="200" initValue={offer}/>
-            </FormItem>
+              <LazyLoad once>
+                <UEditor id="offer" height="200" initValue={offer}/>
+              </LazyLoad> </FormItem>
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="备注">

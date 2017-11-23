@@ -334,24 +334,27 @@ class New extends Component {
               {...formItemLayout}
               label="特色专业"
             >
-              <UEditor id="update_specialProfession" height="200" initValue={specialProfession} />
-            </FormItem>
+              <LazyLoad once>
+                <UEditor id="update_specialProfession" height="200" initValue={specialProfession}/>
+              </LazyLoad> </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
               label="学校简介"
             >
-              <UEditor id="update_introduction" height="200" initValue={introduction} />
-            </FormItem>
+              <LazyLoad once>
+                <UEditor id="update_introduction" height="200" initValue={introduction}/>
+              </LazyLoad> </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
               label="师资力量"
             >
-              <UEditor id="update_faculty" height="200" initValue={faculty} />
-            </FormItem>
+              <LazyLoad once>
+                <UEditor id="update_faculty" height="200" initValue={faculty}/>
+              </LazyLoad> </FormItem>
           </Col>
         </Row>
         <FormItem

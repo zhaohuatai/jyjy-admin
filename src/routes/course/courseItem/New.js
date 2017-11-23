@@ -144,8 +144,9 @@ class New extends Component {
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="课程介绍">
-              <UEditor id="update_courseItemIntroduction" height="200"/>
-            </FormItem>
+              <LazyLoad once>
+                <UEditor id="update_courseItemIntroduction" height="200"/>
+              </LazyLoad> </FormItem>
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} label="显示顺序">

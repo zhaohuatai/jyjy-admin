@@ -122,104 +122,117 @@ class New extends Component {
               {...formItemLayout}
               label="学历要求"
             >
-                <UEditor id="career_back" height="200" />
-            </FormItem>
+              <LazyLoad once>
+                <UEditor id="career_back" height="200"/>
+              </LazyLoad> </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
               label="主要课程"
             >
-              <UEditor id="career_course" height="200" />
-            </FormItem>
+              <LazyLoad once>
+                <UEditor id="career_course" height="200"/>
+              </LazyLoad> </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
               label="职业定义"
             >
-              <UEditor id="career_definition" height="200" />
-            </FormItem>
+              <LazyLoad once>
+                <UEditor id="career_definition" height="200"/>
+              </LazyLoad> </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
               label="工作内容"
             >
-              <UEditor id="career_duty" height="200" />
-            </FormItem>
+              <LazyLoad once>
+                <UEditor id="career_duty" height="200"/>
+              </LazyLoad> </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
               label="个人发展路径"
             >
-              <UEditor id="career_fore" height="200" />
-            </FormItem>
+              <LazyLoad once>
+                <UEditor id="career_fore" height="200"/>
+              </LazyLoad> </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
               label="简介"
             >
-              <UEditor id="career_intro" height="200" />
-            </FormItem>
+              <LazyLoad once>
+                <UEditor id="career_intro" height="200"/>
+              </LazyLoad> </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
               label="薪酬结构"
             >
-              <UEditor id="career_money" height="200" />
-            </FormItem>
+              <LazyLoad once>
+                <UEditor id="career_money" height="200"/>
+              </LazyLoad> </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
               label="主要职责"
             >
-              <UEditor id="career_moral" height="200" />
-            </FormItem>
+              <LazyLoad once>
+                <UEditor id="career_moral" height="200"/>
+              </LazyLoad> </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
               label="资格"
             >
-              <UEditor id="career_qualify" height="200" />
-            </FormItem>
+              <LazyLoad once>
+                <UEditor id="career_qualify" height="200"/>
+              </LazyLoad> </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
               label="技能"
             >
-              <UEditor id="career_skill" height="200" />
-            </FormItem>
+              <LazyLoad once>
+                <UEditor id="career_skill" height="200"/>
+              </LazyLoad> </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
               label="工具"
             >
-              <UEditor id="career_tools" height="200" />
-            </FormItem>
+              <LazyLoad once>
+                <UEditor id="career_tools" height="200"/>
+              </LazyLoad> </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
               label="要求"
             >
-              <UEditor id="career_claim" height="200" />
-            </FormItem>
+              <LazyLoad once>
+                <UEditor id="career_claim" height="200"/>
+              </LazyLoad> </FormItem>
           </Col>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
               label="工作地点"
             >
-              <UEditor id="career_local" height="200" />
-            </FormItem>
+              <LazyLoad once>
+                <UEditor id="career_local" height="200"/>
+              </LazyLoad> </FormItem>
           </Col>
         </Row>
         <FormItem
