@@ -53,7 +53,7 @@ class Filter extends Component {
 
     const menu = (
       <Menu onClick={this.handleActionClick}>
-        <Menu.Item key="delete">删除</Menu.Item>
+        <Menu.Item key="delete" disabled>删除</Menu.Item>
         <Menu.Item key="update">更新</Menu.Item>
       </Menu>
     );
@@ -93,7 +93,7 @@ class Filter extends Component {
           </Col>
 
           <Col span={2}>
-            <Button onClick={() => this.handleActionClick({key: 'recycle'})}>
+            <Button disabled onClick={() => this.handleActionClick({key: 'recycle'})}>
               <Icon type="info-circle-o"/> {this.state.recycleStr ? "回收站" : "返回"}
             </Button>
           </Col>

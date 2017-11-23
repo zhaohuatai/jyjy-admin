@@ -106,7 +106,6 @@ class School extends Component {
               }}
               doDelete={this.handleDelete}
               doUpdate={this.handleUpdate}
-
             />
             <Table
               dataSource={this.state.dataSet}
