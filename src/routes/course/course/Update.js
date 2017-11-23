@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {API_DOMAIN} from '../../../utils/config';
-import {Button, Col, Form, Input, message, Modal, Row, Select} from 'antd';
+import {Button, Col, Form, Input, message, Modal, Row, Select, Switch, Upload} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
 import {loadServiceCourseCategoryDataSet, updateServiceCourse} from "../../../service/course";
 import {loadMemberTeacherDataSet} from '../../../service/member';
 
 const FormItem = Form.Item;
 
-class New extends Component {
+class Update extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -37,14 +37,12 @@ class New extends Component {
     let formData = this.props.form.getFieldsValue();
     formData = {
       ...formData,
-      update_customizeContent: UE.getEditor('update_courseIntroduction').getContent(),
+      update_courseContent: UE.getEditor('update_courseIntroduction').getContent(),
     };
 
     formData.id = this.props.data.id;
     formData.freePay ? formData.freePay = 0 : formData.freePay = 1;
     formData.isTop ? formData.isTop = 1 : formData.isTop = 0;
-
-    console.log(formData);
 
     if (formData.coverUrl) {
       formData.coverUrl = formData.coverUrl[0].response.data.image;
@@ -143,21 +141,14 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="校徽图片"
-            >
+            <FormItem{...formItemLayout} label="课程封面">
               {getFieldDecorator('coverUrl', {
                 valuePropName: 'fileList',
                 getValueFromEvent: this.normFile,
                 initialValue: '',
               })(
-                <Upload
-                  name="file"
-                  action={`${API_DOMAIN}admin/course/serviceCourse/uploadCover`}
-                  listType="picture"
-                  withCredentials={true}
-                >
+                <Upload name="file" action={`${API_DOMAIN}admin/course/serviceCourse/uploadCover`} listType="picture"
+                        withCredentials={true}>
                   <Button>
                     <Icon type="upload"/> 点击上传
                   </Button>
@@ -169,10 +160,10 @@ class New extends Component {
             <FormItem {...formItemLayout} label="免费课程">
               {getFieldDecorator('freePay', {
                 valuePropName: 'checked',
-                initialValue: freePay ? true : false,
+                initialValue: !!freePay,
                 rules: []
               })(
-                <Switch />
+                <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
               )}
             </FormItem>
           </Col>
@@ -207,20 +198,10 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem {...formItemLayout} label="实际学习人数">
-              {getFieldDecorator('learningCountActual', {
-                initialValue: learningCountActual,
-                rules: []
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
             <FormItem {...formItemLayout} label="是否置顶">
               {getFieldDecorator('isTop', {
                 valuePropName: 'checked',
-                initialValue: isTop ? true : false,
+                initialValue: !!isTop,
               })(
                 <Switch />
               )}
@@ -260,4 +241,4 @@ class New extends Component {
   }
 }
 
-export default Form.create()(New);
+export default Form.create()(Update);

@@ -25,7 +25,7 @@ class New extends Component {
     let formData = this.props.form.getFieldsValue();
     formData = {
       ...formData,
-      update_customizeContent: UE.getEditor('update_courseIntroduction').getContent(),
+      update_courseContent: UE.getEditor('update_courseIntroduction').getContent(),
     };
 
     formData.id = this.props.data.id;

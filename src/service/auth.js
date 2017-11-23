@@ -8,7 +8,7 @@ import {message} from 'antd';
  * @param {int} statusCode
  */
 function checkCode(statusCode,message){
-  if(statusCode == 200){
+  if (statusCode === 200) {
     return {code:statusCode, message:''};
   }else{
     //返回码判断
@@ -90,7 +90,7 @@ Http.post = (url,params='')=>{
     }).then((responseData) => {
 
       let checkCodeResult = checkCode(responseData.statusCode,responseData.message);
-      if(checkCodeResult.code != 200){
+      if (checkCodeResult && checkCodeResult.code !== 200) {
         //触发store action 弹出提示框
         if(checkCodeResult.message){
           message.warning(checkCodeResult.message);
@@ -431,7 +431,7 @@ export function confirmReceipt(params, getDate){
 //设置订单状态
 export function setOrdersStatus(params, getDate){
   Http.post(API_DOMAIN+'admin/orders/setOrdersStatus',params).then(data=>{
-    if(data.statusCode == 200){
+    if (data && data.statusCode === 200) {
       message.success('设置成功');
     }
     getDate(data);

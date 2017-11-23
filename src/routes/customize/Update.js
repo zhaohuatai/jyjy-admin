@@ -13,7 +13,7 @@ class New extends Component {
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
     formData = { ...formData,
-        update_customizeContent: UE.getEditor('update_customizeContent').getContent(),
+      update_courseContent: UE.getEditor('update_customizeContent').getContent(),
     };
 
     formData.id = this.props.data.id;
