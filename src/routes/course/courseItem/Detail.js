@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {Col, Collapse, Form, Modal, Row, Switch} from 'antd';
+import {Col, Collapse, Form, Modal, Row} from 'antd';
 
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;
 
-class New extends Component {
+class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,42 +52,27 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="所属课程Id"
-            >
+            <FormItem{...formItemLayout} label="所属课程Id">
               <p>{courseId}</p>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="主讲人"
-            >
+            <FormItem{...formItemLayout} label="主讲人">
               <p>{presenterName}</p>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="免费"
-            >
-              <Switch checked={freePay}/>
+            <FormItem{...formItemLayout} label="免费">
+              {freePay ? "否" : "是"}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="普通价格"
-            >
+            <FormItem{...formItemLayout} label="普通价格">
               <p>{price}</p>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="会员价格"
-            >
+            <FormItem{...formItemLayout} label="会员价格">
               <p>{priceVIP}</p>
             </FormItem>
           </Col>
@@ -178,10 +163,7 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="备注"
-            >
+            <FormItem{...formItemLayout} label="备注">
               <p>{remark}</p>
             </FormItem>
           </Col>
@@ -191,4 +173,4 @@ class New extends Component {
   }
 }
 
-export default New
+export default Detail

@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { Form, Col, Row, Modal,Collapse, Switch} from 'antd';
-import { API_DOMAIN } from '../../../utils/config';
+import React, {Component} from 'react';
+import {Col, Collapse, Form, Modal, Row} from 'antd';
 
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;
@@ -73,7 +72,7 @@ class New extends Component {
               {...formItemLayout}
               label="免费"
             >
-              <Switch checked={freePay}/>
+              {freePay ? "否" : "是"}
             </FormItem>
           </Col>
           <Col span={24}>
