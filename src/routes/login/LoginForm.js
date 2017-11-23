@@ -2,7 +2,7 @@ import React from 'react';
 import {hashHistory} from 'react-router';
 import {connect} from 'react-redux';
 import md5 from 'blueimp-md5';
-import { Form, Icon, Input, Button, Checkbox, message} from 'antd';
+import {Button, Form, Icon, Input, message} from 'antd';
 import {sitename} from '../../utils/config';
 import {API_DOMAIN} from '../../config';
 import {doWebLogin} from '../../service/auth';
@@ -40,11 +40,11 @@ class NormalLoginForm extends React.Component {
         let md5_password = md5(salt+values.password);
         let param = { "username" : values.username,"password":md5_password,"captcha":values.captcha,"loginOrgin":"PC"};
         doWebLogin(param,data=>{
-            if(data.statusCode == 200){
+          if (data.statusCode === 200) {
               this.props.onDoLogin({username:'admin',status:1});
               hashHistory.push('/');
             }else{
-              message.warn('登录失败');
+            message.warn(data.message);
             }
         });
 
