@@ -39,7 +39,7 @@ class Customize extends Component {
   handleRefresh = (params) => {
     this.setState({table_loading: true});
     loadPubCustomizeDataSet(params).then(data => {
-      this.setState({course: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
+      this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
     })
   }
 
@@ -94,18 +94,14 @@ class Customize extends Component {
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
               doRecycle={() => {
-                if (this.state.recycle_data) {
-                  this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
-                } else {
-                  this.handleRefresh({status: '2'});
-                }
                 this.setState({recycle_data: !this.state.recycle_data});
+                this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
               }}
               doUpdate={this.handleUpdate}
 
             />
             <Table
-              dataSource={this.state.course}
+              dataSource={this.state.dataSet}
               columns={table_columns}
               pagination={false}
               rowKey={record => record.id + ''}

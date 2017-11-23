@@ -55,7 +55,7 @@ class Course extends Component {
   handleRefresh = (params) => {
     this.setState({table_loading: true});
     loadColumnChannelDataSet(params).then(data => {
-      this.setState({course: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
+      this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
     })
   }
 
@@ -117,7 +117,7 @@ class Course extends Component {
 
             />
             <Table
-              dataSource={this.state.course}
+              dataSource={this.state.dataSet}
               columns={table_columns}
               pagination={false}
               rowKey={record => record.id + ''}

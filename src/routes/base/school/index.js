@@ -9,19 +9,19 @@ import Detail from './Detail';
 const TabPane = Tabs.TabPane;
 
 const table_columns = [
-  { title: '序号', dataIndex: 'id', key: 'id'},
-  { title: '名称', dataIndex: 'name', key: 'name'},
-  { title: '排名', dataIndex: 'rank', key: 'rank'},
-  { title: '省份', dataIndex: 'province', key: 'province'},
-  { title: '学校层次', dataIndex: 'stage', key: 'stage'},
-  { title: '双一流', dataIndex: 'firstRate', key: 'firstRate'},
-  { title: '招生电话', dataIndex: 'phone', key: 'phone'},
-  { title: '学校隶属', dataIndex: 'attached', key: 'attached'},
-  { title: '地址', dataIndex: 'location', key: 'location'},
-  { title: '院士人数', dataIndex: 'academicianNum', key: 'academicianNum'},
-  { title: '博士点数', dataIndex: 'doctor', key: 'doctor'},
-  { title: '硕士点数', dataIndex: 'masterNum', key: 'masterNum'},
-  { title: '学生数', dataIndex: 'studentNum', key: 'studentNum'},
+  {title: '序号', dataIndex: 'id', key: 'id'},
+  {title: '名称', dataIndex: 'name', key: 'name'},
+  {title: '排名', dataIndex: 'rank', key: 'rank'},
+  {title: '省份', dataIndex: 'province', key: 'province'},
+  {title: '学校层次', dataIndex: 'stage', key: 'stage'},
+  {title: '双一流', dataIndex: 'firstRate', key: 'firstRate'},
+  {title: '招生电话', dataIndex: 'phone', key: 'phone'},
+  {title: '学校隶属', dataIndex: 'attached', key: 'attached'},
+  {title: '地址', dataIndex: 'location', key: 'location'},
+  {title: '院士人数', dataIndex: 'academicianNum', key: 'academicianNum'},
+  {title: '博士点数', dataIndex: 'doctor', key: 'doctor'},
+  {title: '硕士点数', dataIndex: 'masterNum', key: 'masterNum'},
+  {title: '学生数', dataIndex: 'studentNum', key: 'studentNum'},
 ]
 
 class School extends Component {
@@ -60,7 +60,7 @@ class School extends Component {
 
   // 勾选记录
   onSelectChange = (selectedRowKeys) => {
-    this.setState({ selectedRowKeys });
+    this.setState({selectedRowKeys});
   }
 
 
@@ -86,39 +86,35 @@ class School extends Component {
   // 更新
   handleUpdate = () => {
     loadDataUniversity({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.setState({ update_data: data.data.dataUniversity, update_display: true })
+      this.setState({update_data: data.data.dataUniversity, update_display: true})
     })
   }
 
   // 显示详情
   handleShowDetail = (record) => {
     loadDataUniversity({id: record.id}).then(data => {
-      this.setState({ detail_data: data.data.dataUniversity, detail_display: true })
+      this.setState({detail_data: data.data.dataUniversity, detail_display: true})
     })
   }
 
   render() {
-    const { table_loading, selectedRowKeys, table_cur_page, table_total } = this.state;
+    const {table_loading, selectedRowKeys, table_cur_page, table_total} = this.state;
 
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange,
     };
 
-    return(
-      <div style={{backgroundColor: '#fff', padding: '10px' }}>
+    return (
+      <div style={{backgroundColor: '#fff', padding: '10px'}}>
         <Tabs defaultActiveKey="1">
           <TabPane tab="学校列表" key="1">
             <Filter
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
               doRecycle={() => {
-                if(this.state.recycle_data){
-                  this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
-                }else{
-                  this.handleRefresh({status: '2'});
-                }
                 this.setState({recycle_data: !this.state.recycle_data});
+                this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
               }}
               doDelete={this.handleDelete}
               doUpdate={this.handleUpdate}
@@ -142,8 +138,10 @@ class School extends Component {
           </TabPane>
         </Tabs>
 
-        <Update show={this.state.update_display} data={this.state.update_data} onCancel={()=>this.setState({update_display: false})}/>
-        <Detail show={this.state.detail_display} data={this.state.detail_data} onCancel={()=>this.setState({detail_display: false})}/>
+        <Update show={this.state.update_display} data={this.state.update_data}
+                onCancel={() => this.setState({update_display: false})}/>
+        <Detail show={this.state.detail_display} data={this.state.detail_data}
+                onCancel={() => this.setState({detail_display: false})}/>
       </div>
     );
   }

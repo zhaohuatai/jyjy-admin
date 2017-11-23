@@ -22,11 +22,23 @@ const table_columns = [
 
 ]
 
-class Course extends Component {
+class CourseCategory extends Component {
+  // 获取数据
+  handleRefresh = (params) => {
+    this.setState({table_loading: true});
+    loadServiceCourseCategoryDataSet(params).then(data => {
+      this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
+    })
+  }
+
+  componentDidMount() {
+    this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
+  }
+
   constructor(props) {
     super(props);
     this.state = {
-      course: [],
+      dataSet: [],
       table_loading: false,
       selectedRowKeys: [],
       table_cur_page: 1,
@@ -38,18 +50,6 @@ class Course extends Component {
       detail_data: {},
       recycle_data: false,
     };
-  }
-
-  componentDidMount() {
-    this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
-  }
-
-  // 获取数据
-  handleRefresh = (params) => {
-    this.setState({table_loading: true});
-    loadServiceCourseCategoryDataSet(params).then(data => {
-      this.setState({course: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
-    })
   }
 
   // 勾选记录
@@ -109,18 +109,14 @@ class Course extends Component {
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
               doRecycle={() => {
-                if(this.state.recycle_data){
-                  this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
-                }else{
-                  this.handleRefresh({status: '2'});
-                }
                 this.setState({recycle_data: !this.state.recycle_data});
+                this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
               }}
               doDelete={this.handleDelete}
               doUpdate={this.handleUpdate}
             />
             <Table
-              dataSource={this.state.course}
+              dataSource={this.state.dataSet}
               columns={table_columns}
               pagination={false}
               rowKey={record => record.id + ''}
@@ -146,4 +142,4 @@ class Course extends Component {
   }
 }
 
-export default Course;
+export default CourseCategory;

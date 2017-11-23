@@ -36,13 +36,13 @@ const Routers = () => (
         <Route path="score-line-province" component={ScoreLineProvince}/>
       </Route>
 
-      <Route path="course">
+      <Route path="/course">
         <Route path="course-list" component={Course}/>
         <Route path="course-item" component={CourseItem}/>
         <Route path="course-category" component={CourseCategory}/>
       </Route>
 
-      <Route path="column">
+      <Route path="/column">
         <Route path="column-list" component={Column}/>
         <Route path="column-item" component={ColumnItem}/>
       </Route>

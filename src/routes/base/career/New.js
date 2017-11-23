@@ -25,7 +25,7 @@ class New extends Component {
     formData = {
       ...formData,
       back: UE.getEditor('career_back').getContent(),
-      course: UE.getEditor('career_course').getContent(),
+      dataSet: UE.getEditor('career_course').getContent(),
       definition: UE.getEditor('career_definition').getContent(),
       duty: UE.getEditor('career_duty').getContent(),
       fore: UE.getEditor('career_fore').getContent(),
