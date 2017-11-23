@@ -11,7 +11,6 @@ const TabPane = Tabs.TabPane;
 const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
   {title: '标题', dataIndex: 'title', key: 'title'},
-  {title: '所属专栏', dataIndex: 'channelId', key: 'channelId'},
   {title: '描述', dataIndex: 'hint', key: 'hint'},
   {title: '节次', dataIndex: 'itemOrder', key: 'itemOrder'},
   {title: '主讲人', dataIndex: 'presenterName', key: 'presenterName'},

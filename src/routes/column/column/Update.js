@@ -3,7 +3,7 @@ import {Button, Col, Form, Icon, Input, message, Modal, Row, Select, Switch} fro
 import UEditor from '../../../components/editor/UEditor';
 import {updatePubCustomize} from "../../../service/customize";
 import {loadMemberTeacherDataSet} from "../../../service/member";
-import LazyLoad from 'react-lazyload';
+import LazyLoad from 'react-lazy-load';
 
 
 const FormItem = Form.Item;
@@ -86,7 +86,7 @@ class New extends Component {
             </Col>
             <Col span={24}>
               <FormItem {...formItemLayout} label="介绍">
-                <LazyLoad height={200}>
+                <LazyLoad height={400}>
                   <UEditor id="update_courseIntroduction" height="200" initialValue={introduction}/>
                 </LazyLoad>
               </FormItem>

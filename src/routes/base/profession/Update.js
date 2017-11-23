@@ -6,7 +6,7 @@ import {
   loadDataProfessionSubjectDataSet,
   updateDataUniversity
 } from '../../../service/base';
-import LazyLoad from 'react-lazyload';
+import LazyLoad from 'react-lazy-load';
 
 const FormItem = Form.Item;
 
@@ -167,14 +167,14 @@ class Update extends Component {
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="专业详情">
-              <LazyLoad height={200}>
+              <LazyLoad height={400}>
                 <UEditor id="detail" height="400" initValue={detail}/>
               </LazyLoad>
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="开设院校">
-              <LazyLoad height={200}>
+              <LazyLoad height={400}>
                 <UEditor id="offer" height="200" initValue={offer}/>
               </LazyLoad>
             </FormItem>

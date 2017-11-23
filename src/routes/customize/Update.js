@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Button, Col, Form, Input, message, Modal, Row} from 'antd';
 import UEditor from '../../components/editor/UEditor';
 import {updatePubCustomize} from "../../service/customize";
-import LazyLoad from 'react-lazyload';
+import LazyLoad from 'react-lazy-load';
 
 
 const FormItem = Form.Item;
@@ -72,7 +72,7 @@ class New extends Component {
               {...formItemLayout}
               label="内容"
             >
-              <LazyLoad height={200}>
+              <LazyLoad height={400}>
                 <UEditor id="update_customizeContent" height="200" initValue={content}/>
               </LazyLoad>
             </FormItem>

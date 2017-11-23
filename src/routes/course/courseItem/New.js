@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Button, Col, Form, Icon, Input, message, Row, Select, Switch} from 'antd';
 import {createServiceCourseItem, loadServiceCourseDataSet} from '../../../service/course';
 import {loadMemberTeacherDataSet} from "../../../service/member";
-import LazyLoad from 'react-lazyload';
+import LazyLoad from 'react-lazy-load';
 import UEditor from "../../../components/editor/UEditor";
 
 const FormItem = Form.Item;
@@ -145,7 +145,7 @@ class New extends Component {
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="课程介绍">
-              <LazyLoad height={200}>
+              <LazyLoad height={400}>
                 <UEditor id="update_courseItemIntroduction" height="200"/>
               </LazyLoad>
             </FormItem>

@@ -4,7 +4,7 @@ import UEditor from '../../../components/editor/UEditor';
 import {createServiceCourse, loadServiceCourseCategoryDataSet} from "../../../service/course";
 import {loadMemberTeacherDataSet} from '../../../service/member';
 import {API_DOMAIN} from "../../../config";
-import LazyLoad from 'react-lazyload';
+import LazyLoad from 'react-lazy-load';
 
 
 const FormItem = Form.Item;
@@ -225,7 +225,7 @@ class New extends Component {
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} label="介绍">
-              <LazyLoad height={200}>
+              <LazyLoad height={400}>
                 <UEditor id="introduction" height="200"/>
               </LazyLoad>
             </FormItem>

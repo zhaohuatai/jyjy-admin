@@ -4,7 +4,7 @@ import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, Upload} fr
 import UEditor from '../../../components/editor/UEditor';
 import {createDataUniversity} from '../../../service/base';
 import {loadProvinceList} from '../../../service/dic';
-import LazyLoad from 'react-lazyload';
+import LazyLoad from 'react-lazy-load';
 
 const FormItem = Form.Item;
 
@@ -290,7 +290,7 @@ class New extends Component {
               {...formItemLayout}
               label="特色专业"
             >
-              <LazyLoad height={200}>
+              <LazyLoad height={400}>
                 <UEditor id="specialProfession" height="200"/>
               </LazyLoad>
 
@@ -301,14 +301,14 @@ class New extends Component {
               {...formItemLayout}
               label="学校简介"
             >
-              <LazyLoad height={200}>
+              <LazyLoad height={400}>
                 <UEditor id="introduction" height="200"/>
               </LazyLoad>
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="师资力量">
-              <LazyLoad height={200}>
+              <LazyLoad height={400}>
                 <UEditor id="faculty" height="200"/>
               </LazyLoad>
             </FormItem>

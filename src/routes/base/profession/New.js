@@ -6,7 +6,7 @@ import {
   loadDataProfessionCategoryDataSet,
   loadDataProfessionSubjectDataSet
 } from '../../../service/base';
-import LazyLoad from 'react-lazyload';
+import LazyLoad from 'react-lazy-load';
 
 
 const FormItem = Form.Item;
@@ -170,7 +170,7 @@ class New extends Component {
                 initialValue: '',
                 rules: []
               })(
-                <LazyLoad height={200}>
+                <LazyLoad height={400}>
                   <UEditor id="detail" height="400"/>
                 </LazyLoad>
               )}
@@ -182,7 +182,7 @@ class New extends Component {
                 initialValue: '',
                 rules: []
               })(
-                <LazyLoad height={200}>
+                <LazyLoad height={400}>
                   <UEditor id="offer" height="200"/>
                 </LazyLoad>
               )}

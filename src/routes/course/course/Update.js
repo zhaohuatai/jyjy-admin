@@ -4,7 +4,7 @@ import {Button, Col, Form, Icon, Input, message, Modal, Row, Select, Switch, Upl
 import UEditor from '../../../components/editor/UEditor';
 import {loadServiceCourseCategoryDataSet, updateServiceCourse} from "../../../service/course";
 import {loadMemberTeacherDataSet} from '../../../service/member';
-import LazyLoad from 'react-lazyload';
+import LazyLoad from 'react-lazy-load';
 
 
 const FormItem = Form.Item;
@@ -231,7 +231,7 @@ class Update extends Component {
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} label="介绍">
-              <LazyLoad height={200}>
+              <LazyLoad height={400}>
                 <UEditor id="introduction" height="200" initValue={introduction}/>
               </LazyLoad>
             </FormItem>

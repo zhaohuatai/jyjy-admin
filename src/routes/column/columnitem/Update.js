@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Input, message, Modal, Row, Select} from 'antd';
+import {Button, Col, Form, Input, message, Modal, Row, Select, Switch} from 'antd';
 import {loadColumnChannelDataSet, updateColumnChannelItem} from "../../../service/column";
 import {loadMemberTeacherDataSet} from "../../../service/member";
 

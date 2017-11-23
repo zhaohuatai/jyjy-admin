@@ -7,7 +7,7 @@ import {
   reloadUploadVideoAuth,
   updateServiceCourseItem
 } from '../../../service/course';
-import LazyLoad from 'react-lazyload';
+import LazyLoad from 'react-lazy-load';
 import '../../../utils/aliupload/aliyun-sdk.min';
 import '../../../utils/aliupload/vod-sdk-upload-1.0.6.min';
 import {loadMemberTeacherDataSet} from "../../../service/member";
@@ -335,7 +335,7 @@ class Update extends Component {
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="课程介绍">
-              <LazyLoad height={200}>
+              <LazyLoad height={400}>
                 <UEditor id="update_courseItemIntroduction" height="200" initValue={introduction}/>
               </LazyLoad>
             </FormItem>

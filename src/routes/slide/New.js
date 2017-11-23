@@ -3,7 +3,7 @@ import {API_DOMAIN} from '../../utils/config';
 import {Button, Col, Form, Icon, Input, message, Row, Select, Upload} from 'antd';
 import UEditor from '../../components/editor/UEditor';
 import {createPubSlide} from '../../service/slide';
-import LazyLoad from 'react-lazyload';
+import LazyLoad from 'react-lazy-load';
 
 
 const FormItem = Form.Item;
@@ -126,7 +126,7 @@ class New extends Component {
               {...formItemLayout}
               label="学历要求"
             >
-              <LazyLoad height={200}>
+              <LazyLoad height={400}>
                 <UEditor id="slide_content" height="200"/>
               </LazyLoad>
             </FormItem>
