@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Button, Col, Form, Input, message, Row, Select} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
 import {createDataCareer, loadDataCareerCategoryDataSet} from '../../../service/base';
+import LazyLoad from 'react-lazyload';
+
 
 const FormItem = Form.Item;
 const Option = Select.Option;

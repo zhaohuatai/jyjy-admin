@@ -3,6 +3,8 @@ import {API_DOMAIN} from '../../utils/config';
 import {Button, Col, Form, Icon, Input, message, Row, Select, Upload} from 'antd';
 import UEditor from '../../components/editor/UEditor';
 import {createPubSlide} from '../../service/slide';
+import LazyLoad from 'react-lazyload';
+
 
 const FormItem = Form.Item;
 const Option = Select.Option;

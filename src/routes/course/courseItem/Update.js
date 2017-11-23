@@ -7,7 +7,7 @@ import {
   reloadUploadVideoAuth,
   updateServiceCourseItem
 } from '../../../service/course';
-
+import LazyLoad from 'react-lazyload';
 import '../../../utils/aliupload/aliyun-sdk.min';
 import '../../../utils/aliupload/vod-sdk-upload-1.0.6.min';
 import {loadMemberTeacherDataSet} from "../../../service/member";

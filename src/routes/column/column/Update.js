@@ -3,6 +3,8 @@ import {Button, Col, Form, Icon, Input, message, Modal, Row, Select, Switch} fro
 import UEditor from '../../../components/editor/UEditor';
 import {updatePubCustomize} from "../../../service/customize";
 import {loadMemberTeacherDataSet} from "../../../service/member";
+import LazyLoad from 'react-lazyload';
+
 
 const FormItem = Form.Item;
 

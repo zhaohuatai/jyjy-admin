@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Button, Col, Form, Icon, Input, message, Row, Select, Switch} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
 import {createServiceCourse} from "../../../service/course";
+import LazyLoad from 'react-lazyload';
+
 
 const FormItem = Form.Item;
 

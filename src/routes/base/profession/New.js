@@ -6,6 +6,8 @@ import {
   loadDataProfessionCategoryDataSet,
   loadDataProfessionSubjectDataSet
 } from '../../../service/base';
+import LazyLoad from 'react-lazyload';
+
 
 const FormItem = Form.Item;
 

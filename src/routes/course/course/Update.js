@@ -4,6 +4,8 @@ import {Button, Col, Form, Icon, Input, message, Modal, Row, Select, Switch, Upl
 import UEditor from '../../../components/editor/UEditor';
 import {loadServiceCourseCategoryDataSet, updateServiceCourse} from "../../../service/course";
 import {loadMemberTeacherDataSet} from '../../../service/member';
+import LazyLoad from 'react-lazyload';
+
 
 const FormItem = Form.Item;
 

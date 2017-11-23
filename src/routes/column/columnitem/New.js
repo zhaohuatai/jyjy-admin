@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Button, Col, Form, Icon, Input, message, Row, Select, Switch} from 'antd';
 import {createServiceCourseItem, loadServiceCourseDataSet} from '../../../service/course';
 import {loadMemberTeacherDataSet} from "../../../service/member";
+import LazyLoad from 'react-lazyload';
+
 
 const FormItem = Form.Item;
 const Option = Select.Option;

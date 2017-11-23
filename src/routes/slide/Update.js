@@ -4,6 +4,8 @@ import {Button, Col, Form, Icon, Input, message, Modal, Row, Select, Switch, Upl
 import UEditor from '../../components/editor/UEditor';
 import {updateDataUniversity} from '../../service/base';
 import {loadProvinceList} from '../../service/dic';
+import LazyLoad from 'react-lazyload';
+
 
 const FormItem = Form.Item;
 const Option = Select.Option;

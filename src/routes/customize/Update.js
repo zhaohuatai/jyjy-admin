@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Button, Col, Form, Input, message, Modal, Row} from 'antd';
 import UEditor from '../../components/editor/UEditor';
 import {updatePubCustomize} from "../../service/customize";
+import LazyLoad from 'react-lazyload';
+
 
 const FormItem = Form.Item;
 

@@ -4,6 +4,8 @@ import UEditor from '../../../components/editor/UEditor';
 import {createServiceCourse, loadServiceCourseCategoryDataSet} from "../../../service/course";
 import {loadMemberTeacherDataSet} from '../../../service/member';
 import {API_DOMAIN} from "../../../config";
+import LazyLoad from 'react-lazyload';
+
 
 const FormItem = Form.Item;
 
