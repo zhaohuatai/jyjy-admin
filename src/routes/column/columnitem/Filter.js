@@ -1,10 +1,26 @@
 import React, {Component} from 'react';
 import {Button, Col, Dropdown, Form, Icon, Input, Menu, Row, Select} from 'antd';
+import {loadColumnChannelDataSet} from "../../../service/column";
 
-const Option = Select.Option;
 const FormItem = Form.Item;
 
 class Filter extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      search_form: {},
+      channelList: [],
+      recycleStr: true,
+    };
+  }
+
+  componentDidMount() {
+    loadColumnChannelDataSet({rows: 100}).then(data => {
+      this.setState({channelList: data.data.dataSet.rows})
+    })
+  }
+
   //  触发操作
   handleActionClick = ({item, key, keyPath}) => {
     console.log(key);
@@ -38,19 +54,6 @@ class Filter extends Component {
     this.props.doSearch(form);
   }
 
-  // 清空搜索条件
-  handleClean = () => {
-    this.props.cleanform();
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      search_form: {},
-      recycleStr: true
-    };
-  }
-
   render() {
     const {getFieldDecorator} = this.props.form;
 
@@ -77,6 +80,22 @@ class Filter extends Component {
                 initialValue: ''
               })(
                 <Input addonBefore='标题' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
+              )}
+            </FormItem>
+          </Col>
+
+          <Col span={4}>
+            <FormItem>
+              {getFieldDecorator('channelId', {
+                initialValue: 1,
+              })(
+                <Select placeholder="选择专栏">
+                  {
+                    this.state.channelList.map(item => {
+                      return <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
+                    })
+                  }
+                </Select>
               )}
             </FormItem>
           </Col>

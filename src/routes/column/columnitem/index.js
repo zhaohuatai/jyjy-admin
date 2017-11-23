@@ -11,7 +11,7 @@ const TabPane = Tabs.TabPane;
 const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
   {title: '标题', dataIndex: 'name', key: 'title'},
-  {title: '所属课程', dataIndex: 'courseId', key: 'courseId'},
+  {title: '所属专栏', dataIndex: '', key: 'courseId'},
   {title: '描述', dataIndex: 'hint', key: 'hint'},
   {title: '节次', dataIndex: 'itemOrder', key: 'itemOrder'},
   {title: '主讲人', dataIndex: 'presenterName', key: 'presenterName'},
@@ -104,7 +104,7 @@ class School extends Component {
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
         <Tabs defaultActiveKey="1">
-          <TabPane tab="课程小节列表" key="1">
+          <TabPane tab="期列表" key="1">
             <Filter
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}

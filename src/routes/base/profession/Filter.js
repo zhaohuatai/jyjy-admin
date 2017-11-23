@@ -5,10 +5,6 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 
 class Filter extends Component {
-  // 清空搜索条件
-  handleClean = () => {
-    this.props.cleanform();
-  }
 
   doSearch = () => {
     let form = this.state;

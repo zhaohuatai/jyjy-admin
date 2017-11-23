@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { hashHistory} from 'react-router';
-import { Layout, Menu, Breadcrumb, Icon ,Footer} from 'antd';
+import React from 'react';
+import {connect} from 'react-redux';
+import {hashHistory} from 'react-router';
+import {Footer, Icon, Layout, Menu} from 'antd';
 import IndexHeader from './Header';
 import style from './Layout.scss';
 import {loadCategoryTree} from '../../service/auth';
@@ -59,7 +59,7 @@ class IndexLayout extends React.Component {
           collapsed={this.state.collapsed}
           onCollapse={this.onCollapse}
         >
-          <div className={style.logo} >水墨人生-后台</div>
+          <div className={style.logo}>经英教育-后台</div>
           <Menu theme="dark" defaultSelectedKeys={['/']} selectedKeys={this.state.selectedkey} mode="inline" onClick={this.handelSelect}>
             {
               this.state.menudata.map(item=>{

@@ -1,7 +1,7 @@
 import 'whatwg-fetch';
-import { hashHistory } from 'react-router';
-import { API_DOMAIN } from './config';
-import { message } from 'antd';
+import {hashHistory} from 'react-router';
+import {API_DOMAIN} from './config';
+import {message} from 'antd';
 import md5 from 'blueimp-md5';
 
 /**
@@ -46,7 +46,7 @@ export function get(url, params = '') {
       response.json();
     }).then((responseData) => {
       const checkCodeResult = checkCode(responseData.statusCode);
-      if (checkCodeResult.code === 200) {
+      if (checkCodeResult && checkCodeResult.code === 200) {
         resolve(responseData);
       } else {
         message.error(checkCodeResult.re_message);
@@ -87,7 +87,7 @@ export function post(url, params = '') {
       return response.json();
     }).then((responseData) => {
       const checkCodeResult = checkCode(responseData.statusCode, responseData.message);
-      if (checkCodeResult.code === 200) {
+      if (checkCodeResult && checkCodeResult.code === 200) {
         resolve(responseData);
       } else {
         reject(checkCodeResult.message);
@@ -115,7 +115,7 @@ export function postImg(url,params=''){
       return response.json();
     }).then((responseData) => {
       const checkCodeResult = checkCode(responseData.statusCode, responseData.message);
-      if (checkCodeResult.code === 200) {
+      if (checkCodeResult && checkCodeResult.code === 200) {
         resolve(responseData);
       } else {
         reject(checkCodeResult.message);

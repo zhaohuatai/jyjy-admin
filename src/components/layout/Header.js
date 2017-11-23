@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './Layout.scss';
-import { Menu, Icon, Popover, Layout } from 'antd';
+import {Icon, Layout, Menu} from 'antd';
 
 const SubMenu = Menu.SubMenu
 const { Header, Content, Sider, Footer } = Layout;
@@ -25,7 +25,7 @@ const IndexHeader = ({user,childern,action}) => {
         {childern}
       </Content>
       <Footer style={{ textAlign: 'center' }}>
-      Ant Design ©2017 Created by 水墨人生
+        Ant Design ©2017 Created by 经英教育
       </Footer>
     </Layout>
     

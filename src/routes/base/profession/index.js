@@ -21,7 +21,7 @@ const table_columns = [
   {title: '毕业5年', dataIndex: 'salary', key: 'salary'},
   {
     title: '开设院校', dataIndex: 'offer', key: 'offer', render: (text) => {
-    text = text.replace(/<br \/>/g, ",");
+    text = text.replace(/<.+\/>/g, ",");
     return text.length > 15 ? text.substr(0, 10) + "..." : text
   }
   },

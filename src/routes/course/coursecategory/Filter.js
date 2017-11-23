@@ -18,10 +18,6 @@ class Filter extends Component {
     let form = this.state;
     this.props.doSearch(form);
   }
-  // 清空搜索条件
-  handleClean = () => {
-    this.props.cleanform();
-  }
   //  触发操作
   handleActionClick = ({item, key, keyPath}) => {
     console.log(key);

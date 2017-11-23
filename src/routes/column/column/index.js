@@ -10,21 +10,18 @@ const TabPane = Tabs.TabPane;
 
 const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
-  {title: '频道名', dataIndex: 'title', key: 'title'},
+  {title: '专栏', dataIndex: 'title', key: 'title'},
   {title: '描述', dataIndex: 'hint', key: 'hint'},
   {title: '主讲人', dataIndex: 'presenterName', key: 'presenterName'},
   {title: '价格', dataIndex: 'price', key: 'price'},
   {title: '会员价格', dataIndex: 'priceVIP', key: 'priceVIP'},
   {title: '留言数', dataIndex: 'consultationCount', key: 'consultationCount'},
   {title: '收藏数', dataIndex: 'favoriteCount', key: 'favoriteCount'},
-  {title: '实际学习人数', dataIndex: 'learningCountActual', key: 'learningCountActual'},
-  {title: '学习人数', dataIndex: 'learningCount', key: 'learningCount'},
+  {title: '学习人数', dataIndex: 'learningCountActual', key: 'learningCountActual'},
   {title: '免费', dataIndex: 'freePay', key: 'freePay'},
   {title: '置顶', dataIndex: 'isTop', key: 'isTop'},
   {title: '显示顺序', dataIndex: 'showIndex', key: 'showIndex'},
-  {title: '创建时间', dataIndex: 'createTime', key: 'createTime'},
-  {title: '更新时间', dataIndex: 'updateTime', key: 'updateTime'},
-
+  {title: '备注', dataIndex: 'remark', key: 'remark'},
 ]
 
 class Course extends Component {
@@ -108,13 +105,12 @@ class Course extends Component {
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
         <Tabs defaultActiveKey="1">
-          <TabPane tab="频道列表" key="1">
+          <TabPane tab="专栏列表" key="1">
             <Filter
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
               doUpdate={this.handleUpdate}
               doDelete={this.handleDelete}
-
             />
             <Table
               dataSource={this.state.dataSet}

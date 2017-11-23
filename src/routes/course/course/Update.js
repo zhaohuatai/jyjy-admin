@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {API_DOMAIN} from '../../../utils/config';
-import {Button, Col, Form, Input, message, Modal, Row, Select, Switch, Upload} from 'antd';
+import {Button, Col, Form, Icon, Input, message, Modal, Row, Select, Switch, Upload} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
 import {loadServiceCourseCategoryDataSet, updateServiceCourse} from "../../../service/course";
 import {loadMemberTeacherDataSet} from '../../../service/member';
@@ -133,7 +133,7 @@ class Update extends Component {
                 >
                   {
                     this.state.teacher_list.map(item => {
-                      return <Option key={item.id} value={`${item.id}`}>{item.name}</Option>
+                      return <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
                     })
                   }
                 </Select>
@@ -160,7 +160,7 @@ class Update extends Component {
             <FormItem {...formItemLayout} label="免费课程">
               {getFieldDecorator('freePay', {
                 valuePropName: 'checked',
-                initialValue: !!freePay,
+                initialValue: !freePay,
                 rules: []
               })(
                 <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
@@ -203,7 +203,7 @@ class Update extends Component {
                 valuePropName: 'checked',
                 initialValue: !!isTop,
               })(
-                <Switch />
+                <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
               )}
             </FormItem>
           </Col>

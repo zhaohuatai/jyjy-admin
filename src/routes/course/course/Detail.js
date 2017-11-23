@@ -131,7 +131,7 @@ class New extends Component {
             {...formItemLayout}
             label="免费"
           >
-            <Switch checked={!!freePay}/>
+            <p>{freePay ? "否" : "是"}</p>
           </FormItem>
           </Col>
           <Col span={24}>

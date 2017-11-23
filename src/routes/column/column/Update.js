@@ -109,7 +109,7 @@ class New extends Component {
               <FormItem {...formItemLayout} label="免费课程">
                 {getFieldDecorator('freePay', {
                   valuePropName: 'checked',
-                  initialValue: !!freePay,
+                  initialValue: !freePay,
                   rules: []
                 })(
                   <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>

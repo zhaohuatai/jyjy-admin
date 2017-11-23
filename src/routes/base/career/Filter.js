@@ -38,10 +38,6 @@ class Filter extends Component {
     this.props.doSearch(form);
   }
 
-  // 清空搜索条件
-  handleClean = () => {
-    this.props.cleanform();
-  }
 
   constructor(props) {
     super(props);
