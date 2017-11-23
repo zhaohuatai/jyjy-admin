@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Input, message, Row } from 'antd';
-import { updateServiceCourseCategory } from "../../../service/course";
+import {Button, Col, Form, Input, message, Row} from 'antd';
+import {updateServiceCourseCategory} from "../../../service/course";
 
 const FormItem = Form.Item;
 
@@ -49,10 +49,7 @@ class New extends Component {
       <div>
         <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="课程名"
-            >
+            <FormItem{...formItemLayout} label="课程名">
               {getFieldDecorator('categoryName', {
                 initialValue: categoryName,
                 rules: [

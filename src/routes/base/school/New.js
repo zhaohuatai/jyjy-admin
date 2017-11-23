@@ -291,7 +291,7 @@ class New extends Component {
               {...formItemLayout}
               label="特色专业"
             >
-              <LazyLoad once>
+              <LazyLoad height={200}>
                 <UEditor id="specialProfession" height="200"/>
               </LazyLoad>
 
@@ -302,14 +302,14 @@ class New extends Component {
               {...formItemLayout}
               label="学校简介"
             >
-              <LazyLoad once>
+              <LazyLoad height={200}>
                 <UEditor id="introduction" height="200"/>
               </LazyLoad>
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="师资力量">
-              <LazyLoad once>
+              <LazyLoad height={200}>
                 <UEditor id="faculty" height="200"/>
               </LazyLoad>
             </FormItem>

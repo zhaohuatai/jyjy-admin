@@ -120,51 +120,36 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="学历要求"
-            >
-              <LazyLoad once>
+            <FormItem{...formItemLayout} label="学历要求">
+              <LazyLoad height={200}>
                 <UEditor id="career_back" height="200"/>
               </LazyLoad>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="主要课程"
-            >
-              <LazyLoad once>
+            <FormItem{...formItemLayout} label="主要课程">
+              <LazyLoad height={200}>
                 <UEditor id="career_course" height="200"/>
               </LazyLoad>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="职业定义"
-            >
-              <LazyLoad once>
+            <FormItem{...formItemLayout} label="职业定义">
+              <LazyLoad height={200}>
                 <UEditor id="career_definition" height="200"/>
               </LazyLoad>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="工作内容"
-            >
-              <LazyLoad once>
+            <FormItem{...formItemLayout} label="工作内容">
+              <LazyLoad height={200}>
                 <UEditor id="career_duty" height="200"/>
               </LazyLoad>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="个人发展路径"
-            >
-              <LazyLoad once>
+            <FormItem{...formItemLayout} label="个人发展路径">
+              <LazyLoad height={200}>
                 <UEditor id="career_fore" height="200"/>
               </LazyLoad>
             </FormItem>
@@ -174,7 +159,7 @@ class New extends Component {
               {...formItemLayout}
               label="简介"
             >
-              <LazyLoad once>
+              <LazyLoad height={200}>
                 <UEditor id="career_intro" height="200"/>
               </LazyLoad>
             </FormItem>
@@ -184,7 +169,7 @@ class New extends Component {
               {...formItemLayout}
               label="薪酬结构"
             >
-              <LazyLoad once>
+              <LazyLoad height={200}>
                 <UEditor id="career_money" height="200"/>
               </LazyLoad>
             </FormItem>
@@ -194,7 +179,7 @@ class New extends Component {
               {...formItemLayout}
               label="主要职责"
             >
-              <LazyLoad once>
+              <LazyLoad height={200}>
                 <UEditor id="career_moral" height="200"/>
               </LazyLoad>
             </FormItem>
@@ -204,7 +189,7 @@ class New extends Component {
               {...formItemLayout}
               label="资格"
             >
-              <LazyLoad once>
+              <LazyLoad height={200}>
                 <UEditor id="career_qualify" height="200"/>
               </LazyLoad>
             </FormItem>
@@ -214,7 +199,7 @@ class New extends Component {
               {...formItemLayout}
               label="技能"
             >
-              <LazyLoad once>
+              <LazyLoad height={200}>
                 <UEditor id="career_skill" height="200"/>
               </LazyLoad>
             </FormItem>
@@ -224,7 +209,7 @@ class New extends Component {
               {...formItemLayout}
               label="工具"
             >
-              <LazyLoad once>
+              <LazyLoad height={200}>
                 <UEditor id="career_tools" height="200"/>
               </LazyLoad>
             </FormItem>
@@ -234,7 +219,7 @@ class New extends Component {
               {...formItemLayout}
               label="要求"
             >
-              <LazyLoad once>
+              <LazyLoad height={200}>
                 <UEditor id="career_claim" height="200"/>
               </LazyLoad>
             </FormItem>
@@ -244,7 +229,7 @@ class New extends Component {
               {...formItemLayout}
               label="工作地点"
             >
-              <LazyLoad once>
+              <LazyLoad height={200}>
                 <UEditor id="career_local" height="200"/>
               </LazyLoad>
             </FormItem>
@@ -260,4 +245,4 @@ class New extends Component {
   }
 }
 
-export default Form.create()(New);;
+export default Form.create()(New);

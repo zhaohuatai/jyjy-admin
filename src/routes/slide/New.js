@@ -126,7 +126,7 @@ class New extends Component {
               {...formItemLayout}
               label="学历要求"
             >
-              <LazyLoad once>
+              <LazyLoad height={200}>
                 <UEditor id="slide_content" height="200"/>
               </LazyLoad>
             </FormItem>

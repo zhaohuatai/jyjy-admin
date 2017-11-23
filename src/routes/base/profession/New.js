@@ -170,7 +170,7 @@ class New extends Component {
                 initialValue: '',
                 rules: []
               })(
-                <LazyLoad once>
+                <LazyLoad height={200}>
                   <UEditor id="detail" height="400"/>
                 </LazyLoad>
               )}
@@ -182,7 +182,7 @@ class New extends Component {
                 initialValue: '',
                 rules: []
               })(
-                <LazyLoad once>
+                <LazyLoad height={200}>
                   <UEditor id="offer" height="200"/>
                 </LazyLoad>
               )}

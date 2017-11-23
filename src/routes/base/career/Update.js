@@ -336,7 +336,7 @@ class New extends Component {
               {...formItemLayout}
               label="特色专业"
             >
-              <LazyLoad once>
+              <LazyLoad height={200}>
                 <UEditor id="update_specialProfession" height="200" initValue={specialProfession}/>
               </LazyLoad>
             </FormItem>
@@ -346,7 +346,7 @@ class New extends Component {
               {...formItemLayout}
               label="学校简介"
             >
-              <LazyLoad once>
+              <LazyLoad height={200}>
                 <UEditor id="update_introduction" height="200" initValue={introduction}/>
               </LazyLoad>
             </FormItem>
@@ -356,7 +356,7 @@ class New extends Component {
               {...formItemLayout}
               label="师资力量"
             >
-              <LazyLoad once>
+              <LazyLoad height={200}>
                 <UEditor id="update_faculty" height="200" initValue={faculty}/>
               </LazyLoad>
             </FormItem>

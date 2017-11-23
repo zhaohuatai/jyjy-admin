@@ -36,15 +36,9 @@ class New extends Component {
 
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
-    formData = {
-      ...formData,
-
-    };
 
     formData.freePay ? formData.freePay = 0 : formData.freePay = 1;
     formData.isTop ? formData.isTop = 1 : formData.isTop = 0;
-
-    console.log(formData);
 
     if (formData.coverUrl) {
       formData.coverUrl = formData.coverUrl[0].response.data.image;
@@ -76,10 +70,7 @@ class New extends Component {
       <div>
         <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="课程名"
-            >
+            <FormItem{...formItemLayout} label="课程名">
               {getFieldDecorator('name', {
                 initialValue: '',
                 rules: [
@@ -142,7 +133,7 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="校徽图片"
+              label="课程封面"
             >
               {getFieldDecorator('coverUrl', {
                 valuePropName: 'fileList',
@@ -234,7 +225,7 @@ class New extends Component {
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} label="介绍">
-              <LazyLoad once>
+              <LazyLoad height={200}>
                 <UEditor id="introduction" height="200"/>
               </LazyLoad>
             </FormItem>
@@ -249,4 +240,3 @@ class New extends Component {
 }
 
 export default Form.create()(New);
-;

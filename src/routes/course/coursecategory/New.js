@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Input, message, Row } from 'antd';
-import { createServiceCourseCategory } from "../../../service/course";
+import {Button, Col, Form, Input, message, Row} from 'antd';
+import {createServiceCourseCategory} from "../../../service/course";
 
 const FormItem = Form.Item;
 
@@ -43,48 +43,47 @@ class New extends Component {
     };
 
     return (
-      <div>
-        <Row type='flex' style={{marginBottom: '5px'}}>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="课程名"
-            >
-              {getFieldDecorator('categoryName', {
-                initialValue: '',
-                rules: [
-                  {required: true, message: '请输入名称'},
-                ]
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem {...formItemLayout} label="显示顺序">
-              {getFieldDecorator('showIndex', {
-                initialValue: '',
-                rules: []
-              })(
-                <Input type='number'/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem {...formItemLayout} label="备注">
-              {getFieldDecorator('remark', {
-                initialValue: '',
-                rules: []
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-        </Row>
-        <FormItem wrapperCol={{span: 12, offset: 4}}>
-          <Button type="primary" onClick={this.handleSubmit}>创建</Button>
-        </FormItem>
-      </div>
+      <Modal title="详情" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width="80%">
+        <div>
+          <Row type='flex' style={{marginBottom: '5px'}}>
+            <Col span={24}>
+              <FormItem{...formItemLayout} label="分类名">
+                {getFieldDecorator('categoryName', {
+                  initialValue: '',
+                  rules: [
+                    {required: true, message: '请输入名称'},
+                  ]
+                })(
+                  <Input/>
+                )}
+              </FormItem>
+            </Col>
+            <Col span={24}>
+              <FormItem {...formItemLayout} label="显示顺序">
+                {getFieldDecorator('showIndex', {
+                  initialValue: '',
+                  rules: []
+                })(
+                  <Input type='number'/>
+                )}
+              </FormItem>
+            </Col>
+            <Col span={24}>
+              <FormItem {...formItemLayout} label="备注">
+                {getFieldDecorator('remark', {
+                  initialValue: '',
+                  rules: []
+                })(
+                  <Input/>
+                )}
+              </FormItem>
+            </Col>
+          </Row>
+          <FormItem wrapperCol={{span: 12, offset: 4}}>
+            <Button type="primary" onClick={this.handleSubmit}>创建</Button>
+          </FormItem>
+        </div>
+      </Modal>
     )
   }
 }

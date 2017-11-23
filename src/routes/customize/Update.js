@@ -72,7 +72,7 @@ class New extends Component {
               {...formItemLayout}
               label="内容"
             >
-              <LazyLoad once>
+              <LazyLoad height={200}>
                 <UEditor id="update_customizeContent" height="200" initValue={content}/>
               </LazyLoad>
             </FormItem>
