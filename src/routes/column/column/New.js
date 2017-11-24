@@ -1,43 +1,37 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Icon, Input, message, Row, Select, Switch} from 'antd';
-import UEditor from '../../../components/editor/UEditor';
-import {createServiceCourse} from "../../../service/course";
-import LazyLoad from 'react-lazy-load';
+import {createColumnChannel} from "../../../service/column";
+import {loadMemberTeacherDataSet} from "../../../service/member";
 
 
 const FormItem = Form.Item;
 
 class New extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      categoryList: []
-    }
-  }
-
-  componentDidMount() {
-    loadServiceCourseCategoryDataSet({rows: 100}).then(data => {
-      this.setState({categoryList: data.data.dataSet.rows})
-    })
-  }
 
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
-    formData = {
-      ...formData,
-
-    };
 
     formData.freePay ? formData.freePay = 0 : formData.freePay = 1;
     formData.isTop ? formData.isTop = 1 : formData.freePay = 0;
 
-    console.log(formData);
-
-    createServiceCourse(formData).then(data => {
+    createColumnChannel(formData).then(data => {
       this.props.form.resetFields();
       message.success("创建成功！");
     }).catch((e) => {
       message.error(e);
+    })
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      presenterList: []
+    }
+  }
+
+  componentDidMount() {
+    loadMemberTeacherDataSet({rows: 1000}).then(data => {
+      this.setState({presenterList: data.data.dataSet.rows})
     })
   }
 
@@ -59,14 +53,11 @@ class New extends Component {
       <div>
         <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="课程名"
-            >
-              {getFieldDecorator('name', {
+            <FormItem{...formItemLayout} label="专栏标题">
+              {getFieldDecorator('title', {
                 initialValue: '',
                 rules: [
-                  {required: true, message: '请输入名称'},
+                  {required: true, message: '请输入'},
                 ]
               })(
                 <Input/>
@@ -84,19 +75,15 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem {...formItemLayout} label="选择分类">
-              {getFieldDecorator('categoryId', {
-                initialValue: '',
+            <FormItem{...formItemLayout} label="主讲人">
+              {getFieldDecorator('presenterId', {
                 rules: [
-                  {required: true, message: '请选择分类'},
+                  {required: true, message: '请选择主讲人'},
                 ]
               })(
-                <Select
-                  placeholder="选择分类"
-                  style={{width: '200px'}}
-                >
+                <Select placeholder="选择主讲人" style={{width: '200px'}}>
                   {
-                    this.state.categoryList.map(item => {
+                    this.state.presenterList.map(item => {
                       return <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
                     })
                   }
@@ -107,14 +94,15 @@ class New extends Component {
           <Col span={24}>
             <FormItem {...formItemLayout} label="介绍">
               <LazyLoad height={400}>
-                <UEditor id="introduction" height="200"/>
+                <UEditor id="update_courseIntroduction" height="200" initialValue={introduction}/>
               </LazyLoad>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem {...formItemLayout} label="是否免费">
+            <FormItem {...formItemLayout} label="免费课程">
               {getFieldDecorator('freePay', {
                 valuePropName: 'checked',
+                initialValue: false,
                 rules: []
               })(
                 <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
@@ -122,7 +110,7 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem {...formItemLayout} label="普通价格">
+            <FormItem {...formItemLayout} label="价格">
               {getFieldDecorator('price', {
                 initialValue: '',
                 rules: []
@@ -147,14 +135,15 @@ class New extends Component {
                 initialValue: '',
                 rules: []
               })(
-                <Input/>
+                <Input type="number"/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem {...formItemLayout} label="是否置顶">
+            <FormItem {...formItemLayout} label="置顶">
               {getFieldDecorator('isTop', {
                 valuePropName: 'checked',
+                initialValue: false,
                 rules: []
               })(
                 <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
@@ -167,7 +156,7 @@ class New extends Component {
                 initialValue: '',
                 rules: []
               })(
-                <Input/>
+                <Input type="number"/>
               )}
             </FormItem>
           </Col>

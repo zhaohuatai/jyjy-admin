@@ -19,10 +19,10 @@ class New extends Component {
   }
 
   componentDidMount() {
-    loadServiceCourseCategoryDataSet({rows: 100}).then(data => {
+    loadServiceCourseCategoryDataSet({rows: 1000}).then(data => {
       this.setState({categoryList: data.data.dataSet.rows})
     })
-    loadMemberTeacherDataSet({rows: 100}).then(data => {
+    loadMemberTeacherDataSet({rows: 1000}).then(data => {
       this.setState({teacher_list: data.data.dataSet.rows})
     })
   }

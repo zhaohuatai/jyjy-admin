@@ -27,11 +27,11 @@ class New extends Component {
   }
 
   componentDidMount() {
-    loadColumnChannelDataSet({rows: 100}).then(data => {
+    loadColumnChannelDataSet({rows: 1000}).then(data => {
       this.setState({channelList: data.data.dataSet.rows})
     });
 
-    loadMemberTeacherDataSet({rows: 100}).then(data => {
+    loadMemberTeacherDataSet({rows: 1000}).then(data => {
       this.setState({presenterList: data.data.dataSet.rows})
     })
   }

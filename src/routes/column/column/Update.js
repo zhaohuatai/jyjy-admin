@@ -18,7 +18,7 @@ class New extends Component {
   }
 
   componentDidMount() {
-    loadMemberTeacherDataSet({rows: 100}).then(data => {
+    loadMemberTeacherDataSet({rows: 1000}).then(data => {
       this.setState({presenterList: data.data.dataSet.rows})
     })
   }
@@ -85,15 +85,8 @@ class New extends Component {
               </FormItem>
             </Col>
             <Col span={24}>
-              <FormItem {...formItemLayout} label="介绍">
-                <LazyLoad height={400}>
-                  <UEditor id="update_courseIntroduction" height="200" initialValue={introduction}/>
-                </LazyLoad>
-              </FormItem>
-            </Col>
-            <Col span={24}>
               <FormItem{...formItemLayout} label="主讲人">
-                {getFieldDecorator('type', {
+                {getFieldDecorator('presenterId', {
                   initialValue: presenterId,
                   rules: [
                     {required: true, message: '请选择主讲人'},
@@ -107,6 +100,13 @@ class New extends Component {
                     }
                   </Select>
                 )}
+              </FormItem>
+            </Col>
+            <Col span={24}>
+              <FormItem {...formItemLayout} label="介绍">
+                <LazyLoad height={400}>
+                  <UEditor id="update_courseIntroduction" height="200" initialValue={introduction}/>
+                </LazyLoad>
               </FormItem>
             </Col>
             <Col span={24}>

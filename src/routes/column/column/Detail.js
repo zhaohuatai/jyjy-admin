@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Col, Collapse, Form, Modal, Row, Switch} from 'antd';
+import {Col, Collapse, Form, Modal, Row} from 'antd';
 
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;
@@ -36,111 +36,74 @@ class New extends Component {
       >
         <Row type="flex" style={{marginBottom: '5px'}}>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="课程名"
-            >
+            <FormItem{...formItemLayout} label="课程名">
               <p>{title}</p>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="描述"
-            >
+            <FormItem{...formItemLayout} label="描述">
               <p>{hint}</p>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="主讲人"
-            >
+            <FormItem{...formItemLayout} label="主讲人">
               <p>{presenterName}</p>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="介绍"
-            >
+            <FormItem{...formItemLayout} label="介绍">
               <Collapse>
                 <Panel header="点击查看详情" key="1">
-                  <div dangerouslySetInnerHTML={{ __html: introduction }} />
+                  <div dangerouslySetInnerHTML={{__html: introduction}}/>
                 </Panel>
               </Collapse>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="普通价格"
-            >
+            <FormItem{...formItemLayout} label="普通价格">
               <p>{price}</p>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="会员价格"
-            >
+            <FormItem{...formItemLayout} label="会员价格">
               <p>{priceVIP}</p>
             </FormItem>
           </Col>
 
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="前台显示学习数"
-            >
+            <FormItem{...formItemLayout} label="前台显示学习数">
               <p>{learningCount}</p>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="实际学习人数"
-            >
+            <FormItem{...formItemLayout} label="实际学习人数">
               <p>{learningCountActual}</p>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="收藏数"
-            >
+            <FormItem{...formItemLayout} label="收藏数">
               <p>{favoriteCount}</p>
             </FormItem>
-          </Col><Col span={24}>
-          <FormItem
-            {...formItemLayout}
-            label="免费"
-          >
-            {freePay ? "否" : "是"}
-          </FormItem>
           </Col>
           <Col span={24}>
-          <FormItem
-            {...formItemLayout}
-            label="置顶"
-          >
-            <Switch checked={isTop}/>
-          </FormItem>
-        </Col><Col span={24}>
-          <FormItem
-            {...formItemLayout}
-            label="显示顺序"
-          >
+            <FormItem{...formItemLayout} label="免费">
+              {freePay ? "否" : "是"}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="置顶">
+              {isTop ? "是" : "否"}
+            </FormItem>
+          </Col><Col span={24}>
+          <FormItem{...formItemLayout} label="显示顺序">
             <p>{showIndex}</p>
           </FormItem>
-        </Col><Col span={24}>
-          <FormItem
-            {...formItemLayout}
-            label="备注"
-          >
-            <p>{remark}</p>
-          </FormItem>
         </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="备注">
+              <p>{remark}</p>
+            </FormItem>
+          </Col>
 
         </Row>
       </Modal>

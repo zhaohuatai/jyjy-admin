@@ -17,7 +17,7 @@ class Filter extends Component {
   }
 
   componentDidMount() {
-    loadColumnChannelDataSet({rows: 100}).then(data => {
+    loadColumnChannelDataSet({rows: 1000}).then(data => {
       this.setState({channelList: data.data.dataSet.rows})
       if (data.data.dataSet.rows) {
         this.setState({defaultChannel: data.data.dataSet.rows[0]['id']})
