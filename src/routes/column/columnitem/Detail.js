@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Col, Collapse, Form, Modal, Row} from 'antd';
 import {API_DOMAIN} from "../../../config";
-import {loadColumnChannel} from "../../../service/column";
 
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;
@@ -11,20 +10,11 @@ class New extends Component {
     super(props);
     this.state = {
       provinceList: [],
-      channel: []
     }
   }
 
-  componentDidMount() {
-    loadColumnChannel({id: this.props.data.id}).then(data => {
-      this.setState({channel: data.data.columnChannel})
-    })
-  }
-
   render() {
-    const {title, coverUrl, hint, content, itemOrder, presenterName, commentCount, freePay, price, priceVIP, remark} = this.props.data;
-
-    const {channel} = this.state;
+    const {title, channel, coverUrl, hint, content, itemOrder, presenterName, commentCount, freePay, price, priceVIP, remark} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -66,7 +56,7 @@ class New extends Component {
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="所属专栏">
-              <p>{channel.title}</p>
+              <p>{channel}</p>
             </FormItem>
           </Col>
           <Col span={24}>

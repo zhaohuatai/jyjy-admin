@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {Pagination, Table, Tabs} from 'antd';
-import {deleteServiceCourseItem, loadServiceCourseItem, loadServiceCourseItemDataSet} from '../../../service/course';
+import {deleteServiceCourseItem} from '../../../service/course';
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';
 import Detail from './Detail';
+import {loadColumnChannel, loadColumnChannelItem, loadColumnChannelItemDataSet} from "../../../service/column";
 
 const TabPane = Tabs.TabPane;
 
@@ -49,7 +50,7 @@ class School extends Component {
   // 获取数据
   handleRefresh = (params) => {
     this.setState({table_loading: true});
-    loadServiceCourseItemDataSet(params).then(data => {
+    loadColumnChannelItemDataSet(params).then(data => {
       this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
     })
   }
@@ -82,15 +83,18 @@ class School extends Component {
 
   // 更新
   handleUpdate = () => {
-    loadServiceCourseItem({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.setState({update_data: data.data.serviceCourseItem, update_display: true})
+    loadColumnChannelItem({id: this.state.selectedRowKeys[0]}).then(data => {
+      this.setState({update_data: data.data.columnChannelItem, update_display: true})
     })
   }
 
   // 显示详情
   handleShowDetail = (record) => {
-    loadServiceCourseItem({id: record.id}).then(data => {
-      this.setState({detail_data: data.data.serviceCourseItem, detail_display: true})
+    loadColumnChannel({id: record.channelId}).then(d => {
+      loadColumnChannelItem({id: record.id}).then(data => {
+        data.data.columnChannelItem['channel'] = d.title;
+        this.setState({detail_data: data.data.columnChannelItem, detail_display: true})
+      })
     })
   }
 
