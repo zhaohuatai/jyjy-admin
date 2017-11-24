@@ -4,6 +4,7 @@ import {loadColumnChannelDataSet, updateColumnChannelItem} from "../../../servic
 import {loadMemberTeacherDataSet} from "../../../service/member";
 import UEditor from "../../../components/editor/UEditor";
 import LazyLoad from 'react-lazy-load';
+import {API_DOMAIN} from "../../../config";
 
 const FormItem = Form.Item;
 
@@ -144,7 +145,8 @@ class New extends Component {
           <Col span={24}>
             <FormItem {...formItemLayout} label="内容">
               <LazyLoad height={600}>
-                <UEditor id="update_columnItemContent" height="400" initValue={content}/>
+                <UEditor id="update_columnItemContent" height="400" initValue={content}
+                         uploadAPI={`${API_DOMAIN}admin/channel/columnChannel/uploadAttachment`}/>
               </LazyLoad>
             </FormItem>
           </Col>
