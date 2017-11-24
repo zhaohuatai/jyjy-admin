@@ -37,8 +37,12 @@ class New extends Component {
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
 
-    formData.freePay ? formData.freePay = 0 : formData.freePay = 1;
-    formData.isTop ? formData.isTop = 1 : formData.isTop = 0;
+    formData = {
+      ...formData,
+      introduction: UE.getEditor('new_columnIntroduction').getContent(),
+      freePay: formData.freePay ? 0 : 1,
+      isTop: formData.isTop ? 1 : 0,
+    };
 
     if (formData.coverUrl) {
       formData.coverUrl = formData.coverUrl[0].response.data.image;

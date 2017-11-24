@@ -1,25 +1,13 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Input, message, Modal, Row, Select, Switch} from 'antd';
+import {Button, Col, Form, Icon, Input, message, Modal, Row, Select, Switch, Upload} from 'antd';
 import {loadColumnChannelDataSet, updateColumnChannelItem} from "../../../service/column";
 import {loadMemberTeacherDataSet} from "../../../service/member";
+import UEditor from "../../../components/editor/UEditor";
+import LazyLoad from 'react-lazy-load';
 
 const FormItem = Form.Item;
 
 class New extends Component {
-
-  handleSubmit = (e) => {
-    let formData = this.props.form.getFieldsValue();
-
-    formData.id = this.props.data.id;
-
-    updateColumnChannelItem(formData).then(data => {
-      this.props.form.resetFields();
-      this.props.oncancel();
-      message.success("更新成功！");
-    }).catch((e) => {
-      message.error(e);
-    })
-  };
 
   constructor(props) {
     super(props);
@@ -39,9 +27,38 @@ class New extends Component {
     })
   }
 
+  normFile = (e) => {
+    if (Array.isArray(e)) {
+      return e.file;
+    }
+    return e && e.fileList;
+  }
+
+  handleSubmit = (e) => {
+    let formData = this.props.form.getFieldsValue();
+    formData = {
+      ...formData,
+      freePay: formData.freePay ? 0 : 1,
+      content: UE.getEditor("update_columnItemContent").getContent(),
+      id: this.props.data.id,
+    };
+
+    if (formData.coverUrl) {
+      formData.coverUrl = formData.coverUrl[0].response.data.image;
+    }
+
+    updateColumnChannelItem(formData).then(data => {
+      this.props.form.resetFields();
+      this.props.oncancel();
+      message.success("更新成功！");
+    }).catch((e) => {
+      message.error(e);
+    })
+  };
+
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {title, channelId, hint, itemOrder, presenterId, freePay, price, priceVIP, remark} = this.props.data;
+    const {title, channelId, hint, content, itemOrder, presenterId, freePay, price, priceVIP, remark} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -55,7 +72,7 @@ class New extends Component {
     };
 
     return (
-      <Modal title="更新专栏一期" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
+      <Modal title="更新专栏单期" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
         <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
             <FormItem{...formItemLayout} label="标题">
@@ -80,6 +97,25 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
+            <FormItem {...formItemLayout} label="封面">
+              {getFieldDecorator('coverUrl', {
+                valuePropName: 'fileList',
+                getValueFromEvent: this.normFile,
+              })(
+                <Upload
+                  name="file"
+                  action={`${API_DOMAIN}admin/channel/columnChannelItem/uploadCover`}
+                  listType="picture"
+                  withCredentials={true}
+                >
+                  <Button>
+                    <Icon type="upload"/> 点击上传
+                  </Button>
+                </Upload>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
             <FormItem{...formItemLayout} label="所属专栏">
               {getFieldDecorator('channelId', {
                 initialValue: channelId,
@@ -97,12 +133,19 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="节次">
+            <FormItem{...formItemLayout} label="期数">
               {getFieldDecorator('itemOrder', {
                 initialValue: itemOrder,
               })(
                 <Input type="number"/>
               )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="内容">
+              <LazyLoad height={600}>
+                <UEditor id="update_columnItemContent" height="400" initValue={content}/>
+              </LazyLoad>
             </FormItem>
           </Col>
           <Col span={24}>

@@ -1,22 +1,13 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Icon, Input, message, Row, Select, Switch} from 'antd';
+import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, Upload} from 'antd';
 import {loadMemberTeacherDataSet} from "../../../service/member";
-import {createColumnChannel, loadColumnChannelDataSet} from "../../../service/column";
+import {createColumnChannelItem, loadColumnChannelDataSet} from "../../../service/column";
+import UEditor from "../../../components/editor/UEditor";
+import LazyLoad from 'react-lazy-load';
 
 const FormItem = Form.Item;
 
 class New extends Component {
-  handleSubmit = (e) => {
-    let formData = this.props.form.getFieldsValue();
-    formData.freePay ? formData.freePay = 0 : formData.freePay = 1;
-
-    createColumnChannel(formData).then(data => {
-      this.props.form.resetFields();
-      message.success("创建成功！");
-    }).catch((e) => {
-      message.error(e);
-    })
-  };
 
   constructor(props) {
     super(props);
@@ -34,6 +25,33 @@ class New extends Component {
     loadMemberTeacherDataSet({rows: 1000}).then(data => {
       this.setState({presenterList: data.data.dataSet.rows})
     })
+  }
+
+  handleSubmit = (e) => {
+    let formData = this.props.form.getFieldsValue();
+    formData = {
+      ...formData,
+      freePay: formData.freePay ? 0 : 1,
+      content: UE.getEditor("new_columnItemIntroduction").getContent(),
+    };
+
+    if (formData.coverUrl) {
+      formData.coverUrl = formData.coverUrl[0].response.data.image;
+    }
+
+    createColumnChannelItem(formData).then(data => {
+      this.props.form.resetFields();
+      message.success("创建成功！");
+    }).catch((e) => {
+      message.error(e);
+    })
+  };
+
+  normFile = (e) => {
+    if (Array.isArray(e)) {
+      return e.file;
+    }
+    return e && e.fileList;
   }
 
   render() {
@@ -76,8 +94,27 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
+            <FormItem {...formItemLayout} label="封面">
+              {getFieldDecorator('coverUrl', {
+                valuePropName: 'fileList',
+                getValueFromEvent: this.normFile,
+              })(
+                <Upload
+                  name="file"
+                  action={`${API_DOMAIN}admin/channel/columnChannelItem/uploadCover`}
+                  listType="picture"
+                  withCredentials={true}
+                >
+                  <Button>
+                    <Icon type="upload"/> 点击上传
+                  </Button>
+                </Upload>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
             <FormItem{...formItemLayout} label="所属专栏">
-              {getFieldDecorator('stage', {
+              {getFieldDecorator('channelId', {
                 rules: [
                   {required: true, message: '请选择'},
                 ]
@@ -92,10 +129,17 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="节次">
-              {getFieldDecorator('itemOrder', (
+            <FormItem{...formItemLayout} label="期数">
+              {getFieldDecorator('itemOrder')(
                 <Input type="number"/>
-              ))}
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="内容">
+              <LazyLoad height={600}>
+                <UEditor id="new_columnItemIntroduction" height="400"/>
+              </LazyLoad>
             </FormItem>
           </Col>
           <Col span={24}>
@@ -164,4 +208,3 @@ class New extends Component {
 }
 
 export default Form.create()(New);
-;

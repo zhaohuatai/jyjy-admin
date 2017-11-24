@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Col, Collapse, Form, Modal, Row} from 'antd';
+import {API_DOMAIN} from "../../../config";
+import {loadColumnChannel} from "../../../service/column";
 
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;
@@ -8,33 +10,37 @@ class New extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      provinceList:[]
+      provinceList: [],
+      channel: []
     }
   }
 
+  componentDidMount() {
+    loadColumnChannel({id: this.props.data.id}).then(data => {
+      this.setState({channel: data.data.columnChannel})
+    })
+  }
+
   render() {
-    const {
-      freePay, coverUrl, name, courseId, introduction,
-      presenterName, remark, videoAliId, videoDesc, price, priceVIP,
-      videoName, videoSize, videoTags, videoTime, showIndex,
-      videoTitle, videoUrl
-    } = this.props.data;
+    const {title, coverUrl, hint, content, itemOrder, presenterName, commentCount, freePay, price, priceVIP, remark} = this.props.data;
+
+    const {channel} = this.state;
 
     const formItemLayout = {
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 4 },
+        xs: {span: 24},
+        sm: {span: 4},
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 18 },
+        xs: {span: 24},
+        sm: {span: 18},
       },
       style: {
         marginBottom: '8px'
       }
     };
 
-    return(
+    return (
       <Modal
         title="详情"
         visible={this.props.show}
@@ -42,149 +48,72 @@ class New extends Component {
         footer={null}
         width={'80%'}
       >
-        <Row type='flex' style={{ marginBottom: '5px'}}>
+        <Row type="flex" style={{marginBottom: '5px'}}>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="标题"
-            >
-              <p>{name}</p>
+            <FormItem{...formItemLayout} label="封面">
+              <img style={{width: '100px', height: '100px'}} src={`${API_DOMAIN}${coverUrl}`}/>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="所属课程Id"
-            >
-              <p>{courseId}</p>
+            <FormItem{...formItemLayout} label="标题">
+              <p>{title}</p>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="主讲人"
-            >
+            <FormItem{...formItemLayout} label="描述">
+              <p>{hint}</p>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="所属专栏">
+              <p>{channel.title}</p>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="期数">
+              <p>{itemOrder}</p>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="主讲人">
               <p>{presenterName}</p>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="免费"
-            >
+            <FormItem{...formItemLayout} label="介绍">
+              <Collapse>
+                <Panel header="点击查看详情" key="1">
+                  <div dangerouslySetInnerHTML={{__html: content}}/>
+                </Panel>
+              </Collapse>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="免费">
               {freePay ? "否" : "是"}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="普通价格"
-            >
+            <FormItem{...formItemLayout} label="普通价格">
               <p>{price}</p>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="会员价格"
-            >
+            <FormItem{...formItemLayout} label="会员价格">
               <p>{priceVIP}</p>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="权重"
-            >
-              <p>{showIndex}</p>
+            <FormItem{...formItemLayout} label="评论数">
+              <p>{commentCount}</p>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="阿里视频id"
-            >
-              <p>{videoAliId}</p>
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="视频描述"
-            >
-              <p>{videoDesc}</p>
-            </FormItem>
-          </Col>
-
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="视频名称"
-            >
-              <p>{videoName}</p>
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="视频大小"
-            >
-              <p>{videoSize}</p>
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="视频标题"
-            >
-              <p>{videoTitle}</p>
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="视频地址"
-            >
-              <p>{videoUrl}</p>
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="视频标签"
-            >
-              <p>{videoTags}</p>
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="视频时间"
-            >
-              <p>{videoTime}</p>
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="内容"
-            >
-              <Collapse>
-                <Panel header="点击查看详情" key="1">
-                  <div dangerouslySetInnerHTML={{ __html: introduction }} />
-                </Panel>
-              </Collapse>
-
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="备注"
-            >
+            <FormItem{...formItemLayout} label="备注">
               <p>{remark}</p>
             </FormItem>
           </Col>
+
         </Row>
       </Modal>
     )

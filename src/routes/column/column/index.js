@@ -15,12 +15,11 @@ const table_columns = [
   {title: '主讲人', dataIndex: 'presenterName', key: 'presenterName'},
   {title: '价格', dataIndex: 'price', key: 'price'},
   {title: '会员价格', dataIndex: 'priceVIP', key: 'priceVIP'},
-  {title: '留言数', dataIndex: 'consultationCount', key: 'consultationCount'},
-  {title: '收藏数', dataIndex: 'favoriteCount', key: 'favoriteCount'},
   {title: '学习人数', dataIndex: 'learningCountActual', key: 'learningCountActual'},
+  {title: '收藏数', dataIndex: 'favoriteCount', key: 'favoriteCount'},
   {title: '费用', dataIndex: 'freePay', key: 'freePay', render: (text) => text === 1 ? '收费' : '免费'},
-  {title: '置顶', dataIndex: 'isTop', key: 'isTop'},
-  {title: '显示顺序', dataIndex: 'showIndex', key: 'showIndex'},
+  {title: '置顶', dataIndex: 'isTop', key: 'isTop', render: (text) => text === 1 ? '是' : '否'},
+  {title: '分享积分', dataIndex: 'sharePoints', key: 'sharePoints'},
   {title: '备注', dataIndex: 'remark', key: 'remark'},
 ]
 

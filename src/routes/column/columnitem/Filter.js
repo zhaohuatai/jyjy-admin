@@ -101,9 +101,8 @@ class Filter extends Component {
           <Col span={4} pull={9}>
             <FormItem {...formItemLayout}>
               {getFieldDecorator('channelId')(
-                <Select placeholder="选择专栏" style={{width: '190px'}}
-                        onChange={() => this.handleActionClick({key: 'refresh'})}>
-                  {
+                <Select placeholder="选择专栏" style={{width: '150px'}}
+                        onChange={() => this.handleActionClick({key: 'refresh'})}>{
                     this.state.channelList.map(item => {
                       return <Select.Option key={item.id} value={`${item.id}`}>{item.title}</Select.Option>
                     })

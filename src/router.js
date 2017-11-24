@@ -13,7 +13,6 @@ import AuthUser from './routes/auth/user/AuthUser';
 import AuthApplication from './routes/auth/application/AuthApplication';
 import Slide from './routes/slide';
 import Customize from './routes/customize';
-import {checkLogin} from './utils/utils';
 import Course from './routes/course/course/index';
 import CourseItem from './routes/course/courseItem';
 import CourseCategory from './routes/course/coursecategory';
@@ -24,9 +23,9 @@ import ScoreLineProvince from "./routes/base/scoreLineProvice/index";
 
 const Routers = () => (
   <Router history={hashHistory}>
-    <Route path="/" onEnter={checkLogin} component={App}>
+    <Route path="/" component={App}>
       <IndexRoute component={Dashboard}/>
-      <Route path="/dashboard" component={Dashboard}/>
+      <Route path="/index" component={Dashboard}/>
 
       <Route path="/base">
         <Route path="school" component={School}/>

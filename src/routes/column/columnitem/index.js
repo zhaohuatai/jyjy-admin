@@ -17,6 +17,7 @@ const table_columns = [
   {title: '费用', dataIndex: 'freePay', key: 'freePay', render: (text) => text === 1 ? '收费' : '免费'},
   {title: '普通价格', dataIndex: 'price', key: 'price'},
   {title: '会员价', dataIndex: 'priceVIP', key: 'priceVip'},
+  {title: '评论数', dataIndex: 'commentCount', key: 'commentCount'},
   {title: '备注', dataIndex: 'remark', key: 'remark'},
 ]
 

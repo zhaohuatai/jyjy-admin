@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 
+// http://fex.baidu.com/ueditor/#start-toolbar
 class UEditor extends Component {
   constructor(props){
     super(props);
@@ -16,9 +17,11 @@ class UEditor extends Component {
   }
 
   initEditor() {
-    const { initValue, id} = this.props;
+    const {initValue, uploadAPI, id} = this.props;
 
-    const ueEditor = UE.getEditor(this.props.id);
+    const ueEditor = UE.getEditor(this.props.id, {
+      serverUrl: uploadAPI
+    });
     const self = this;
     ueEditor.ready((ueditor) => {
       if (!ueditor) {

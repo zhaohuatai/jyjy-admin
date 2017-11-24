@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Input, Col, Row, DatePicker, Button, Select, Dropdown, Menu, Icon, Switch} from 'antd';
+import React, {Component} from 'react';
+import {Button, Col, Dropdown, Icon, Menu, Row, Select} from 'antd';
 import style from './menu.scss';
 
 const Option = Select.Option;
@@ -23,10 +23,10 @@ class ProductFilter extends Component {
     return (
       <div>
         <Row gutter={16} justify="end" type="flex" className={style.searchbox} >
-          <Col className="gutter-row" span={1} >
+          <Col className="gutter-row" span={2}>
             <Button onClick={()=>this.props.doRefresh()} ghost type='primary'>刷新</Button>
           </Col>
-          <Col className="gutter-row" span={1}>
+          <Col className="gutter-row" span={2}>
             <Button onClick={()=>this.props.doAdd()} ghost type='primary'>添加</Button>
           </Col>
           <Col className="gutter-row" span={2}>

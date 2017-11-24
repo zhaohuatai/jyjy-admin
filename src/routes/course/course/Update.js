@@ -40,11 +40,10 @@ class Update extends Component {
     formData = {
       ...formData,
       update_courseContent: UE.getEditor('update_courseIntroduction').getContent(),
+      freePay: formData.freePay ? 0 : 1,
+      isTop: formData.isTop ? 1 : 0,
+      id: this.props.data.id
     };
-
-    formData.id = this.props.data.id;
-    formData.freePay ? formData.freePay = 0 : formData.freePay = 1;
-    formData.isTop ? formData.isTop = 1 : formData.isTop = 0;
 
     if (formData.coverUrl) {
       formData.coverUrl = formData.coverUrl[0].response.data.image;

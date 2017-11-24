@@ -153,7 +153,7 @@ class New extends Component {
             >
               {getFieldDecorator('firstRate', {
                 valuePropName: 'checked',
-                initialValue: firstRate ? true : false,
+                initialValue: !!firstRate,
               })(
                 <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
               )}

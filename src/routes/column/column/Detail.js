@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Col, Collapse, Form, Modal, Row} from 'antd';
+import {API_DOMAIN} from "../../../config";
 
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;
@@ -7,10 +8,7 @@ const Panel = Collapse.Panel;
 class New extends Component {
 
   render() {
-    const {
-      title, hint, presenterName, introduction, price, priceVIP,
-      learningCount, learningCountActual, favoriteCount, coverUrl, freePay, remark, isTop, showIndex
-    } = this.props.data;
+    const {title, coverUrl, introduction, hint, sharePoints, learningCountActual, favoriteCount, presenterName, freePay, price, priceVIP, learningCount, isTop, showIndex, remark} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -36,7 +34,12 @@ class New extends Component {
       >
         <Row type="flex" style={{marginBottom: '5px'}}>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="课程名">
+            <FormItem{...formItemLayout} label="封面">
+              <img style={{width: '100px', height: '100px'}} src={`${API_DOMAIN}${coverUrl}`}/>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="标题">
               <p>{title}</p>
             </FormItem>
           </Col>
@@ -60,6 +63,11 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
+            <FormItem{...formItemLayout} label="免费">
+              {freePay ? "否" : "是"}
+            </FormItem>
+          </Col>
+          <Col span={24}>
             <FormItem{...formItemLayout} label="普通价格">
               <p>{price}</p>
             </FormItem>
@@ -71,7 +79,7 @@ class New extends Component {
           </Col>
 
           <Col span={24}>
-            <FormItem{...formItemLayout} label="前台显示学习数">
+            <FormItem{...formItemLayout} label="前台显示学习人数">
               <p>{learningCount}</p>
             </FormItem>
           </Col>
@@ -86,19 +94,20 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="免费">
-              {freePay ? "否" : "是"}
-            </FormItem>
-          </Col>
-          <Col span={24}>
             <FormItem{...formItemLayout} label="置顶">
               {isTop ? "是" : "否"}
             </FormItem>
-          </Col><Col span={24}>
+          </Col>
+          <Col span={24}>
           <FormItem{...formItemLayout} label="显示顺序">
             <p>{showIndex}</p>
           </FormItem>
-        </Col>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="分享积分">
+              <p>{sharePoints}</p>
+            </FormItem>
+          </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="备注">
               <p>{remark}</p>

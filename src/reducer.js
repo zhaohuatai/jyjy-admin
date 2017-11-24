@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import {combineReducers} from 'redux';
 
 function global(state={
   message:{
@@ -21,7 +21,7 @@ function session(state={
     username:'Admin',
     status:0,
     sex:'男',
-    adress:'山东省济南市市中区',
+    address: '山东省济南市市中区',
     introduction:'个人说明，非诚勿扰'
   }
 },action){

@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Icon, Input, message, Row, Select, Switch} from 'antd';
+import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, Uplaod} from 'antd';
 import {createColumnChannel} from "../../../service/column";
 import {loadMemberTeacherDataSet} from "../../../service/member";
+import UEditor from "../../../components/editor/UEditor";
+import LazyLoad from 'react-lazy-load';
+import {API_DOMAIN} from "../../../config";
 
 
 const FormItem = Form.Item;
@@ -11,8 +14,12 @@ class New extends Component {
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
 
-    formData.freePay ? formData.freePay = 0 : formData.freePay = 1;
-    formData.isTop ? formData.isTop = 1 : formData.freePay = 0;
+    formData = {
+      ...formData,
+      introduction: UE.getEditor('new_columnIntroduction').getContent(),
+      freePay: formData.freePay ? 0 : 1,
+      isTop: formData.isTop ? 1 : 0,
+    };
 
     createColumnChannel(formData).then(data => {
       this.props.form.resetFields();
@@ -75,6 +82,25 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
+            <FormItem {...formItemLayout} label="封面">
+              {getFieldDecorator('coverUrl', {
+                valuePropName: 'fileList',
+                getValueFromEvent: this.normFile,
+              })(
+                <Upload
+                  name="file"
+                  action={`${API_DOMAIN}admin/channel/columnChannel/uploadCover`}
+                  listType="picture"
+                  withCredentials={true}
+                >
+                  <Button>
+                    <Icon type="upload"/> 点击上传
+                  </Button>
+                </Upload>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
             <FormItem{...formItemLayout} label="主讲人">
               {getFieldDecorator('presenterId', {
                 rules: [
@@ -94,7 +120,7 @@ class New extends Component {
           <Col span={24}>
             <FormItem {...formItemLayout} label="介绍">
               <LazyLoad height={400}>
-                <UEditor id="update_courseIntroduction" height="200" initialValue={introduction}/>
+                <UEditor id="new_columnIntroduction" height="200"/>
               </LazyLoad>
             </FormItem>
           </Col>
@@ -161,6 +187,16 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
+            <FormItem {...formItemLayout} label="分享积分">
+              {getFieldDecorator('sharePoints', {
+                initialValue: '',
+                rules: []
+              })(
+                <Input type="number"/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
             <FormItem {...formItemLayout} label="备注">
               {getFieldDecorator('remark', {
                 initialValue: '',
@@ -180,4 +216,3 @@ class New extends Component {
 }
 
 export default Form.create()(New);
-;

@@ -20,7 +20,7 @@ const table_columns = [
   {title: '收藏数', dataIndex: 'favoriteCount', key: 'favoriteCount'},
   {title: '实际学习人数', dataIndex: 'learningCountActual', key: 'learningCountActual'},
   {title: '费用', dataIndex: 'freePay', key: 'freePay', render: (text) => text === 1 ? '收费' : '免费'},
-  {title: '置顶', dataIndex: 'isTop', key: 'isTop'},
+  {title: '置顶', dataIndex: 'isTop', key: 'isTop', render: (text) => text === 1 ? '是' : '否'},
   {title: '显示顺序', dataIndex: 'showIndex', key: 'showIndex'},
 ]
 

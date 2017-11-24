@@ -28,8 +28,11 @@ class New extends Component {
 
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
-
-    formData.freePay ? formData.freePay = 0 : formData.freePay = 1;
+    formData = {
+      ...formData,
+      introduction: UE.getEditor('new_courseItemIntroduction').getContent(),
+      freePay: formData.freePay ? 0 : 1,
+    };
 
     createServiceCourseItem(formData).then(data => {
       this.props.form.resetFields();
@@ -81,7 +84,6 @@ class New extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="所属课程">
               {getFieldDecorator('stage', {
-                initialValue: '',
                 rules: [
                   {required: true, message: '请选择所属课程'},
                 ]
