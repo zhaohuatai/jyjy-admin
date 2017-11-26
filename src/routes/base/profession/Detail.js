@@ -64,7 +64,7 @@ class Detail extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="专业详情">
               <Collapse>
-                <Panel header="点击查看详情" key="1">
+                <Panel header="点击查看详情" key="detail">
                   <div dangerouslySetInnerHTML={{__html: detail}}/>
                 </Panel>
               </Collapse>
@@ -72,7 +72,11 @@ class Detail extends Component {
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="开设院校">
-              <div dangerouslySetInnerHTML={{__html: offer}}/>
+              <Collapse>
+                <Panel header="点击查看详情" key="offer">
+                  <div dangerouslySetInnerHTML={{__html: offer}}/>
+                </Panel>
+              </Collapse>
             </FormItem>
           </Col>
           <Col span={24}>

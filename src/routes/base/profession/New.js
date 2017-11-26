@@ -166,12 +166,12 @@ class New extends Component {
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="专业详情">
-              {getFieldDecorator('undergradPro', {
+              {getFieldDecorator('detail', {
                 initialValue: '',
                 rules: []
               })(
-                <LazyLoad height={400}>
-                  <UEditor id="detail" height="400"/>
+                <LazyLoad height={370}>
+                  <UEditor id="detail"/>
                 </LazyLoad>
               )}
             </FormItem>
@@ -182,8 +182,8 @@ class New extends Component {
                 initialValue: '',
                 rules: []
               })(
-                <LazyLoad height={400}>
-                  <UEditor id="offer" height="200"/>
+                <LazyLoad height={370}>
+                  <UEditor id="offer"/>
                 </LazyLoad>
               )}
             </FormItem>

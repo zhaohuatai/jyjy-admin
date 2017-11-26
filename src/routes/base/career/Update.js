@@ -6,9 +6,7 @@ import {updateDataUniversity} from '../../../service/base';
 import {loadProvinceList} from '../../../service/dic';
 import LazyLoad from 'react-lazy-load';
 
-
 const FormItem = Form.Item;
-const Option = Select.Option;
 
 class New extends Component {
   constructor(props) {
@@ -336,8 +334,8 @@ class New extends Component {
               {...formItemLayout}
               label="特色专业"
             >
-              <LazyLoad height={400}>
-                <UEditor id="update_specialProfession" height="200" initValue={specialProfession}/>
+              <LazyLoad height={370}>
+                <UEditor id="update_specialProfession" initValue={specialProfession}/>
               </LazyLoad>
             </FormItem>
           </Col>
@@ -346,8 +344,8 @@ class New extends Component {
               {...formItemLayout}
               label="学校简介"
             >
-              <LazyLoad height={400}>
-                <UEditor id="update_introduction" height="200" initValue={introduction}/>
+              <LazyLoad height={370}>
+                <UEditor id="update_introduction" initValue={introduction}/>
               </LazyLoad>
             </FormItem>
           </Col>
@@ -356,8 +354,8 @@ class New extends Component {
               {...formItemLayout}
               label="师资力量"
             >
-              <LazyLoad height={400}>
-                <UEditor id="update_faculty" height="200" initValue={faculty}/>
+              <LazyLoad height={370}>
+                <UEditor id="update_faculty" initValue={faculty}/>
               </LazyLoad>
             </FormItem>
           </Col>

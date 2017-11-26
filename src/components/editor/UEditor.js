@@ -20,8 +20,9 @@ class UEditor extends Component {
     const {initValue, uploadAPI, id} = this.props;
 
     const ueEditor = UE.getEditor(this.props.id, {
-      serverUrl: uploadAPI
+      serverUrl: uploadAPI,
     });
+
     const self = this;
     ueEditor.ready((ueditor) => {
       if (!ueditor) {

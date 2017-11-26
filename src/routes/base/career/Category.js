@@ -1,13 +1,45 @@
 import React, {Component} from 'react';
 import {Button, Card, Col, Dropdown, Form, Icon, Input, Menu, message, Pagination, Row, Table} from 'antd';
-import {
-  createDataProfessionCategory,
-  deleteDataProfessionCategory,
-  loadDataProfessionCategoryDataSet
-} from "../../../service/base";
+import {createDataCareer, deleteDataCareer, loadDataCareerCategoryDataSet} from "../../../service/base";
 
 class Category extends Component {
 
+  doRefresh = (params) => {
+    this.setState({table_loading: true});
+    params = {...params};
+    params['status'] = (this.state.recycle ? 2 : 1);
+    loadDataCareerCategoryDataSet(params).then(data => {
+      this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
+    })
+  };
+  onChangeTablePage = (currentPage) => {
+    this.setState({table_loading: true, table_cur_page: currentPage});
+    let searchForm = this.state.search_form;
+    searchForm['page'] = currentPage;
+    this.doRefresh(searchForm)
+  };
+  doRecycle = () => {
+    this.setState({recycle: !this.state.recycle}, () => {
+      this.doRefresh();
+    });
+  };
+  doSearch = (values) => {
+    this.setState({table_cur_page: 1});
+    this.doRefresh(values);
+  };
+  doDelete = (id) => {
+    deleteDataCareer({id: id}).then(data => {
+      message.success("删除成功！");
+      this.doRefresh();
+    });
+  };
+  doAdd = () => {
+    createDataCareer({name: this.props.form.getFieldsValue()['add']}).then(data => {
+      message.success("添加成功！");
+      this.props.form.resetFields(['add']);
+      this.doRefresh();
+    });
+  };
   handleActionClick = ({key, id}) => {
     switch (key) {
       case 'clean' :
@@ -44,43 +76,6 @@ class Category extends Component {
       recycle: false,
     };
   }
-
-  doRefresh = (params) => {
-    this.setState({table_loading: true});
-    params = {...params};
-    params['status'] = (this.state.recycle ? 2 : 1);
-    loadDataProfessionCategoryDataSet(params).then(data => {
-      this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
-    })
-  };
-  onChangeTablePage = (currentPage) => {
-    this.setState({table_loading: true, table_cur_page: currentPage});
-    let searchForm = this.state.search_form;
-    searchForm['page'] = currentPage;
-    this.doRefresh(searchForm)
-  };
-  doRecycle = () => {
-    this.setState({recycle: !this.state.recycle}, () => {
-      this.doRefresh();
-    });
-  };
-  doSearch = (values) => {
-    this.setState({table_cur_page: 1});
-    this.doRefresh(values);
-  };
-  doDelete = (id) => {
-    deleteDataProfessionCategory({id: id}).then(data => {
-      message.success("删除成功！");
-      this.doRefresh();
-    });
-  };
-  doAdd = () => {
-    createDataProfessionCategory({name: this.props.form.getFieldsValue()['add']}).then(data => {
-      message.success("添加成功！");
-      this.props.form.resetFields(['add']);
-      this.doRefresh();
-    });
-  };
 
   componentDidMount() {
     this.doRefresh();

@@ -230,8 +230,8 @@ class Update extends Component {
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} label="介绍">
-              <LazyLoad height={400}>
-                <UEditor id="introduction" height="200" initValue={introduction}/>
+              <LazyLoad height={370}>
+                <UEditor id="introduction" initValue={introduction}/>
               </LazyLoad>
             </FormItem>
           </Col>

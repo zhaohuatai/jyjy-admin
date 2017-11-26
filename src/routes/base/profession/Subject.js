@@ -20,6 +20,10 @@ class Subject extends Component {
     };
   }
 
+  componentDidMount() {
+    this.doRefresh();
+  }
+
   doRefresh = (params) => {
     this.setState({table_loading: true});
     params = {...params};
@@ -56,7 +60,6 @@ class Subject extends Component {
       this.doRefresh();
     });
   };
-  //  触发操作
   handleActionClick = ({key, id}) => {
     switch (key) {
       case 'clean' :
@@ -81,10 +84,6 @@ class Subject extends Component {
         break;
     }
   };
-
-  componentDidMount() {
-    this.doRefresh();
-  }
 
   render() {
     const {table_loading, table_cur_page, table_total} = this.state;

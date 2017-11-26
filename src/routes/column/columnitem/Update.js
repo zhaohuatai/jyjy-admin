@@ -144,8 +144,8 @@ class New extends Component {
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} label="内容">
-              <LazyLoad height={600}>
-                <UEditor id="update_columnItemContent" height="400" initValue={content}
+              <LazyLoad height={370}>
+                <UEditor id="update_columnItemContent" initValue={content}
                          uploadAPI={`${API_DOMAIN}admin/channel/columnChannel/uploadAttachment`}/>
               </LazyLoad>
             </FormItem>

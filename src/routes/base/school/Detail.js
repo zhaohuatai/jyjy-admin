@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {API_DOMAIN} from '../../../utils/config';
-import {Col, Collapse, Form, Modal, Row, Select, Switch} from 'antd';
+import {Col, Collapse, Form, Modal, Row} from 'antd';
 
 const FormItem = Form.Item;
-const Option = Select.Option;
 const Panel = Collapse.Panel;
 
 class New extends Component {
@@ -14,10 +13,8 @@ class New extends Component {
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
     const { attached, badge, establishTime, faculty, academicianNum,
-      firstRate, introduction, location, masterNum, hint,
-      name, phone, province, rank,
+      firstRate, introduction, location, masterNum, name, phone, province, rank,
       remark, doctor, specialProfession, stage, studentNum, type } = this.props.data;
 
     const formItemLayout = {
@@ -49,7 +46,7 @@ class New extends Component {
             >
               <p>{province}</p>
             </FormItem>
-          </Col >
+          </Col>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
@@ -63,13 +60,13 @@ class New extends Component {
               {...formItemLayout}
               label="是否双一流"
             >
-              <Switch checked={firstRate}/>
+              {firstRate ? "是" : "否"}
             </FormItem>
           </Col >
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="阶段"
+              label="学校层次"
             >
               <p>{stage}</p>
             </FormItem>
@@ -157,15 +154,6 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="备注"
-            >
-              <p>{remark}</p>
-            </FormItem>
-
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
               label="特色专业"
             >
               <Collapse>
@@ -200,10 +188,18 @@ class New extends Component {
               </Collapse>
             </FormItem>
           </Col>
+          <Col span={24}>
+            <FormItem
+              {...formItemLayout}
+              label="备注"
+            >
+              <p>{remark}</p>
+            </FormItem>
+          </Col>
         </Row>
       </Modal>
     )
   }
 }
 
-export default Form.create()(New);;
+export default Form.create()(New);

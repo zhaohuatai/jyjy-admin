@@ -88,18 +88,18 @@ class Filter extends Component {
 
     return (
       <div>
-        <Row type='flex' justify='end' gutter={8} style={{marginBottom: '5px'}}>
+        <Row type='flex' justify='end' style={{marginBottom: '5px'}}>
           <Col span={4} pull={10}>
             <FormItem>
               {getFieldDecorator('title', {
                 initialValue: ''
               })(
-                <Input size='default' addonBefore='标题' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
+                <Input addonBefore='标题' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
               )}
             </FormItem>
           </Col>
 
-          <Col span={4} pull={10}>
+          <Col span={4} pull={9}>
             <FormItem {...formItemLayout}>
               {getFieldDecorator('channelId', {
                 onChange: (value) => {

@@ -5,6 +5,7 @@ import Filter from './Filter';
 import New from './New';
 import Update from './Update';
 import Detail from './Detail';
+import Category from "../profession/Category";
 
 const TabPane = Tabs.TabPane;
 
@@ -12,12 +13,16 @@ const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
   {title: '名称', dataIndex: 'name', key: 'name'},
   {title: '分类', dataIndex: 'categoryName', key: 'categoryName'},
-  {title: '创建时间', dataIndex: 'createTime', key: 'createTime'},
-  {title: '更新时间', dataIndex: 'updateTime', key: 'updateTime'},
+  {
+    title: '简介', dataIndex: 'intro', key: 'intro', render: (text) => {
+    text = text.replace(/<.+\/>/g, ",");
+    return text.length > 25 ? text.substr(0, 25) + "..." : text
+  }
+  },
   {title: '备注', dataIndex: 'remark', key: 'remark'},
 ]
 
-class School extends Component {
+class Career extends Component {
   // 获取数据
   handleRefresh = (params) => {
     this.setState({table_loading: true});
@@ -96,8 +101,11 @@ class School extends Component {
 
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
-        <Tabs defaultActiveKey="1">
-          <TabPane tab="职业列表" key="1">
+        <Tabs defaultActiveKey="2">
+          <TabPane tab="分类管理" key="1">
+            <Category/>
+          </TabPane>
+          <TabPane tab="职业列表" key="2">
             <Filter
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
@@ -123,7 +131,7 @@ class School extends Component {
             <Pagination style={{marginTop: '10px'}} showQuickJumper defaultCurrent={1} current={table_cur_page}
                         defaultPageSize={20} total={table_total} onChange={this.onChangeTablePage}/>,
           </TabPane>
-          <TabPane tab="新建" key="2">
+          <TabPane tab="新建" key="3">
             <New/>
           </TabPane>
         </Tabs>
@@ -137,4 +145,4 @@ class School extends Component {
   }
 }
 
-export default School;
+export default Career;
