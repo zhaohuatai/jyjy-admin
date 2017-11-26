@@ -131,19 +131,19 @@ class Subject extends Component {
             </Col>
             <Col span={2}>
               <Button onClick={() => this.handleActionClick({key: 'recycle'})}>
-                <Icon type="info-circle-o"/> {this.props.recycle ? "返回" : "回收站"}
+                <Icon type="info-circle-o"/> {this.state.recycle ? "返回" : "回收站"}
               </Button>
             </Col>
           </Row>
         </div>
         <Row type='flex'>
-          <Col span={12}>
+          <Col span={16}>
             <Table dataSource={this.state.dataSet} columns={table_columns} pagination={false}
                    rowKey={record => record.id + ''} loading={table_loading}/>
             <Pagination style={{marginTop: '10px'}} defaultCurrent={1} current={table_cur_page} defaultPageSize={20}
                         total={table_total} onChange={this.onChangeTablePage}/>
           </Col>
-          <Col span={8} push={2}>
+          <Col span={8} push={1}>
             <Card title="添加" style={{position: 'fixed'}}>
               <Row type='flex'>
                 <Col span={18}>
