@@ -8,7 +8,6 @@ class Filter extends Component {
 
   //  触发操作
   handleActionClick = ({item, key, keyPath}) => {
-    console.log(key);
     switch (key) {
       case 'clean' :
         this.props.form.resetFields();
@@ -44,7 +43,6 @@ class Filter extends Component {
     super(props);
     this.state = {
       search_form: {},
-      recycle: false
     };
   }
 
@@ -73,7 +71,7 @@ class Filter extends Component {
               {getFieldDecorator('title', {
                 initialValue: ''
               })(
-                <Input addonBefore='标题' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
+                <Input size='default' addonBefore='标题' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
               )}
             </FormItem>
           </Col>
@@ -94,7 +92,7 @@ class Filter extends Component {
 
           <Col span={2}>
             <Button disabled onClick={() => this.handleActionClick({key: 'recycle'})}>
-              <Icon type="info-circle-o"/> {this.state.recycle ? "返回" : "回收站"}
+              <Icon type="info-circle-o"/> {this.props.recycle ? "返回" : "回收站"}
             </Button>
           </Col>
         </Row>

@@ -11,14 +11,12 @@ class Filter extends Component {
     this.state = {
       search_form: {},
       channelList: [],
-      recycle: false,
       defaultChannel: [],
     };
   }
 
   //  触发操作
   handleActionClick = ({item, key, keyPath, channelId}) => {
-    console.log(key);
     switch (key) {
       case 'clean' :
         this.props.form.resetFields();
@@ -46,7 +44,7 @@ class Filter extends Component {
 
   componentDidMount() {
     loadColumnChannelDataSet({rows: 1000}).then(data => {
-      this.setState({channelList: data.data.dataSet.rows})
+      this.setState({channelList: data.data.dataSet.rows});
       if (data.data.dataSet.rows) {
         this.props.form.setFieldsValue({
           channelId: data.data.dataSet.rows[0]['id'].toString(),
@@ -96,7 +94,7 @@ class Filter extends Component {
               {getFieldDecorator('title', {
                 initialValue: ''
               })(
-                <Input addonBefore='标题' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
+                <Input size='default' addonBefore='标题' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
               )}
             </FormItem>
           </Col>
@@ -137,7 +135,7 @@ class Filter extends Component {
 
           <Col span={2}>
             <Button onClick={() => this.handleActionClick({key: 'recycle'})}>
-              <Icon type="info-circle-o"/> {this.state.recycle ? "返回" : "回收站"}
+              <Icon type="info-circle-o"/> {this.props.recycle ? "返回" : "回收站"}
             </Button>
           </Col>
         </Row>

@@ -19,7 +19,6 @@ class Filter extends Component {
 
   //  触发操作
   handleActionClick = ({item, key, keyPath}) => {
-    console.log(key);
     switch (key) {
       case 'clean' :
         this.props.form.resetFields();
@@ -66,7 +65,7 @@ class Filter extends Component {
               {getFieldDecorator('title', {
                 initialValue: ''
               })(
-                <Input addonBefore='标题' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
+                <Input size='default' addonBefore='标题' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
               )}
             </FormItem>
           </Col>

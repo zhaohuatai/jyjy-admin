@@ -36,7 +36,7 @@ class Sysconfig extends Component {
         if (data.statusCode == 200) {
           message.success('操作成功');
           this.setState({visible_update: false});
-          this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
+          this.handleRefresh();
         }
       })
 
@@ -97,7 +97,7 @@ class Sysconfig extends Component {
 	}
 
   componentDidMount() {
-    this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
+    this.handleRefresh();
 	}
 
 	saveUpdateFormRef = (form) => {

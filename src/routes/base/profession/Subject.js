@@ -1,38 +1,12 @@
 import React, {Component} from 'react';
-import {Button, Col, Dropdown, Form, Icon, Input, Menu, Pagination, Row, Table} from 'antd';
-import {loadDataProfessionSubjectDataSet} from "../../../service/base";
-
-const table_columns = [
-  {title: '序号', dataIndex: 'id', key: 'id'},
-  {title: '类别', dataIndex: 'name', key: 'name'},
-  {
-    title: '操作', key: 'action', render: (text, record) => (
-    <span>
-      <Button shape="circle" icon='minus'/>
-    </span>
-  )
-  }
-]
+import {Button, Card, Col, Dropdown, Form, Icon, Input, Menu, message, Pagination, Row, Table} from 'antd';
+import {
+  createDataProfessionSubject,
+  deleteDataProfessionSubject,
+  loadDataProfessionSubjectDataSet
+} from "../../../service/base";
 
 class Subject extends Component {
-
-  handleRefresh = (params) => {
-    this.setState({table_loading: true});
-    loadDataProfessionSubjectDataSet(params).then(data => {
-      this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
-    })
-  }
-
-  componentDidMount() {
-    this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
-  }
-  onChangeTablePage = (currentPage) => {
-    this.setState({table_loading: true, table_cur_page: currentPage});
-    let searchForm = this.state.search_form;
-    searchForm['page'] = currentPage;
-    searchForm['status'] = (this.state.recycle_data ? 2 : 1);
-    this.handleRefresh(searchForm)
-  }
 
   constructor(props) {
     super(props);
@@ -46,31 +20,95 @@ class Subject extends Component {
     };
   }
 
+  doRefresh = (params) => {
+    this.setState({table_loading: true});
+    params = {...params};
+    loadDataProfessionSubjectDataSet(params).then(data => {
+      this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
+    })
+  };
+  onChangeTablePage = (currentPage) => {
+    this.setState({table_loading: true, table_cur_page: currentPage});
+    let searchForm = this.state.search_form;
+    searchForm['page'] = currentPage;
+    this.doRefresh(searchForm)
+  };
+  doRecycle = () => {
+    this.setState({recycle: !this.state.recycle}, () => {
+      this.doRefresh();
+    });
+  };
+  doSearch = (values) => {
+    this.setState({table_cur_page: 1});
+    this.doRefresh(values);
+  };
+  doDelete = (id) => {
+    deleteDataProfessionSubject({id: id}).then(data => {
+      message.success("删除成功！");
+      this.doRefresh();
+    });
+  };
+  doAdd = () => {
+    createDataProfessionSubject({name: this.props.form.getFieldsValue()['add']}).then(data => {
+      message.success("添加成功！");
+      this.props.form.resetFields(['add']);
+      this.doRefresh();
+    });
+  };
+  //  触发操作
+  handleActionClick = ({key, id}) => {
+    switch (key) {
+      case 'clean' :
+        this.props.form.resetFields();
+        break;
+      case 'search' :
+        this.doSearch(this.props.form.getFieldsValue());
+        break;
+      case 'refresh' :
+        this.doRefresh();
+        break;
+      case 'delete' :
+        this.doDelete(id);
+        break;
+      case 'recycle' :
+        this.doRecycle();
+        break;
+      case 'add' :
+        this.doAdd();
+        break;
+      default :
+        break;
+    }
+  };
+
+  componentDidMount() {
+    this.doRefresh();
+  }
+
   render() {
     const {table_loading, table_cur_page, table_total} = this.state;
 
     const {getFieldDecorator} = this.props.form;
 
-    const formItemLayout = {
-      labelCol: {
-        xs: {span: 24},
-        sm: {span: 4},
-      },
-      wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 18},
-      },
-      style: {
-        marginBottom: '8px'
+    const table_columns = [
+      {title: '序号', dataIndex: 'id', key: 'id'},
+      {title: '学科', dataIndex: 'name', key: 'name'},
+      {
+        title: '操作', key: 'action', render: (text, record) => {
+        return (<span>
+                  <Button shape="circle" type='danger' icon='minus' size='small'
+                          onClick={() => this.handleActionClick({key: 'delete', id: record.id})}/>
+                </span>)
       }
-    };
+      }
+    ];
 
     const searchMenu = (
       <Menu onClick={this.handleActionClick}>
         <Menu.Item key="refresh">刷新</Menu.Item>
         <Menu.Item key="clean">清空</Menu.Item>
       </Menu>
-    )
+    );
 
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}} width={'50%'}>
@@ -81,7 +119,7 @@ class Subject extends Component {
                 {getFieldDecorator('name', {
                   initialValue: ''
                 })(
-                  <Input size='default' addonBefore='科目' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
+                  <Input size='default' addonBefore='学科' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
                 )}
               </Form.Item>
             </Col>
@@ -92,7 +130,7 @@ class Subject extends Component {
             </Col>
             <Col span={2}>
               <Button onClick={() => this.handleActionClick({key: 'recycle'})}>
-                <Icon type="info-circle-o"/> {this.state.recycle ? "返回" : "回收站"}
+                <Icon type="info-circle-o"/> {this.props.recycle ? "返回" : "回收站"}
               </Button>
             </Col>
           </Row>
@@ -104,14 +142,30 @@ class Subject extends Component {
             <Pagination style={{marginTop: '10px'}} defaultCurrent={1} current={table_cur_page} defaultPageSize={20}
                         total={table_total} onChange={this.onChangeTablePage}/>
           </Col>
-          <Col span={12}>
-
+          <Col span={8} push={2}>
+            <Card title="添加" style={{position: 'fixed'}}>
+              <Row type='flex'>
+                <Col span={18}>
+                  <Form.Item>
+                    {getFieldDecorator('add', {
+                      initialValue: ''
+                    })(
+                      <Input addonBefore='学科'/>
+                    )}
+                  </Form.Item>
+                </Col>
+                <Col span={2} push={2}>
+                  <Button onClick={() => this.handleActionClick({key: 'add'})}>
+                    添加
+                  </Button>
+                </Col>
+              </Row>
+            </Card>
           </Col>
         </Row>
       </div>
     );
   }
-
 }
 
 export default Form.create()(Subject);

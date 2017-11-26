@@ -25,6 +25,14 @@ const table_columns = [
 ]
 
 class Course extends Component {
+  //删除
+  handleDelete = () => {
+    deleteServiceCourse({id: this.state.selectedRowKeys[0]}).then(data => {
+      message.success("删除成功！");
+      this.handleRefresh();
+    })
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -38,12 +46,8 @@ class Course extends Component {
       update_data: {},
       detail_display: false,
       detail_data: {},
-      recycle_data: false,
+      recycle: false,
     };
-  }
-
-  componentDidMount() {
-    this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
   }
 
   // 获取数据
@@ -64,14 +68,12 @@ class Course extends Component {
     this.setState({table_loading: true, table_cur_page: currentPage});
     let searchForm = this.state.search_form;
     searchForm['page'] = currentPage;
-    searchForm['status'] = (this.state.recycle_data ? 2 : 1);
     this.handleRefresh(searchForm)
   }
 
   // 搜索
   handleSearch = (values) => {
     this.setState({table_cur_page: 1});
-    values['status'] = (this.state.recycle_data ? 2 : 1);
     this.handleRefresh(values);
   }
 
@@ -82,11 +84,8 @@ class Course extends Component {
     })
   }
 
-  //删除
-  handleDelete = () => {
-    deleteServiceCourse({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
-    })
+  componentDidMount() {
+    this.handleRefresh();
   }
 
   // 显示详情
@@ -112,8 +111,9 @@ class Course extends Component {
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
               doRecycle={() => {
-                this.handleRefresh({status: this.state.recycle_data ? 1 : 2});
-                this.setState({recycle_data: !this.state.recycle_data});
+                this.setState({recycle: !this.state.recycle}, () => {
+                  this.handleRefresh();
+                })
               }}
               doUpdate={this.handleUpdate}
               doDelete={this.handleDelete}

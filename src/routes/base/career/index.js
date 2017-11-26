@@ -35,19 +35,18 @@ class School extends Component {
     this.setState({table_loading: true, table_cur_page: currentPage});
     let searchForm = this.state.search_form;
     searchForm['page'] = currentPage;
-    searchForm['status'] = (this.state.recycle_data ? 2 : 1);
     this.handleRefresh(searchForm)
   };
   // 删除记录
   handleDelete = () => {
     deleteDataCareer({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
+      message.success("删除成功！");
+      this.handleRefresh();
     });
   };
   // 搜索
   handleSearch = (values) => {
     this.setState({table_cur_page: 1});
-    values['status'] = (this.state.recycle_data ? 2 : 1);
     this.handleRefresh(values);
   };
   // 更新
@@ -70,7 +69,7 @@ class School extends Component {
       update_data: {},
       detail_display: false,
       detail_data: {},
-      recycle_data: false,
+      recycle: false,
     };
   }
 
@@ -82,7 +81,7 @@ class School extends Component {
   }
 
   componentDidMount() {
-    this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
+    this.handleRefresh();
   }
 
   render() {
@@ -101,11 +100,13 @@ class School extends Component {
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
               doRecycle={() => {
-                this.handleRefresh({status: this.state.recycle_data ? 1 : 2});
-                this.setState({recycle_data: !this.state.recycle_data});
+                this.setState({recycle: !this.state.recycle}, () => {
+                  this.handleRefresh();
+                })
               }}
               doDelete={this.handleDelete}
               doUpdate={this.handleUpdate}
+              recycle={this.state.recycle}
             />
             <Table
               dataSource={this.state.dataSet}

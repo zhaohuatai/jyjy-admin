@@ -22,7 +22,7 @@ const table_columns = [
   {
     title: '开设院校', dataIndex: 'offer', key: 'offer', render: (text) => {
     text = text.replace(/<.+\/>/g, ",");
-    return text.length > 15 ? text.substr(0, 10) + "..." : text
+    return text.length > 15 ? text.substr(0, 15) + "..." : text
   }
   },
   {title: '本科专业', dataIndex: 'undergradPro', key: 'undergradPro'},
@@ -41,7 +41,8 @@ class Profession extends Component {
   // 删除记录
   handleDelete = () => {
     deleteDataProfession({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
+      message.success("删除成功！");
+      this.handleRefresh();
     });
   }
 
@@ -49,36 +50,13 @@ class Profession extends Component {
   onSelectChange = (selectedRowKeys) => {
     this.setState({selectedRowKeys});
   }
+
   // 切换页码
   onChangeTablePage = (currentPage) => {
     this.setState({table_loading: true, table_cur_page: currentPage});
     let searchForm = this.state.search_form;
     searchForm['page'] = currentPage;
-    searchForm['status'] = (this.state.recycle_data ? 2 : 1);
     this.handleRefresh(searchForm)
-  }
-
-  componentDidMount() {
-    this.handleRefresh({status: this.state.recycle_data ? 2 : 1});
-  }
-
-  // 搜索
-  handleSearch = (values) => {
-    this.setState({table_cur_page: 1});
-    values['status'] = (this.state.recycle_data ? 2 : 1);
-    this.handleRefresh(values);
-  }
-  // 更新
-  handleUpdate = () => {
-    loadDataProfession({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.setState({update_data: data.data.dataProfession, update_display: true})
-    })
-  }
-  // 显示详情
-  handleShowDetail = (record) => {
-    loadDataProfession({id: record.id}).then(data => {
-      this.setState({detail_data: data.data.dataProfession, detail_display: true})
-    })
   }
 
   constructor(props) {
@@ -94,8 +72,32 @@ class Profession extends Component {
       update_data: {},
       detail_display: false,
       detail_data: {},
-      recycle_data: false,
+      recycle: false,
     };
+  }
+
+  // 搜索
+  handleSearch = (values) => {
+    this.setState({table_cur_page: 1});
+    this.handleRefresh(values);
+  }
+
+  // 更新
+  handleUpdate = () => {
+    loadDataProfession({id: this.state.selectedRowKeys[0]}).then(data => {
+      this.setState({update_data: data.data.dataProfession, update_display: true})
+    })
+  }
+
+  // 显示详情
+  handleShowDetail = (record) => {
+    loadDataProfession({id: record.id}).then(data => {
+      this.setState({detail_data: data.data.dataProfession, detail_display: true})
+    })
+  }
+
+  componentDidMount() {
+    this.handleRefresh();
   }
 
   render() {
@@ -120,11 +122,13 @@ class Profession extends Component {
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
               doRecycle={() => {
-                this.handleRefresh({status: this.state.recycle_data ? 1 : 2});
-                this.setState({recycle_data: !this.state.recycle_data});
+                this.setState({recycle: !this.state.recycle}, () => {
+                  this.handleRefresh();
+                })
               }}
               doDelete={this.handleDelete}
               doUpdate={this.handleUpdate}
+              recycle={this.state.recycle}
             />
             <Table
               dataSource={this.state.dataSet}

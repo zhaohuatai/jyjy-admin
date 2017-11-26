@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {Button, Col, Dropdown, Form, Icon, Input, Menu, Row, Select} from 'antd';
+import {Button, Col, Dropdown, Form, Icon, Input, Menu, Row} from 'antd';
 
-const Option = Select.Option;
 const FormItem = Form.Item;
 
 class Filter extends Component {
@@ -12,7 +11,6 @@ class Filter extends Component {
   }
   //  触发操作
   handleActionClick = ({item, key, keyPath}) => {
-    console.log(key);
     switch (key) {
       case 'clean' :
         this.props.form.resetFields();
@@ -42,7 +40,6 @@ class Filter extends Component {
     super(props);
     this.state = {
       search_form: {},
-      recycle: false
     };
   }
 
@@ -71,7 +68,7 @@ class Filter extends Component {
               {getFieldDecorator('profession', {
                 initialValue: ''
               })(
-                <Input addonBefore='专业名' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
+                <Input size='default' addonBefore='专业名' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
               )}
             </FormItem>
           </Col>
@@ -92,7 +89,7 @@ class Filter extends Component {
 
           <Col span={2}>
             <Button onClick={() => this.handleActionClick({key: 'recycle'})}>
-              <Icon type="info-circle-o"/> {this.state.recycle ? "返回" : "回收站"}
+              <Icon type="info-circle-o"/> {this.props.recycle ? "返回" : "回收站"}
             </Button>
           </Col>
         </Row>

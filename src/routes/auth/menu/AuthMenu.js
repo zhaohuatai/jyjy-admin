@@ -45,7 +45,6 @@ class AuthMenu extends Component {
 
     searchForm.rows = this.state.pageRows;
     searchForm['page'] = currentPage;
-    searchForm['status'] = (this.state.recycle_data ? 2 : 1);
 
     loadProduct(searchForm, data => {
 				this.setState({
