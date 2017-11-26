@@ -144,7 +144,7 @@ class Subject extends Component {
                         total={table_total} onChange={this.onChangeTablePage}/>
           </Col>
           <Col span={8} push={1}>
-            <Card title="添加" style={{position: 'fixed'}}>
+            <Card title="添加">
               <Row type='flex'>
                 <Col span={18}>
                   <Form.Item>

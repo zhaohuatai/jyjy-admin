@@ -6,11 +6,6 @@ import {
   loadDataProfessionCategoryDataSet
 } from "../../../service/base";
 
-const table_columns = [
-  {title: '序号', dataIndex: 'id', key: 'id'},
-  {title: '类别', dataIndex: 'name', key: 'name'},
-]
-
 class Category extends Component {
 
   doRefresh = (params) => {
@@ -120,7 +115,7 @@ class Category extends Component {
                         total={table_total} onChange={this.onChangeTablePage}/>
           </Col>
           <Col span={8} push={1}>
-            <Card title="添加" style={{position: 'fixed'}}>
+            <Card title="添加">
               <Row type='flex'>
                 <Col span={18}>
                   <Form.Item>
