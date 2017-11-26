@@ -23,6 +23,7 @@ class Subject extends Component {
   doRefresh = (params) => {
     this.setState({table_loading: true});
     params = {...params};
+    params['status'] = (this.state.recycle ? 2 : 1);
     loadDataProfessionSubjectDataSet(params).then(data => {
       this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
     })
