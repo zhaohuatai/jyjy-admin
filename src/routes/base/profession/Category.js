@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Form, Pagination, Row, Table} from 'antd';
+import {Col, Form, Pagination, Row, Table} from 'antd';
 import {loadDataProfessionCategoryDataSet} from "../../../service/base";
 
 const table_columns = [

@@ -43,7 +43,7 @@ class Filter extends Component {
     super(props);
     this.state = {
       search_form: {},
-      recycleStr: true
+      recycle: false
     };
   }
 
@@ -96,7 +96,7 @@ class Filter extends Component {
               this.handleActionClick({key: 'recycle'});
             }
             }>
-              <Icon type="info-circle-o"/> {this.state.recycleStr ? "回收站" : "返回"}
+              <Icon type="info-circle-o"/> {this.state.recycle ? "返回" : "回收站"}
             </Button>
           </Col>
         </Row>
