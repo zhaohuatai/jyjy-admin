@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Form, Pagination, Table} from 'antd';
+import {Form, Pagination, Row, Table} from 'antd';
 import {loadDataProfessionCategoryDataSet} from "../../../service/base";
 
 const table_columns = [
@@ -15,6 +15,7 @@ class Category extends Component {
       this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
     })
   }
+
   onChangeTablePage = (currentPage) => {
     this.setState({table_loading: true, table_cur_page: currentPage});
     let searchForm = this.state.search_form;
@@ -57,10 +58,20 @@ class Category extends Component {
 
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}} width={'50%'}>
-        <Table dataSource={this.state.dataSet} columns={table_columns} pagination={false}
-               rowKey={record => record.id + ''} loading={table_loading}/>
-        <Pagination style={{marginTop: '10px'}} defaultCurrent={1} current={table_cur_page} defaultPageSize={20}
-                    total={table_total} onChange={this.onChangeTablePage}/>
+        <Row type='flex'>
+          <Col span={18}>
+            <Table dataSource={this.state.dataSet} columns={table_columns} pagination={false}
+                   rowKey={record => record.id + ''} loading={table_loading}/>
+            <Pagination style={{marginTop: '10px'}} defaultCurrent={1} current={table_cur_page} defaultPageSize={20}
+                        total={table_total} onChange={this.onChangeTablePage}/>
+          </Col>
+          <Col span={6}>
+            <Table dataSource={this.state.dataSet} columns={table_columns} pagination={false}
+                   rowKey={record => record.id + ''} loading={table_loading}/>
+            <Pagination style={{marginTop: '10px'}} defaultCurrent={1} current={table_cur_page} defaultPageSize={20}
+                        total={table_total} onChange={this.onChangeTablePage}/>
+          </Col>
+        </Row>
       </div>
     );
   }

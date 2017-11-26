@@ -109,6 +109,12 @@ class Profession extends Component {
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
         <Tabs defaultActiveKey="3">
+          <TabPane tab="学科管理" key="1">
+            <Subject/>
+          </TabPane>
+          <TabPane tab="门类管理" key="2">
+            <Category/>
+          </TabPane>
           <TabPane tab="专业列表" key="3">
             <Filter
               doSearch={this.handleSearch}
@@ -135,12 +141,6 @@ class Profession extends Component {
           </TabPane>
           <TabPane tab="新建" key="4">
             <New/>
-          </TabPane>
-          <TabPane tab="学科管理" key="1">
-            <Subject/>
-          </TabPane>
-          <TabPane tab="门类管理" key="2">
-            <Category/>
           </TabPane>
         </Tabs>
         <Update show={this.state.update_display} data={this.state.update_data}

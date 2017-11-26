@@ -16,17 +16,8 @@ class Filter extends Component {
     };
   }
 
-  componentDidMount() {
-    loadColumnChannelDataSet({rows: 1000}).then(data => {
-      this.setState({channelList: data.data.dataSet.rows})
-      if (data.data.dataSet.rows) {
-        this.setState({defaultChannel: data.data.dataSet.rows[0]['id']})
-      }
-    })
-  }
-
   //  触发操作
-  handleActionClick = ({item, key, keyPath}) => {
+  handleActionClick = ({item, key, keyPath, channelId}) => {
     console.log(key);
     switch (key) {
       case 'clean' :
@@ -51,6 +42,18 @@ class Filter extends Component {
       default :
         break;
     }
+  }
+
+  componentDidMount() {
+    loadColumnChannelDataSet({rows: 1000}).then(data => {
+      this.setState({channelList: data.data.dataSet.rows})
+      if (data.data.dataSet.rows) {
+        this.props.form.setFieldsValue({
+          channelId: data.data.dataSet.rows[0]['id'].toString(),
+        })
+        this.props.doSearch(this.props.form.getFieldsValue());
+      }
+    })
   }
 
   doSearch = () => {
@@ -87,7 +90,7 @@ class Filter extends Component {
 
     return (
       <div>
-        <Row type='flex' justify='end' style={{marginBottom: '5px'}}>
+        <Row type='flex' justify='end' gutter={8} style={{marginBottom: '5px'}}>
           <Col span={4} pull={10}>
             <FormItem>
               {getFieldDecorator('title', {
@@ -98,15 +101,21 @@ class Filter extends Component {
             </FormItem>
           </Col>
 
-          <Col span={4} pull={9}>
+          <Col span={4} pull={10}>
             <FormItem {...formItemLayout}>
-              {getFieldDecorator('channelId')(
-                <Select placeholder="选择专栏" style={{width: '150px'}}
-                        onChange={() => this.handleActionClick({key: 'refresh'})}>{
-                    this.state.channelList.map(item => {
-                      return <Select.Option key={item.id} value={`${item.id}`}>{item.title}</Select.Option>
-                    })
-                  }
+              {getFieldDecorator('channelId', {
+                onChange: (value) => {
+                  this.props.form.setFieldsValue({
+                    channelId: value
+                  });
+                  this.handleActionClick({key: 'search'})
+                }
+              })(
+                <Select placeholder="选择专栏" style={{width: '150px'}}>{
+                  this.state.channelList.map(item =>
+                    <Select.Option key={item.id} value={`${item.id}`}>{item.title}</Select.Option>
+                  )
+                }
                 </Select>
               )}
             </FormItem>

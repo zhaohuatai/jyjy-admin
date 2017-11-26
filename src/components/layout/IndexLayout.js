@@ -54,12 +54,8 @@ class IndexLayout extends React.Component {
     const {userinfo} = this.props;
     return (
       <Layout>
-        <Sider
-          collapsible
-          collapsed={this.state.collapsed}
-          onCollapse={this.onCollapse}
-        >
-          <div className={style.logo}>经英教育-后台</div>
+        <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
+          <div style={{textAlign: 'center'}} className={style.logo}>经英教育</div>
           <Menu theme="dark" defaultSelectedKeys={['/']} selectedKeys={this.state.selectedkey} mode="inline" onClick={this.handelSelect}>
             {
               this.state.menudata.map(item=>{

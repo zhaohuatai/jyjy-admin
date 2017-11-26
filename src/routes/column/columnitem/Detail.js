@@ -5,7 +5,7 @@ import {API_DOMAIN} from "../../../config";
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;
 
-class New extends Component {
+class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -110,4 +110,4 @@ class New extends Component {
   }
 }
 
-export default New
+export default Detail
