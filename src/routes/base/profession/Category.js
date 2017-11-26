@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Col, Form, Pagination, Row, Table} from 'antd';
+import {Button, Card, Col, Dropdown, Form, Icon, Input, Menu, message, Pagination, Row, Table} from 'antd';
 import {
   createDataProfessionCategory,
   deleteDataProfessionCategory,
@@ -79,6 +79,13 @@ class Category extends Component {
       }
       }
     ];
+
+    const searchMenu = (
+      <Menu onClick={this.handleActionClick}>
+        <Menu.Item key="refresh">刷新</Menu.Item>
+        <Menu.Item key="clean">清空</Menu.Item>
+      </Menu>
+    );
 
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}} width={'50%'}>
