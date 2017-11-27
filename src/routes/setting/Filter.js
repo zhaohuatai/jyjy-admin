@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Button, Col, Dropdown, Icon, Menu, Row, Select} from 'antd';
-import NewSysconifg from './NewSysconifg';
 import {createCategory} from '../../service/auth';
 
 const Option = Select.Option;
@@ -47,7 +46,6 @@ class Filter extends Component {
   render() {
     const menu = (
       <Menu disabled={this.props.recycle} onClick={this.handleActionClick}>
-        {/* <Menu.Item key="delete">删除</Menu.Item> */}
         <Menu.Item key="update">修改</Menu.Item>
       </Menu>
 		);
@@ -62,13 +60,6 @@ class Filter extends Component {
 		        </Dropdown>
           </Col>
         </Row>
-
-        <NewSysconifg
-          ref={this.saveFormRef}
-          visible={this.state.visible}
-          onCancel={this.handleCancelNewCategory}
-          onCreate={this.handleCreateNewCategory}
-        />
       </div>
     );
   }

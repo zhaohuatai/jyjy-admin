@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {loadDicSysconfig, loadDicSysconfigDataSet, updateDicSysconfig} from '../../service/auth';
 import {message, RangePicker, Table, Tabs} from 'antd';
 import Filter from './Filter';
+import Update from "./Update";
 
 class SysConfig extends Component {
   handleUpdateSysconfig = () => {
@@ -140,18 +141,16 @@ class SysConfig extends Component {
               rowKey={record => record.id}
               pagination={false}
             />
-            <SysconifgUpdate
-              ref={this.saveUpdateFormRef}
-              visible={this.state.visible_update}
-              onCancel={() => this.setState({visible_update: false})}
-              onCreate={this.handleUpdateSysconfig}
-              formData={this.state.cur_config_update_data}
-            />
           </div>
           <TabPane tab="配置" key="1">
             <SysConfig/>
           </TabPane>
         </Tabs>
+
+        <Update ref={this.saveUpdateFormRef} visible={this.state.visible_update}
+                onCancel={() => this.setState({visible_update: false})} onCreate={this.handleUpdateSysconfig}
+                formData={this.state.cur_config_update_data}
+        />
       </div>
     );
   }

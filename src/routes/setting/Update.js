@@ -12,14 +12,7 @@ class Update extends Component {
     const {getFieldDecorator} = form;
 
     return (
-      <Modal
-        visible={visible}
-        title="修改系统参数"
-        okText="提交"
-        width='600px'
-        onCancel={onCancel}
-        onOk={onCreate}
-      >
+      <Modal visible={visible} title="修改系统参数" okText="提交" width='600px' onCancel={onCancel} onOk={onCreate}>
         <Form layout="vertical">
           <FormItem label="id">
             {getFieldDecorator('id', {
@@ -65,7 +58,6 @@ class Update extends Component {
               <Input/>
             )}
           </FormItem>
-
         </Form>
       </Modal>
     );
