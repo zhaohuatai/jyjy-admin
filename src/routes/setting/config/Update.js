@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Form, Input, message, Modal} from 'antd';
-import {updateDicSysconfig} from "../../../service/auth";
+import {updateDicSysconfig} from "../../../service/system";
 
 const FormItem = Form.Item;
 

@@ -441,460 +441,460 @@ export function changePwd(params, getData) {
   });
 }
 
-/**
- * order
- */
-//订单列表
-export function loadOrdersDataSet(params, getData) {
-  Http.post(API_DOMAIN + 'admin/orders/loadOrdersDataSet', params).then((data) => {
-    getData(data);
-  });
-}
-
-export function loadSumPayFee(params, getData) {
-  Http.post(API_DOMAIN + 'admin/orders/loadSumPayFee', params).then((data) => {
-    getData(data);
-  });
-}
-
-export function loadOrdersDetails(params, getData) {
-  Http.post(API_DOMAIN + 'admin/orders/loadOrdersDetails', params).then((data) => {
-    getData(data);
-  });
-}
-
-//确认收货
-export function confirmReceipt(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/orders/confirmReceipt', params).then(data => {
-    getDate(data);
-  });
-}
-
-//设置订单状态
-export function setOrdersStatus(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/orders/setOrdersStatus', params).then(data => {
-    if (data && data.statusCode === 200) {
-      message.success('设置成功');
-    }
-    getDate(data);
-  });
-}
-
-export function loadOrdersListCount(params, getData) {
-  Http.post(API_DOMAIN + 'admin/orders/loadOrdersListCount', params).then((data) => {
-    getData(data);
-  });
-}
-
-/**
- * 商品
- */
-
-//商品列表
-export function loadProduct(params, getData) {
-  Http.post(API_DOMAIN + 'admin/product/product/loadProduct', params).then((data) => {
-    getData(data);
-  });
-}
-
-//商品列表
-export function setProductStatus(params, getData) {
-  Http.post(API_DOMAIN + 'admin/product/product/setProductStatus', params).then((data) => {
-    getData(data);
-  });
-}
-
-//商品数
-export function loadProductListCount(params, getData) {
-  Http.post(API_DOMAIN + 'admin/product/product/loadProductListCount', params).then((data) => {
-    getData(data);
-  });
-}
-
-//商品热销设置
-export function setProductIsHot(params, getData) {
-  Http.post(API_DOMAIN + 'admin/product/product/setProductIsHot', params).then((data) => {
-    getData(data);
-  });
-}
-
-//审核商品 5不通过  6通过
-export function checkProduct(params, getData) {
-  Http.post(API_DOMAIN + 'admin/product/product/checkProduct', params).then((data) => {
-    getData(data);
-  });
-}
-
-//商品下架
-export function setProductOffShelf(params, getData) {
-  Http.post(API_DOMAIN + 'admin/product/product/setProductOffShelf', params).then((data) => {
-    getData(data);
-  });
-}
-
-export function loadProductDetail(params, getData) {
-  Http.post(API_DOMAIN + 'admin/product/product/loadProductDetail', params).then((data) => {
-    getData(data);
-  });
-}
-
-/**
- * 用户
- */
-export function loadMemberDataSet(params, getData) {
-  Http.post(API_DOMAIN + 'admin/member/loadMemberDataSet', params).then((data) => {
-    getData(data);
-  });
-}
-
-export function setMemberStatus(params, getData) {
-  Http.post(API_DOMAIN + 'admin/member/setMemberStatus', params).then((data) => {
-    getData(data);
-  });
-}
-
-export function loadMemberCount(params, getData) {
-  Http.post(API_DOMAIN + 'admin/member/loadMemberCount', params).then((data) => {
-    getData(data);
-  });
-}
-
-export function loadMember(params, getData) {
-  Http.post(API_DOMAIN + 'admin/member/loadMember', params).then((data) => {
-    getData(data);
-  });
-}
-
-//商品保证金
-export function loadMemberAccountDepositDataSet(params, getData) {
-  Http.post(API_DOMAIN + 'admin/member/memberAccountDeposit/loadMemberAccountDepositDataSet', params).then((data) => {
-    getData(data);
-  });
-}
-
-export function loadMemberAccountDeposit(params, getData) {
-  Http.post(API_DOMAIN + 'admin/member/memberAccountDeposit/loadMemberAccountDeposit', params).then((data) => {
-    getData(data);
-  });
-}
-
-//推广
-export function loadMemberAccountIntroDataSet(params, getData) {
-  Http.post(API_DOMAIN + 'admin/member/memberAccountIntro/loadMemberAccountIntroDataSet', params).then((data) => {
-    getData(data);
-  });
-}
-
-export function loadMemberAccountIntro(params, getData) {
-  Http.post(API_DOMAIN + 'admin/member/memberAccountIntro/loadMemberAccountIntro', params).then((data) => {
-    getData(data);
-  });
-}
-
-//交易记录
-export function loadMemberAccountLogDataSet(params, getData) {
-  Http.post(API_DOMAIN + 'admin/member/memberAccountLog/loadMemberAccountLogDataSet', params).then((data) => {
-    getData(data);
-  });
-}
-
-export function loadMemberAccountLog(params, getData) {
-  Http.post(API_DOMAIN + 'admin/member/memberAccountLog/loadMemberAccountLog', params).then((data) => {
-    getData(data);
-  });
-}
-
-//充值记录
-export function loadMemberAccountRechargeDataSet(params, getData) {
-  Http.post(API_DOMAIN + 'admin/member/memberAccountRecharge/loadMemberAccountRechargeDataSet', params).then((data) => {
-    getData(data);
-  });
-}
-
-export function loadMemberAccountRecharge(params, getData) {
-  Http.post(API_DOMAIN + 'admin/member/memberAccountRecharge/loadMemberAccountRecharge', params).then((data) => {
-    getData(data);
-  });
-}
-
-export function deletMemberAccountRecharge(params, getData) {
-  Http.post(API_DOMAIN + 'admin/member/memberAccountRecharge/deletMemberAccountRecharge', params).then((data) => {
-    getData(data);
-  });
-}
-
-//体现
-export function loadMemberAccountWithdrawDataSet(params, getData) {
-  Http.post(API_DOMAIN + 'admin/member/memberAccountWithdrawCash/loadMemberAccountWithdrawDataSet', params).then((data) => {
-    getData(data);
-  });
-}
-
-export function loadMemberAccountWithdrawCash(params, getData) {
-  Http.post(API_DOMAIN + 'admin/member/memberAccountWithdrawCash/loadMemberAccountWithdrawCash', params).then((data) => {
-    getData(data);
-  });
-}
-
-
-/**
- * 文章
- */
-export function loadPubArticleImageDataSet(params, getData) {
-  Http.post(API_DOMAIN + 'admin/pub/pubArticleImage/loadPubArticleImageDataSet', params).then((data) => {
-    getData(data);
-  });
-}
+// /**
+//  * order
+//  */
+// //订单列表
+// export function loadOrdersDataSet(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/orders/loadOrdersDataSet', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// export function loadSumPayFee(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/orders/loadSumPayFee', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// export function loadOrdersDetails(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/orders/loadOrdersDetails', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// //确认收货
+// export function confirmReceipt(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/orders/confirmReceipt', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// //设置订单状态
+// export function setOrdersStatus(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/orders/setOrdersStatus', params).then(data => {
+//     if (data && data.statusCode === 200) {
+//       message.success('设置成功');
+//     }
+//     getDate(data);
+//   });
+// }
+//
+// export function loadOrdersListCount(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/orders/loadOrdersListCount', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// /**
+//  * 商品
+//  */
+//
+// //商品列表
+// export function loadProduct(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/product/product/loadProduct', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// //商品列表
+// export function setProductStatus(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/product/product/setProductStatus', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// //商品数
+// export function loadProductListCount(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/product/product/loadProductListCount', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// //商品热销设置
+// export function setProductIsHot(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/product/product/setProductIsHot', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// //审核商品 5不通过  6通过
+// export function checkProduct(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/product/product/checkProduct', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// //商品下架
+// export function setProductOffShelf(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/product/product/setProductOffShelf', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// export function loadProductDetail(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/product/product/loadProductDetail', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// /**
+//  * 用户
+//  */
+// export function loadMemberDataSet(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/member/loadMemberDataSet', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// export function setMemberStatus(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/member/setMemberStatus', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// export function loadMemberCount(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/member/loadMemberCount', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// export function loadMember(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/member/loadMember', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// //商品保证金
+// export function loadMemberAccountDepositDataSet(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/member/memberAccountDeposit/loadMemberAccountDepositDataSet', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// export function loadMemberAccountDeposit(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/member/memberAccountDeposit/loadMemberAccountDeposit', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// //推广
+// export function loadMemberAccountIntroDataSet(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/member/memberAccountIntro/loadMemberAccountIntroDataSet', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// export function loadMemberAccountIntro(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/member/memberAccountIntro/loadMemberAccountIntro', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// //交易记录
+// export function loadMemberAccountLogDataSet(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/member/memberAccountLog/loadMemberAccountLogDataSet', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// export function loadMemberAccountLog(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/member/memberAccountLog/loadMemberAccountLog', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// //充值记录
+// export function loadMemberAccountRechargeDataSet(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/member/memberAccountRecharge/loadMemberAccountRechargeDataSet', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// export function loadMemberAccountRecharge(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/member/memberAccountRecharge/loadMemberAccountRecharge', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// export function deletMemberAccountRecharge(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/member/memberAccountRecharge/deletMemberAccountRecharge', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// //体现
+// export function loadMemberAccountWithdrawDataSet(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/member/memberAccountWithdrawCash/loadMemberAccountWithdrawDataSet', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// export function loadMemberAccountWithdrawCash(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/member/memberAccountWithdrawCash/loadMemberAccountWithdrawCash', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+//
+// /**
+//  * 文章
+//  */
+// export function loadPubArticleImageDataSet(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/pub/pubArticleImage/loadPubArticleImageDataSet', params).then((data) => {
+//     getData(data);
+//   });
+// }
 
 // export function createPubArticleImage(params,getData){
 //   Http.post(API_DOMAIN+'admin/pub/pubArticleImage/createPubArticleImage',params).then((data)=>{
 //     getData(data);
 //   });
 // }
-export function createPubArticleImage(params, getDate) {
-  let headers = new Headers();
-  //headers.set('Content-Type','multipart/form-data; boundary=----WebKitFormBoundary4I9QTerA7b4BBalV');
-  headers.set('X-Requested-With', 'XMLHttpRequest');
+// export function createPubArticleImage(params, getDate) {
+//   let headers = new Headers();
+//   //headers.set('Content-Type','multipart/form-data; boundary=----WebKitFormBoundary4I9QTerA7b4BBalV');
+//   headers.set('X-Requested-With', 'XMLHttpRequest');
+//
+//   fetch(API_DOMAIN + 'admin/pub/pubArticleImage/createPubArticleImage', {
+//     method: 'post',
+//     mode: 'cors',
+//     credentials: 'include',
+//     headers,
+//     body: params
+//   }).then((response) => {
+//     return response.json();
+//   }).then((responseData) => {
+//     getDate(responseData);
+//   }).catch(() => {
+//     getDate({codeStatus: 400});
+//   });
+// }
+//
+// export function loadPubArticleImage(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/pub/pubArticleImage/loadPubArticleImage', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// export function deletePubArticleImage(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/pub/pubArticleImage/deletePubArticleImage', params).then((data) => {
+//     getData(data);
+//   });
+// }
 
-  fetch(API_DOMAIN + 'admin/pub/pubArticleImage/createPubArticleImage', {
-    method: 'post',
-    mode: 'cors',
-    credentials: 'include',
-    headers,
-    body: params
-  }).then((response) => {
-    return response.json();
-  }).then((responseData) => {
-    getDate(responseData);
-  }).catch(() => {
-    getDate({codeStatus: 400});
-  });
-}
-
-export function loadPubArticleImage(params, getData) {
-  Http.post(API_DOMAIN + 'admin/pub/pubArticleImage/loadPubArticleImage', params).then((data) => {
-    getData(data);
-  });
-}
-
-export function deletePubArticleImage(params, getData) {
-  Http.post(API_DOMAIN + 'admin/pub/pubArticleImage/deletePubArticleImage', params).then((data) => {
-    getData(data);
-  });
-}
-
-
-/**
- * 广告
- */
-export function loadProductAdvDataSet(params, getData) {
-  Http.post(API_DOMAIN + 'admin/product/productAdv/loadProductAdvDataSet', params).then((data) => {
-    getData(data);
-  });
-}
-
-export function addProductAdv(params, getData) {
-  Http.post(API_DOMAIN + 'admin/product/productAdv/createProductAdv', params).then((data) => {
-    getData(data);
-  });
-}
-
-export function loadProductAdv(params, getData) {
-  Http.post(API_DOMAIN + 'admin/product/productAdv/loadProductAdv', params).then((data) => {
-    getData(data);
-  });
-}
-
-export function uploadProductAdvImage(params, getDate) {
-  let headers = new Headers();
-  //headers.set('Content-Type','multipart/form-data; boundary=----WebKitFormBoundary4I9QTerA7b4BBalV');
-  headers.set('X-Requested-With', 'XMLHttpRequest');
-
-  fetch(API_DOMAIN + 'admin/product/productAdv/uploadProductAdvImage', {
-    method: 'post',
-    mode: 'cors',
-    credentials: 'include',
-    headers,
-    body: params
-  }).then((response) => {
-    return response.json();
-  }).then((responseData) => {
-    getDate(responseData);
-  }).catch(() => {
-    getDate({codeStatus: 400});
-  });
-}
-
-export function deleteProductAdv(params, getData) {
-  Http.post(API_DOMAIN + 'admin/product/productAdv/deleteProductAdv', params).then((data) => {
-    getData(data);
-  });
-}
-
-export function setProductAdvIsShow(params, getData) {
-  Http.post(API_DOMAIN + 'admin/product/productAdv/setProductAdvIsShow', params).then((data) => {
-    getData(data);
-  });
-}
-
-/**
- * specification
- */
-export function loadSpecificationDataSet(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/specification/loadSpecificationDataSet', params).then(data => {
-    getDate(data);
-  });
-}
-
-export function createSpecification(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/specification/createSpecification', params).then(data => {
-    getDate(data);
-  });
-}
-
-export function loadSpecification(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/specification/loadSpecification', params).then(data => {
-    getDate(data);
-  });
-}
-
-export function updateSpecification(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/specification/updateSpecification', params).then(data => {
-    getDate(data);
-  });
-}
-
-export function deleteSpecification(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/specification/deleteSpecification', params).then(data => {
-    getDate(data);
-  });
-}
-
-export function disableSpecificationStatus(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/specification/loadSpecificationDataSet', params).then(data => {
-    getDate(data);
-  });
-}
-
-export function enableSpecificationStatus(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/specification/enableSpecificationStatus', params).then(data => {
-    getDate(data);
-  });
-}
-
-export function auditNoSpecificationStatus(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/specification/auditNoSpecificationStatus', params).then(data => {
-    getDate(data);
-  });
-}
+//
+// /**
+//  * 广告
+//  */
+// export function loadProductAdvDataSet(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/product/productAdv/loadProductAdvDataSet', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// export function addProductAdv(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/product/productAdv/createProductAdv', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// export function loadProductAdv(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/product/productAdv/loadProductAdv', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// export function uploadProductAdvImage(params, getDate) {
+//   let headers = new Headers();
+//   //headers.set('Content-Type','multipart/form-data; boundary=----WebKitFormBoundary4I9QTerA7b4BBalV');
+//   headers.set('X-Requested-With', 'XMLHttpRequest');
+//
+//   fetch(API_DOMAIN + 'admin/product/productAdv/uploadProductAdvImage', {
+//     method: 'post',
+//     mode: 'cors',
+//     credentials: 'include',
+//     headers,
+//     body: params
+//   }).then((response) => {
+//     return response.json();
+//   }).then((responseData) => {
+//     getDate(responseData);
+//   }).catch(() => {
+//     getDate({codeStatus: 400});
+//   });
+// }
+//
+// export function deleteProductAdv(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/product/productAdv/deleteProductAdv', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// export function setProductAdvIsShow(params, getData) {
+//   Http.post(API_DOMAIN + 'admin/product/productAdv/setProductAdvIsShow', params).then((data) => {
+//     getData(data);
+//   });
+// }
+//
+// /**
+//  * specification
+//  */
+// export function loadSpecificationDataSet(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/specification/loadSpecificationDataSet', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// export function createSpecification(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/specification/createSpecification', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// export function loadSpecification(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/specification/loadSpecification', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// export function updateSpecification(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/specification/updateSpecification', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// export function deleteSpecification(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/specification/deleteSpecification', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// export function disableSpecificationStatus(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/specification/loadSpecificationDataSet', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// export function enableSpecificationStatus(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/specification/enableSpecificationStatus', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// export function auditNoSpecificationStatus(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/specification/auditNoSpecificationStatus', params).then(data => {
+//     getDate(data);
+//   });
+// }
 
 /**
  * 系统参数
  */
-export function loadDicSysconfigDataSet(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/dic/dicSysconfig/loadDicSysconfigDataSet', params).then(data => {
-    getDate(data);
-  });
-}
-
-export function addDicSysconfig(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/dic/dicSysconfig/addDicSysconfig', params).then(data => {
-    getDate(data);
-  });
-}
-
-export function updateDicSysconfig(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/dic/dicSysconfig/updateDicSysconfig', params).then(data => {
-    getDate(data);
-  });
-}
-
-export function loadDicSysconfig(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/dic/dicSysconfig/loadDicSysconfig', params).then(data => {
-    getDate(data);
-  });
-}
-
-export function deletDicSysconfig(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/dic/dicSysconfig/deletDicSysconfig', params).then(data => {
-    getDate(data);
-  });
-}
-
-/**
- * catergory
- */
-export function createCategory(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/category/createCategory', params).then(data => {
-    getDate(data);
-  });
-}
-
-export function deleteCategory(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/category/deleteCategory', params).then(data => {
-    getDate(data);
-  });
-}
-
-export function enableCategoryAttr(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/category/enableCategoryAttr', params).then(data => {
-    getDate(data);
-  });
-}
-
-export function disableCategory(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/category/disableCategory', params).then(data => {
-    getDate(data);
-  });
-}
-
-export function updateCategoryOrderNum(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/category/updateCategoryOrderNum', params).then(data => {
-    getDate(data);
-  });
-}
-
-export function loadProductCategoryTree(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/category/loadCategoryTree', params).then(data => {
-    getDate(data);
-  });
-}
-
-export function loadCategory(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/category/loadCategory', params).then(data => {
-    getDate(data);
-  });
-}
-
-/*
-Term
-*/
-export function loadPubTermDataSet(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/pub/pubTerm/loadPubTermDataSet', params).then(data => {
-    getDate(data);
-  });
-}
-
-export function createPubTerm(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/pub/pubTerm/createPubTerm', params).then(data => {
-    getDate(data);
-  });
-}
-
-export function updatePubTerm(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/pub/pubTerm/updatePubTerm', params).then(data => {
-    getDate(data);
-  });
-}
-
-export function deletePubTerm(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/pub/pubTerm/deletePubTerm', params).then(data => {
-    getDate(data);
-  });
-}
-
-export function loadPubTerm(params, getDate) {
-  Http.post(API_DOMAIN + 'admin/pub/pubTerm/loadPubTerm', params).then(data => {
-    getDate(data);
-  });
-}
+// export function loadDicSysconfigDataSet(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/dic/dicSysconfig/loadDicSysconfigDataSet', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// export function addDicSysconfig(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/dic/dicSysconfig/addDicSysconfig', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// export function updateDicSysconfig(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/dic/dicSysconfig/updateDicSysconfig', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// export function loadDicSysconfig(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/dic/dicSysconfig/loadDicSysconfig', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// export function deletDicSysconfig(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/dic/dicSysconfig/deletDicSysconfig', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// /**
+//  * catergory
+//  */
+// export function createCategory(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/category/createCategory', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// export function deleteCategory(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/category/deleteCategory', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// export function enableCategoryAttr(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/category/enableCategoryAttr', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// export function disableCategory(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/category/disableCategory', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// export function updateCategoryOrderNum(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/category/updateCategoryOrderNum', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// export function loadProductCategoryTree(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/category/loadCategoryTree', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// export function loadCategory(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/category/loadCategory', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// /*
+// Term
+// */
+// export function loadPubTermDataSet(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/pub/pubTerm/loadPubTermDataSet', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// export function createPubTerm(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/pub/pubTerm/createPubTerm', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// export function updatePubTerm(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/pub/pubTerm/updatePubTerm', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// export function deletePubTerm(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/pub/pubTerm/deletePubTerm', params).then(data => {
+//     getDate(data);
+//   });
+// }
+//
+// export function loadPubTerm(params, getDate) {
+//   Http.post(API_DOMAIN + 'admin/pub/pubTerm/loadPubTerm', params).then(data => {
+//     getDate(data);
+//   });
+// }

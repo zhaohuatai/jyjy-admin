@@ -3,7 +3,7 @@ import {hashHistory} from 'react-router';
 import {connect} from 'react-redux';
 import md5 from 'blueimp-md5';
 import {Button, Form, Icon, Input, message} from 'antd';
-import {sitename} from '../../utils/config';
+import {siteName} from '../../utils/config';
 import {API_DOMAIN} from '../../config';
 import {doWebLogin} from '../../service/auth';
 import {doLogin} from '../../action';
@@ -16,7 +16,7 @@ function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
 
-console.log(sitename);
+console.log(siteName);
 
 class NormalLoginForm extends React.Component {
   constructor(props){
@@ -59,7 +59,7 @@ class NormalLoginForm extends React.Component {
       <div className={style.form}>
           <div className={style.logo}>
       {/* <img alt={'logo'} src={config.logo} /> */}
-      <span>{sitename}</span>
+            <span>{siteName}</span>
     </div>
       <Form onSubmit={this.handleSubmit} className={style.loginform}>
         <FormItem>

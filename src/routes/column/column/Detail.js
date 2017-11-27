@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Col, Collapse, Form, Modal, Row} from 'antd';
-import {API_DOMAIN} from "../../../config";
+import {IMG_DOMAIN} from "../../../config";
 
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;
@@ -35,7 +35,7 @@ class New extends Component {
         <Row type="flex" style={{marginBottom: '5px'}}>
           <Col span={24}>
             <FormItem{...formItemLayout} label="封面">
-              <img style={{width: '100px', height: '100px'}} src={`${API_DOMAIN}${coverUrl}`}/>
+              <img style={{width: '100px', height: '100px'}} src={`${IMG_DOMAIN}${coverUrl}`}/>
             </FormItem>
           </Col>
           <Col span={24}>

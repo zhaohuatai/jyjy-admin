@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {loadDicSysconfig, loadDicSysconfigDataSet} from '../../../service/auth';
+import {loadDicSysconfig, loadDicSysconfigDataSet} from '../../../service/system';
 import {Pagination, Table, Tabs} from 'antd';
 import Filter from './Filter';
 import Update from "./Update";

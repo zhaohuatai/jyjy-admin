@@ -88,7 +88,7 @@ class Category extends Component {
 
     const table_columns = [
       {title: '序号', dataIndex: 'id', key: 'id'},
-      {title: '门类', dataIndex: 'name', key: 'name'},
+      {title: '分类', dataIndex: 'name', key: 'name'},
       {
         title: '操作', key: 'action', render: (text, record) => {
         return (<span>
@@ -115,7 +115,7 @@ class Category extends Component {
                 {getFieldDecorator('name', {
                   initialValue: ''
                 })(
-                  <Input size='default' addonBefore='学科' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
+                  <Input size='default' addonBefore='分类' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
                 )}
               </Form.Item>
             </Col>
@@ -146,7 +146,7 @@ class Category extends Component {
                     {getFieldDecorator('add', {
                       initialValue: ''
                     })(
-                      <Input addonBefore='门类'/>
+                      <Input addonBefore='分类'/>
                     )}
                   </Form.Item>
                 </Col>

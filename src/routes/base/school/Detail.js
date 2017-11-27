@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {API_DOMAIN} from '../../../utils/config';
 import {Col, Collapse, Form, Modal, Row} from 'antd';
+import {IMG_DOMAIN} from "../../../config";
 
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;
@@ -52,7 +52,7 @@ class New extends Component {
               {...formItemLayout}
               label="校徽图片"
             >
-              <img style={{width: '100px', height: '100px'}} src={`${API_DOMAIN}${badge}`}/>
+              <img style={{width: '100px', height: '100px'}} src={`${IMG_DOMAIN}${badge}`}/>
             </FormItem>
           </Col >
           <Col span={24}>

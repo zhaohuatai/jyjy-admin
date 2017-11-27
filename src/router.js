@@ -21,6 +21,7 @@ import ScoreLine from "./routes/base/scoreLine/index";
 import ScoreLineProvince from "./routes/base/scoreLineProvice/index";
 import Setting from "./routes/setting/config/index";
 import Page from "./routes/customize/page/index";
+import Partner from "./routes/setting/partner";
 
 const Routers = () => (
   <Router history={hashHistory}>
@@ -86,7 +87,7 @@ const Routers = () => (
 
       <Route path="/system">
         <Route path="config" component={Setting}/>
-        {/*<Route path="partner" component={SettingPartner}/>*/}
+        <Route path="partner" component={Partner}/>
         {/*<Route path="vip-card" component={vipCard}/>*/}
       </Route>
 
