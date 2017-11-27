@@ -22,6 +22,7 @@ import ScoreLineProvince from "./routes/base/scoreLineProvice/index";
 import Setting from "./routes/setting/config/index";
 import Page from "./routes/customize/page/index";
 import Partner from "./routes/setting/partner";
+import ServiceContent from './routes/entrance/service';
 
 const Routers = () => (
   <Router history={hashHistory}>
@@ -48,10 +49,10 @@ const Routers = () => (
         <Route path="column-item" component={ColumnItem}/>
       </Route>
 
-      {/*<Route path='/entrance'>*/}
-      {/*<Route path="service" component={Entrance}/>*/}
+      <Route path='/entrance'>
+      <Route path="service" component={ServiceContent}/>
       {/*<Route path="appointment" component={Appointment}/>*/}
-      {/*</Route>*/}
+      </Route>
 
       {/*<Route path='/enroll-self'>*/}
       {/*<Route path="award" component={Award}/>*/}
