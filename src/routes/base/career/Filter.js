@@ -60,7 +60,7 @@ class Filter extends Component {
         <Menu.Item key="refresh">刷新</Menu.Item>
         <Menu.Item key="clean">清空</Menu.Item>
       </Menu>
-    )
+    );
 
     return (
       <div>

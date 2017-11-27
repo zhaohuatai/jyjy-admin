@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Input, message, Modal, Row} from 'antd';
-import UEditor from '../../components/editor/UEditor';
-import {updatePubCustomize} from "../../service/customize";
+import UEditor from '../../../components/editor/UEditor';
+import {updatePubCustomize} from "../../../service/customize";
 import LazyLoad from 'react-lazy-load';
-
 
 const FormItem = Form.Item;
 
-class New extends Component {
+class Update extends Component {
   constructor(props) {
     super(props);
   }
@@ -88,4 +87,5 @@ class New extends Component {
   }
 }
 
-export default Form.create()(New);;
+export default Form.create()(Update);
+;

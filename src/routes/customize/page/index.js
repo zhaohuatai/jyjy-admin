@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Pagination, Table, Tabs} from 'antd';
-import {loadPubCustomize, loadPubCustomizeDataSet} from '../../service/customize';
+import {loadPubCustomize, loadPubCustomizeDataSet} from '../../../service/customize';
 import Filter from './Filter';
 import Update from './Update';
 import Detail from './Detail';

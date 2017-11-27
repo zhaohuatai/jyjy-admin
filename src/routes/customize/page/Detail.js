@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import {Col, Collapse, Form, Modal, Row} from 'antd';
-import {API_DOMAIN} from '../../utils/config';
 
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;
 
-class New extends Component {
+class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -66,4 +65,4 @@ class New extends Component {
   }
 }
 
-export default New
+export default Detail
