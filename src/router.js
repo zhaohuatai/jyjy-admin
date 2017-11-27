@@ -21,7 +21,6 @@ import ColumnItem from './routes/column/columnitem';
 import ScoreLine from "./routes/base/scoreLine/index";
 import ScoreLineProvince from "./routes/base/scoreLineProvice/index";
 import Setting from "./routes/setting/Setting";
-import Sysconfig from "./routes/setting/Sysconfig";
 
 const Routers = () => (
   <Router history={hashHistory}>
@@ -48,6 +47,29 @@ const Routers = () => (
         <Route path="column-item" component={ColumnItem}/>
       </Route>
 
+      {/*<Route path='/entrance'>*/}
+      {/*<Route path="service" component={Entrance}/>*/}
+      {/*<Route path="appointment" component={Appointment}/>*/}
+      {/*</Route>*/}
+
+      {/*<Route path='/enroll-self'>*/}
+      {/*<Route path="award" component={Award}/>*/}
+      {/*<Route path="question" component={Question}/>*/}
+      {/*<Route path="big-data" component={BigData}/>*/}
+      {/*<Route path="admission-brochures" component={AdmissionBrochures}/>*/}
+      {/*</Route>*/}
+
+      {/*<Route path='/qa'>*/}
+      {/*<Route path="entrance-service" component={Entrance}/>*/}
+      {/*<Route path="enroll-self" component={EnrollSelf}/>*/}
+      {/*</Route>*/}
+
+      {/*<Route path='/member'>*/}
+      {/*<Route path="management" component={Member}/>*/}
+      {/*<Route path="teacher" component={Teacher}/>*/}
+      {/*<Route path="coupon" component={Coupon}/>*/}
+      {/*</Route>*/}
+
       <Route path='/customize'>
         <Route path="slide" component={Slide}/>
         <Route path="page" component={Customize}/>
@@ -64,7 +86,8 @@ const Routers = () => (
 
       <Route path="/system">
         <Route path="config" component={Setting}/>
-        <Route path="system-config" component={Sysconfig}/>
+        {/*<Route path="partner" component={Partner}/>*/}
+        {/*<Route path="vip-card" component={vipCard}/>*/}
       </Route>
 
     </Route>
