@@ -13,7 +13,7 @@ const table_columns = [
   {title: '标题', dataIndex: 'title', key: 'title'},
 ]
 
-class Customize extends Component {
+class Page extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -126,4 +126,4 @@ class Customize extends Component {
   }
 }
 
-export default Customize;
+export default Page;

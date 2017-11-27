@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {API_DOMAIN} from '../../utils/config';
+import {API_DOMAIN} from '../../../utils/config';
 import {Button, Col, Form, Icon, Input, message, Modal, Row, Upload} from 'antd';
-import {updatePubSlide} from "../../service/slide";
+import {updatePubSlide} from "../../../service/slide";
 
 const FormItem = Form.Item;
 

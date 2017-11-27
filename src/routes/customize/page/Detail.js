@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Form, Col, Row, Modal,Collapse} from 'antd';
-import { API_DOMAIN } from '../../utils/config';
+import React, {Component} from 'react';
+import {Col, Collapse, Form, Modal, Row} from 'antd';
+import {API_DOMAIN} from '../../utils/config';
 
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;

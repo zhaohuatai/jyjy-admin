@@ -46,7 +46,7 @@ class SysconfigFilter extends Component {
 
   render() {
     const menu = (
-      <Menu onClick={this.handleActionClick}>
+      <Menu disabled={this.props.recycle} onClick={this.handleActionClick}>
         {/* <Menu.Item key="delete">删除</Menu.Item> */}
         <Menu.Item key="update">修改</Menu.Item>
       </Menu>

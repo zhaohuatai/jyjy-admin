@@ -11,8 +11,7 @@ import AuthPermission from './routes/auth/permission/AuthPermission';
 import AuthRole from './routes/auth/role/AuthRole';
 import AuthUser from './routes/auth/user/AuthUser';
 import AuthApplication from './routes/auth/application/AuthApplication';
-import Slide from './routes/slide';
-import Customize from './routes/customize';
+import Slide from './routes/customize/slide';
 import Course from './routes/course/course/index';
 import CourseItem from './routes/course/courseItem';
 import CourseCategory from './routes/course/coursecategory';
@@ -21,6 +20,7 @@ import ColumnItem from './routes/column/columnitem';
 import ScoreLine from "./routes/base/scoreLine/index";
 import ScoreLineProvince from "./routes/base/scoreLineProvice/index";
 import Setting from "./routes/setting/Setting";
+import Page from "./routes/customize/page/index";
 
 const Routers = () => (
   <Router history={hashHistory}>
@@ -72,7 +72,7 @@ const Routers = () => (
 
       <Route path='/customize'>
         <Route path="slide" component={Slide}/>
-        <Route path="page" component={Customize}/>
+        <Route path="page" component={Page}/>
         {/*<Route path="case-success" component={caseSuccess}/>*/}
       </Route>
 

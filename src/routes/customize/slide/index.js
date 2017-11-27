@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Pagination, Table, Tabs} from 'antd';
-import {deletePubSlide, loadPubSlide, loadPubSlideDataSet} from '../../service/slide';
+import {deletePubSlide, loadPubSlide, loadPubSlideDataSet} from '../../../service/slide';
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';

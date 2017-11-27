@@ -48,7 +48,7 @@ class Filter extends Component {
     const {getFieldDecorator} = this.props.form;
 
     const menu = (
-      <Menu onClick={this.handleActionClick}>
+      <Menu disabled={this.props.recycle} onClick={this.handleActionClick}>
         <Menu.Item key="delete">删除</Menu.Item>
         <Menu.Item key="update">更新</Menu.Item>
       </Menu>

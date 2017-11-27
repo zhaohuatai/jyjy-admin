@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import {Button, Col, Dropdown, Form, Icon, Input, Menu, Row, Select} from 'antd';
+import {Button, Col, Dropdown, Form, Icon, Input, Menu, Row} from 'antd';
 
-const Option = Select.Option;
 const FormItem = Form.Item;
 
 class Filter extends Component {
-
   //  触发操作
   handleActionClick = ({item, key, keyPath}) => {
     switch (key) {
@@ -50,8 +48,8 @@ class Filter extends Component {
     const {getFieldDecorator} = this.props.form;
 
     const menu = (
-      <Menu onClick={this.handleActionClick}>
-        <Menu.Item key="delete" disabled>删除</Menu.Item>
+      <Menu disabled={this.props.recycle} onClick={this.handleActionClick}>
+        <Menu.Item key="delete">删除</Menu.Item>
         <Menu.Item key="update">更新</Menu.Item>
       </Menu>
     );
@@ -91,7 +89,7 @@ class Filter extends Component {
           </Col>
 
           <Col span={2}>
-            <Button disabled onClick={() => this.handleActionClick({key: 'recycle'})}>
+            <Button onClick={() => this.handleActionClick({key: 'recycle'})}>
               <Icon type="info-circle-o"/> {this.props.recycle ? "返回" : "回收站"}
             </Button>
           </Col>
