@@ -11,9 +11,9 @@ class Filter extends Component {
     };
   }
 
-  handleActionClick=({ item, key, keyPath })=>{
+  handleActionClick = ({key}) => {
     this.props.operation(key);
-  }
+  };
 
   render() {
     const menu = (

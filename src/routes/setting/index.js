@@ -4,6 +4,8 @@ import {message, RangePicker, Table, Tabs} from 'antd';
 import Filter from './Filter';
 import Update from "./Update";
 
+const TabPane = Tabs.TabPane;
+
 class SysConfig extends Component {
   handleUpdateSysconfig = () => {
     const form = this.form;
@@ -135,7 +137,6 @@ class SysConfig extends Component {
               dataSource={this.state.dataSource}
               columns={columns}
               bordered
-              size='middle'
               loading={this.state.loading}
               rowSelection={rowSelection}
               rowKey={record => record.id}
@@ -145,12 +146,13 @@ class SysConfig extends Component {
           <TabPane tab="配置" key="1">
             <SysConfig/>
           </TabPane>
+          <Pagination style={{marginTop: '10px'}} showQuickJumper defaultCurrent={1} current={table_cur_page}
+                      defaultPageSize={20} total={table_total} onChange={this.onChangeTablePage}/>,
         </Tabs>
 
         <Update ref={this.saveUpdateFormRef} visible={this.state.visible_update}
                 onCancel={() => this.setState({visible_update: false})} onCreate={this.handleUpdateSysconfig}
-                formData={this.state.cur_config_update_data}
-        />
+                formData={this.state.cur_config_update_data}/>
       </div>
     );
   }
