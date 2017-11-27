@@ -12,14 +12,6 @@ export function loadDicSysconfigDataSet(params) {
   });
 }
 
-export function addDicSysconfig(params) {
-  return new Promise((resolve) => {
-    post(API_DOMAIN + 'admin/dic/dicSysconfig/addDicSysconfig', params).then(data => {
-      resolve(data);
-    });
-  })
-}
-
 export function updateDicSysconfig(params) {
   return new Promise((resolve) => {
     post(API_DOMAIN + 'admin/dic/dicSysconfig/updateDicSysconfig', params).then(data => {
@@ -58,7 +50,7 @@ export function loadPubPartnerDataSet(params) {
 
 export function createPubPartner(params) {
   return new Promise((resolve) => {
-    post(API_DOMAIN + 'admin/pub/pubPartner/addPubPartner', params).then(data => {
+    post(API_DOMAIN + 'admin/pub/pubPartner/createPubPartner', params).then(data => {
       resolve(data);
     });
   })

@@ -100,4 +100,4 @@ class New extends Component {
   }
 }
 
-export default Form.create()(New);;
+export default Form.create()(New);

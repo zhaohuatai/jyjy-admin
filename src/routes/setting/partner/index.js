@@ -1,9 +1,26 @@
 import React, {Component} from 'react';
-import {Button, Card, Col, Dropdown, Form, Icon, Input, Menu, message, Pagination, Row, Table, Tabs} from 'antd';
+import {
+  Button,
+  Card,
+  Col,
+  Dropdown,
+  Form,
+  Icon,
+  Input,
+  Menu,
+  message,
+  Modal,
+  Pagination,
+  Row,
+  Table,
+  Tabs,
+  Upload
+} from 'antd';
 import {createPubPartner, deletePubPartner, loadPubPartnerDataSet} from "../../../service/system";
-import {IMG_DOMAIN} from "../../../utils/config";
+import {API_DOMAIN, IMG_DOMAIN} from "../../../utils/config";
 
 const TabPane = Tabs.TabPane;
+const confirm = Modal.confirm;
 
 class Partner extends Component {
 
@@ -31,13 +48,25 @@ class Partner extends Component {
     this.doRefresh(values);
   };
   doDelete = (id) => {
-    deletePubPartner({id: id}).then(data => {
-      message.success("删除成功！");
-      this.doRefresh();
+    confirm({
+      title: '确定删除吗？',
+      okType: 'danger',
+      onOk: () => {
+        deletePubPartner({id: id}).then(data => {
+          message.success("删除成功！");
+          this.doRefresh();
+        });
+      },
     });
   };
   doAdd = () => {
-    createPubPartner({name: this.props.form.getFieldsValue()['add']}).then(data => {
+    let formData = this.props.form.getFieldsValue();
+
+    if (formData.addImgUrl) {
+      formData.addImgUrl = formData.addImgUrl[0].response.data.image;
+    }
+
+    createPubPartner({name: formData.addName, logo: formData.addImgUrl}).then(data => {
       message.success("添加成功！");
       this.props.form.resetFields(['add']);
       this.doRefresh();
@@ -95,6 +124,17 @@ class Partner extends Component {
     const {table_loading, table_cur_page, table_total} = this.state;
 
     const {getFieldDecorator} = this.props.form;
+
+    const formItemLayout = {
+      labelCol: {
+        xs: {span: 24},
+        sm: {span: 4},
+      },
+      wrapperCol: {
+        xs: {span: 24},
+        sm: {span: 20},
+      },
+    };
 
     const table_columns = [
       {title: '序号', dataIndex: 'id', key: 'id'},
@@ -162,20 +202,26 @@ class Partner extends Component {
                   <Card title="添加">
                     <Row type='flex'>
                       <Col span={24}>
-                        <Form.Item>
-                          {getFieldDecorator('add-name', {
+                        <Form.Item {...formItemLayout} label='名称'>
+                          {getFieldDecorator('addName', {
                             initialValue: ''
                           })(
-                            <Input addonBefore='名称'/>
+                            <Input/>
                           )}
                         </Form.Item>
                       </Col>
                       <Col span={24}>
-                        <Form.Item>
-                          {getFieldDecorator('add-image', {
-                            initialValue: ''
+                        <Form.Item {...formItemLayout} label='Logo'>
+                          {getFieldDecorator('addImgUrl', {
+                            valuePropName: 'fileList',
+                            getValueFromEvent: this.normFile,
                           })(
-                            <Input addonBefore='Logo'/>
+                            <Upload name="file" action={`${API_DOMAIN}admin/pub/pubPartner/uploadLogo`}
+                                    listType="picture" withCredentials={true}>
+                              <Button>
+                                <Icon type="upload"/> 点击上传
+                              </Button>
+                            </Upload>
                           )}
                         </Form.Item>
                       </Col>
