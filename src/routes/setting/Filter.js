@@ -5,7 +5,7 @@ import {createCategory} from '../../service/auth';
 
 const Option = Select.Option;
 
-class SysconfigFilter extends Component {
+class Filter extends Component {
   constructor(props){
     super(props);
     this.state={
@@ -53,7 +53,7 @@ class SysconfigFilter extends Component {
 		);
     return (
       <div>
-        <Row type='flex' justify='end'>
+        <Row type='flex' justify='end' style={{marginBottom: '5px'}}>
           <Col span={2}>
             <Dropdown  overlay={menu}>
               <Button style={{ marginLeft: 8 }}>
@@ -74,4 +74,4 @@ class SysconfigFilter extends Component {
   }
 }
 
-export default SysconfigFilter;
+export default Filter;

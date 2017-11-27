@@ -1,12 +1,16 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Form, Input, Modal} from 'antd';
 
 const FormItem = Form.Item;
 
-const SysconifgUpdate = Form.create()(
-  (props) => {
+class Update extends Component {
+
+  render() {
+
     const {visible, onCancel, onCreate, form, formData} = props;
-    const { getFieldDecorator } = form;
+
+    const {getFieldDecorator} = form;
+
     return (
       <Modal
         visible={visible}
@@ -19,7 +23,7 @@ const SysconifgUpdate = Form.create()(
         <Form layout="vertical">
           <FormItem label="id">
             {getFieldDecorator('id', {
-              rules: [{ required: true, message: '请输入名 配置码' }],
+              rules: [{required: true, message: '请输入名 配置码'}],
               initialValue: formData.id
             })(
               <Input readOnly/>
@@ -28,44 +32,44 @@ const SysconifgUpdate = Form.create()(
 
           <FormItem label="名称">
             {getFieldDecorator('confName', {
-              rules: [{ required: true, message: '请输入名称' }],
+              rules: [{required: true, message: '请输入名称'}],
               initialValue: formData.confName
             })(
-              <Input />
+              <Input/>
             )}
           </FormItem>
 
           <FormItem label="值">
             {getFieldDecorator('confValue', {
-              rules: [{ required: true, message: '请输入名 值' }],
+              rules: [{required: true, message: '请输入名 值'}],
               initialValue: formData.confValue
             })(
-              <Input />
+              <Input/>
             )}
           </FormItem>
 
           <FormItem label="配置码">
             {getFieldDecorator('confCode', {
-              rules: [{ required: true, message: '请输入名 配置码' }],
+              rules: [{required: true, message: '请输入名 配置码'}],
               initialValue: formData.confCode
             })(
-              <Input />
+              <Input/>
             )}
           </FormItem>
 
           <FormItem label="状态">
             {getFieldDecorator('status', {
-              rules: [{ required: true, message: '请输入名 状态' }],
+              rules: [{required: true, message: '请输入名 状态'}],
               initialValue: formData.status
             })(
-              <Input />
+              <Input/>
             )}
           </FormItem>
-          
+
         </Form>
       </Modal>
     );
   }
-);
+}
 
-export default SysconifgUpdate;
+export default Update;

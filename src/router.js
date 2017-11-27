@@ -19,7 +19,7 @@ import Column from './routes/column/column';
 import ColumnItem from './routes/column/columnitem';
 import ScoreLine from "./routes/base/scoreLine/index";
 import ScoreLineProvince from "./routes/base/scoreLineProvice/index";
-import Setting from "./routes/setting/Setting";
+import Setting from "./routes/setting/index";
 import Page from "./routes/customize/page/index";
 
 const Routers = () => (
@@ -86,7 +86,7 @@ const Routers = () => (
 
       <Route path="/system">
         <Route path="config" component={Setting}/>
-        {/*<Route path="partner" component={Partner}/>*/}
+        {/*<Route path="partner" component={SettingPartner}/>*/}
         {/*<Route path="vip-card" component={vipCard}/>*/}
       </Route>
 
