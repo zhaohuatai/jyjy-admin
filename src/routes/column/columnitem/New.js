@@ -4,7 +4,7 @@ import {loadMemberTeacherDataSet} from "../../../service/member";
 import {createColumnChannelItem, loadColumnChannelDataSet} from "../../../service/column";
 import UEditor from "../../../components/editor/UEditor";
 import LazyLoad from 'react-lazy-load';
-import {API_DOMAIN} from "../../../config";
+import {API_DOMAIN} from "../../../utils/config";
 
 const FormItem = Form.Item;
 

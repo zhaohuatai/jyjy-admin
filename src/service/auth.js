@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
 import {hashHistory} from 'react-router';
-import {API_DOMAIN} from '../config';
+import {API_DOMAIN} from '../utils/config';
 import {message} from 'antd';
 
 /**

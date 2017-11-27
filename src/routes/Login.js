@@ -3,20 +3,13 @@ import {hashHistory} from 'react-router';
 import {connect} from 'react-redux';
 import md5 from 'blueimp-md5';
 import {Button, Form, Icon, Input, message} from 'antd';
-import {siteName} from '../../utils/config';
-import {API_DOMAIN} from '../../config';
-import {doWebLogin} from '../../service/auth';
-import {doLogin} from '../../action';
+import {API_DOMAIN, siteName} from '../utils/config';
+import {doWebLogin} from '../service/auth';
+import {doLogin} from '../action';
 
-import style from './loginform.scss'
+import style from './Login.scss'
 
 const FormItem = Form.Item;
-
-function hasErrors(fieldsError) {
-  return Object.keys(fieldsError).some(field => fieldsError[field]);
-}
-
-console.log(siteName);
 
 class NormalLoginForm extends React.Component {
   constructor(props){
@@ -95,7 +88,7 @@ class NormalLoginForm extends React.Component {
   }
 }
 
-const LoginForm = Form.create()(NormalLoginForm);
+const Login = Form.create()(NormalLoginForm);
 
 const mapStateToProps = (state) => {
   return {
@@ -110,4 +103,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(LoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

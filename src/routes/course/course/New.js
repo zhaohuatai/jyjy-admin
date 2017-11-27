@@ -3,7 +3,7 @@ import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, Upload} fr
 import UEditor from '../../../components/editor/UEditor';
 import {createServiceCourse, loadServiceCourseCategoryDataSet} from "../../../service/course";
 import {loadMemberTeacherDataSet} from '../../../service/member';
-import {API_DOMAIN} from "../../../config";
+import {API_DOMAIN} from "../../../utils/config";
 import LazyLoad from 'react-lazy-load';
 
 

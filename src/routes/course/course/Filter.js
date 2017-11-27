@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {Button, Col, Dropdown, Form, Icon, Input, Menu, Row, Select} from 'antd';
+import {Button, Col, Dropdown, Form, Icon, Input, Menu, Row} from 'antd';
 
-const Option = Select.Option;
 const FormItem = Form.Item;
 
 class Filter extends Component {

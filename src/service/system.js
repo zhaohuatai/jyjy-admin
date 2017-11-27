@@ -1,5 +1,5 @@
 import {post} from "../utils/request";
-import {API_DOMAIN} from "../config";
+import {API_DOMAIN} from "../utils/config";
 
 /**
  * 系统参数
@@ -38,7 +38,7 @@ export function loadDicSysconfig(params) {
 
 export function deletDicSysconfig(params) {
   return new Promise((resolve) => {
-    post(API_DOMAIN + 'admin/dic/dicSysconfig/deletDicSysconfig', params).then(data => {
+    post(API_DOMAIN + 'admin/dic/dicSysconfig/deleteDicSysconfig', params).then(data => {
       resolve(data);
     });
   })
@@ -82,7 +82,15 @@ export function loadPubPartner(params) {
 
 export function deletePubPartner(params) {
   return new Promise((resolve) => {
-    post(API_DOMAIN + 'admin/pub/pubPartner/deletPubPartner', params).then(data => {
+    post(API_DOMAIN + 'admin/pub/pubPartner/deletePubPartner', params).then(data => {
+      resolve(data);
+    });
+  })
+}
+
+export function uploadLogo(params) {
+  return new Promise((resolve) => {
+    post(API_DOMAIN + 'admin/pub/pubPartner/uploadLogo', params).then(data => {
       resolve(data);
     });
   })

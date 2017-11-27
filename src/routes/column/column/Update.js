@@ -4,7 +4,7 @@ import UEditor from '../../../components/editor/UEditor';
 import {loadMemberTeacherDataSet} from "../../../service/member";
 import LazyLoad from 'react-lazy-load';
 import {updateColumnChannel} from "../../../service/column";
-import {API_DOMAIN} from "../../../config";
+import {API_DOMAIN} from "../../../utils/config";
 
 
 const FormItem = Form.Item;

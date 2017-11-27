@@ -44,7 +44,7 @@ class Setting extends Component {
     this.state = {
       selectedRowKeys: [],
       table_loading: true,
-      dataSource: [],
+      dataSet: [],
       table_total: 0,
       table_cur_page: 1,
       visible_update: false,
@@ -86,13 +86,23 @@ class Setting extends Component {
       selectedRowKeys,
       onChange: this.onSelectChange,
     };
+
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
         <Tabs defaultActiveKey="1">
           <TabPane tab="配置" key="1">
-            <Filter operation={this.handleOperation}/>
+            <Filter
+              doSearch={this.handleSearch}
+              doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
+              doRecycle={() => {
+                this.setState({recycle: !this.state.recycle}, () => {
+                  this.handleRefresh();
+                })
+              }}
+              doUpdate={this.handleUpdate}
+            />
             <Table
-              dataSource={this.state.dataSource}
+              dataSource={this.state.dataSet}
               columns={columns}
               bordered
               loading={loading}

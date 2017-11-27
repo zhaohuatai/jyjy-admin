@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Col, Collapse, Form, Modal, Row} from 'antd';
-import {IMG_DOMAIN} from "../../../config";
+import {IMG_DOMAIN} from "../../../utils/config";
 
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;

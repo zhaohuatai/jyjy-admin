@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Card, Col, Dropdown, Form, Icon, Input, Menu, message, Pagination, Row, Table, Tabs} from 'antd';
 import {createPubPartner, deletePubPartner, loadPubPartnerDataSet} from "../../../service/system";
-import {IMG_DOMAIN} from "../../../config";
+import {IMG_DOMAIN} from "../../../utils/config";
 
 const TabPane = Tabs.TabPane;
 
@@ -68,6 +68,13 @@ class Partner extends Component {
     }
   };
 
+  normFile = (e) => {
+    if (Array.isArray(e)) {
+      return e.file;
+    }
+    return e && e.fileList;
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -93,7 +100,7 @@ class Partner extends Component {
       {title: '序号', dataIndex: 'id', key: 'id'},
       {title: '名称', dataIndex: 'name', key: 'name'},
       {
-        title: '图标', dataIndex: 'logo', key: 'logo', render: (text) => {
+        title: 'Logo', dataIndex: 'logo', key: 'logo', render: (text) => {
         return <img width='30px' height='30px' src={`${IMG_DOMAIN}${text}`}/>
       }
       },
@@ -154,7 +161,7 @@ class Partner extends Component {
                 <Col span={7} push={1}>
                   <Card title="添加">
                     <Row type='flex'>
-                      <Col span={18}>
+                      <Col span={24}>
                         <Form.Item>
                           {getFieldDecorator('add-name', {
                             initialValue: ''
@@ -163,16 +170,16 @@ class Partner extends Component {
                           )}
                         </Form.Item>
                       </Col>
-                      <Col span={18}>
+                      <Col span={24}>
                         <Form.Item>
                           {getFieldDecorator('add-image', {
                             initialValue: ''
                           })(
-                            <Input addonBefore='名称'/>
+                            <Input addonBefore='Logo'/>
                           )}
                         </Form.Item>
                       </Col>
-                      <Col span={2} push={2}>
+                      <Col span={2} push={19}>
                         <Button onClick={() => this.handleActionClick({key: 'add'})}>
                           添加
                         </Button>
