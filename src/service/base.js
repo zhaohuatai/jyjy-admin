@@ -287,6 +287,16 @@ export function deleteDataCareer(param) {
   });
 }
 
+export function createDataCareer(param) {
+  return new Promise((resolve, reject) => {
+    post(`${API_DOMAIN}admin/data/dataCareer/createDataCareer`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+//careerCategory
+
 export function loadDataCareerCategoryDataSet(param) {
   return new Promise((resolve, reject) => {
     post(`${API_DOMAIN}admin/data/dataCareerCategory/loadDataCareerCategoryDataSet`, param).then((data) => {
@@ -295,9 +305,33 @@ export function loadDataCareerCategoryDataSet(param) {
   });
 }
 
-export function createDataCareer(param) {
+export function loadDataCareerCategory(param) {
   return new Promise((resolve, reject) => {
-    post(`${API_DOMAIN}admin/data/dataCareer/createDataCareer`, param).then((data) => {
+    post(`${API_DOMAIN}admin/data/dataCareerCategory/loadDataCareerCategory`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+export function deleteDataCareerCategory(param) {
+  return new Promise((resolve, reject) => {
+    post(`${API_DOMAIN}admin/data/dataCareerCategory/deleteDataCareerCategory`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+export function loadDataCareerCategoryCategoryDataSet(param) {
+  return new Promise((resolve, reject) => {
+    post(`${API_DOMAIN}admin/data/dataCareerCategoryCategory/loadDataCareerCategoryCategoryDataSet`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+export function createDataCareerCategory(param) {
+  return new Promise((resolve, reject) => {
+    post(`${API_DOMAIN}admin/data/dataCareerCategory/createDataCareerCategory`, param).then((data) => {
       resolve(data);
     });
   });

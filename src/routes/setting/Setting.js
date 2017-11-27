@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import style from './setting.scss';
+import React, {Component} from 'react';
 import {loadDicSysconfigDataSet} from '../../service/auth';
-import { Tabs } from 'antd';
+import {Tabs} from 'antd';
 import Sysconfig from './Sysconfig';
 
 const TabPane = Tabs.TabPane;
@@ -14,9 +13,9 @@ class Setting extends Component {
   }
   render() {
     return (
-      <div className={style.orderroot} >
+      <div style={{backgroundColor: '#fff', padding: '10px'}}>
         <Tabs defaultActiveKey="1" >
-          <TabPane tab="系统配置" key="1">
+          <TabPane tab="配置" key="1">
             <Sysconfig />
           </TabPane>
         </Tabs>

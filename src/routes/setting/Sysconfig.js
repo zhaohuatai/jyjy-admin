@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import style from './setting.scss';
 import {loadDicSysconfig, loadDicSysconfigDataSet, updateDicSysconfig} from '../../service/auth';
 import {message, RangePicker, Table, Tabs} from 'antd';
 import SysconfigFilter from './SysconfigFilter';
@@ -33,7 +32,7 @@ class Sysconfig extends Component {
         return;
       }
       updateDicSysconfig(values, data => {
-        if (data.statusCode == 200) {
+        if (data.statusCode === 200) {
           message.success('操作成功');
           this.setState({visible_update: false});
           this.handleRefresh();
@@ -77,7 +76,7 @@ class Sysconfig extends Component {
 		switch (key) {
 			case 'delete':
 				deleteCategory({id:id},data=>{
-					if(data.statusCode ==200){
+          if (data.statusCode === 200) {
 						message.success('操作成功');
 					}
 				})
@@ -134,7 +133,7 @@ class Sysconfig extends Component {
       onChange: this.onSelectChange,
     };
     return (
-      <div className={style.orderroot}>
+			<div style={{backgroundColor: '#fff', padding: '10px'}}>
 				<SysconfigFilter operation={this.handleOperation}/>
 
         <Table

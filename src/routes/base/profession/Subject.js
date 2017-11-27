@@ -142,7 +142,7 @@ class Subject extends Component {
             <Pagination style={{marginTop: '10px'}} defaultCurrent={1} current={table_cur_page} defaultPageSize={20}
                         total={table_total} onChange={this.onChangeTablePage}/>
           </Col>
-          <Col span={8} push={1}>
+          <Col span={7} push={1}>
             <Card title="添加">
               <Row type='flex'>
                 <Col span={18}>

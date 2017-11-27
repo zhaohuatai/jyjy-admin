@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { Input, Col, Row, DatePicker, Button, Select, Dropdown, Menu, Icon} from 'antd';
+import React, {Component} from 'react';
+import {Button, Col, Dropdown, Icon, Menu, Row, Select} from 'antd';
 import NewSysconifg from './NewSysconifg';
-import style from './setting.scss';
 import {createCategory} from '../../service/auth';
 
 const Option = Select.Option;
@@ -54,7 +53,7 @@ class SysconfigFilter extends Component {
 		);
     return (
       <div>
-        <Row type='flex' justify='end' className={style.searchbox}>
+        <Row type='flex' justify='end'>
           <Col span={2}>
             <Dropdown  overlay={menu}>
               <Button style={{ marginLeft: 8 }}>

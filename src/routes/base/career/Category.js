@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Card, Col, Dropdown, Form, Icon, Input, Menu, message, Pagination, Row, Table} from 'antd';
-import {createDataCareer, deleteDataCareer, loadDataCareerCategoryDataSet} from "../../../service/base";
+import {createDataCareerCategory, deleteDataCareerCategory, loadDataCareerCategoryDataSet} from "../../../service/base";
 
 class Category extends Component {
 
@@ -28,13 +28,13 @@ class Category extends Component {
     this.doRefresh(values);
   };
   doDelete = (id) => {
-    deleteDataCareer({id: id}).then(data => {
+    deleteDataCareerCategory({id: id}).then(data => {
       message.success("删除成功！");
       this.doRefresh();
     });
   };
   doAdd = () => {
-    createDataCareer({name: this.props.form.getFieldsValue()['add']}).then(data => {
+    createDataCareerCategory({name: this.props.form.getFieldsValue()['add']}).then(data => {
       message.success("添加成功！");
       this.props.form.resetFields(['add']);
       this.doRefresh();
@@ -138,7 +138,7 @@ class Category extends Component {
             <Pagination style={{marginTop: '10px'}} defaultCurrent={1} current={table_cur_page} defaultPageSize={20}
                         total={table_total} onChange={this.onChangeTablePage}/>
           </Col>
-          <Col span={8} push={1}>
+          <Col span={7} push={1}>
             <Card title="添加">
               <Row type='flex'>
                 <Col span={18}>

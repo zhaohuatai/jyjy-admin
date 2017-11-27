@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {Button, Col, Dropdown, Form, Icon, Input, Menu, Row, Select} from 'antd';
+import {Button, Col, Dropdown, Form, Icon, Input, Menu, Row} from 'antd';
 
-const Option = Select.Option;
 const FormItem = Form.Item;
 
 class Filter extends Component {
@@ -65,12 +64,30 @@ class Filter extends Component {
     return (
       <div>
         <Row type='flex' justify='end' style={{marginBottom: '5px'}}>
-          <Col span={4} pull={14}>
+          <Col span={4} pull={6}>
             <FormItem>
-              {getFieldDecorator('dataSet', {
+              {getFieldDecorator('universityId', {
                 initialValue: ''
               })(
                 <Input size='default' addonBefore='学校' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={4} pull={5}>
+            <FormItem>
+              {getFieldDecorator('liberalScienceCode', {
+                initialValue: ''
+              })(
+                <Input size='default' addonBefore='文理' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={4} pull={4}>
+            <FormItem>
+              {getFieldDecorator('batchCode', {
+                initialValue: ''
+              })(
+                <Input size='default' addonBefore='批次' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
               )}
             </FormItem>
           </Col>

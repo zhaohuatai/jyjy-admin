@@ -1,5 +1,5 @@
 import React from 'react';
-import {hashHistory, IndexRoute, Route, Router} from 'react-router';
+import {hashHistory, IndexRoute, Redirect, Route, Router} from 'react-router';
 import App from './routes/App';
 import Dashboard from './routes/dashboard/Dashboard';
 import School from './routes/base/school';
@@ -20,6 +20,8 @@ import Column from './routes/column/column';
 import ColumnItem from './routes/column/columnitem';
 import ScoreLine from "./routes/base/scoreLine/index";
 import ScoreLineProvince from "./routes/base/scoreLineProvice/index";
+import Setting from "./routes/setting/Setting";
+import Sysconfig from "./routes/setting/Sysconfig";
 
 const Routers = () => (
   <Router history={hashHistory}>
@@ -46,14 +48,11 @@ const Routers = () => (
         <Route path="column-item" component={ColumnItem}/>
       </Route>
 
-      {/*<Route path="entrance" component={entrance}>*/}
-      {/*<Route path="category" component={entranceCategory}/>*/}
-      {/*<Route path="appointment" component={entranceAppointment}/>*/}
-      {/*</Route>*/}
-
-      <Route path="slide" component={Slide}/>
-
-      <Route path="customize" component={Customize}/>
+      <Route path='/customize'>
+        <Route path="slide" component={Slide}/>
+        <Route path="page" component={Customize}/>
+        {/*<Route path="case-success" component={caseSuccess}/>*/}
+      </Route>
 
       <Route path="/auth">
         <Route path="menu" component={AuthMenu}/>
@@ -62,9 +61,20 @@ const Routers = () => (
         <Route path="application" component={AuthApplication}/>
         <Route path="role" component={AuthRole}/>
       </Route>
+
+      <Route path="/system">
+        <Route path="config" component={Setting}/>
+        <Route path="system-config" component={Sysconfig}/>
+      </Route>
+
     </Route>
 
     <Route path="/login" component={Login}/>
+
+    <Redirect path="*" to='/'/>
+
+    {/*<Route path="*" component={PageNotFound} />*/}
+
   </Router>
 );
 

@@ -10,7 +10,7 @@ const TabPane = Tabs.TabPane;
 
 const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
-  {title: '大学', dataIndex: 'dataSet', key: 'dataSet'},
+  {title: '大学', dataIndex: 'university', key: 'university'},
   {title: '文理科', dataIndex: 'liberalScience', key: 'liberalScience'},
   {title: '年份', dataIndex: 'years', key: 'years'},
   {title: '招生批次', dataIndex: 'batch', key: 'batch'},
