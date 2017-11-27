@@ -19,7 +19,7 @@ import Column from './routes/column/column';
 import ColumnItem from './routes/column/columnitem';
 import ScoreLine from "./routes/base/scoreLine/index";
 import ScoreLineProvince from "./routes/base/scoreLineProvice/index";
-import Setting from "./routes/setting/index";
+import Setting from "./routes/setting/config/index";
 import Page from "./routes/customize/page/index";
 
 const Routers = () => (

@@ -88,4 +88,3 @@ class Update extends Component {
 }
 
 export default Form.create()(Update);
-;

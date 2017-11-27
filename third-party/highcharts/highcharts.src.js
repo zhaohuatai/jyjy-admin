@@ -13529,7 +13529,7 @@ Series.prototype = {
 				other = isNegative ? stackKey : negKey;
 				if (negStacks && stacks[other] && stacks[other][x]) {
 					other = stacks[other][x];
-					stack.total = other.total = mathMax(other.total, stack.total) + mathAbs(y) || 0;
+          stack.total = other.table_total = mathMax(other.table_total, stack.total) + mathAbs(y) || 0;
 
 				// Percent stacked areas					
 				} else {

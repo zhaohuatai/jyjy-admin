@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, Dropdown, Icon, Menu, Row, Select} from 'antd';
-
-const Option = Select.Option;
+import {Button, Col, Dropdown, Icon, Menu, Row} from 'antd';
 
 class Filter extends Component {
   constructor(props){
