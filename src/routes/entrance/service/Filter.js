@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {Button, Col, Dropdown, Form, Icon, Input, Menu, Row, Select} from 'antd';
+import {Button, Col, Dropdown, Form, Icon, Input, Menu, Row} from 'antd';
 
-const Option = Select.Option;
 const FormItem = Form.Item;
 
 class Filter extends Component {
@@ -67,10 +66,10 @@ class Filter extends Component {
         <Row type='flex' justify='end' style={{marginBottom: '5px'}}>
           <Col span={4} pull={14}>
             <FormItem>
-              {getFieldDecorator('name', {
+              {getFieldDecorator('title', {
                 initialValue: ''
               })(
-                <Input size='default' addonBefore='校名' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
+                <Input size='default' addonBefore='服务' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
               )}
             </FormItem>
           </Col>

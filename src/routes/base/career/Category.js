@@ -27,11 +27,17 @@ class Category extends Component {
     this.setState({table_cur_page: 1});
     this.doRefresh(values);
   };
-  doDelete = (id) => {
-    deleteDataCareerCategory({id: id}).then(data => {
-      message.success("删除成功！");
-      this.doRefresh();
-    });
+  doDelete = (record) => {
+    confirm({
+      title: `确定删除${record.name}吗？`,
+      okType: 'danger',
+      onOk: () => {
+        deleteDataCareerCategory({id: record.id}).then(data => {
+          message.success("删除成功！");
+          this.doRefresh();
+        });
+      }
+    })
   };
   doAdd = () => {
     createDataCareerCategory({name: this.props.form.getFieldsValue()['add']}).then(data => {
@@ -40,7 +46,7 @@ class Category extends Component {
       this.doRefresh();
     });
   };
-  handleActionClick = ({key, id}) => {
+  handleActionClick = ({key, record}) => {
     switch (key) {
       case 'clean' :
         this.props.form.resetFields();
@@ -52,7 +58,7 @@ class Category extends Component {
         this.doRefresh();
         break;
       case 'delete' :
-        this.doDelete(id);
+        this.doDelete(record);
         break;
       case 'recycle' :
         this.doRecycle();
@@ -93,7 +99,7 @@ class Category extends Component {
         title: '操作', key: 'action', render: (text, record) => {
         return (<span>
                   <Button shape="circle" type='danger' icon='minus' size='small'
-                          onClick={() => this.handleActionClick({key: 'delete', id: record.id})}/>
+                          onClick={() => this.handleActionClick({key: 'delete', id: record})}/>
                 </span>)
       }
       }

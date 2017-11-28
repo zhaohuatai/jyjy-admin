@@ -10,20 +10,15 @@ const TabPane = Tabs.TabPane;
 
 const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
+  {title: '所属分类', dataIndex: 'cateName', key: 'cateName'},
   {title: '名称', dataIndex: 'title', key: 'title'},
+  {title: '是否免费', dataIndex: 'freePay', key: 'freePay', render: (text) => text === 1 ? '收费' : '免费'},
   {title: '价格', dataIndex: 'price', key: 'price'},
-  {title: 'VIP价格', dataIndex: 'priceVIP', key: 'priceVIP'},
-  {title: '创建者', dataIndex: 'creator', key: 'creator'},
+  {title: '会员价格', dataIndex: 'priceVIP', key: 'priceVIP'},
   {title: '当前预约人数', dataIndex: 'appointCount', key: 'appointCount'},
   {title: '最大可预约数', dataIndex: 'maxAppointCount', key: 'maxAppointCount'},
   {title: '留言数', dataIndex: 'consultationCount', key: 'consultationCount'},
   {title: '收藏数', dataIndex: 'favoriteCount', key: 'favoriteCount'},
-  {title: '是否免费', dataIndex: 'freePay', key: 'freePay'},
-  {title: '所属三级分类', dataIndex: 'catethirdId', key: 'catethirdId'},
-  {title: '所属二级分类', dataIndex: 'cateSecondId', key: 'cateSecondId'},
-  {title: '所属一级分类', dataIndex: 'cateFirstId', key: 'cateFirstId'},
-  {title: '创建时间', dataIndex: 'createTime', key: 'createTime'},
-  {title: '修改时间', dataIndex: 'updateTime', key: 'updateTime'},
 ]
 
 class ServiceContent extends Component {
@@ -36,7 +31,6 @@ class ServiceContent extends Component {
       this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
     })
   }
-
 
   // 删除记录
   handleDelete = () => {

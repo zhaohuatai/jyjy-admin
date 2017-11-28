@@ -4,7 +4,7 @@ import {createDicData, deleteDicData, loadDicData} from "../../../service/dic";
 
 class Batch extends Component {
 
-  handleActionClick = ({key, id}) => {
+  handleActionClick = ({key, record}) => {
     switch (key) {
       case 'clean' :
         this.props.form.resetFields();
@@ -16,7 +16,7 @@ class Batch extends Component {
         this.doRefresh();
         break;
       case 'delete' :
-        this.doDelete(id);
+        this.doDelete(record);
         break;
       case 'recycle' :
         this.doRecycle();
@@ -52,11 +52,17 @@ class Batch extends Component {
     this.setState({table_cur_page: 1});
     this.doRefresh(values);
   };
-  doDelete = (id) => {
-    deleteDicData({id: id}).then(data => {
-      message.success("删除成功！");
-      this.doRefresh();
-    });
+  doDelete = (record) => {
+    confirm({
+      title: `确定删除${record.itemValue}吗？`,
+      okType: 'danger',
+      onOk: () => {
+        deleteDicData({id: record.id}).then(data => {
+          message.success("删除成功！");
+          this.doRefresh();
+        });
+      }
+    })
   };
   doAdd = () => {
     createDicData({name: this.props.form.getFieldsValue()['add']}).then(data => {
@@ -94,7 +100,7 @@ class Batch extends Component {
         title: '操作', key: 'action', render: (text, record) => {
         return (<span>
                   <Button shape="circle" type='danger' icon='minus' size='small'
-                          onClick={() => this.handleActionClick({key: 'delete', id: record.id})}/>
+                          onClick={() => this.handleActionClick({key: 'delete', record: record})}/>
                 </span>)
       }
       }
