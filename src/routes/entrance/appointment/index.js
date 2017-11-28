@@ -1,13 +1,8 @@
 import React, {Component} from 'react';
 import {message, Pagination, Table, Tabs} from 'antd';
 import Filter from './Filter';
-import New from './New';
 import Update from './Update';
-import Detail from './Detail';
 import {deleteServiceEntrance, loadServiceEntrance, loadServiceEntranceDataSet} from "../../../service/entrance";
-import CategoryF from "./CategoryF";
-import CategoryS from "./CategoryS";
-import CategoryT from "./CategoryT";
 
 const TabPane = Tabs.TabPane;
 
@@ -25,6 +20,7 @@ const table_columns = [
 ]
 
 class ServiceContent extends Component {
+
   // 获取数据
   handleRefresh = (params) => {
     this.setState({table_loading: true});
@@ -50,6 +46,34 @@ class ServiceContent extends Component {
       }
     })
   }
+  // 勾选记录
+  onSelectChange = (selectedRowKeys) => {
+    this.setState({selectedRowKeys});
+  }
+  // 切换页码
+  onChangeTablePage = (currentPage) => {
+    this.setState({table_loading: true, table_cur_page: currentPage});
+    let searchForm = this.state.search_form;
+    searchForm['page'] = currentPage;
+    this.handleRefresh(searchForm)
+  }
+  // 搜索
+  handleSearch = (values) => {
+    this.setState({table_cur_page: 1});
+    this.handleRefresh(values);
+  }
+  // 更新
+  handleUpdate = () => {
+    loadServiceEntrance({id: this.state.selectedRowKeys[0]}).then(data => {
+      this.setState({update_data: data.data.serviceEntrance, update_display: true})
+    })
+  }
+  // 显示详情
+  handleShowDetail = (record) => {
+    loadServiceEntrance({id: record.id}).then(data => {
+      this.setState({detail_data: data.data.serviceEntrance, detail_display: true})
+    })
+  }
 
   constructor(props) {
     super(props);
@@ -68,42 +92,8 @@ class ServiceContent extends Component {
     };
   }
 
-  // 勾选记录
-  onSelectChange = (selectedRowKeys) => {
-    this.setState({selectedRowKeys});
-  }
-
-
-  // 切换页码
-  onChangeTablePage = (currentPage) => {
-    this.setState({table_loading: true, table_cur_page: currentPage});
-    let searchForm = this.state.search_form;
-    searchForm['page'] = currentPage;
-    this.handleRefresh(searchForm)
-  }
-
-  // 搜索
-  handleSearch = (values) => {
-    this.setState({table_cur_page: 1});
-    this.handleRefresh(values);
-  }
-
   componentDidMount() {
     this.handleRefresh();
-  }
-
-  // 更新
-  handleUpdate = () => {
-    loadServiceEntrance({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.setState({update_data: data.data.serviceEntrance, update_display: true})
-    })
-  }
-
-  // 显示详情
-  handleShowDetail = (record) => {
-    loadServiceEntrance({id: record.id}).then(data => {
-      this.setState({detail_data: data.data.serviceEntrance, detail_display: true})
-    })
   }
 
   render() {
@@ -116,17 +106,8 @@ class ServiceContent extends Component {
 
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
-        <Tabs defaultActiveKey="4">
-          <TabPane tab="栏目1" key="1">
-            <CategoryF/>
-          </TabPane>
-          <TabPane tab="栏目2" key="2">
-            <CategoryS/>
-          </TabPane>
-          <TabPane tab="栏目3" key="3">
-            <CategoryT/>
-          </TabPane>
-          <TabPane tab="服务内容" key="4">
+        <Tabs defaultActiveKey="1">
+          <TabPane tab="服务内容" key="1">
             <Filter
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
@@ -136,9 +117,7 @@ class ServiceContent extends Component {
                 })
               }}
               doDelete={this.handleDelete}
-              doUpdate={this.handleUpdate}
-
-            />
+              doUpdate={this.handleUpdate}/>
             <Table
               dataSource={this.state.dataSet}
               columns={table_columns}
@@ -147,20 +126,13 @@ class ServiceContent extends Component {
               loading={table_loading}
               bordered
               rowSelection={rowSelection}
-              onRowClick={this.handleShowDetail}
-            />
+              onRowClick={this.handleShowDetail}/>
             <Pagination style={{marginTop: '10px'}} showQuickJumper defaultCurrent={1} current={table_cur_page}
                         defaultPageSize={20} total={table_total} onChange={this.onChangeTablePage}/>,
           </TabPane>
-          <TabPane tab="新建" key="5">
-            <New/>
-          </TabPane>
         </Tabs>
-
         <Update show={this.state.update_display} data={this.state.update_data}
                 onCancel={() => this.setState({update_display: false})}/>
-        <Detail show={this.state.detail_display} data={this.state.detail_data}
-                onCancel={() => this.setState({detail_display: false})}/>
       </div>
     );
   }

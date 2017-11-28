@@ -23,6 +23,7 @@ const table_columns = [
   },
   {title: '激活日期', dataIndex: 'startDate', key: 'startDate', render: (text) => text ? text : '未被激活'},
   {title: '激活会员ID', dataIndex: 'memberId', key: 'memberId', render: (text) => text ? text : '-'},
+  {title: '激活会员', dataIndex: 'memberName', key: 'memberName', render: (text) => text ? text : '-'},
   {title: '备注', dataIndex: 'remark', key: 'remark'},
 ]
 
@@ -55,7 +56,11 @@ class VipCard extends Component {
     loadDataCareer({id: record.id}).then(data => {
       this.setState({detail_data: data.data.dataCareer, detail_display: true})
     })
-  }
+  };
+
+  onSelectChange = (selectedRowKeys) => {
+    this.setState({selectedRowKeys});
+  };
 
   constructor(props) {
     super(props);
