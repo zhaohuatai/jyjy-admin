@@ -22,7 +22,7 @@ const table_columns = [
   }
   },
   {title: '激活日期', dataIndex: 'startDate', key: 'startDate', render: (text) => text ? text : '未被激活'},
-  {title: '激活会员ID', dataIndex: 'memberId', key: 'memberId', render: (text) => text ? text : '未被激活'},
+  {title: '激活会员ID', dataIndex: 'memberId', key: 'memberId', render: (text) => text ? text : '-'},
   {title: '备注', dataIndex: 'remark', key: 'remark'},
 ]
 
