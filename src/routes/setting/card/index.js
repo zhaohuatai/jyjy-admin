@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Pagination, Table, Tabs} from 'antd';
 import {loadDataCareer} from '../../../service/base';
-import Filter from './Filter';
 import {loadMemberVipCardDataSet} from "../../../service/member";
 
 const TabPane = Tabs.TabPane;
@@ -13,15 +12,17 @@ const table_columns = [
   {
     title: '状态', dataIndex: 'status', key: 'status', render: (text) => {
     switch (text) {
-      case '1':
-        return '正常（未激活）';
-      case '3':
+      case 1:
+        return '正常';
+      case 3:
         return '已激活';
       default:
         return '已失效';
     }
   }
   },
+  {title: '激活日期', dataIndex: 'startDate', key: 'startDate', render: (text) => text ? text : '未被激活'},
+  {title: '激活会员ID', dataIndex: 'memberId', key: 'memberId', render: (text) => text ? text : '未被激活'},
   {title: '备注', dataIndex: 'remark', key: 'remark'},
 ]
 
@@ -87,25 +88,12 @@ class VipCard extends Component {
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
         <Tabs defaultActiveKey="1">
           <TabPane tab="会员卡" key="1">
-            <Filter
-              doSearch={this.handleSearch}
-              doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
-              doRecycle={() => {
-                this.setState({recycle: !this.state.recycle}, () => {
-                  this.handleRefresh();
-                })
-              }}
-              doDelete={this.handleDelete}
-              doUpdate={this.handleUpdate}
-              recycle={this.state.recycle}
-            />
             <Table
               dataSource={this.state.dataSet}
               columns={table_columns}
               pagination={false}
               rowKey={record => record.id + ''}
               loading={table_loading}
-              bordered
               rowSelection={rowSelection}
               onRowClick={this.handleShowDetail}
             />
