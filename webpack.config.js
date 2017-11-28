@@ -1,5 +1,3 @@
-import {siteName} from "./src/utils/config";
-
 var path = require('path');
 var HtmlwebpackPlugin = require('html-webpack-plugin');
 
@@ -92,7 +90,7 @@ module.exports = {
   //添加我们的插件 会自动生成一个html文件
   plugins: [
     new HtmlwebpackPlugin({
-      title: `${siteName}`,
+      title: `经英教育 - 后台管理`,
       template: path.resolve(TEM_PATH),
       filename: 'index.html',
       //chunks这个参数告诉插件要引用entry里面的哪几个入口
