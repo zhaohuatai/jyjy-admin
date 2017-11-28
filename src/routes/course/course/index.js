@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Pagination, Table, Tabs} from 'antd';
+import {message, Pagination, Table, Tabs} from 'antd';
 import Filter from './Filter';
 import Update from './Update';
 import Detail from './Detail';
@@ -26,10 +26,17 @@ const table_columns = [
 
 class Course extends Component {
   //删除
+
   handleDelete = () => {
-    deleteServiceCourse({id: this.state.selectedRowKeys[0]}).then(data => {
-      message.success("删除成功！");
-      this.handleRefresh();
+    confirm({
+      title: `确定删除${this.state.dataSet[this.state.selectedRowkeys[0]].name}吗？`,
+      okType: 'danger',
+      onOk: () => {
+        deleteServiceCourse({id: this.state.selectedRowKeys[0]}).then(data => {
+          message.success("删除成功！");
+          this.handleRefresh();
+        })
+      }
     })
   }
 

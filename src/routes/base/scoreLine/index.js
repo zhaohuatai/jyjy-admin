@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Pagination, Table, Tabs} from 'antd';
+import {message, Pagination, Table, Tabs} from 'antd';
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';
@@ -50,10 +50,16 @@ class ScoreLine extends Component {
   }
   // 删除记录
   handleDelete = () => {
-    deleteDataScoreLine({id: this.state.selectedRowKeys[0]}).then(data => {
-      message.success("删除成功！");
-      this.handleRefresh();
-    });
+    confirm({
+      title: `确定删除${this.state.dataSet[this.state.selectedRowkeys[0]].title}吗？`,
+      okType: 'danger',
+      onOk: () => {
+        deleteDataScoreLine({id: this.state.selectedRowKeys[0]}).then(data => {
+          message.success("删除成功！");
+          this.handleRefresh();
+        });
+      }
+    })
   }
   // 更新
   handleUpdate = () => {

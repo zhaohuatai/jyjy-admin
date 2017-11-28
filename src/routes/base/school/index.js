@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Pagination, Table, Tabs} from 'antd';
+import {message, Pagination, Table, Tabs} from 'antd';
 import {deleteDataUniversity, loadDataUniversity, loadDataUniversityDataSet} from '../../../service/base';
 import Filter from './Filter';
 import New from './New';
@@ -38,10 +38,16 @@ class School extends Component {
 
   // 删除记录
   handleDelete = () => {
-    deleteDataUniversity({id: this.state.selectedRowKeys[0]}).then(data => {
-      message.success("删除成功！");
-      this.handleRefresh();
-    });
+    confirm({
+      title: `确定删除${this.state.dataSet[this.state.selectedRowkeys[0]].name}吗？`,
+      okType: 'danger',
+      onOk: () => {
+        deleteDataUniversity({id: this.state.selectedRowKeys[0]}).then(data => {
+          message.success("删除成功！");
+          this.handleRefresh();
+        });
+      }
+    })
   }
 
   constructor(props) {

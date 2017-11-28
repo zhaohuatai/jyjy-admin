@@ -47,12 +47,12 @@ class Partner extends Component {
     this.setState({table_cur_page: 1});
     this.doRefresh(values);
   };
-  doDelete = (id) => {
+  doDelete = (record) => {
     confirm({
-      title: '确定删除吗？',
+      title: `确定删除${record.name}吗？`,
       okType: 'danger',
       onOk: () => {
-        deletePubPartner({id: id}).then(data => {
+        deletePubPartner({id: record.id}).then(data => {
           message.success("删除成功！");
           this.doRefresh();
         });
@@ -72,7 +72,7 @@ class Partner extends Component {
       this.doRefresh();
     });
   };
-  handleActionClick = ({key, id}) => {
+  handleActionClick = ({key, record}) => {
     switch (key) {
       case 'clean' :
         this.props.form.resetFields();
@@ -84,7 +84,7 @@ class Partner extends Component {
         this.doRefresh();
         break;
       case 'delete' :
-        this.doDelete(id);
+        this.doDelete(record);
         break;
       case 'recycle' :
         this.doRecycle();
@@ -148,7 +148,7 @@ class Partner extends Component {
         title: '操作', key: 'action', render: (text, record) => {
         return (<span>
                   <Button shape="circle" type='danger' icon='minus' size='small'
-                          onClick={() => this.handleActionClick({key: 'delete', id: record.id})}/>
+                          onClick={() => this.handleActionClick({key: 'delete', record: record})}/>
                 </span>)
       }
       }

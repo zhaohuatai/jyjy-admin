@@ -1,11 +1,24 @@
 import React, {Component} from 'react';
 import {Button, Col, Dropdown, Form, Icon, Input, Menu, Row, Select} from 'antd';
+import {loadServiceCourseDataSet} from "../../../service/course";
 
-const Option = Select.Option;
 const FormItem = Form.Item;
 
 class Filter extends Component {
-  //  触发操作
+
+  doSearch = () => {
+    let form = this.state;
+    this.props.doSearch(form);
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      search_form: {},
+      courseList: [],
+    };
+  }
+
   handleActionClick = ({item, key, keyPath}) => {
     switch (key) {
       case 'clean' :
@@ -32,21 +45,31 @@ class Filter extends Component {
     }
   }
 
-  doSearch = () => {
-    let form = this.state;
-    this.props.doSearch(form);
-  }
-
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      search_form: {},
-    };
+  componentDidMount() {
+    loadServiceCourseDataSet({rows: 1000}).then(data => {
+      this.setState({courseList: data.data.dataSet.rows});
+      if (data.data.dataSet.rows) {
+        this.props.form.setFieldsValue({
+          courseId: data.data.dataSet.rows[0]['id'] + '',
+        })
+        this.props.doSearch(this.props.form.getFieldsValue());
+      }
+    })
   }
 
   render() {
     const {getFieldDecorator} = this.props.form;
+
+    const formItemLayout = {
+      labelCol: {
+        xs: {span: 24},
+        sm: {span: 4},
+      },
+      wrapperCol: {
+        xs: {span: 24},
+        sm: {span: 14},
+      },
+    };
 
     const menu = (
       <Menu disabled={this.props.recycle} onClick={this.handleActionClick}>
@@ -65,12 +88,32 @@ class Filter extends Component {
     return (
       <div>
         <Row type='flex' justify='end' style={{marginBottom: '5px'}}>
-          <Col span={4} pull={14}>
+          <Col span={4} pull={10}>
             <FormItem>
               {getFieldDecorator('title', {
                 initialValue: ''
               })(
                 <Input size='default' addonBefore='标题' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
+              )}
+            </FormItem>
+          </Col>
+
+          <Col span={4} pull={9}>
+            <FormItem {...formItemLayout}>
+              {getFieldDecorator('courseId', {
+                onChange: (value) => {
+                  this.props.form.setFieldsValue({
+                    courseId: value
+                  });
+                  this.handleActionClick({key: 'search'})
+                }
+              })(
+                <Select placeholder="选择课程" style={{width: '150px'}}>{
+                  this.state.courseList.map(item =>
+                    <Select.Option key={item.id} value={`${item.id}`}>{item.title}</Select.Option>
+                  )
+                }
+                </Select>
               )}
             </FormItem>
           </Col>

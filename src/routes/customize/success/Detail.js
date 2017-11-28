@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Col, Collapse, Form, Modal, Row} from 'antd';
+import {IMG_DOMAIN} from "../../../utils/config";
 
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;
@@ -7,7 +8,7 @@ const Panel = Collapse.Panel;
 class Detail extends Component {
 
   render() {
-    const {title, content} = this.props.data;
+    const {title, thumbNailImage, content} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -29,6 +30,11 @@ class Detail extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="标题">
               <p>{title}</p>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="略缩图">
+              <img src={`${IMG_DOMAIN}${thumbNailImage}`}/>
             </FormItem>
           </Col>
           <Col span={24}>

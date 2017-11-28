@@ -41,10 +41,16 @@ class Success extends Component {
   }
   // 删除记录
   handleDelete = () => {
-    deleteCaseSuccess({id: this.state.selectedRowKeys[0]}).then(data => {
-      message.success("删除成功！");
-      this.handleRefresh();
-    });
+    confirm({
+      title: `确定删除${this.state.dataSet[this.state.selectedRowkeys[0]].title}吗？`,
+      okType: 'danger',
+      onOk: () => {
+        deleteCaseSuccess({id: this.state.selectedRowKeys[0]}).then(data => {
+          message.success("删除成功！");
+          this.handleRefresh();
+        });
+      }
+    })
   }
   // 搜索
   handleSearch = (values) => {
@@ -67,7 +73,7 @@ class Success extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      slide: [],
+      dataSet: [],
       table_loading: false,
       selectedRowKeys: [],
       table_cur_page: 1,

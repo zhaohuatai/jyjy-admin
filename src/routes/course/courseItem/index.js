@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Pagination, Table, Tabs} from 'antd';
+import {message, Pagination, Table, Tabs} from 'antd';
 import {deleteServiceCourseItem, loadServiceCourseItem, loadServiceCourseItemDataSet} from '../../../service/course';
 import Filter from './Filter';
 import New from './New';
@@ -10,7 +10,7 @@ const TabPane = Tabs.TabPane;
 
 const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
-  {title: '标题', dataIndex: 'name', key: 'title'},
+  {title: '标题', dataIndex: 'title', key: 'title'},
   {title: '所属课程', dataIndex: 'courseId', key: 'courseId'},
   {title: '描述', dataIndex: 'hint', key: 'hint'},
   {title: '节次', dataIndex: 'itemOrder', key: 'itemOrder'},
@@ -24,10 +24,16 @@ const table_columns = [
 class School extends Component {
   // 删除记录
   handleDelete = () => {
-    deleteServiceCourseItem({id: this.state.selectedRowKeys[0]}).then(data => {
-      message.success("删除成功！");
-      this.handleRefresh();
-    });
+    confirm({
+      title: `确定删除${this.state.dataSet[this.state.selectedRowkeys[0]].title}吗？`,
+      okType: 'danger',
+      onOk: () => {
+        deleteServiceCourseItem({id: this.state.selectedRowKeys[0]}).then(data => {
+          message.success("删除成功！");
+          this.handleRefresh();
+        });
+      }
+    })
   }
 
   constructor(props) {

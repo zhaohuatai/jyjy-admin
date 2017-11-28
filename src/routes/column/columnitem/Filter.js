@@ -11,8 +11,19 @@ class Filter extends Component {
     this.state = {
       search_form: {},
       channelList: [],
-      defaultChannel: [],
     };
+  }
+
+  componentDidMount() {
+    loadColumnChannelDataSet({rows: 1000}).then(data => {
+      this.setState({channelList: data.data.dataSet.rows});
+      if (data.data.dataSet.rows) {
+        this.props.form.setFieldsValue({
+          channelId: data.data.dataSet.rows[0]['id'].toString(),
+        })
+        this.props.doSearch(this.props.form.getFieldsValue());
+      }
+    })
   }
 
   //  触发操作
@@ -40,18 +51,6 @@ class Filter extends Component {
       default :
         break;
     }
-  }
-
-  componentDidMount() {
-    loadColumnChannelDataSet({rows: 1000}).then(data => {
-      this.setState({channelList: data.data.dataSet.rows});
-      if (data.data.dataSet.rows) {
-        this.props.form.setFieldsValue({
-          channelId: data.data.dataSet.rows[0]['id'].toString(),
-        })
-        this.props.doSearch(this.props.form.getFieldsValue());
-      }
-    })
   }
 
   doSearch = () => {

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Pagination, Table, Tabs} from 'antd';
+import {message, Pagination, Table, Tabs} from 'antd';
 import {deleteDataCareer, loadDataCareer, loadDataCareerDataSet} from '../../../service/base';
 import Filter from './Filter';
 import New from './New';
@@ -46,10 +46,16 @@ class Career extends Component {
   };
   // 删除记录
   handleDelete = () => {
-    deleteDataCareer({id: this.state.selectedRowKeys[0]}).then(data => {
-      message.success("删除成功！");
-      this.handleRefresh();
-    });
+    confirm({
+      title: `确定删除${this.state.dataSet[this.state.selectedRowkeys[0]].title}吗？`,
+      okType: 'danger',
+      onOk: () => {
+        deleteDataCareer({id: this.state.selectedRowKeys[0]}).then(data => {
+          message.success("删除成功！");
+          this.handleRefresh();
+        });
+      }
+    })
   };
   // 搜索
   handleSearch = (values) => {

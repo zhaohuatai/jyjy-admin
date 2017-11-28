@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {Pagination, Table, Tabs} from 'antd';
+import {message, Pagination, Table, Tabs} from 'antd';
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';
 import Detail from './Detail';
-import {loadServiceEntranceDataSet, deleteServiceEntrance, loadServiceEntrance} from "../../../service/entrance";
+import {deleteServiceEntrance, loadServiceEntrance, loadServiceEntranceDataSet} from "../../../service/entrance";
 
 const TabPane = Tabs.TabPane;
 
@@ -40,10 +40,16 @@ class ServiceContent extends Component {
 
   // 删除记录
   handleDelete = () => {
-    deleteServiceEntrance({id: this.state.selectedRowKeys[0]}).then(data => {
-      message.success("删除成功！");
-      this.handleRefresh();
-    });
+    confirm({
+      title: `确定删除${this.state.dataSet[this.state.selectedRowkeys[0]].name}吗？`,
+      okType: 'danger',
+      onOk: () => {
+        deleteServiceEntrance({id: this.state.selectedRowKeys[0]}).then(data => {
+          message.success("删除成功！");
+          this.handleRefresh();
+        });
+      }
+    })
   }
 
   constructor(props) {

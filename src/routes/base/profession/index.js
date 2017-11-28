@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Pagination, Table, Tabs} from 'antd';
+import {message, Pagination, Table, Tabs} from 'antd';
 import {deleteDataProfession, loadDataProfession, loadDataProfessionDataSet} from '../../../service/base';
 import Filter from './Filter';
 import New from './New';
@@ -42,10 +42,16 @@ class Profession extends Component {
 
   // 删除记录
   handleDelete = () => {
-    deleteDataProfession({id: this.state.selectedRowKeys[0]}).then(data => {
-      message.success("删除成功！");
-      this.handleRefresh();
-    });
+    confirm({
+      title: `确定删除${this.state.dataSet[this.state.selectedRowkeys[0]].profession}吗？`,
+      okType: 'danger',
+      onOk: () => {
+        deleteDataProfession({id: this.state.selectedRowKeys[0]}).then(data => {
+          message.success("删除成功！");
+          this.handleRefresh();
+        });
+      }
+    })
   }
 
   // 勾选记录

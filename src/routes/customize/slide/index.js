@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Pagination, Table, Tabs} from 'antd';
+import {message, Pagination, Table, Tabs} from 'antd';
 import {deletePubSlide, loadPubSlide, loadPubSlideDataSet} from '../../../service/slide';
 import Filter from './Filter';
 import New from './New';
@@ -19,10 +19,16 @@ const table_columns = [
 class School extends Component {
   // 删除记录
   handleDelete = () => {
-    deletePubSlide({id: this.state.selectedRowKeys[0]}).then(data => {
-      message.success("删除成功！");
-      this.handleRefresh();
-    });
+    confirm({
+      title: `确定删除${this.state.dataSet[this.state.selectedRowkeys[0]].title}吗？`,
+      okType: 'danger',
+      onOk: () => {
+        deletePubSlide({id: this.state.selectedRowKeys[0]}).then(data => {
+          message.success("删除成功！");
+          this.handleRefresh();
+        });
+      }
+    })
   }
 
   constructor(props) {
