@@ -62,7 +62,6 @@ class New extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="学校">
               {getFieldDecorator('universityId', {
-                initialValue: '',
                 rules: [{
                   required: true, message: '请选择'
                 }]
@@ -80,7 +79,6 @@ class New extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="分科">
               {getFieldDecorator('liberalScienceCode', {
-                initialValue: '',
                 rules: [{
                   required: true, message: '请选择'
                 }]
@@ -110,7 +108,6 @@ class New extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="批次">
               {getFieldDecorator('batchCode', {
-                initialValue: '',
                 rules: [{
                   required: true, message: '请选择'
                 }]

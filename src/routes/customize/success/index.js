@@ -1,34 +1,25 @@
 import React, {Component} from 'react';
 import {Pagination, Table, Tabs} from 'antd';
+import {loadCaseSuccess, loadCaseSuccessDataSet} from '../../../service/customize';
 import Filter from './Filter';
-import New from './New';
 import Update from './Update';
 import Detail from './Detail';
-import {deleteDataScoreLine, loadDataScoreLine, loadDataScoreLineDataSet} from "../../../service/base";
-import Subject from "./Subject";
-import Batch from "./Batch";
 
 const TabPane = Tabs.TabPane;
 
 const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
-  {title: '大学', dataIndex: 'university', key: 'university'},
-  {title: '文理科', dataIndex: 'liberalScience', key: 'liberalScience'},
-  {title: '年份', dataIndex: 'years', key: 'years'},
-  {title: '招生批次', dataIndex: 'batch', key: 'batch'},
-  {title: '最高分', dataIndex: 'highest', key: 'highest'},
-  {title: '最低分', dataIndex: 'lowest', key: 'lowest'},
-  {title: '录取数', dataIndex: 'offerNum', key: 'offerNum'},
-  {title: '备注', dataIndex: 'remark', key: 'remark'},
-]
+  {title: '标题', dataIndex: 'title', key: 'title'},
+  {title: '内容', dataIndex: 'content', key: 'content'},
+];
 
-class ScoreLine extends Component {
+class Success extends Component {
   // 获取数据
   handleRefresh = (params) => {
     this.setState({table_loading: true});
     params = {...params};
     params['status'] = (this.state.recycle ? 2 : 1);
-    loadDataScoreLineDataSet(params).then(data => {
+    loadCaseSuccessDataSet(params).then(data => {
       this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
     })
   }
@@ -48,30 +39,23 @@ class ScoreLine extends Component {
     this.setState({table_cur_page: 1});
     this.handleRefresh(values);
   }
-  // 删除记录
-  handleDelete = () => {
-    deleteDataScoreLine({id: this.state.selectedRowKeys[0]}).then(data => {
-      message.success("删除成功！");
-      this.handleRefresh();
-    });
-  }
   // 更新
   handleUpdate = () => {
-    loadDataScoreLine({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.setState({update_data: data.data.data, update_display: true})
+    loadCaseSuccess({id: this.state.selectedRowKeys[0]}).then(data => {
+      this.setState({update_data: data.data.caseSuccess, update_display: true})
     })
   }
   // 显示详情
   handleShowDetail = (record) => {
-    loadDataScoreLine({id: record.id}).then(data => {
-      this.setState({detail_data: data.data.daraScoreLine, detail_display: true})
+    loadCaseSuccess({id: record.id}).then(data => {
+      this.setState({detail_data: data.data.caseSuccess, detail_display: true})
     })
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      dataSet: [],
+      slide: [],
       table_loading: false,
       selectedRowKeys: [],
       table_cur_page: 1,
@@ -99,14 +83,8 @@ class ScoreLine extends Component {
 
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
-        <Tabs defaultActiveKey="3">
-          <TabPane tab="分科" key="1">
-            <Subject/>
-          </TabPane>
-          <TabPane tab="批次" key="2">
-            <Batch/>
-          </TabPane>
-          <TabPane tab="分数线数据" key="3">
+        <Tabs defaultActiveKey="1">
+          <TabPane tab="成功案例列表" key="1">
             <Filter
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
@@ -115,9 +93,7 @@ class ScoreLine extends Component {
                   this.handleRefresh();
                 })
               }}
-              doDelete={this.handleDelete}
               doUpdate={this.handleUpdate}
-              recycle={this.state.recycle}
             />
             <Table
               dataSource={this.state.dataSet}
@@ -132,9 +108,6 @@ class ScoreLine extends Component {
             <Pagination style={{marginTop: '10px'}} showQuickJumper defaultCurrent={1} current={table_cur_page}
                         defaultPageSize={20} total={table_total} onChange={this.onChangeTablePage}/>,
           </TabPane>
-          <TabPane tab="新建" key="4">
-            <New/>
-          </TabPane>
         </Tabs>
 
         <Update show={this.state.update_display} data={this.state.update_data}
@@ -146,4 +119,4 @@ class ScoreLine extends Component {
   }
 }
 
-export default ScoreLine;
+export default Success;

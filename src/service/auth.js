@@ -6,6 +6,7 @@ import {message} from 'antd';
 /**
  * 状态码错误名称
  * @param {int} statusCode
+ * @param message
  */
 function checkCode(statusCode, message) {
   if (statusCode === 200) {
@@ -73,21 +74,21 @@ Http.get = (url, params = '') => {
  */
 Http.post = (url, params = '') => {
 
-  //json 序列化
+  let paramsUrl;
   if (params) {
-    var paramsArray = [];
+    let paramsArray = [];
     //encodeURIComponent
     Object.keys(params).forEach(key => paramsArray.push(key + '=' + params[key]));
 
-    var paramsurl = '';
-    paramsurl += paramsArray.join('&');
+    paramsUrl = '';
+    paramsUrl += paramsArray.join('&');
 
   }
 
   return new Promise(function (resolve, reject) {
     fetch(url, {
       method: 'post',
-      body: paramsurl,
+      body: paramsUrl,
       mode: 'cors',
       credentials: 'include',
       headers: {
@@ -133,7 +134,7 @@ export function doWebLogin(paramsArray, getDate) {
   const formBody = Object.keys(paramsArray).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(paramsArray[key])).join('&');
 
   // let = 'username=buyer1&password=4b633e6c440f32152859d2a424f1e5df&captcha=1111&loginOrgin=PC'
-  var headers = new Headers();
+  let headers = new Headers();
   //headers.set('Accept', 'application/json');
   headers.set('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
   headers.set('X-Requested-With', 'XMLHttpRequest');
@@ -153,8 +154,8 @@ export function doWebLogin(paramsArray, getDate) {
 
 
 //获取导航菜单
-export function loadCategoryTree(getData) {
-  Http.post(API_DOMAIN + 'auth/loadMenu?appkey=APP_ROOT').then((data) => {
+export function loadCategoryTree(params, getData) {
+  Http.post(API_DOMAIN + 'auth/loadMenu?appkey=APP_ROOT', params).then((data) => {
     getData(data);
   });
 }
@@ -352,8 +353,7 @@ export function addPermsToRole(params, getData) {
 
   let len = params.permIds.length;
   for (let i = 0; i < len; i++) {
-    let temp = 'permIds[]=' + params.permIds[i] + '&';
-    url += temp;
+    url += 'permIds[]=' + params.permIds[i] + '&';
   }
 
   url += 'roleId=' + params.roleId;

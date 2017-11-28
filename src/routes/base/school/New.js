@@ -41,7 +41,6 @@ class New extends Component {
   }
 
   normFile = (e) => {
-    console.log('Upload event:', e);
     if (Array.isArray(e)) {
       return e.file;
     }
@@ -74,8 +73,7 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="校名"
-            >
+              label="校名">
               {getFieldDecorator('name', {
                 initialValue: '',
                 rules: [
@@ -92,7 +90,6 @@ class New extends Component {
               label="所在省份"
             >
               {getFieldDecorator('provinceCode', {
-                initialValue: '',
                 rules: [
                   {required: true, message: '请选择所在省份'},
                 ]

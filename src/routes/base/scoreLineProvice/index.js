@@ -5,6 +5,7 @@ import New from './New';
 import Update from './Update';
 import Detail from './Detail';
 import {deleteDataScoreLine, loadDataScoreLineProvince, loadDataScoreLineProvinceDataSet} from "../../../service/base";
+import BatchPro from "./BatchPro";
 
 const TabPane = Tabs.TabPane;
 
@@ -98,8 +99,11 @@ class ScoreLineProvince extends Component {
 
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
-        <Tabs defaultActiveKey="1">
-          <TabPane tab="省分数线数据列表" key="1">
+        <Tabs defaultActiveKey="2">
+          <TabPane tab="省批次" key="1">
+            <BatchPro/>
+          </TabPane>
+          <TabPane tab="省批次线数据" key="2">
             <Filter
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
@@ -125,7 +129,7 @@ class ScoreLineProvince extends Component {
             <Pagination style={{marginTop: '10px'}} showQuickJumper defaultCurrent={1} current={table_cur_page}
                         defaultPageSize={20} total={table_total} onChange={this.onChangeTablePage}/>,
           </TabPane>
-          <TabPane tab="新建" key="2">
+          <TabPane tab="新建" key="3">
             <New/>
           </TabPane>
         </Tabs>

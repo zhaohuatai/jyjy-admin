@@ -24,3 +24,19 @@ export function loadDicData(param) {
     });
   });
 }
+
+export function deleteDicData(param) {
+  return new Promise((resolve, reject) => {
+    post(`${API_DOMAIN}admin/dic/dicData/deleteDicData`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+export function createDicData(param) {
+  return new Promise((resolve, reject) => {
+    post(`${API_DOMAIN}admin/dic/dicData/createDicData`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}

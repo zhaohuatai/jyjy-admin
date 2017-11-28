@@ -62,7 +62,6 @@ class New extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="省份">
               {getFieldDecorator('provinceCode', {
-                initialValue: '',
                 rules: [{
                   required: true, message: '请选择'
                 }]
@@ -80,7 +79,6 @@ class New extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="分科">
               {getFieldDecorator('subjectCode', {
-                initialValue: '',
                 rules: [{
                   required: true, message: '请选择'
                 }]
@@ -110,14 +108,13 @@ class New extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="招生批次">
               {getFieldDecorator('batchCode', {
-                initialValue: '',
                 rules: [{
                   required: true, message: '请选择'
                 }]
               })(
                 <Select placeholder="选择批次" style={{width: '200px'}}>
                   {
-                    this.state.universityList.map(item => {
+                    this.state.batchList.map(item => {
                       return <Select.Option key={item.id} value={`${item.itemCode}`}>{item.itemValue}</Select.Option>
                     })
                   }
