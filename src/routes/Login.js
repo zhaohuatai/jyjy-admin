@@ -5,7 +5,6 @@ import md5 from 'blueimp-md5';
 import {Button, Form, Icon, Input, message} from 'antd';
 import {API_DOMAIN, siteName} from '../utils/config';
 import {doWebLogin} from '../service/auth';
-import {doLogin} from '../action';
 
 import style from './Login.scss'
 
@@ -97,8 +96,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onDoLogin: (userinfo) => {
-      dispatch(doLogin(userinfo))
+    onDoLogin: (userInfo) => {
+      dispatch(() => {
+        return {
+          type: 'LOGIN',
+          userInfo
+        }
+      })
     }
   }
 }

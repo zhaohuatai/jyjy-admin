@@ -5,7 +5,7 @@ import Dashboard from './routes/dashboard/Dashboard';
 import School from './routes/base/school';
 import Career from './routes/base/career';
 import Profession from './routes/base/profession';
-import Login from './routes/Login';
+import Login from './routes/Login'
 import AuthMenu from './routes/auth/menu/AuthMenu';
 import AuthPermission from './routes/auth/permission/AuthPermission';
 import AuthRole from './routes/auth/role/AuthRole';

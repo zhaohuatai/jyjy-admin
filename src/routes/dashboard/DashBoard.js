@@ -1,11 +1,8 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import NumberCard from './numberCard';
-import { Row, Col, Card} from 'antd';
-import Trend from './Trend';
-import {loadOrdersListCount, loadProductListCount, loadMemberCount,loadSumPayFee} from '../../service/auth';
-
-import mockdata from '../../mock';
+import {Col, Row} from 'antd';
+import {loadMemberCount, loadOrdersListCount, loadProductListCount, loadSumPayFee} from '../../service/auth';
 
 const bodyStyle = {
   bodyStyle: {
