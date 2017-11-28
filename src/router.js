@@ -25,6 +25,7 @@ import Partner from "./routes/setting/partner";
 import ServiceContent from './routes/entrance/service';
 import Success from "./routes/customize/success/index";
 import VipCard from "./routes/setting/card";
+import Appointment from "./routes/entrance/appointment/index";
 
 const Routers = () => (
   <Router history={hashHistory}>
@@ -53,7 +54,7 @@ const Routers = () => (
 
       <Route path='/entrance'>
       <Route path="service" component={ServiceContent}/>
-      {/*<Route path="appointment" component={Appointment}/>*/}
+        <Route path="appointment" component={Appointment}/>
       </Route>
 
       {/*<Route path='/enroll-self'>*/}

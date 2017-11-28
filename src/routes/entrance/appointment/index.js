@@ -2,7 +2,11 @@ import React, {Component} from 'react';
 import {message, Pagination, Table, Tabs} from 'antd';
 import Filter from './Filter';
 import Update from './Update';
-import {deleteServiceEntrance, loadServiceEntrance, loadServiceEntranceDataSet} from "../../../service/entrance";
+import {
+  deleteServiceEntrance,
+  loadServiceEntrance,
+  loadServiceEntranceAppointmentDataSet
+} from "../../../service/entrance";
 
 const TabPane = Tabs.TabPane;
 
@@ -19,14 +23,14 @@ const table_columns = [
   {title: '收藏数', dataIndex: 'favoriteCount', key: 'favoriteCount'},
 ]
 
-class ServiceContent extends Component {
+class Appointment extends Component {
 
   // 获取数据
   handleRefresh = (params) => {
     this.setState({table_loading: true});
     params = {...params};
     params['status'] = (this.state.recycle ? 2 : 1);
-    loadServiceEntranceDataSet(params).then(data => {
+    loadServiceEntranceAppointmentDataSet(params).then(data => {
       this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
     }).catch((e) => {
       message.error(e);
@@ -66,12 +70,6 @@ class ServiceContent extends Component {
   handleUpdate = () => {
     loadServiceEntrance({id: this.state.selectedRowKeys[0]}).then(data => {
       this.setState({update_data: data.data.serviceEntrance, update_display: true})
-    })
-  }
-  // 显示详情
-  handleShowDetail = (record) => {
-    loadServiceEntrance({id: record.id}).then(data => {
-      this.setState({detail_data: data.data.serviceEntrance, detail_display: true})
     })
   }
 
@@ -138,4 +136,4 @@ class ServiceContent extends Component {
   }
 }
 
-export default ServiceContent;
+export default Appointment;

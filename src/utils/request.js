@@ -31,7 +31,6 @@ const checkCode = (statusCode, re_message) => {
     default:
       return {code: statusCode, re_message};
   }
-
   return {code: statusCode, re_message};
 };
 

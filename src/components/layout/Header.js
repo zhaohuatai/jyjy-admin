@@ -25,10 +25,9 @@ const IndexHeader = ({user,childern,action}) => {
         {childern}
       </Content>
       <Footer style={{ textAlign: 'center' }}>
-        Ant Design ©2017 Created by `${siteName}`
+        Ant Design ©2017 Created by {siteName}
       </Footer>
     </Layout>
-    
   );
 };
 

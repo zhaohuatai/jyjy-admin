@@ -25,6 +25,25 @@ export function deleteServiceEntrance(param) {
   });
 }
 
+//预约===============================================================================================
+
+export function loadServiceEntranceAppointmentDataSet(param) {
+  return new Promise((resolve, reject) => {
+    post(`${API_DOMAIN}admin/entrance/loadServiceEntranceAppointmentDataSet`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+export function appointmentReturn(param) {
+  return new Promise((resolve, reject) => {
+    post(`${API_DOMAIN}admin/entrance/appointmentReturn`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+//分类===============================================================================================
 export function loadEntranceCategoryFDataSet(param) {
   return new Promise((resolve, reject) => {
     post(`${API_DOMAIN}admin/entrance/category/loadCateFirstDataSet`, param).then((data) => {
@@ -168,3 +187,4 @@ export function setEntranceCateThirdShowIndex(param) {
     });
   });
 }
+

@@ -27,7 +27,6 @@ function checkCode(statusCode, message) {
         return {code: statusCode, message: message};
     }
   }
-
   return {code: statusCode, message: message};
 }
 
@@ -52,21 +51,18 @@ Http.get = (url, params = '') => {
       method: 'get',
     }).then((response) => {
       response.json();
+    }).then((responseData) => {
+      let checkCodeResult = checkCode(responseData.statusCode);
+      if (checkCodeResult.code === 200) {
+        resolve(responseData);
+      } else {
+        //触发store action 弹出提示框
+        throw String(checkCodeResult.message)
+      }
+    }).catch((e) => {
+      message.warning(e);
     })
-      .then((responseData) => {
-        let checkCodeResult = checkCode(responseData.statusCode);
-        if (checkCodeResult.code === 200) {
-          resolve(responseData);
-        } else {
-          //触发store action 弹出提示框
-          message.warning(checkCodeResult.message);
-        }
-      })
-      .catch((err) => {
-        reject(err);
-      });
   });
-
 };
 
 /**
@@ -98,35 +94,13 @@ Http.post = (url, params = '') => {
     }).then((response) => {
       return response.json();
     }).then((responseData) => {
-
       let checkCodeResult = checkCode(responseData.statusCode, responseData.message);
-      if (checkCodeResult.code !== 200) {
-        //触发store action 弹出提示框
-        if (checkCodeResult.message) {
-          message.warning(checkCodeResult.message);
-        }
-      }
-      resolve(responseData);
+      throw String(checkCodeResult.message)
+    }).catch((e) => {
+      message.warning(e);
     })
-      .catch((err) => {
-        reject(err);
-      });
   });
 };
-
-
-//获取登录验证码
-export function getCaptcha(getDate) {
-  fetch(API_DOMAIN + 'api/auth/captcha', {
-    method: 'get',
-    mode: 'no-cors',
-  }).then(response => {
-    response.json();
-  })
-    .then(responseData => {
-      getDate(responseData);
-    });
-}
 
 //web登录
 export function doWebLogin(paramsArray, getDate) {
