@@ -51,7 +51,7 @@ class ScoreLine extends Component {
   // 删除记录
   handleDelete = () => {
     confirm({
-      title: `确定删除${this.state.dataSet[this.state.selectedRowkeys[0]].title}吗？`,
+      title: `确定删除序号为${this.state.selectedRowkeys[0]}的数据吗？`,
       okType: 'danger',
       onOk: () => {
         deleteDataScoreLine({id: this.state.selectedRowKeys[0]}).then(data => {

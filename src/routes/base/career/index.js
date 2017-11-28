@@ -47,7 +47,7 @@ class Career extends Component {
   // 删除记录
   handleDelete = () => {
     confirm({
-      title: `确定删除${this.state.dataSet[this.state.selectedRowkeys[0]].title}吗？`,
+      title: `确定删除${this.state.dataSet[this.state.selectedRowkeys[0]].name}吗？`,
       okType: 'danger',
       onOk: () => {
         deleteDataCareer({id: this.state.selectedRowKeys[0]}).then(data => {
