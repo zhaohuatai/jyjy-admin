@@ -22,7 +22,7 @@ function session(state={
     status:0,
     sex:'男',
     address: '山东省济南市市中区',
-    introduction:'个人说明，非诚勿扰'
+    introduction: '个人说明'
   }
 },action){
   switch (action.type) {
