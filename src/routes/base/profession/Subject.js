@@ -53,8 +53,10 @@ class Subject extends Component {
       okType: 'danger',
       onOk: () => {
         deleteDataProfessionSubject({id: record.id}).then(data => {
-      message.success("删除成功！");
-      this.doRefresh();
+          message.success("删除成功！");
+          this.doRefresh();
+        })
+      }
     });
   };
   doAdd = () => {
@@ -64,7 +66,7 @@ class Subject extends Component {
       this.doRefresh();
     });
   };
-    handleActionClick = ({key, record}) => {
+  handleActionClick = ({key, record}) => {
     switch (key) {
       case 'clean' :
         this.props.form.resetFields();
