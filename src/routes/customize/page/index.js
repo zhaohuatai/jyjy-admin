@@ -11,6 +11,12 @@ const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
   {title: '键值', dataIndex: 'keyStr', key: 'keyStr'},
   {title: '标题', dataIndex: 'title', key: 'title'},
+  {
+    title: '内容', dataIndex: 'content', key: 'content', render: (text) => {
+    text = (text ? text.replace(/<.+\/>/g, "") : text );
+    return text && text.length > 15 ? text.substr(0, 15) + "..." : text
+  }
+  },
 ]
 
 class Page extends Component {
@@ -100,7 +106,6 @@ class Page extends Component {
                 })
               }}
               doUpdate={this.handleUpdate}
-
             />
             <Table
               dataSource={this.state.dataSet}

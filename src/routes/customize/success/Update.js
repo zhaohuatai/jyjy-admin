@@ -14,6 +14,9 @@ class Update extends Component {
       id: this.props.data.id,
       content: UE.getEditor('update_caseContent').getContent(),
     };
+    if (formData.thumbNailImage) {
+      formData.thumbNailImage = formData.thumbNailImage[0].response.data.image;
+    }
 
     updateCaseSuccess(formData).then(data => {
       this.props.form.resetFields();
@@ -48,8 +51,8 @@ class Update extends Component {
         <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
             <FormItem{...formItemLayout} label="标题">
-              {getFieldDecorator('title', {
-                initialValue: title,
+              {getFieldDecorator('name', {
+                initialValue: name,
                 rules: [{
                   require: true
                 }]

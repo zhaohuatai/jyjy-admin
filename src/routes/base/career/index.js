@@ -15,8 +15,8 @@ const table_columns = [
   {title: '分类', dataIndex: 'categoryName', key: 'categoryName'},
   {
     title: '简介', dataIndex: 'intro', key: 'intro', render: (text) => {
-    text = text.replace(/<.+\/>/g, ",");
-    return text.length > 25 ? text.substr(0, 25) + "..." : text
+    text = (text ? text.replace(/<.+\/>/g, ",") : text );
+    return text && text.length > 25 ? text.substr(0, 25) + "..." : text
   }
   },
   {title: '备注', dataIndex: 'remark', key: 'remark'},

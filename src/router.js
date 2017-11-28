@@ -23,6 +23,7 @@ import Setting from "./routes/setting/config/index";
 import Page from "./routes/customize/page/index";
 import Partner from "./routes/setting/partner";
 import ServiceContent from './routes/entrance/service';
+import Success from "./routes/customize/success/index";
 
 const Routers = () => (
   <Router history={hashHistory}>
@@ -75,7 +76,7 @@ const Routers = () => (
       <Route path='/customize'>
         <Route path="slide" component={Slide}/>
         <Route path="page" component={Page}/>
-        {/*<Route path="case-success" component={caseSuccess}/>*/}
+        <Route path="case-success" component={Success}/>
       </Route>
 
       <Route path="/auth">

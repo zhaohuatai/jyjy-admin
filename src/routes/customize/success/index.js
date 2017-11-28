@@ -1,16 +1,21 @@
 import React, {Component} from 'react';
 import {Pagination, Table, Tabs} from 'antd';
-import {loadCaseSuccess, loadCaseSuccessDataSet} from '../../../service/customize';
+import {deleteCaseSuccess, loadCaseSuccess, loadCaseSuccessDataSet} from '../../../service/customize';
 import Filter from './Filter';
 import Update from './Update';
 import Detail from './Detail';
+import {IMG_DOMAIN} from "../../../utils/config";
 
 const TabPane = Tabs.TabPane;
 
 const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
-  {title: '标题', dataIndex: 'title', key: 'title'},
-  {title: '内容', dataIndex: 'content', key: 'content'},
+  {title: '标题', dataIndex: 'name', key: 'name'},
+  {
+    title: '略缩图', dataIndex: 'thumbNailImage', key: 'thumbNailImage', render: (text, record) => {
+    return <img width='30px' height='30px' src={`${IMG_DOMAIN}${text}`}/>
+  }
+  },
 ];
 
 class Success extends Component {
@@ -33,6 +38,13 @@ class Success extends Component {
     let searchForm = this.state.search_form;
     searchForm['page'] = currentPage;
     this.handleRefresh(searchForm)
+  }
+  // 删除记录
+  handleDelete = () => {
+    deleteCaseSuccess({id: this.state.selectedRowKeys[0]}).then(data => {
+      message.success("删除成功！");
+      this.handleRefresh();
+    });
   }
   // 搜索
   handleSearch = (values) => {
@@ -93,6 +105,7 @@ class Success extends Component {
                   this.handleRefresh();
                 })
               }}
+              doDelete={this.handleDelete}
               doUpdate={this.handleUpdate}
             />
             <Table
