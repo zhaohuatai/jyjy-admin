@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Pagination, Table, Tabs} from 'antd';
+import {message, Pagination, Table, Tabs} from 'antd';
 import {deleteCaseSuccess, loadCaseSuccess, loadCaseSuccessDataSet} from '../../../service/customize';
 import Filter from './Filter';
 import Update from './Update';
