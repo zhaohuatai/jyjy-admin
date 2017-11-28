@@ -9,3 +9,12 @@ export function loadMemberTeacherDataSet(param) {
   });
 }
 
+
+export function loadMemberVipCardDataSet(param) {
+  return new Promise((resolve) => {
+    post(`${API_DOMAIN}admin/member/memberVipCard/loadMemberVipCardDataSet`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+

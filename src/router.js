@@ -24,6 +24,7 @@ import Page from "./routes/customize/page/index";
 import Partner from "./routes/setting/partner";
 import ServiceContent from './routes/entrance/service';
 import Success from "./routes/customize/success/index";
+import VipCard from "./routes/setting/card";
 
 const Routers = () => (
   <Router history={hashHistory}>
@@ -90,7 +91,7 @@ const Routers = () => (
       <Route path="/system">
         <Route path="config" component={Setting}/>
         <Route path="partner" component={Partner}/>
-        {/*<Route path="vip-card" component={vipCard}/>*/}
+        <Route path="vip-card" component={VipCard}/>
       </Route>
 
     </Route>
