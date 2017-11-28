@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {loadDicSysconfig, loadDicSysconfigDataSet} from '../../../service/system';
-import {Pagination, Table, Tabs} from 'antd';
+import {message, Pagination, Table, Tabs} from 'antd';
 import Filter from './Filter';
 import Update from "./Update";
 
@@ -14,6 +14,8 @@ class Setting extends Component {
     params['status'] = (this.state.recycle ? 2 : 1);
     loadDicSysconfigDataSet(params).then(data => {
       this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
+    }).catch((e) => {
+      message.error(e);
     })
   }
   // 勾选记录

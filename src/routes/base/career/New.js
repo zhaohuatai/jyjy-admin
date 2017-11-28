@@ -17,6 +17,8 @@ class New extends Component {
   componentDidMount() {
     loadDataCareerCategoryDataSet({rows: 1000}).then(data => {
       this.setState({ categoryList: data.data.dataSet.rows})
+    }).catch((e) => {
+      message.error(e);
     })
   }
 

@@ -40,11 +40,15 @@ class New extends Component {
   componentDidMount() {
     loadDataProfessionCategoryDataSet({}).then(data => {
       this.setState({categoryList: data.data.dataSet.rows})
-    });
+    }).catch((e) => {
+      message.error(e);
+    })
 
     loadDataProfessionSubjectDataSet({}).then(data => {
       this.setState({subjectList: data.data.dataSet.rows})
-    });
+    }).catch((e) => {
+      message.error(e);
+    })
   }
 
   render() {

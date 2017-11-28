@@ -34,6 +34,8 @@ class ScoreLineProvince extends Component {
     params['status'] = (this.state.recycle ? 2 : 1);
     loadDataScoreLineProvinceDataSet(params).then(data => {
       this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
+    }).catch((e) => {
+      message.error(e);
     })
   }
   // 勾选记录

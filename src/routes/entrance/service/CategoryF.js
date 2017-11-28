@@ -6,7 +6,7 @@ import {
   loadEntranceCategoryFDataSet
 } from "../../../service/entrance";
 
-class Category extends Component {
+class CategoryF extends Component {
 
   handleActionClick = ({key, id}) => {
     switch (key) {
@@ -38,6 +38,8 @@ class Category extends Component {
     params['status'] = (this.state.recycle ? 2 : 1);
     loadEntranceCategoryFDataSet(params).then(data => {
       this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
+    }).catch((e) => {
+      message.error(e);
     })
   };
   onChangeTablePage = (currentPage) => {
@@ -98,7 +100,7 @@ class Category extends Component {
 
     const table_columns = [
       {title: '序号', dataIndex: 'id', key: 'id'},
-      {title: '分类', dataIndex: 'name', key: 'name'},
+      {title: '栏目', dataIndex: 'name', key: 'name'},
       {
         title: '操作', key: 'action', render: (text, record) => {
         return (<span>
@@ -125,7 +127,7 @@ class Category extends Component {
                 {getFieldDecorator('name', {
                   initialValue: ''
                 })(
-                  <Input size='default' addonBefore='分类' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
+                  <Input size='default' addonBefore='栏目' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
                 )}
               </Form.Item>
             </Col>
@@ -156,7 +158,7 @@ class Category extends Component {
                     {getFieldDecorator('add', {
                       initialValue: ''
                     })(
-                      <Input addonBefore='分类'/>
+                      <Input addonBefore='栏目'/>
                     )}
                   </Form.Item>
                 </Col>
@@ -174,4 +176,4 @@ class Category extends Component {
   }
 }
 
-export default Form.create()(Category);
+export default Form.create()(CategoryF);

@@ -32,14 +32,20 @@ class New extends Component {
   componentDidMount() {
     loadDataUniversityDataSet({}).then(data => {
       this.setState({universityList: data.data.dataSet.rows})
-    });
+    }).catch((e) => {
+      message.error(e);
+    })
 
     loadDicData({code: "FK"}).then(data => {
       this.setState({liberalScienceList: data.data.dicData})
-    });
+    }).catch((e) => {
+      message.error(e);
+    })
 
     loadDicData({code: "PC"}).then(data => {
       this.setState({batchList: data.data.dicData})
+    }).catch((e) => {
+      message.error(e);
     })
   }
 

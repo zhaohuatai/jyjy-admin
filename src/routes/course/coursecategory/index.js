@@ -29,6 +29,8 @@ class CourseCategory extends Component {
     params['status'] = (this.state.recycle ? 2 : 1);
     loadServiceCourseCategoryDataSet(params).then(data => {
       this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
+    }).catch((e) => {
+      message.error(e);
     })
   }
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, Dropdown, Form, Icon, Input, Menu, Row, Select} from 'antd';
+import {Button, Col, Dropdown, Form, Icon, Input, Menu, message, Row, Select} from 'antd';
 import {loadServiceCourseDataSet} from "../../../service/course";
 
 const FormItem = Form.Item;
@@ -54,6 +54,8 @@ class Filter extends Component {
         })
         this.props.doSearch(this.props.form.getFieldsValue());
       }
+    }).catch((e) => {
+      message.error(e);
     })
   }
 

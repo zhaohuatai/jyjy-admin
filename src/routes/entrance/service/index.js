@@ -5,18 +5,19 @@ import New from './New';
 import Update from './Update';
 import Detail from './Detail';
 import {deleteServiceEntrance, loadServiceEntrance, loadServiceEntranceDataSet} from "../../../service/entrance";
+import CategoryF from "./CategoryF";
 
 const TabPane = Tabs.TabPane;
 
 const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
-  {title: '所属分类', dataIndex: 'cateName', key: 'cateName'},
   {title: '名称', dataIndex: 'title', key: 'title'},
+  {title: '栏目', dataIndex: 'cateName', key: 'cateName'},
+  {title: '当前预约人数', dataIndex: 'appointCount', key: 'appointCount'},
+  {title: '最大可预约数', dataIndex: 'maxAppointCount', key: 'maxAppointCount'},
   {title: '是否免费', dataIndex: 'freePay', key: 'freePay', render: (text) => text === 1 ? '收费' : '免费'},
   {title: '价格', dataIndex: 'price', key: 'price'},
   {title: '会员价格', dataIndex: 'priceVIP', key: 'priceVIP'},
-  {title: '当前预约人数', dataIndex: 'appointCount', key: 'appointCount'},
-  {title: '最大可预约数', dataIndex: 'maxAppointCount', key: 'maxAppointCount'},
   {title: '留言数', dataIndex: 'consultationCount', key: 'consultationCount'},
   {title: '收藏数', dataIndex: 'favoriteCount', key: 'favoriteCount'},
 ]
@@ -29,6 +30,8 @@ class ServiceContent extends Component {
     params['status'] = (this.state.recycle ? 2 : 1);
     loadServiceEntranceDataSet(params).then(data => {
       this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
+    }).catch((e) => {
+      message.error(e);
     })
   }
 
@@ -111,8 +114,17 @@ class ServiceContent extends Component {
 
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
-        <Tabs defaultActiveKey="1">
-          <TabPane tab="服务列表" key="1">
+        <Tabs defaultActiveKey="4">
+          <TabPane tab="栏目1" key="1">
+            <CategoryF/>
+          </TabPane>
+          <TabPane tab="栏目2" key="2">
+            <New/>
+          </TabPane>
+          <TabPane tab="栏目3" key="3">
+            <New/>
+          </TabPane>
+          <TabPane tab="服务内容" key="4">
             <Filter
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
@@ -138,7 +150,7 @@ class ServiceContent extends Component {
             <Pagination style={{marginTop: '10px'}} showQuickJumper defaultCurrent={1} current={table_cur_page}
                         defaultPageSize={20} total={table_total} onChange={this.onChangeTablePage}/>,
           </TabPane>
-          <TabPane tab="新建" key="2">
+          <TabPane tab="新建" key="5">
             <New/>
           </TabPane>
         </Tabs>

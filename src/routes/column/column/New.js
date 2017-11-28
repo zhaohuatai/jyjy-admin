@@ -39,6 +39,8 @@ class New extends Component {
   componentDidMount() {
     loadMemberTeacherDataSet({rows: 1000}).then(data => {
       this.setState({presenterList: data.data.dataSet.rows})
+    }).catch((e) => {
+      message.error(e);
     })
   }
 

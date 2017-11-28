@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Pagination, Table, Tabs} from 'antd';
+import {message, Pagination, Table, Tabs} from 'antd';
 import {loadPubCustomize, loadPubCustomizeDataSet} from '../../../service/customize';
 import Filter from './Filter';
 import Update from './Update';
@@ -48,6 +48,8 @@ class Page extends Component {
     params['status'] = (this.state.recycle ? 2 : 1);
     loadPubCustomizeDataSet(params).then(data => {
       this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
+    }).catch((e) => {
+      message.error(e);
     })
   }
 

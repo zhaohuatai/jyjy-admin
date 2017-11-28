@@ -21,9 +21,13 @@ class Update extends Component {
   componentDidMount() {
     loadServiceCourseCategoryDataSet({rows: 1000}).then(data => {
       this.setState({categoryList: data.data.dataSet.rows})
+    }).catch((e) => {
+      message.error(e);
     })
     loadMemberTeacherDataSet({rows: 1000}).then(data => {
       this.setState({teacher_list: data.data.dataSet.rows})
+    }).catch((e) => {
+      message.error(e);
     })
   }
 
