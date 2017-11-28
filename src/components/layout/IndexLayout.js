@@ -5,6 +5,7 @@ import {Footer, Icon, Layout, Menu} from 'antd';
 import IndexHeader from './Header';
 import style from './Layout.scss';
 import {loadCategoryTree} from '../../service/auth';
+import {siteName} from "../../utils/config";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -55,7 +56,7 @@ class IndexLayout extends React.Component {
     return (
       <Layout>
         <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
-          <div style={{textAlign: 'center'}} className={style.logo}>经英教育</div>
+          <div style={{textAlign: 'center'}} className={style.logo}>{siteName}</div>
           <Menu theme="dark" defaultSelectedKeys={['/']} selectedKeys={this.state.selectedkey} mode="inline" onClick={this.handelSelect}>
             {
               this.state.menudata.map(item=>{

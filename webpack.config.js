@@ -1,3 +1,5 @@
+import {siteName} from "./src/utils/config";
+
 var path = require('path');
 var HtmlwebpackPlugin = require('html-webpack-plugin');
 
@@ -31,9 +33,9 @@ module.exports = {
                 //配置antd的按需引入
                 [
                   'import',{
-                    libraryName:'antd',
-                    style:'css'
-                  }
+                  libraryName:'antd',
+                  style:'css'
+                }
                 ],
 
                 //react热替换
@@ -90,7 +92,7 @@ module.exports = {
   //添加我们的插件 会自动生成一个html文件
   plugins: [
     new HtmlwebpackPlugin({
-      title: '控制台-经英教育',
+      title: `${siteName}`,
       template: path.resolve(TEM_PATH),
       filename: 'index.html',
       //chunks这个参数告诉插件要引用entry里面的哪几个入口

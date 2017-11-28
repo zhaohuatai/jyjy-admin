@@ -4,6 +4,7 @@ import {Provider} from 'react-redux';
 import {applyMiddleware, createStore} from 'redux';
 import AppReducer from './reducer';
 import thunkMiddleware from 'redux-thunk';
+import {siteName} from './utils/config';
 
 
 import Router from './router';
@@ -13,20 +14,14 @@ import './utils/ueditor/ueditor.all.min';
 import './utils/ueditor/zh-cn';
 
 ReactDOM.render(
+  document.title = `${siteName} - 后台管理`,
   <Provider store={createStore(
     AppReducer,
     applyMiddleware(
       thunkMiddleware
     )
   )}>
-    <Router />
+    <Router/>
   </Provider>,
   document.getElementById('app')
 );
-
-export function doLogin(userinfo) {
-  return {
-    type: 'LOGIN',
-    userinfo
-  };
-}

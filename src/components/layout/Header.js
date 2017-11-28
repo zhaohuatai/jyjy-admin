@@ -1,6 +1,7 @@
 import React from 'react';
 import style from './Layout.scss';
 import {Icon, Layout, Menu} from 'antd';
+import {siteName} from "../../utils/config";
 
 const SubMenu = Menu.SubMenu
 const { Header, Content, Sider, Footer } = Layout;
@@ -13,8 +14,7 @@ const IndexHeader = ({user,childern,action}) => {
             title={<span>
               <Icon type="user" />
               {user.username}
-            </span>}
-          >
+            </span>}>
             <Menu.Item key="logout">
               退出
             </Menu.Item>
@@ -25,7 +25,7 @@ const IndexHeader = ({user,childern,action}) => {
         {childern}
       </Content>
       <Footer style={{ textAlign: 'center' }}>
-        Ant Design ©2017 Created by 经英教育
+        Ant Design ©2017 Created by `${siteName}`
       </Footer>
     </Layout>
     
