@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import {Button, Cascader, Col, Dropdown, Form, Icon, Input, Menu, message, Row} from 'antd';
-import {loadEntranceCategoryFDataSet, loadEntranceCategorySDataSet} from "../../../service/entrance";
+import {
+  loadEntranceCategoryFDataSet,
+  loadEntranceCategorySDataSet,
+  loadEntranceCategoryTDataSet
+} from "../../../service/entrance";
 
 const FormItem = Form.Item;
 
@@ -10,48 +14,38 @@ class Filter extends Component {
     if (!data) return;
     let options = [];
     data.forEach((row) => {
-      options.push({value: `${row['id']}`, label: row['name'], isLeaf: false, cate: 'First'})
+      options.push({value: `${row['id']}`, label: row['name'], isLeaf: cate === 3 ? true : !!row.isLeaf, cate})
     });
     return options;
-  }
+  };
+
   loadCateData = (selectedOptions) => {
     const targetOption = selectedOptions[selectedOptions.length - 1];
     targetOption.loading = true;
     switch (targetOption.cate) {
       case 'First' :
         loadEntranceCategorySDataSet({rows: 1000, cateFirstId: targetOption.value}).then(data => {
-
-          if (data.data.dataSet.rows) {
-            this.props.form.setFieldsValue({
-              cateSecondId: data.data.dataSet.rows[0]['id'] + '',
-            });
-            this.handleActionClick({key: 'search'});
-          }
+          if (!data.data.dataSet.rows)
+            targetOption.isLeaf = true;
+          targetOption.children = this.renderData(data.data.dataSet.rows, 'Second');
+          targetOption.loading = false;
+          this.setState({options: [...this.state.options]});
         });
         break;
-
+      case 'Second' :
+        loadEntranceCategoryTDataSet({rows: 1000, cateSecondId: targetOption.value}).then(data => {
+          if (!data.data.dataSet.rows)
+            targetOption.isLeaf = true;
+          targetOption.children = this.renderData(data.data.dataSet.rows, 'Third');
+          targetOption.loading = false;
+          this.setState({options: [...this.state.options]});
+        });
+        break;
     }
-    // loadEntranceCategorySDataSet({rows: 1000}).then(data => {
-    //   this.setState({cateBList: data.data.dataSet.rows});
-    //   if (data.data.dataSet.rows) {
-    //     this.props.form.setFieldsValue({
-    //       cateSecondId: data.data.dataSet.rows[0]['id'] + '',
-    //     });
-    //     this.handleActionClick({key: 'search'});
-    //   }
-    // }).then(
-    //   loadEntranceCategoryTDataSet({rows: 1000}).then(data => {
-    //     this.setState({cateCList: data.data.dataSet.rows});
-    //     if (data.data.dataSet.rows) {
-    //       this.props.form.setFieldsValue({
-    //         cateThirdId: data.data.dataSet.rows[0]['id'] + '',
-    //       });
-    //       this.handleActionClick({key: 'search'});
-    //     }
-    //   }))
   }
+
   onCateChange = (selectedOptions) => {
-    // console.log(selectedOptions);
+    this.handleActionClick({key: 'search', cate: selectedOptions.cate, value: selectedOptions.value})
   }
 
   constructor(props) {
@@ -62,28 +56,17 @@ class Filter extends Component {
     };
   }
 
-  componentDidMount() {
-    loadEntranceCategoryFDataSet({rows: 1000}).then(data => {
-      if (data.data.dataSet.rows) {
-        this.setState({options: this.renderData(data.data.dataSet.rows)});
-        this.props.form.setFieldsValue({
-          cateId: data.data.dataSet.rows[0]['id'] + '',
-        });
-        this.handleActionClick({key: 'search'});
-      }
-    }).catch((e) => {
-        message.error(e);
-      }
-    )
-  }
-
-  handleActionClick = ({item, key, keyPath}) => {
+  handleActionClick = ({key, cate, value}) => {
     switch (key) {
       case 'clean' :
         this.props.form.resetFields();
         break;
       case 'search' :
-        this.props.doSearch(this.props.form.getFieldsValue());
+        let params = this.props.form.getFieldsValue();
+        if (cate) {
+          params[cate] = value;
+        }
+        this.props.doSearch(params);
         break;
       case 'refresh' :
         this.props.doRefresh();
@@ -101,6 +84,18 @@ class Filter extends Component {
       default :
         break;
     }
+  }
+
+  componentDidMount() {
+    loadEntranceCategoryFDataSet({rows: 1000}).then(data => {
+      if (data.data.dataSet.rows) {
+        this.setState({options: this.renderData(data.data.dataSet.rows, 'First')});
+        this.handleActionClick({key: 'search'})
+      }
+    }).catch((e) => {
+        message.error(e);
+      }
+    )
   }
 
   doSearch = () => {
@@ -128,7 +123,7 @@ class Filter extends Component {
     return (
       <div>
         <Row type='flex' justify='end' style={{marginBottom: '5px'}}>
-          <Col span={4} pull={10}>
+          <Col span={4} pull={8}>
             <FormItem>
               {getFieldDecorator('title', {
                 initialValue: ''
@@ -138,12 +133,10 @@ class Filter extends Component {
             </FormItem>
           </Col>
 
-          <Col span={4} pull={9}>
+          <Col span={6} pull={7}>
             <FormItem>
-              {getFieldDecorator('cateId')(
-                <Cascader size='default' placeholder="栏目" options={this.state.options} loadData={this.loadCateData}
-                          onChange={this.onCateChange} changeOnSelect/>
-              )}
+              <Cascader placeholder="栏目" options={this.state.options} loadData={this.loadCateData} style={{width: 270}}
+                        onChange={this.onCateChange} changeOnSelect/>
             </FormItem>
           </Col>
 

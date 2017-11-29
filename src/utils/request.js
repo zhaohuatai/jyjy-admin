@@ -57,7 +57,7 @@ export function get(url, params = '') {
       if (checkCodeResult.code === 200) {
         resolve(responseData);
       } else {
-        message.error(checkCodeResult.message);
+        message.info(checkCodeResult.message);
         reject(checkCodeResult.message);
       }
     }).catch((err) => {
@@ -98,6 +98,7 @@ export function post(url, params = '') {
       if (checkCodeResult.code === 200) {
         resolve(responseData);
       } else {
+        message.info(checkCodeResult.message);
         reject(checkCodeResult.message);
       }
     }).catch((err) => {
