@@ -1,33 +1,34 @@
 import React, {Component} from 'react';
 import {message, Pagination, Table, Tabs, Modal} from 'antd';
-import {deleteEnrollAutoBigdata, loadEnrollAutoBigdata, loadEnrollAutoBigdataDataSet} from '../../../service/bigdata';
+import {loadEnrollAutoQuestion, deleteEnrollAutoQuestion, loadEnrollAutoQuestionDataSet} from '../../../service/auto-question';
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';
 import Detail from './Detail';
-import {IMG_DOMAIN} from "../../../utils/config";
+import Category from './Category';
 
 const TabPane = Tabs.TabPane;
 
 const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
   {title: '标题', dataIndex: 'title', key: 'title'},
-  {title: '缩略图', dataIndex: 'thumbnailUrl', key: 'thumbnailUrl', render: (text) => <img style={{width: '40px', height:'40px'}} src={`${IMG_DOMAIN}${text}`} /> },
-  {title: '浏览量', dataIndex: 'browseCount', key: 'browseCount'},
-  {title: '排序', dataIndex: 'showIndex', key: 'showIndex'},
+  {title: '内容', dataIndex: 'content', key: 'content', render: (text) => '点击查看'},
+  {title: '所属分类', dataIndex: 'categoryId', key: 'categoryId'},
+  {title: '浏览数', dataIndex: 'browseCount', key: 'browseCount'},
   {title: '收藏数', dataIndex: 'favoriteCount', key: 'favoriteCount'},
+  {title: '排序', dataIndex: 'showIndex', key: 'showIndex'},
   {title: '创建时间', dataIndex: 'createTime', key: 'createTime'},
   {title: '更新时间', dataIndex: 'updateTime', key: 'updateTime'},
   {title: '备注', dataIndex: 'remark', key: 'remark'},
 ]
 
-class BigData extends Component {
+class Interlocution extends Component {
   // 获取数据
   handleRefresh = (params) => {
     this.setState({table_loading: true});
     params = {...params};
     params['status'] = (this.state.recycle ? 2 : 1);
-    loadEnrollAutoBigdataDataSet(params).then(data => {
+    loadEnrollAutoQuestionDataSet(params).then(data => {
       this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
     }).catch((e) => {
       message.error(e);
@@ -41,7 +42,7 @@ class BigData extends Component {
       title: `确定删除吗？`,
       okType: 'danger',
       onOk: () => {
-        deleteEnrollAutoBigdata({id: this.state.selectedRowKeys[0]}).then(data => {
+        deleteEnrollAutoQuestion({id: this.state.selectedRowKeys[0]}).then(data => {
           message.success("删除成功！");
           this.handleRefresh();
         });
@@ -92,15 +93,15 @@ class BigData extends Component {
 
   // 更新
   handleUpdate = () => {
-    loadEnrollAutoBigdata({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.setState({update_data: data.data.enrollAutoBigdata, update_display: true})
+    loadEnrollAutoQuestion({id: this.state.selectedRowKeys[0]}).then(data => {
+      this.setState({update_data: data.data.enrollAutoQuestion, update_display: true})
     })
   }
 
   // 显示详情
   handleShowDetail = (record) => {
-    loadEnrollAutoBigdata({id: record.id}).then(data => {
-      this.setState({detail_data: data.data.enrollAutoBigdata, detail_display: true})
+    loadEnrollAutoQuestion({id: record.id}).then(data => {
+      this.setState({detail_data: data.data.enrollAutoQuestion, detail_display: true})
     })
   }
 
@@ -115,7 +116,7 @@ class BigData extends Component {
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
         <Tabs defaultActiveKey="1">
-          <TabPane tab="升学百科问答" key="1">
+          <TabPane tab="自主招生题库" key="1">
             <Filter
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
@@ -144,6 +145,9 @@ class BigData extends Component {
           <TabPane tab="新建" key="2">
             <New/>
           </TabPane>
+          <TabPane tab="分类管理" key="3">
+            <Category/>
+          </TabPane>
         </Tabs>
 
         <Update show={this.state.update_display} data={this.state.update_data}
@@ -158,4 +162,4 @@ class BigData extends Component {
   }
 }
 
-export default BigData;
+export default Interlocution;

@@ -46,6 +46,7 @@ import EnrollSelf from './routes/qa/consultation';
 
 import Award from './routes/enroll-self/award';
 import BigData from './routes/enroll-self/bigdata';
+import Question from './routes/enroll-self/question';
 
 const Routers = () => (
   <Router history={hashHistory}>
@@ -79,7 +80,7 @@ const Routers = () => (
 
       <Route path='/enroll-self'>
       <Route path="award" component={Award}/>
-      {/*<Route path="question" component={Question}/>*/}
+      <Route path="question" component={Question}/>
       <Route path="big-data" component={BigData}/>
       {/*<Route path="admission-brochures" component={AdmissionBrochures}/>*/}
       </Route>

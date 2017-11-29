@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Col, Collapse, Form, Modal, Row} from 'antd';
+import {Col, Collapse, Form, Modal, Row, Select} from 'antd';
+import { loadEnrollAutoQuestionCategoryDataSet } from '../../../service/auto-question';
 
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;
@@ -8,11 +9,19 @@ class New extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      category: []
     }
   }
 
+
+  componentDidMount() {
+    loadEnrollAutoQuestionCategoryDataSet().then(data=>{
+      this.setState({category: data.data.dataSet.rows})
+    })
+  }
+
   render() {
-    const { title, content, remark} = this.props.data;
+    const { categoryId, content, title, remark} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -32,8 +41,23 @@ class New extends Component {
       <Modal title="高校信息" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
         <Row type='flex' style={{ marginBottom: '5px'}}>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="标题">
+            <FormItem{...formItemLayout} label="问题">
               <p>{title}</p>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem
+              {...formItemLayout}
+              label="所属分类"
+            >
+
+                <Select placeholder="选择省份" style={{width: '200px'}} value={`${categoryId}`} disabled={true}>
+                  {
+                    this.state.category.map(item => {
+                      return <Select.Option key={item.id} value={`${item.id}`}>{item.categoryName}</Select.Option>
+                    })
+                  }
+                </Select>
             </FormItem>
           </Col>
           <Col span={24}>

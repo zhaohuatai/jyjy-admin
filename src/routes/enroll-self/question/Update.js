@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, Upload} from 'antd';
+import {Button, Col, Form, Input, message, Modal, Row, Select} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import {createDataUniversity} from '../../../service/base';
-import LazyLoad from 'react-lazy-load';
-import {createEnrollAutoBigdata} from "../../../service/bigdata";
-import {API_DOMAIN} from '../../../utils/config';
+import { updateEnrollAutoQuestion, loadEnrollAutoQuestionCategoryDataSet} from "../../../service/auto-question";
 
 const FormItem = Form.Item;
 
@@ -13,17 +10,14 @@ class New extends Component {
     let formData = this.props.form.getFieldsValue();
     formData = {
       ...formData,
-      content: UE.getEditor('bigdata_content').getContent(),
-    };
-    if (formData.thumbnailUrl) {
-      formData.thumbnailUrl = formData.thumbnailUrl[0].response.data.image;
+      content: UE.getEditor('auto_question_content_update').getContent(),
+      id: this.props.data.id,
     }
 
-    createEnrollAutoBigdata(formData).then(data => {
+    updateEnrollAutoQuestion(formData).then(data => {
       this.props.form.resetFields();
-      message.success("创建成功！");
-    }).catch((e) => {
-      message.error(e);
+      this.props.onCancel();
+      message.success("更新成功！");
     })
   }
 
@@ -35,14 +29,22 @@ class New extends Component {
   }
 
   normFile = (e) => {
+    console.log('Upload event:', e);
     if (Array.isArray(e)) {
       return e.file;
     }
     return e && e.fileList;
   }
 
+  componentDidMount() {
+    loadEnrollAutoQuestionCategoryDataSet().then(data => {
+      this.setState({category: data.data.dataSet.rows})
+    })
+  }
+
   render() {
     const {getFieldDecorator} = this.props.form;
+    const { content, title, categoryId, remark} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -51,21 +53,21 @@ class New extends Component {
       },
       wrapperCol: {
         xs: {span: 24},
-        sm: {span: 14},
+        sm: {span: 18},
       },
     };
 
     return (
-      <div>
+      <Modal title="更新高校信息" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
         <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
               label="标题">
               {getFieldDecorator('title', {
-                initialValue: '',
+                initialValue: title,
                 rules: [
-                  {required: true, message: '标题'},
+                  {required: true, message: '请输入标题'},
                 ]
               })(
                 <Input/>
@@ -75,36 +77,34 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="缩略图"
+              label="所属分类"
             >
-              {getFieldDecorator('thumbnailUrl', {
-                valuePropName: 'fileList',
-                getValueFromEvent: this.normFile,
+              {getFieldDecorator('categoryId', {
+                initialValue: `${categoryId}`,
+                rules: [
+                  {required: true, message: '请选择分类'},
+                ]
               })(
-                <Upload
-                  name="file"
-                  action={`${API_DOMAIN}admin/data/dataUniversity/uploadBadge`}
-                  listType="picture"
-                  withCredentials={true}
-                >
-                  <Button>
-                    <Icon type="upload"/> 点击上传
-                  </Button>
-                </Upload>
+                <Select placeholder="选择分类" style={{width: '200px'}}>
+                  {
+                    this.state.category.map(item => {
+                      return <Select.Option key={item.id} value={`${item.id}`}>{item.categoryName}</Select.Option>
+                    })
+                  }
+                </Select>
               )}
             </FormItem>
           </Col>
+
           <Col span={24}>
             <FormItem{...formItemLayout} label="内容">
-              <LazyLoad height={370}>
-                <UEditor id="bigdata_content"/>
-              </LazyLoad>
+              <UEditor id="auto_question_content_update" initValue={content}/>
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="备注">
               {getFieldDecorator('remark', {
-                initialValue: '',
+                initialValue: remark,
                 rules: []
               })(
                 <Input/>
@@ -113,9 +113,9 @@ class New extends Component {
           </Col>
         </Row>
         <FormItem wrapperCol={{span: 12, offset: 4}}>
-          <Button type="primary" onClick={this.handleSubmit}>创建</Button>
+          <Button type="primary" onClick={this.handleSubmit}>提交更新</Button>
         </FormItem>
-      </div>
+      </Modal>
     )
   }
 }

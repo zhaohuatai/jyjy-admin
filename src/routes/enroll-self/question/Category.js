@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {Button, Card, Col, Dropdown, Form, Icon, Input, Menu, message, Pagination, Row, Table} from 'antd';
+import {Button, Card, Col, Dropdown, Form, Icon, Input, Menu, message, Pagination, Row, Table, Modal} from 'antd';
 import {
-  createInterlocutionCategory,
-  deleteInterlocutionCategory,
-  loadInterlocutionCategoryDataSet
-} from "../../../service/interlocution";
+  createEnrollAutoQuestionCategory,
+  deleteEnrollAutoQuestionCategory,
+  loadEnrollAutoQuestionCategoryDataSet
+} from "../../../service/auto-question";
 
 class Category extends Component {
 
@@ -49,7 +49,7 @@ class Category extends Component {
     this.setState({table_loading: true});
     params = {...params};
     params['status'] = (this.state.recycle ? 2 : 1);
-    loadInterlocutionCategoryDataSet(params).then(data => {
+    loadEnrollAutoQuestionCategoryDataSet(params).then(data => {
       this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
     }).catch((e) => {
       message.error(e);
@@ -71,11 +71,11 @@ class Category extends Component {
     this.doRefresh(values);
   };
   doDelete = (record) => {
-    confirm({
+    Modal.confirm({
       title: `确定删除吗？`,
       okType: 'danger',
       onOk: () => {
-        deleteInterlocutionCategory({id: record.id}).then(data => {
+        deleteEnrollAutoQuestionCategory({id: record.id}).then(data => {
           message.success("删除成功！");
           this.doRefresh();
         });
@@ -83,7 +83,7 @@ class Category extends Component {
     })
   };
   doAdd = () => {
-    createInterlocutionCategory({categoryName: this.props.form.getFieldsValue()['categoryName']}).then(data => {
+    createEnrollAutoQuestionCategory({categoryName: this.props.form.getFieldsValue()['add_categoryName']}).then(data => {
       message.success("添加成功！");
       this.props.form.resetFields(['categoryName']);
       this.doRefresh();
@@ -156,7 +156,7 @@ class Category extends Component {
               <Row type='flex'>
                 <Col span={18}>
                   <Form.Item>
-                    {getFieldDecorator('categoryName', {
+                    {getFieldDecorator('add_categoryName', {
                       initialValue: ''
                     })(
                       <Input addonBefore='分类'/>

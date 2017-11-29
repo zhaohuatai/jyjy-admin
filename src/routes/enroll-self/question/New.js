@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, Upload} from 'antd';
+import {Button, Col, Form, Input, message, Row, Select} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import {createDataUniversity} from '../../../service/base';
 import LazyLoad from 'react-lazy-load';
-import {createEnrollAutoBigdata} from "../../../service/bigdata";
-import {API_DOMAIN} from '../../../utils/config';
+import { createEnrollAutoQuestion, loadEnrollAutoQuestionCategoryDataSet} from "../../../service/auto-question";
 
 const FormItem = Form.Item;
 
@@ -13,13 +11,10 @@ class New extends Component {
     let formData = this.props.form.getFieldsValue();
     formData = {
       ...formData,
-      content: UE.getEditor('bigdata_content').getContent(),
+      content: UE.getEditor('auto_question_content').getContent(),
     };
-    if (formData.thumbnailUrl) {
-      formData.thumbnailUrl = formData.thumbnailUrl[0].response.data.image;
-    }
 
-    createEnrollAutoBigdata(formData).then(data => {
+    createEnrollAutoQuestion(formData).then(data => {
       this.props.form.resetFields();
       message.success("创建成功！");
     }).catch((e) => {
@@ -39,6 +34,12 @@ class New extends Component {
       return e.file;
     }
     return e && e.fileList;
+  }
+
+  componentDidMount() {
+    loadEnrollAutoQuestionCategoryDataSet().then(data => {
+      this.setState({category: data.data.dataSet.rows})
+    })
   }
 
   render() {
@@ -65,7 +66,7 @@ class New extends Component {
               {getFieldDecorator('title', {
                 initialValue: '',
                 rules: [
-                  {required: true, message: '标题'},
+                  {required: true, message: '请输入标题'},
                 ]
               })(
                 <Input/>
@@ -75,29 +76,28 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="缩略图"
+              label="所属分类"
             >
-              {getFieldDecorator('thumbnailUrl', {
-                valuePropName: 'fileList',
-                getValueFromEvent: this.normFile,
+              {getFieldDecorator('categoryId', {
+                rules: [
+                  {required: true, message: '请选择分类'},
+                ]
               })(
-                <Upload
-                  name="file"
-                  action={`${API_DOMAIN}admin/data/dataUniversity/uploadBadge`}
-                  listType="picture"
-                  withCredentials={true}
-                >
-                  <Button>
-                    <Icon type="upload"/> 点击上传
-                  </Button>
-                </Upload>
+                <Select placeholder="选择分类" style={{width: '200px'}}>
+                  {
+                    this.state.category.map(item => {
+                      return <Select.Option key={item.id} value={`${item.id}`}>{item.categoryName}</Select.Option>
+                    })
+                  }
+                </Select>
               )}
             </FormItem>
           </Col>
+
           <Col span={24}>
             <FormItem{...formItemLayout} label="内容">
               <LazyLoad height={370}>
-                <UEditor id="bigdata_content"/>
+                <UEditor id="auto_question_content"/>
               </LazyLoad>
             </FormItem>
           </Col>
