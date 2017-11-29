@@ -128,6 +128,8 @@ class Course extends Component {
               }}
               doUpdate={this.handleUpdate}
               doDelete={this.handleDelete}
+              recycle={this.state.recycle}
+
             />
             <Table
               dataSource={this.state.dataSet}

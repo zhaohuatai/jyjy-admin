@@ -108,6 +108,7 @@ class Page extends Component {
                 })
               }}
               doUpdate={this.handleUpdate}
+              recycle={this.state.recycle}
             />
             <Table
               dataSource={this.state.dataSet}

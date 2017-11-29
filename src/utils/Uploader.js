@@ -126,7 +126,7 @@ class New extends Component {
               label="课程视频"
             >
               <input onChange={this.handleChangeVideo} type="file" name="file" id="videofiles" multiple/>
-              <button onClick={this.doUpload}>开始上传</button>
+              <button onClick={() => this.doUpload}>开始上传</button>
             </FormItem>
           </Col>
 

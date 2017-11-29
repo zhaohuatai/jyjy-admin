@@ -141,13 +141,13 @@ class CategoryS extends Component {
         title: '置顶', dataIndex: 'isTop', key: 'isTop', render: (text, record) => {
           return (
             <Switch checked={!!text} checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}
-                    onChecked={this.doChecked(record)}/>
+                    onChecked={() => this.doChecked(record)}/>
           )
         }
       }, {
         title: '显示次序', dataIndex: 'showIndex', key: 'showIndex', render: (text, record) => {
           return (
-            <InputNumber min={1} defaultValue={text} onChange={this.doChange(record)}/>
+            <InputNumber min={1} defaultValue={text} onChange={() => this.doChange(record)}/>
           )
         }
       }, {

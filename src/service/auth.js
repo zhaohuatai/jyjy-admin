@@ -9,30 +9,25 @@ import {message} from 'antd';
  * @param message
  */
 function checkCode(statusCode, message) {
-  try {
-    if (statusCode === 200) {
-      return {code: statusCode, message: ''};
-    } else {
-      //返回码判断
-      switch (statusCode) {
-        case 300 :
-          return {code: statusCode, message: message};
-        case 401 :
-          return {code: statusCode, message: message};
-        case 301 :
-          hashHistory.push('/login');
-          throw message;
-        case 500 :
-          return {code: statusCode, message: message};
-        default :
-          return {code: statusCode, message: message};
-      }
+  if (statusCode === 200) {
+    return {code: statusCode, message: ''};
+  } else {
+    //返回码判断
+    switch (statusCode) {
+      case 300 :
+        return {code: statusCode, message: message};
+      case 401 :
+        return {code: statusCode, message: message};
+      case 301 :
+        hashHistory.push('/login');
+        throw message;
+      case 500 :
+        return {code: statusCode, message: message};
+      default :
+        return {code: statusCode, message: message};
     }
-  } catch (err) {
-    message.error(err);
   }
 }
-
 
 let Http = {};
 /**
@@ -55,8 +50,7 @@ Http.get = (url, params = '') => {
       method: 'get',
     }).then((response) => {
       response.json();
-    })
-      .then((responseData) => {
+    }).then((responseData) => {
         let checkCodeResult = checkCode(responseData.statusCode);
         if (checkCodeResult.code === 200) {
           resolve(responseData);
@@ -98,10 +92,8 @@ Http.post = (url, params = '') => {
     }).then((response) => {
       return response.json();
     }).then((responseData) => {
-
       let checkCodeResult = checkCode(responseData.statusCode, responseData.message);
       if (checkCodeResult.code !== 200) {
-        //触发store action 弹出提示框
         if (checkCodeResult.message) {
           message.warning(checkCodeResult.message);
         }

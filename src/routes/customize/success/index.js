@@ -115,6 +115,8 @@ class Success extends Component {
               }}
               doDelete={this.handleDelete}
               doUpdate={this.handleUpdate}
+              recycle={this.state.recycle}
+
             />
             <Table
               dataSource={this.state.dataSet}

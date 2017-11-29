@@ -259,7 +259,7 @@ class Update extends Component {
                   <Icon type="upload"/> 选择文件
                 </Button>
               </Upload>
-              <Button type="primary" onClick={this.doUpload} disabled={this.state.fileList.length === 0}
+              <Button type="primary" onClick={() => this.doUpload} disabled={this.state.fileList.length === 0}
                       loading={this.state.uploading}>
                 {this.state.uploading ? '正在上传...' : '开始上传'}
               </Button>

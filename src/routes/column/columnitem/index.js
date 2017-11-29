@@ -26,7 +26,7 @@ class School extends Component {
   // 删除记录
   handleDelete = () => {
     confirm({
-      title: `确定删除${this.state.dataSet[this.state.selectedRowkeys[0]].title}吗？`,
+      title: `确定删除吗？`,
       okType: 'danger',
       onOk: () => {
         deleteServiceCourseItem({id: this.state.selectedRowKeys[0]}).then(data => {
