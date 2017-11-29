@@ -41,6 +41,12 @@ import VipCard from "./routes/setting/card";
 
 import Appointment from "./routes/entrance/appointment/index";
 
+import Interlocution from './routes/qa/interlocution';
+import EnrollSelf from './routes/qa/consultation';
+
+import Award from './routes/enroll-self/award';
+import BigData from './routes/enroll-self/bigdata';
+import Question from './routes/enroll-self/question';
 
 const Routers = () => (
   <Router history={hashHistory}>
@@ -72,17 +78,17 @@ const Routers = () => (
         <Route path="appointment" component={Appointment}/>
       </Route>
 
-      {/*<Route path='/enroll-self'>*/}
-      {/*<Route path="award" component={Award}/>*/}
-      {/*<Route path="question" component={Question}/>*/}
-      {/*<Route path="big-data" component={BigData}/>*/}
+      <Route path='/enroll-self'>
+      <Route path="award" component={Award}/>
+      <Route path="question" component={Question}/>
+      <Route path="big-data" component={BigData}/>
       {/*<Route path="admission-brochures" component={AdmissionBrochures}/>*/}
-      {/*</Route>*/}
+      </Route>
 
-      {/*<Route path='/qa'>*/}
-      {/*<Route path="entrance-service" component={Entrance}/>*/}
-      {/*<Route path="enroll-self" component={EnrollSelf}/>*/}
-      {/*</Route>*/}
+      <Route path='/qa'>
+      <Route path="entrance-service" component={Interlocution}/>
+      <Route path="enroll-self" component={EnrollSelf}/>
+      </Route>
 
       <Route path='/member'>
         <Route path="management" component={Member}/>
