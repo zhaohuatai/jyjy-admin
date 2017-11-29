@@ -113,7 +113,7 @@ export function doWebLogin(paramsArray, getDate) {
 
   const formBody = Object.keys(paramsArray).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(paramsArray[key])).join('&');
 
-  // let = 'username=buyer1&password=4b633e6c440f32152859d2a424f1e5df&captcha=1111&loginOrigin=PC'
+  // let = 'username=buyer1&password=4b633e6c440f32152859d2a424f1e5df&captcha=1111&loginOrgin=PC'
   let headers = new Headers();
   //headers.set('Accept', 'application/json');
   headers.set('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');

@@ -12,7 +12,7 @@ const FormItem = Form.Item;
 
 class NormalLoginForm extends React.Component {
   //刷新验证码
-  refresh = () => {
+  refesh = () => {
     let captcha = API_DOMAIN + 'api/auth/captcha?' + Math.floor(Math.random() * 100);
     this.setState({captcha: captcha});
   };
@@ -26,7 +26,7 @@ class NormalLoginForm extends React.Component {
           "username": values.username,
           "password": md5_password,
           "captcha": values.captcha,
-          "loginOrigin": "PC"
+          "loginOrgin": "PC"
         };
         doWebLogin(param, data => {
           if (data.statusCode === 200) {
@@ -36,6 +36,7 @@ class NormalLoginForm extends React.Component {
             message.warn(data.message);
           }
         });
+
         //hashHistory.push('/');
       }
     });
@@ -78,7 +79,7 @@ class NormalLoginForm extends React.Component {
               <Input prefix={<Icon type="wallet" style={{fontSize: 13}}/>} placeholder="验证码"/>
             )}
           </FormItem>
-          <img onClick={this.refresh} style={{height: '40px'}} src={this.state.captcha}/>
+          <img onClick={this.refesh} style={{height: '40px'}} src={this.state.captcha}/>
           <FormItem>
             <Button type="primary" htmlType='submit' className={style.loginformbutton}>
               登录
@@ -91,6 +92,10 @@ class NormalLoginForm extends React.Component {
 }
 
 const Login = Form.create()(NormalLoginForm);
+
+const mapStateToProps = (state) => {
+  return {}
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -105,4 +110,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

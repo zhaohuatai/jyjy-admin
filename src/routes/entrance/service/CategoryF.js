@@ -82,7 +82,9 @@ class CategoryF extends Component {
         deleteServiceEntranceCateFirst({id: record.id}).then(data => {
           message.success("删除成功！");
           this.doRefresh();
-        });
+        }).catch((e) => {
+          message.error(e);
+        })
       }
     })
   };
@@ -90,20 +92,26 @@ class CategoryF extends Component {
     setEntranceCateFirstIsTop({id: record.id, isTop: record.checked ? 1 : 0}).then(data => {
       this.doRefresh();
       message.success(`${record.name}更新为${record.isTop ? '' : '不'}置顶！`);
-    });
+    }).catch((e) => {
+      message.error(e);
+    })
   };
   doChange = (record) => {
     setEntranceCateFirstShowIndex({id: record.id, showIndex: record.showIndex}).then(data => {
       this.doRefresh();
       message.success(`${record.name}显示次序更新为${record.showIndex}！`);
-    });
+    }).catch((e) => {
+      message.error(e);
+    })
   };
   doAdd = () => {
     createServiceEntranceCateFirst({name: this.props.form.getFieldsValue()['add']}).then(data => {
       message.success("添加成功！");
       this.props.form.resetFields(['add']);
       this.doRefresh();
-    });
+    }).catch((e) => {
+      message.error(e);
+    })
   };
 
   constructor(props) {
