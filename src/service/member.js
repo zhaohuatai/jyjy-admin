@@ -9,6 +9,30 @@ export function loadMemberTeacherDataSet(param) {
   });
 }
 
+export function loadMemberTeacher(param) {
+  return new Promise((resolve) => {
+    post(`${API_DOMAIN}admin/member/memberTeacher/loadMemberTeacher`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+export function deleteMemberTeacher(param) {
+  return new Promise((resolve) => {
+    post(`${API_DOMAIN}admin/member/memberTeacher/deleteMemberTeacher`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+export function createMemberTeacher(param) {
+  return new Promise((resolve) => {
+    post(`${API_DOMAIN}admin/member/memberTeacher/createMemberTeacher`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
 export function loadMemberVipCardDataSet(param) {
   return new Promise((resolve) => {
     post(`${API_DOMAIN}admin/member/memberVipCard/loadMemberVipCardDataSet`, param).then((data) => {
@@ -25,3 +49,10 @@ export function loadMemberDataSet(param) {
   });
 }
 
+export function loadMemberTeacherAppointmentDataSet(param) {
+  return new Promise((resolve) => {
+    post(`${API_DOMAIN}admin/member/memberTeacher/loadMemberTeacherAppointmentDataSet`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}

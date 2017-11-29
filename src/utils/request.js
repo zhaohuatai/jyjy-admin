@@ -8,14 +8,14 @@ import md5 from 'blueimp-md5';
  * 状态码错误名称
  * @param {int} statusCode
  */
-const checkCode = (statusCode, re_message) => {
+const checkCode = (statusCode, message) => {
   if (statusCode === 200) {
-    return {code: statusCode, re_message: ''};
+    return {code: statusCode, message};
   }
   // 返回码判断
   switch (statusCode) {
     case 300:
-      return {code: statusCode, re_message};
+      return {code: statusCode, message};
     case 301:
       hashHistory.push('/login');
       break;
@@ -23,15 +23,15 @@ const checkCode = (statusCode, re_message) => {
       hashHistory.push('/login');
       break;
     case 4011:
-      return {code: statusCode, re_message};
+      return {code: statusCode, message};
     case 4004:
-      return {code: statusCode, re_message}; // 非vip
+      return {code: statusCode, message}; // 非vip
     case 500:
-      return {code: statusCode, re_message};
+      return {code: statusCode, message};
     default:
-      return {code: statusCode, re_message};
+      return {code: statusCode, message};
   }
-  return {code: statusCode, re_message};
+  return {code: statusCode, message};
 };
 
 /**
@@ -59,8 +59,8 @@ export function get(url, params = '') {
       if (checkCodeResult.code === 200) {
         resolve(responseData);
       } else {
-        message.error(checkCodeResult.re_message);
-        reject(checkCodeResult.re_message);
+        message.error(checkCodeResult.message);
+        reject(checkCodeResult.message);
       }
     }).catch((err) => {
       reject(err);
@@ -100,6 +100,7 @@ export function post(url, params = '') {
       if (checkCodeResult.code === 200) {
         resolve(responseData);
       } else {
+        message.error(checkCodeResult.message);
         reject(checkCodeResult.message);
       }
     }).catch((err) => {

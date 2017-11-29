@@ -33,7 +33,12 @@ import ServiceContent from './routes/entrance/service';
 import Success from "./routes/customize/success/index";
 
 import Member from "./routes/member/member";
+import Teacher from "./routes/member/teacher/teacher";
+import Coupon from "./routes/member/coupon";
+
+import TeacherAppointment from "./routes/member/teacher/appointment";
 import VipCard from "./routes/setting/card";
+
 import Appointment from "./routes/entrance/appointment/index";
 
 
@@ -81,8 +86,9 @@ const Routers = () => (
 
       <Route path='/member'>
       <Route path="management" component={Member}/>
-      {/*<Route path="teacher" component={Teacher}/>*/}
-      {/*<Route path="coupon" component={Coupon}/>*/}
+      <Route path="teacher" component={Teacher}/>
+      <Route path="appointment" component={TeacherAppointment}/>
+      <Route path="coupon" component={Coupon}/>
       </Route>
 
       <Route path='/customize'>
