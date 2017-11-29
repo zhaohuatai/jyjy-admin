@@ -20,14 +20,13 @@ function checkCode(statusCode, message) {
         return {code: statusCode, message: message};
       case 301 :
         hashHistory.push('/login');
-        break;
+        throw message;
       case 500 :
         return {code: statusCode, message: message};
       default :
         return {code: statusCode, message: message};
     }
   }
-  return {code: statusCode, message: message};
 }
 
 let Http = {};
@@ -51,17 +50,18 @@ Http.get = (url, params = '') => {
       method: 'get',
     }).then((response) => {
       response.json();
-    }).then((responseData) => {
-      let checkCodeResult = checkCode(responseData.statusCode);
-      if (checkCodeResult.code === 200) {
-        resolve(responseData);
-      } else {
-        //触发store action 弹出提示框
-        throw String(checkCodeResult.message)
-      }
-    }).catch((e) => {
-      message.warning(e);
     })
+      .then((responseData) => {
+        let checkCodeResult = checkCode(responseData.statusCode);
+        if (checkCodeResult.code === 200) {
+          resolve(responseData);
+        } else {
+          //触发store action 弹出提示框
+          message.warning(checkCodeResult.message);
+        }
+      }).catch((err) => {
+      reject(err);
+    });
   });
 };
 
@@ -78,7 +78,6 @@ Http.post = (url, params = '') => {
 
     paramsUrl = '';
     paramsUrl += paramsArray.join('&');
-
   }
 
   return new Promise(function (resolve, reject) {
@@ -94,11 +93,18 @@ Http.post = (url, params = '') => {
     }).then((response) => {
       return response.json();
     }).then((responseData) => {
+
       let checkCodeResult = checkCode(responseData.statusCode, responseData.message);
-      throw String(checkCodeResult.message)
-    }).catch((e) => {
-      message.warning(e);
-    })
+      if (checkCodeResult.code !== 200) {
+        //触发store action 弹出提示框
+        if (checkCodeResult.message) {
+          message.warning(checkCodeResult.message);
+        }
+      }
+      resolve(responseData);
+    }).catch((err) => {
+      reject(err);
+    });
   });
 };
 

@@ -1,9 +1,26 @@
 import React, {Component} from 'react';
-import {Button, Card, Col, Dropdown, Form, Icon, Input, Menu, message, Pagination, Row, Table} from 'antd';
+import {
+  Button,
+  Card,
+  Col,
+  Dropdown,
+  Form,
+  Icon,
+  Input,
+  InputNumber,
+  Menu,
+  message,
+  Pagination,
+  Row,
+  Switch,
+  Table
+} from 'antd';
 import {
   createServiceEntranceCateFirst,
   deleteServiceEntranceCateFirst,
-  loadEntranceCategoryFDataSet
+  loadEntranceCategoryFDataSet,
+  setEntranceCateFirstIsTop,
+  setEntranceCateFirstShowIndex
 } from "../../../service/entrance";
 
 class CategoryF extends Component {
@@ -69,6 +86,18 @@ class CategoryF extends Component {
       }
     })
   };
+  doChecked = (record) => {
+    setEntranceCateFirstIsTop({id: record.id, isTop: record.checked ? 1 : 0}).then(data => {
+      this.doRefresh();
+      message.success(`${record.name}更新为${record.isTop ? '' : '不'}置顶！`);
+    });
+  };
+  doChange = (record) => {
+    setEntranceCateFirstShowIndex({id: record.id, showIndex: record.showIndex}).then(data => {
+      this.doRefresh();
+      message.success(`${record.name}显示次序更新为${record.showIndex}！`);
+    });
+  };
   doAdd = () => {
     createServiceEntranceCateFirst({name: this.props.form.getFieldsValue()['add']}).then(data => {
       message.success("添加成功！");
@@ -100,14 +129,26 @@ class CategoryF extends Component {
 
     const table_columns = [
       {title: '序号', dataIndex: 'id', key: 'id'},
-      {title: '栏目', dataIndex: 'name', key: 'name'},
-      {
+      {title: '栏目', dataIndex: 'name', key: 'name'}, {
+        title: '置顶', dataIndex: 'isTop', key: 'isTop', render: (text, record) => {
+          return (
+            <Switch checked={!!text} checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}
+                    onChecked={this.doChecked(record)}/>
+          )
+        }
+      }, {
+        title: '显示次序', dataIndex: 'showIndex', key: 'showIndex', render: (text, record) => {
+          return (
+            <InputNumber min={1} defaultValue={text} onChange={this.doChange(record)}/>
+          )
+        }
+      }, {
         title: '操作', key: 'action', render: (text, record) => {
-        return (<span>
-                  <Button shape="circle" type='danger' icon='minus' size='small'
-                          onClick={() => this.handleActionClick({key: 'delete', id: record})}/>
-                </span>)
-      }
+          return (<Col span={4}>
+            <Button shape="circle" type='danger' icon='minus' size='small'
+                    onClick={() => this.handleActionClick({key: 'delete', record: record})}/>
+          </Col>)
+        }
       }
     ];
 
