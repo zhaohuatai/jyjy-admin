@@ -6,26 +6,36 @@ import School from './routes/base/school';
 import Career from './routes/base/career';
 import Profession from './routes/base/profession';
 import Login from './routes/Login'
+
 import AuthMenu from './routes/auth/menu/AuthMenu';
 import AuthPermission from './routes/auth/permission/AuthPermission';
 import AuthRole from './routes/auth/role/AuthRole';
 import AuthUser from './routes/auth/user/AuthUser';
+
 import AuthApplication from './routes/auth/application/AuthApplication';
 import Slide from './routes/customize/slide';
+
 import Course from './routes/course/course/index';
 import CourseItem from './routes/course/courseItem';
 import CourseCategory from './routes/course/coursecategory';
+
 import Column from './routes/column/column';
 import ColumnItem from './routes/column/columnitem';
+
 import ScoreLine from "./routes/base/scoreLine/index";
 import ScoreLineProvince from "./routes/base/scoreLineProvice/index";
+
 import Setting from "./routes/setting/config/index";
+
 import Page from "./routes/customize/page/index";
 import Partner from "./routes/setting/partner";
 import ServiceContent from './routes/entrance/service';
 import Success from "./routes/customize/success/index";
+
+import Member from "./routes/member/member";
 import VipCard from "./routes/setting/card";
 import Appointment from "./routes/entrance/appointment/index";
+
 
 const Routers = () => (
   <Router history={hashHistory}>
@@ -69,11 +79,11 @@ const Routers = () => (
       {/*<Route path="enroll-self" component={EnrollSelf}/>*/}
       {/*</Route>*/}
 
-      {/*<Route path='/member'>*/}
-      {/*<Route path="management" component={Member}/>*/}
+      <Route path='/member'>
+      <Route path="management" component={Member}/>
       {/*<Route path="teacher" component={Teacher}/>*/}
       {/*<Route path="coupon" component={Coupon}/>*/}
-      {/*</Route>*/}
+      </Route>
 
       <Route path='/customize'>
         <Route path="slide" component={Slide}/>
