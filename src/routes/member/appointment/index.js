@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {message, Pagination, Table, Tabs} from 'antd';
 import Detail from './Detail';
 import Filter from './Filter';
-import {deleteServiceEntrance, loadServiceEntrance, loadServiceEntranceDataSet} from "../../../../service/entrance";
-import {loadMemberTeacherAppointmentDataSet} from "../../../../service/member";
+import {loadServiceEntrance} from "../../../service/entrance";
+import {loadMemberTeacherAppointmentDataSet} from "../../../service/member";
 
 const TabPane = Tabs.TabPane;
 

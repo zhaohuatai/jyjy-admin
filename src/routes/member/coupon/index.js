@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs, Modal} from 'antd';
-import {loadCouponDataSet, loadCoupon, deleteCoupon} from '../../../service/coupon';
+import {message, Modal, Pagination, Table, Tabs} from 'antd';
+import {deleteCoupon, loadCoupon, loadCouponDataSet} from '../../../service/coupon';
 import Filter from './Filter';
 import New from './New';
 import Detail from './Detail';
@@ -123,7 +123,7 @@ class Teacher extends Component {
               }}
               doDelete={this.handleDelete}
               doUpdate={this.handleUpdate}
-
+              recycle={this.state.recycle}
             />
             <Table
               dataSource={this.state.dataSet}

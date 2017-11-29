@@ -1,61 +1,80 @@
 import React, {Component} from 'react';
-import {Button, Col, Dropdown, Form, Icon, Input, Menu, message, Row, Select} from 'antd';
-import {
-  loadEntranceCategoryFDataSet,
-  loadEntranceCategorySDataSet,
-  loadEntranceCategoryTDataSet
-} from "../../../service/entrance";
+import {Button, Cascader, Col, Dropdown, Form, Icon, Input, Menu, message, Row} from 'antd';
+import {loadEntranceCategoryFDataSet, loadEntranceCategorySDataSet} from "../../../service/entrance";
 
 const FormItem = Form.Item;
 
 class Filter extends Component {
 
+  renderData = (data, cate) => {
+    if (!data) return;
+    let options = [];
+    data.forEach((row) => {
+      options.push({value: `${row['id']}`, label: row['name'], isLeaf: false, cate: 'First'})
+    });
+    return options;
+  }
+  loadCateData = (selectedOptions) => {
+    const targetOption = selectedOptions[selectedOptions.length - 1];
+    targetOption.loading = true;
+    switch (targetOption.cate) {
+      case 'First' :
+        loadEntranceCategorySDataSet({rows: 1000, cateFirstId: targetOption.value}).then(data => {
+
+          if (data.data.dataSet.rows) {
+            this.props.form.setFieldsValue({
+              cateSecondId: data.data.dataSet.rows[0]['id'] + '',
+            });
+            this.handleActionClick({key: 'search'});
+          }
+        });
+        break;
+
+    }
+    // loadEntranceCategorySDataSet({rows: 1000}).then(data => {
+    //   this.setState({cateBList: data.data.dataSet.rows});
+    //   if (data.data.dataSet.rows) {
+    //     this.props.form.setFieldsValue({
+    //       cateSecondId: data.data.dataSet.rows[0]['id'] + '',
+    //     });
+    //     this.handleActionClick({key: 'search'});
+    //   }
+    // }).then(
+    //   loadEntranceCategoryTDataSet({rows: 1000}).then(data => {
+    //     this.setState({cateCList: data.data.dataSet.rows});
+    //     if (data.data.dataSet.rows) {
+    //       this.props.form.setFieldsValue({
+    //         cateThirdId: data.data.dataSet.rows[0]['id'] + '',
+    //       });
+    //       this.handleActionClick({key: 'search'});
+    //     }
+    //   }))
+  }
+  onCateChange = (selectedOptions) => {
+    // console.log(selectedOptions);
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       search_form: {},
-      cateAList: [],
-      cateBList: [],
-      cateCList: [],
+      options: [],
     };
   }
 
   componentDidMount() {
     loadEntranceCategoryFDataSet({rows: 1000}).then(data => {
-      this.setState({cateAList: data.data.dataSet.rows});
       if (data.data.dataSet.rows) {
+        this.setState({options: this.renderData(data.data.dataSet.rows)});
         this.props.form.setFieldsValue({
-          cateAList: data.data.dataSet.rows[0]['id'] + '',
-        })
-        this.props.doSearch(this.props.form.getFieldsValue());
+          cateId: data.data.dataSet.rows[0]['id'] + '',
+        });
+        this.handleActionClick({key: 'search'});
       }
     }).catch((e) => {
-      message.error(e);
-    });
-
-    loadEntranceCategorySDataSet({rows: 1000}).then(data => {
-      this.setState({cateAList: data.data.dataSet.rows});
-      if (data.data.dataSet.rows) {
-        this.props.form.setFieldsValue({
-          cateBList: data.data.dataSet.rows[0]['id'] + '',
-        })
-        this.props.doSearch(this.props.form.getFieldsValue());
+        message.error(e);
       }
-    }).catch((e) => {
-      message.error(e);
-    });
-
-    loadEntranceCategoryTDataSet({rows: 1000}).then(data => {
-      this.setState({cateAList: data.data.dataSet.rows});
-      if (data.data.dataSet.rows) {
-        this.props.form.setFieldsValue({
-          cateCList: data.data.dataSet.rows[0]['id'] + '',
-        })
-        this.props.doSearch(this.props.form.getFieldsValue());
-      }
-    }).catch((e) => {
-      message.error(e);
-    })
+    )
   }
 
   handleActionClick = ({item, key, keyPath}) => {
@@ -92,17 +111,6 @@ class Filter extends Component {
   render() {
     const {getFieldDecorator} = this.props.form;
 
-    const formItemLayout = {
-      labelCol: {
-        xs: {span: 24},
-        sm: {span: 4},
-      },
-      wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 14},
-      },
-    };
-
     const menu = (
       <Menu disabled={this.props.recycle} onClick={this.handleActionClick}>
         <Menu.Item key="delete">删除</Menu.Item>
@@ -120,7 +128,7 @@ class Filter extends Component {
     return (
       <div>
         <Row type='flex' justify='end' style={{marginBottom: '5px'}}>
-          <Col span={4} pull={2}>
+          <Col span={4} pull={10}>
             <FormItem>
               {getFieldDecorator('title', {
                 initialValue: ''
@@ -130,62 +138,11 @@ class Filter extends Component {
             </FormItem>
           </Col>
 
-          <Col span={4} pull={1}>
-            <FormItem {...formItemLayout}>
-              {getFieldDecorator('cateFirstId', {
-                onChange: (value) => {
-                  this.props.form.setFieldsValue({
-                    cateFirstId: value
-                  });
-                  this.handleActionClick({key: 'search'})
-                }
-              })(
-                <Select placeholder="栏目1" style={{width: '150px'}}>{
-                  this.state.cateAList.map(item =>
-                    <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
-                  )
-                }
-                </Select>
-              )}
-            </FormItem>
-          </Col>
-
-          <Col span={4} pull={1}>
-            <FormItem {...formItemLayout}>
-              {getFieldDecorator('cateSecondId', {
-                onChange: (value) => {
-                  this.props.form.setFieldsValue({
-                    cateSecondId: value
-                  });
-                  this.handleActionClick({key: 'search'})
-                }
-              })(
-                <Select placeholder="栏目2" style={{width: '150px'}}>{
-                  this.state.cateBList.map(item =>
-                    <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
-                  )
-                }
-                </Select>
-              )}
-            </FormItem>
-          </Col>
-
-          <Col span={4} pull={1}>
-            <FormItem {...formItemLayout}>
-              {getFieldDecorator('cateThirdId', {
-                onChange: (value) => {
-                  this.props.form.setFieldsValue({
-                    cateThirdId: value
-                  });
-                  this.handleActionClick({key: 'search'})
-                }
-              })(
-                <Select placeholder="栏目3" style={{width: '150px'}}>{
-                  this.state.cateCList.map(item =>
-                    <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
-                  )
-                }
-                </Select>
+          <Col span={4} pull={9}>
+            <FormItem>
+              {getFieldDecorator('cateId')(
+                <Cascader size='default' placeholder="栏目" options={this.state.options} loadData={this.loadCateData}
+                          onChange={this.onCateChange} changeOnSelect/>
               )}
             </FormItem>
           </Col>

@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs, Modal} from 'antd';
-import {loadMemberTeacherDataSet, loadMemberTeacher, deleteMemberTeacher} from '../../../../service/member';
+import {message, Modal, Pagination, Table, Tabs} from 'antd';
+import {deleteMemberTeacher, loadMemberTeacher, loadMemberTeacherDataSet} from '../../../service/member';
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';
+
 const TabPane = Tabs.TabPane;
 
 const table_columns = [
@@ -123,7 +124,7 @@ class Teacher extends Component {
               }}
               doDelete={this.handleDelete}
               doUpdate={this.handleUpdate}
-
+              recycle={this.state.recycle}
             />
             <Table
               dataSource={this.state.dataSet}

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {message, Pagination, Table, Tabs} from 'antd';
 import Detail from './Detail';
 import Filter from './Filter';
-import {deleteServiceEntrance, loadServiceEntrance, loadServiceEntranceDataSet} from "../../../service/entrance";
+import {loadServiceEntrance} from "../../../service/entrance";
 import {loadMemberDataSet} from "../../../service/member";
 
 const TabPane = Tabs.TabPane;
@@ -115,7 +115,7 @@ class ServiceContent extends Component {
               }}
               doDelete={this.handleDelete}
               doUpdate={this.handleUpdate}
-
+              recycle={this.state.recycle}
             />
             <Table
               dataSource={this.state.dataSet}

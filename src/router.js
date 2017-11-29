@@ -33,10 +33,10 @@ import ServiceContent from './routes/entrance/service';
 import Success from "./routes/customize/success/index";
 
 import Member from "./routes/member/member";
-import Teacher from "./routes/member/teacher/teacher";
+import Teacher from "./routes/member/teacher/index";
 import Coupon from "./routes/member/coupon";
 
-import TeacherAppointment from "./routes/member/teacher/appointment";
+import TeacherAppointment from "./routes/member/appointment";
 import VipCard from "./routes/setting/card";
 
 import Appointment from "./routes/entrance/appointment/index";

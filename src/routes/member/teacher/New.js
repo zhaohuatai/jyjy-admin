@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {API_DOMAIN} from '../../../../utils/config';
-import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, Upload} from 'antd';
-import UEditor from '../../../../components/editor/UEditor';
-import {createMemberTeacher} from '../../../../service/member';
+import {API_DOMAIN} from '../../../utils/config';
+import {Button, Col, Form, Icon, Input, message, Row, Upload} from 'antd';
+import UEditor from '../../../components/editor/UEditor';
+import {createMemberTeacher} from '../../../service/member';
 import LazyLoad from 'react-lazy-load';
 
 const FormItem = Form.Item;
