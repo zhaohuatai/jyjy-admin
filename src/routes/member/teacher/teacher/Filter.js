@@ -70,7 +70,7 @@ class Filter extends Component {
               {getFieldDecorator('name', {
                 initialValue: ''
               })(
-                <Input size='default' addonBefore='校名' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
+                <Input size='default' addonBefore='姓名' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
               )}
             </FormItem>
           </Col>

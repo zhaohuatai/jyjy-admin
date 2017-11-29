@@ -12,7 +12,7 @@ class New extends Component {
     let formData = this.props.form.getFieldsValue();
     formData = {
       ...formData,
-      introduction: UE.getEditor('introduction').getContent(),
+      introduction: UE.getEditor('teacher_introduction').getContent(),
     };
 
     if (formData.profilePicture) {
@@ -167,7 +167,7 @@ class New extends Component {
               label=" 个人简介"
             >
               <LazyLoad height={370}>
-                <UEditor id="introduction"/>
+                <UEditor id="teacher_introduction"/>
               </LazyLoad>
             </FormItem>
           </Col>

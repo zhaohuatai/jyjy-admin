@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs} from 'antd';
-import {deleteDataUniversity, loadDataUniversity, loadDataUniversityDataSet} from '../../../../service/base';
+import {message, Pagination, Table, Tabs, Modal} from 'antd';
 import {loadMemberTeacherDataSet, loadMemberTeacher, deleteMemberTeacher} from '../../../../service/member';
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';
-import Detail from './Detail';
-
 const TabPane = Tabs.TabPane;
 
 const table_columns = [
@@ -18,6 +15,28 @@ const table_columns = [
 ]
 
 class Teacher extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataSet: [],
+      table_loading: false,
+      selectedRowKeys: [],
+      table_cur_page: 1,
+      table_total: 0,
+      search_form: {},
+      update_display: false,
+      update_data: {
+        memberTeacher:{
+          rank: '',
+          introduction: ''
+        }
+      },
+      detail_display: false,
+      detail_data: {},
+      recycle: false,
+    };
+  }
+
   // 获取数据
   handleRefresh = (params) => {
     this.setState({table_loading: true});
@@ -30,11 +49,10 @@ class Teacher extends Component {
     })
   }
 
-
   // 删除记录
   handleDelete = () => {
-    confirm({
-      title: `确定删除${this.state.dataSet[this.state.selectedRowkeys[0]].name}吗？`,
+    Modal.confirm({
+      title: `确定删除吗？`,
       okType: 'danger',
       onOk: () => {
         deleteMemberTeacher({id: this.state.selectedRowKeys[0]}).then(data => {
@@ -43,23 +61,6 @@ class Teacher extends Component {
         });
       }
     })
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      dataSet: [],
-      table_loading: false,
-      selectedRowKeys: [],
-      table_cur_page: 1,
-      table_total: 0,
-      search_form: {},
-      update_display: false,
-      update_data: {},
-      detail_display: false,
-      detail_data: {},
-      recycle: false,
-    };
   }
 
   // 勾选记录
@@ -89,14 +90,14 @@ class Teacher extends Component {
   // 更新
   handleUpdate = () => {
     loadMemberTeacher({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.setState({update_data: data.data.dataUniversity, update_display: true})
+      this.setState({update_data: data.data.memberTeacher, update_display: true})
     })
   }
 
   // 显示详情
   handleShowDetail = (record) => {
     loadMemberTeacher({id: record.id}).then(data => {
-      this.setState({detail_data: data.data.dataUniversity, detail_display: true})
+      this.setState({detail_data: data.data.memberTeacher, detail_display: true})
     })
   }
 
@@ -143,9 +144,11 @@ class Teacher extends Component {
         </Tabs>
 
         <Update show={this.state.update_display} data={this.state.update_data}
-                onCancel={() => this.setState({update_display: false})}/>
-        <Detail show={this.state.detail_display} data={this.state.detail_data}
-                onCancel={() => this.setState({detail_display: false})}/>
+                onCancel={() => {
+                  this.setState({update_display: false});
+                  this.handleRefresh();
+                  }
+                }/>
       </div>
     );
   }

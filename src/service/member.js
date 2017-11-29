@@ -25,6 +25,14 @@ export function deleteMemberTeacher(param) {
   });
 }
 
+export function updateMemberTeacher(param) {
+  return new Promise((resolve) => {
+    post(`${API_DOMAIN}admin/member/memberTeacher/updateMemberTeacher`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
 export function createMemberTeacher(param) {
   return new Promise((resolve) => {
     post(`${API_DOMAIN}admin/member/memberTeacher/createMemberTeacher`, param).then((data) => {
