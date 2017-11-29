@@ -27,7 +27,7 @@ import {
 
 class CategoryS extends Component {
 
-  handleActionClick = ({key, id}) => {
+  handleActionClick = ({key, record}) => {
     switch (key) {
       case 'clean' :
         this.props.form.resetFields();
@@ -39,7 +39,7 @@ class CategoryS extends Component {
         this.doRefresh();
         break;
       case 'delete' :
-        this.doDelete(id);
+        this.doDelete(record);
         break;
       case 'recycle' :
         this.doRecycle();
@@ -78,7 +78,7 @@ class CategoryS extends Component {
   };
   doDelete = (record) => {
     confirm({
-      title: `确定删除${record.name}吗？`,
+      title: `确定删除${record.title}吗？`,
       okType: 'danger',
       onOk: () => {
         deleteServiceEntranceCateSecond({id: record.id}).then(data => {
@@ -165,7 +165,7 @@ class CategoryS extends Component {
         title: '操作', key: 'action', render: (text, record) => {
           return (
             <Button shape="circle" type='danger' icon='minus' size='small'
-                    onClick={() => this.handleActionClick({key: 'delete', record: record})}/>)
+                    onClick={() => this.handleActionClick({key: 'delete', record})}/>)
         }
       }
     ];
