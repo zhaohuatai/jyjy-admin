@@ -1,12 +1,29 @@
 import React, {Component} from 'react';
-import {Button, Card, Col, Dropdown, Form, Icon, Input, Menu, message, Pagination, Row, Table} from 'antd';
+import {
+  Button,
+  Card,
+  Col,
+  Dropdown,
+  Form,
+  Icon,
+  Input,
+  InputNumber,
+  Menu,
+  message,
+  Pagination,
+  Row,
+  Switch,
+  Table
+} from 'antd';
 import {
   createServiceEntranceCateThird,
   deleteServiceEntranceCateThird,
-  loadEntranceCategoryTDataSet
+  loadEntranceCategoryTDataSet,
+  setEntranceCateThirdIsTop,
+  setEntranceCateThirdShowIndex
 } from "../../../service/entrance";
 
-class CategoryF extends Component {
+class CategoryT extends Component {
 
   handleActionClick = ({key, id}) => {
     switch (key) {
@@ -65,8 +82,22 @@ class CategoryF extends Component {
         deleteServiceEntranceCateThird({id: record.id}).then(data => {
           message.success("删除成功！");
           this.doRefresh();
-        });
+        }).catch((e) => {
+          message.error(e);
+        })
       }
+    })
+  };
+  doChecked = (record, checked) => {
+    setEntranceCateThirdIsTop({id: record.id, isTop: checked ? 1 : 0}).then(data => {
+      this.doRefresh();
+      message.success(`${record.name}更新为${checked ? '' : '不'}置顶！`);
+    })
+  };
+  doChange = (record, value) => {
+    setEntranceCateThirdShowIndex({id: record.id, showIndex: value}).then(data => {
+      this.doRefresh();
+      message.success(`${record.name}显示顺序设为${value}！`);
     })
   };
   doAdd = () => {
@@ -74,7 +105,9 @@ class CategoryF extends Component {
       message.success("添加成功！");
       this.props.form.resetFields(['add']);
       this.doRefresh();
-    });
+    }).catch((e) => {
+      message.error(e);
+    })
   };
 
   constructor(props) {
@@ -100,14 +133,27 @@ class CategoryF extends Component {
 
     const table_columns = [
       {title: '序号', dataIndex: 'id', key: 'id'},
-      {title: '栏目', dataIndex: 'name', key: 'name'},
-      {
+      {title: '栏目', dataIndex: 'name', key: 'name'}, {
+        title: '置顶', dataIndex: 'isTop', key: 'isTop', render: (text, record) => {
+          return (
+            <Switch defaultChecked={!!text} checkedChildren={<Icon type="check"/>}
+                    unCheckedChildren={<Icon type="cross"/>}
+                    onChange={(checked) => this.doChecked(record, checked)}
+            />
+          )
+        }
+      }, {
+        title: '显示顺序', dataIndex: 'showIndex', key: 'showIndex', render: (text, record) => {
+          return (
+            <InputNumber min={1} defaultValue={text} onChange={(value) => this.doChange(record, value)}/>
+          )
+        }
+      }, {
         title: '操作', key: 'action', render: (text, record) => {
-        return (<span>
-                  <Button shape="circle" type='danger' icon='minus' size='small'
-                          onClick={() => this.handleActionClick({key: 'delete', id: record})}/>
-                </span>)
-      }
+          return (
+            <Button shape="circle" type='danger' icon='minus' size='small'
+                    onClick={() => this.handleActionClick({key: 'delete', record: record})}/>)
+        }
       }
     ];
 
@@ -176,4 +222,4 @@ class CategoryF extends Component {
   }
 }
 
-export default Form.create()(CategoryF);
+export default Form.create()(CategoryT);

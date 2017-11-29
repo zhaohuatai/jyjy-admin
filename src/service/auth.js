@@ -50,8 +50,7 @@ Http.get = (url, params = '') => {
       method: 'get',
     }).then((response) => {
       response.json();
-    })
-      .then((responseData) => {
+    }).then((responseData) => {
         let checkCodeResult = checkCode(responseData.statusCode);
         if (checkCodeResult.code === 200) {
           resolve(responseData);
@@ -93,10 +92,8 @@ Http.post = (url, params = '') => {
     }).then((response) => {
       return response.json();
     }).then((responseData) => {
-
       let checkCodeResult = checkCode(responseData.statusCode, responseData.message);
       if (checkCodeResult.code !== 200) {
-        //触发store action 弹出提示框
         if (checkCodeResult.message) {
           message.warning(checkCodeResult.message);
         }
@@ -129,7 +126,7 @@ export function doWebLogin(paramsArray, getDate) {
     return response.json();
   }).then((responseData) => {
     getDate(responseData);
-  });
+  })
 }
 
 

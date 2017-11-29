@@ -24,6 +24,20 @@ const table_columns = [
 ]
 
 class Course extends Component {
+  //删除
+  handleDelete = () => {
+    confirm({
+      title: `确定删除吗？`,
+      okType: 'danger',
+      onOk: () => {
+        deleteColumnChannel({id: this.state.selectedRowKeys[0]}).then(data => {
+          message.success("删除成功！");
+          this.handleRefresh();
+        });
+      }
+    })
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -37,21 +51,8 @@ class Course extends Component {
       update_data: {},
       detail_display: false,
       detail_data: {},
+      recycle: false
     };
-  }
-
-  //删除
-  handleDelete = () => {
-    confirm({
-      title: `确定删除${this.state.dataSet[this.state.selectedRowkeys[0]].title}吗？`,
-      okType: 'danger',
-      onOk: () => {
-        deleteColumnChannel({id: this.state.selectedRowKeys[0]}).then(data => {
-          message.success("删除成功！");
-          this.handleRefresh();
-        });
-      }
-    })
   }
 
   // 获取数据
@@ -121,6 +122,12 @@ class Course extends Component {
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
               doUpdate={this.handleUpdate}
               doDelete={this.handleDelete}
+              recycle={this.state.recycle}
+              doRecycle={() => {
+                this.setState({recycle: !this.state.recycle}, () => {
+                  this.handleRefresh();
+                })
+              }}
             />
             <Table
               dataSource={this.state.dataSet}

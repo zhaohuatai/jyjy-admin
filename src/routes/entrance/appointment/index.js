@@ -40,7 +40,7 @@ class Appointment extends Component {
   // 删除记录
   handleDelete = () => {
     confirm({
-      title: `确定删除${this.state.dataSet[this.state.selectedRowkeys[0]].title}吗？`,
+      title: `确定删除吗？`,
       okType: 'danger',
       onOk: () => {
         deleteServiceEntrance({id: this.state.selectedRowKeys[0]}).then(data => {
@@ -115,7 +115,9 @@ class Appointment extends Component {
                 })
               }}
               doDelete={this.handleDelete}
-              doUpdate={this.handleUpdate}/>
+              doUpdate={this.handleUpdate}
+              recycle={this.state.recycle}
+            />
             <Table
               dataSource={this.state.dataSet}
               columns={table_columns}

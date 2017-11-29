@@ -7,48 +7,43 @@ import style from './Layout.scss';
 import {loadCategoryTree} from '../../service/auth';
 import {siteName} from "../../utils/config";
 
-const { SubMenu } = Menu;
-const { Header, Content, Sider } = Layout;
+const {SubMenu} = Menu;
+const {Header, Content, Sider} = Layout;
 
 class IndexLayout extends React.Component {
   state = {
     collapsed: false,
-    menudata:[],
-    selectedkey:['/product']
+    menudata: [],
+    selectedkey: ['/product']
   };
-
-  componentDidMount(){
-    let path = hashHistory.getCurrentLocation().pathname;
-    loadCategoryTree({sort: 'showIndex', order: 'ASC'}, data => {
-      this.setState({
-        menudata:data.data.navMenuData,
-        selectedkey:[path]
-      });
-    })
-  }
-
   onCollapse = (collapsed) => {
-    this.setState({ collapsed });
+    this.setState({collapsed});
   }
-  
-  handelSelect=({key})=>{
+  handelSelect = ({key}) => {
     hashHistory.push(key)
     this.setState({
-      selectedkey:[key]
+      selectedkey: [key]
     });
   }
-
-  handleHeaderAction=({ item, key, keyPath })=>{
+  handleHeaderAction = ({key}) => {
     switch (key) {
       case 'logout':
-        document.cookie = '';
+        //登出存在问题
         hashHistory.push('/login');
         break;
-    
       default:
         break;
     }
-    
+  }
+
+  componentDidMount() {
+    let path = hashHistory.getCurrentLocation().pathname;
+    loadCategoryTree({sort: 'showIndex', order: 'ASC'}, data => {
+      this.setState({
+        menudata: data.data.navMenuData,
+        selectedkey: [path]
+      });
+    })
   }
 
   render() {
@@ -57,23 +52,24 @@ class IndexLayout extends React.Component {
       <Layout>
         <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
           <div style={{textAlign: 'center'}} className={style.logo}>{siteName}</div>
-          <Menu theme="dark" defaultSelectedKeys={['/']} selectedKeys={this.state.selectedkey} mode="inline" onClick={this.handelSelect}>
+          <Menu theme="dark" defaultSelectedKeys={['/']} selectedKeys={this.state.selectedkey} mode="inline"
+                onClick={this.handelSelect}>
             {
-              this.state.menudata.map(item=>{
-                if(item.items){
+              this.state.menudata.map(item => {
+                if (item.items) {
                   return (
-                    <SubMenu key={item.title} title={<span><Icon type={item.icon} /><span>{item.title}</span></span>}>
+                    <SubMenu key={item.title} title={<span><Icon type={item.icon}/><span>{item.title}</span></span>}>
                       {
-                        item.items.map(subitem=>{
+                        item.items.map(subitem => {
                           return <Menu.Item key={subitem.url}>{subitem.title}</Menu.Item>
                         })
                       }
                     </SubMenu>
                   )
-                }else{
+                } else {
                   return (
                     <Menu.Item key={item.url}>
-                      <Icon type={item.icon} />
+                      <Icon type={item.icon}/>
                       <span>{item.title}</span>
                     </Menu.Item>
                   )
@@ -88,7 +84,7 @@ class IndexLayout extends React.Component {
   }
 }
 
-function mapStatetoProps(state){
+function mapStatetoProps(state) {
   return {
     userinfo: state.session.userinfo
   }

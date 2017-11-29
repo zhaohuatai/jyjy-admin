@@ -82,28 +82,32 @@ class CategoryF extends Component {
         deleteServiceEntranceCateFirst({id: record.id}).then(data => {
           message.success("删除成功！");
           this.doRefresh();
-        });
+        }).catch((e) => {
+          message.error(e);
+        })
       }
     })
   };
-  doChecked = (record) => {
-    setEntranceCateFirstIsTop({id: record.id, isTop: record.checked ? 1 : 0}).then(data => {
+  doChecked = (record, checked) => {
+    setEntranceCateFirstIsTop({id: record.id, isTop: checked ? 1 : 0}).then(data => {
       this.doRefresh();
-      message.success(`${record.name}更新为${record.isTop ? '' : '不'}置顶！`);
-    });
+      message.success(`${record.name}更新为${checked ? '' : '不'}置顶！`);
+    })
   };
-  doChange = (record) => {
-    setEntranceCateFirstShowIndex({id: record.id, showIndex: record.showIndex}).then(data => {
+  doChange = (record, value) => {
+    setEntranceCateFirstShowIndex({id: record.id, showIndex: value}).then(data => {
       this.doRefresh();
-      message.success(`${record.name}显示次序更新为${record.showIndex}！`);
-    });
+      message.success(`${record.name}显示顺序设为${value}！`);
+    })
   };
   doAdd = () => {
     createServiceEntranceCateFirst({name: this.props.form.getFieldsValue()['add']}).then(data => {
       message.success("添加成功！");
       this.props.form.resetFields(['add']);
       this.doRefresh();
-    });
+    }).catch((e) => {
+      message.error(e);
+    })
   };
 
   constructor(props) {
@@ -132,22 +136,23 @@ class CategoryF extends Component {
       {title: '栏目', dataIndex: 'name', key: 'name'}, {
         title: '置顶', dataIndex: 'isTop', key: 'isTop', render: (text, record) => {
           return (
-            <Switch checked={!!text} checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}
-                    onChecked={this.doChecked(record)}/>
+            <Switch defaultChecked={!!text} checkedChildren={<Icon type="check"/>}
+                    unCheckedChildren={<Icon type="cross"/>}
+                    onChange={(checked) => this.doChecked(record, checked)}
+            />
           )
         }
       }, {
-        title: '显示次序', dataIndex: 'showIndex', key: 'showIndex', render: (text, record) => {
+        title: '显示顺序', dataIndex: 'showIndex', key: 'showIndex', render: (text, record) => {
           return (
-            <InputNumber min={1} defaultValue={text} onChange={this.doChange(record)}/>
+            <InputNumber min={1} defaultValue={text} onChange={(value) => this.doChange(record, value)}/>
           )
         }
       }, {
         title: '操作', key: 'action', render: (text, record) => {
-          return (<Col span={4}>
+          return (
             <Button shape="circle" type='danger' icon='minus' size='small'
-                    onClick={() => this.handleActionClick({key: 'delete', record: record})}/>
-          </Col>)
+                    onClick={() => this.handleActionClick({key: 'delete', record: record})}/>)
         }
       }
     ];
