@@ -1,73 +1,25 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs} from 'antd';
-import {deleteDataProfession, loadDataProfession, loadDataProfessionDataSet} from '../../../service/base';
+import {message, Pagination, Table, Tabs, Modal} from 'antd';
+import {deleteInterlocutionConsultation, loadInterlocutionConsultation, loadInterlocutionConsultationDataSet} from '../../../service/interlocution';
 import Filter from './Filter';
-import New from './New';
-import Update from './Update';
+import Replay from './Replay';
 import Detail from './Detail';
-import Subject from "./Subject";
-import Category from "./Category";
 
 const TabPane = Tabs.TabPane;
 
 const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
-  {title: '专业名称', dataIndex: 'profession', key: 'profession'},
-  {title: '专业代码', dataIndex: 'professionCode', key: 'professionCode'},
-  {title: '所属学科', dataIndex: 'subjectName', key: 'subjectName'},
-  {title: '所属门类', dataIndex: 'categoryName', key: 'categoryName'},
-  {title: '修业年限', dataIndex: 'revisedYears', key: 'revisedYears'},
-  {title: '授予学位', dataIndex: 'degree', key: 'degree'},
-  {title: '毕业5年', dataIndex: 'salary', key: 'salary'},
-  {
-    title: '开设院校', dataIndex: 'offer', key: 'offer', render: (text) => {
-    text = (text ? text.replace(/<.+\/>/g, ",") : text );
-    return text && text.length > 15 ? text.substr(0, 15) + "..." : text
-  }
-  },
-  {title: '本科专业', dataIndex: 'undergradPro', key: 'undergradPro'},
+  {title: '标题', dataIndex: 'consultorName', key: 'consultorName'},
+  {title: '内容', dataIndex: 'content', key: 'content', render: (text) => '点击查看'},
+  {title: '电话', dataIndex: 'phone', key: 'phone'},
+  {title: '在线回复', dataIndex: 'onlineReply', key: 'onlineReply'},
+  {title: '用户id', dataIndex: 'memberId', key: 'memberId'},
+  {title: '更新时间', dataIndex: 'updateTime', key: 'updateTime'},
+  {title: '创建时间', dataIndex: 'createTime', key: 'createTime'},
   {title: '备注', dataIndex: 'remark', key: 'remark'},
 ]
 
-class Profession extends Component {
-  // 获取数据
-  handleRefresh = (params) => {
-    this.setState({table_loading: true});
-    params = {...params};
-    params['status'] = (this.state.recycle ? 2 : 1);
-    loadDataProfessionDataSet(params).then(data => {
-      this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
-    }).catch((e) => {
-      message.error(e);
-    })
-  }
-
-  // 删除记录
-  handleDelete = () => {
-    confirm({
-      title: `确定删除${this.state.dataSet[this.state.selectedRowkeys[0]].profession}吗？`,
-      okType: 'danger',
-      onOk: () => {
-        deleteDataProfession({id: this.state.selectedRowKeys[0]}).then(data => {
-          message.success("删除成功！");
-          this.handleRefresh();
-        });
-      }
-    })
-  }
-
-  // 勾选记录
-  onSelectChange = (selectedRowKeys) => {
-    this.setState({selectedRowKeys});
-  }
-
-  // 切换页码
-  onChangeTablePage = (currentPage) => {
-    this.setState({table_loading: true, table_cur_page: currentPage});
-    let searchForm = this.state.search_form;
-    searchForm['page'] = currentPage;
-    this.handleRefresh(searchForm)
-  }
+class Interlocution extends Component {
 
   constructor(props) {
     super(props);
@@ -78,12 +30,54 @@ class Profession extends Component {
       table_cur_page: 1,
       table_total: 0,
       search_form: {},
-      update_display: false,
-      update_data: {},
+      replay_display: false,
+      replay_data: {},
       detail_display: false,
       detail_data: {},
       recycle: false,
     };
+  }
+
+  // 获取数据
+  handleRefresh = (params) => {
+    this.setState({table_loading: true});
+    params = {...params};
+    params['status'] = (this.state.recycle ? 2 : 1);
+    loadInterlocutionConsultationDataSet(params).then(data => {
+      this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
+    }).catch((e) => {
+      message.error(e);
+    })
+  }
+
+
+  // 删除记录
+  handleDelete = () => {
+    Modal.confirm({
+      title: `确定删除吗？`,
+      okType: 'danger',
+      onOk: () => {
+        deleteInterlocutionConsultation({id: this.state.selectedRowKeys[0]}).then(data => {
+          message.success("删除成功！");
+          this.handleRefresh();
+        });
+      }
+    })
+  }
+
+
+  // 勾选记录
+  onSelectChange = (selectedRowKeys) => {
+    this.setState({selectedRowKeys});
+  }
+
+
+  // 切换页码
+  onChangeTablePage = (currentPage) => {
+    this.setState({table_loading: true, table_cur_page: currentPage});
+    let searchForm = this.state.search_form;
+    searchForm['page'] = currentPage;
+    this.handleRefresh(searchForm)
   }
 
   // 搜索
@@ -92,22 +86,22 @@ class Profession extends Component {
     this.handleRefresh(values);
   }
 
+  componentDidMount() {
+    this.handleRefresh();
+  }
+
   // 更新
-  handleUpdate = () => {
-    loadDataProfession({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.setState({update_data: data.data.dataProfession, update_display: true})
+  handleReplay = () => {
+    loadInterlocutionConsultation({id: this.state.selectedRowKeys[0]}).then(data => {
+      this.setState({replay_data: data.data.interlocutionConsultation, replay_display: true})
     })
   }
 
   // 显示详情
   handleShowDetail = (record) => {
-    loadDataProfession({id: record.id}).then(data => {
-      this.setState({detail_data: data.data.dataProfession, detail_display: true})
+    loadInterlocutionConsultation({id: record.id}).then(data => {
+      this.setState({detail_data: data.data.interlocutionConsultation, detail_display: true})
     })
-  }
-
-  componentDidMount() {
-    this.handleRefresh();
   }
 
   render() {
@@ -120,8 +114,8 @@ class Profession extends Component {
 
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
-        <Tabs defaultActiveKey="3">
-          <TabPane tab="专业列表" key="3">
+        <Tabs defaultActiveKey="1">
+          <TabPane tab="自主招生问答" key="1">
             <Filter
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
@@ -131,8 +125,9 @@ class Profession extends Component {
                 })
               }}
               doDelete={this.handleDelete}
-              doUpdate={this.handleUpdate}
+              doReplay={this.handleReplay}
               recycle={this.state.recycle}
+
             />
             <Table
               dataSource={this.state.dataSet}
@@ -147,19 +142,13 @@ class Profession extends Component {
             <Pagination style={{marginTop: '10px'}} showQuickJumper defaultCurrent={1} current={table_cur_page}
                         defaultPageSize={20} total={table_total} onChange={this.onChangeTablePage}/>,
           </TabPane>
-          <TabPane tab="学科管理" key="1">
-            <Subject/>
-          </TabPane>
-          <TabPane tab="门类管理" key="2">
-            <Category/>
-          </TabPane>
-
-          <TabPane tab="新建" key="4">
-            <New/>
-          </TabPane>
         </Tabs>
-        <Update show={this.state.update_display} data={this.state.update_data}
-                onCancel={() => this.setState({update_display: false})}/>
+
+        <Replay show={this.state.replay_display} data={this.state.replay_data}
+                onCancel={() =>{
+                  this.handleRefresh();
+                  this.setState({replay_display: false})
+                }}/>
         <Detail show={this.state.detail_display} data={this.state.detail_data}
                 onCancel={() => this.setState({detail_display: false})}/>
       </div>
@@ -167,4 +156,4 @@ class Profession extends Component {
   }
 }
 
-export default Profession;
+export default Interlocution;
