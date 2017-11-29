@@ -4,13 +4,6 @@ import NumberCard from './numberCard';
 import {Col, Row} from 'antd';
 import {loadMemberCount, loadOrdersListCount, loadProductListCount, loadSumPayFee} from '../../service/auth';
 
-const bodyStyle = {
-  bodyStyle: {
-    height: 432,
-    background: '#fff',
-  },
-};
-
 class Dashboard extends Component {
   constructor(props){
     super(props);

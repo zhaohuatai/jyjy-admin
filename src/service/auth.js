@@ -10,22 +10,21 @@ import {message} from 'antd';
  */
 function checkCode(statusCode, message) {
   if (statusCode === 200) {
-    return {code: statusCode, message: ''};
-  } else {
-    //返回码判断
-    switch (statusCode) {
-      case 300 :
-        return {code: statusCode, message: message};
-      case 401 :
-        return {code: statusCode, message: message};
-      case 301 :
-        hashHistory.push('/login');
-        throw message;
-      case 500 :
-        return {code: statusCode, message: message};
-      default :
-        return {code: statusCode, message: message};
-    }
+    return {code: statusCode, message: message};
+  }
+
+  switch (statusCode) {
+    case 300 :
+      return {code: statusCode, message: message};
+    case 401 :
+      return {code: statusCode, message: message};
+    case 301 :
+      hashHistory.push('/login');
+      return {code: statusCode, message: message};
+    case 500 :
+      return {code: statusCode, message: message};
+    default :
+      return {code: statusCode, message: message};
   }
 }
 
@@ -51,14 +50,13 @@ Http.get = (url, params = '') => {
     }).then((response) => {
       response.json();
     }).then((responseData) => {
-        let checkCodeResult = checkCode(responseData.statusCode);
-        if (checkCodeResult.code === 200) {
-          resolve(responseData);
-        } else {
-          //触发store action 弹出提示框
-          message.warning(checkCodeResult.message);
-        }
-      }).catch((err) => {
+      let checkCodeResult = checkCode(responseData.statusCode);
+      if (checkCodeResult.code === 200) {
+        resolve(responseData);
+      } else {
+        message.info(checkCodeResult.message);
+      }
+    }).catch((err) => {
       reject(err);
     });
   });
@@ -92,11 +90,12 @@ Http.post = (url, params = '') => {
     }).then((response) => {
       return response.json();
     }).then((responseData) => {
+
       let checkCodeResult = checkCode(responseData.statusCode, responseData.message);
-      if (checkCodeResult.code !== 200) {
-        if (checkCodeResult.message) {
-          message.warning(checkCodeResult.message);
-        }
+      if (checkCodeResult.code === 200) {
+        resolve(responseData);
+      } else {
+        message.info(checkCodeResult.message);
       }
       resolve(responseData);
     }).catch((err) => {

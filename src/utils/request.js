@@ -7,21 +7,20 @@ import md5 from 'blueimp-md5';
 /**
  * 状态码错误名称
  * @param {int} statusCode
+ * @param message
  */
 const checkCode = (statusCode, message) => {
   if (statusCode === 200) {
     return {code: statusCode, message};
   }
-  // 返回码判断
+
   switch (statusCode) {
     case 300:
       return {code: statusCode, message};
     case 301:
-      hashHistory.push('/login');
-      break;
     case 4010:
       hashHistory.push('/login');
-      break;
+      return {code: statusCode, message};
     case 4011:
       return {code: statusCode, message};
     case 4004:
@@ -31,7 +30,6 @@ const checkCode = (statusCode, message) => {
     default:
       return {code: statusCode, message};
   }
-  return {code: statusCode, message};
 };
 
 /**
@@ -100,7 +98,6 @@ export function post(url, params = '') {
       if (checkCodeResult.code === 200) {
         resolve(responseData);
       } else {
-        message.error(checkCodeResult.message);
         reject(checkCodeResult.message);
       }
     }).catch((err) => {

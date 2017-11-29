@@ -1,7 +1,7 @@
 import React from 'react';
 import {hashHistory, IndexRoute, Redirect, Route, Router} from 'react-router';
 import App from './routes/App';
-import Dashboard from './routes/dashboard/Dashboard';
+import Dashboard from './routes/dashboard/index';
 import School from './routes/base/school';
 import Career from './routes/base/career';
 import Profession from './routes/base/profession';
@@ -68,7 +68,7 @@ const Routers = () => (
       </Route>
 
       <Route path='/entrance'>
-      <Route path="service" component={ServiceContent}/>
+        <Route path="service" component={ServiceContent}/>
         <Route path="appointment" component={Appointment}/>
       </Route>
 
@@ -85,10 +85,10 @@ const Routers = () => (
       {/*</Route>*/}
 
       <Route path='/member'>
-      <Route path="management" component={Member}/>
-      <Route path="teacher" component={Teacher}/>
-      <Route path="appointment" component={TeacherAppointment}/>
-      <Route path="coupon" component={Coupon}/>
+        <Route path="management" component={Member}/>
+        <Route path="teacher" component={Teacher}/>
+        <Route path="appointment" component={TeacherAppointment}/>
+        <Route path="coupon" component={Coupon}/>
       </Route>
 
       <Route path='/customize'>
