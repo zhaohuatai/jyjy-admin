@@ -9,25 +9,30 @@ import {message} from 'antd';
  * @param message
  */
 function checkCode(statusCode, message) {
-  if (statusCode === 200) {
-    return {code: statusCode, message: ''};
-  } else {
-    //返回码判断
-    switch (statusCode) {
-      case 300 :
-        return {code: statusCode, message: message};
-      case 401 :
-        return {code: statusCode, message: message};
-      case 301 :
-        hashHistory.push('/login');
-        throw new Error(message);
-      case 500 :
-        return {code: statusCode, message: message};
-      default :
-        return {code: statusCode, message: message};
+  try {
+    if (statusCode === 200) {
+      return {code: statusCode, message: ''};
+    } else {
+      //返回码判断
+      switch (statusCode) {
+        case 300 :
+          return {code: statusCode, message: message};
+        case 401 :
+          return {code: statusCode, message: message};
+        case 301 :
+          hashHistory.push('/login');
+          throw message;
+        case 500 :
+          return {code: statusCode, message: message};
+        default :
+          return {code: statusCode, message: message};
+      }
     }
+  } catch (err) {
+    message.error(err);
   }
 }
+
 
 let Http = {};
 /**

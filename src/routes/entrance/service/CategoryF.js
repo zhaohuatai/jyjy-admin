@@ -90,7 +90,7 @@ class CategoryF extends Component {
   };
   doChecked = (record) => {
     setEntranceCateFirstIsTop({id: record.id, isTop: record.checked ? 1 : 0}).then(data => {
-      this.doRefresh();
+      // this.doRefresh();
       message.success(`${record.name}更新为${record.isTop ? '' : '不'}置顶！`);
     }).catch((e) => {
       message.error(e);
@@ -98,7 +98,7 @@ class CategoryF extends Component {
   };
   doChange = (record) => {
     setEntranceCateFirstShowIndex({id: record.id, showIndex: record.showIndex}).then(data => {
-      this.doRefresh();
+      // this.doRefresh();
       message.success(`${record.name}显示次序更新为${record.showIndex}！`);
     }).catch((e) => {
       message.error(e);
