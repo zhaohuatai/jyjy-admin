@@ -14,7 +14,25 @@ class Filter extends Component {
     if (!data) return;
     let options = [];
     data.forEach((row) => {
-      options.push({value: `${row['id']}`, label: row['name'], isLeaf: cate === 3 ? true : !!row.isLeaf, cate})
+      let isLeaf = false;
+      switch (cate) {
+        case 'First' :
+          loadEntranceCategorySDataSet({rows: 1, cateFirstId: row['id']}).then(d => {
+            if (!d.data.dataSet.total)
+              isLeaf = true;
+            options.push({value: `${row['id']}`, label: row['name'], isLeaf: isLeaf, cate})
+          });
+          break;
+        case 'Second' :
+          loadEntranceCategoryTDataSet({rows: 1, cateSecondId: row['id']}).then(d => {
+            if (!d.data.dataSet.total)
+              isLeaf = true;
+            options.push({value: `${row['id']}`, label: row['name'], isLeaf: isLeaf, cate})
+          });
+          break;
+        case 'Third' :
+          options.push({value: `${row['id']}`, label: row['name'], isLeaf: true, cate})
+      }
     });
     return options;
   };
@@ -25,18 +43,20 @@ class Filter extends Component {
     switch (targetOption.cate) {
       case 'First' :
         loadEntranceCategorySDataSet({rows: 1000, cateFirstId: targetOption.value}).then(data => {
-          if (!data.data.dataSet.rows)
+          if (!data.data.dataSet.total)
             targetOption.isLeaf = true;
           targetOption.children = this.renderData(data.data.dataSet.rows, 'Second');
+        }).then(() => {
           targetOption.loading = false;
           this.setState({options: [...this.state.options]});
         });
         break;
       case 'Second' :
         loadEntranceCategoryTDataSet({rows: 1000, cateSecondId: targetOption.value}).then(data => {
-          if (!data.data.dataSet.rows)
+          if (!data.data.dataSet.total)
             targetOption.isLeaf = true;
           targetOption.children = this.renderData(data.data.dataSet.rows, 'Third');
+        }).then(() => {
           targetOption.loading = false;
           this.setState({options: [...this.state.options]});
         });
@@ -44,8 +64,8 @@ class Filter extends Component {
     }
   }
 
-  onCateChange = (selectedOptions) => {
-    this.handleActionClick({key: 'search', cate: selectedOptions.cate, value: selectedOptions.value})
+  onCateChange = (value, selectedOptions) => {
+    this.handleActionClick({key: 'search', cate: selectedOptions[0].cate, value: selectedOptions[0].value})
   }
 
   constructor(props) {
@@ -64,7 +84,7 @@ class Filter extends Component {
       case 'search' :
         let params = this.props.form.getFieldsValue();
         if (cate) {
-          params[cate] = value;
+          params[`cate${cate}Id`] = value;
         }
         this.props.doSearch(params);
         break;
@@ -133,9 +153,10 @@ class Filter extends Component {
             </FormItem>
           </Col>
 
-          <Col span={6} pull={7}>
+          <Col span={6} pull={1}>
             <FormItem>
-              <Cascader placeholder="栏目" options={this.state.options} loadData={this.loadCateData} style={{width: 270}}
+              <Cascader size='default' placeholder="栏目" options={this.state.options} loadData={this.loadCateData}
+                        style={{width: 270}}
                         onChange={this.onCateChange} changeOnSelect/>
             </FormItem>
           </Col>

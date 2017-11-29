@@ -12,12 +12,14 @@ import {
   message,
   Pagination,
   Row,
+  Select,
   Switch,
   Table
 } from 'antd';
 import {
   createServiceEntranceCateSecond,
   deleteServiceEntranceCateSecond,
+  loadEntranceCategoryFDataSet,
   loadEntranceCategorySDataSet,
   setEntranceCateSecondIsTop,
   setEntranceCateSecondShowIndex
@@ -101,7 +103,10 @@ class CategoryS extends Component {
     })
   };
   doAdd = () => {
-    createServiceEntranceCateSecond({name: this.props.form.getFieldsValue()['add']}).then(data => {
+    createServiceEntranceCateSecond({
+      name: this.props.form.getFieldsValue()['add'],
+      cateFirstId: this.props.form.getFieldsValue()['add-cateFirstId'],
+    }).then(data => {
       message.success("添加成功！");
       this.props.form.resetFields(['add']);
       this.doRefresh();
@@ -119,10 +124,16 @@ class CategoryS extends Component {
       table_cur_page: 1,
       table_total: 0,
       recycle: false,
+      cateFirstList: [],
     };
   }
 
   componentDidMount() {
+    loadEntranceCategoryFDataSet({rows: 1000}).then(data => {
+      if (data.data.dataSet.rows) {
+        this.setState({cateFirstList: data.data.dataSet.rows});
+      }
+    });
     this.doRefresh();
   }
 
@@ -133,15 +144,17 @@ class CategoryS extends Component {
 
     const table_columns = [
       {title: '序号', dataIndex: 'id', key: 'id'},
-      {title: '栏目', dataIndex: 'name', key: 'name'}, {
+      {title: '父栏目', dataIndex: 'cateFirst', key: 'cateFirst'},
+      {title: '栏目', dataIndex: 'name', key: 'name'},
+      {
         title: '置顶', dataIndex: 'isTop', key: 'isTop', render: (text, record) => {
-          return (
-            <Switch defaultChecked={!!text} checkedChildren={<Icon type="check"/>}
-                    unCheckedChildren={<Icon type="cross"/>}
-                    onChange={(checked) => this.doChecked(record, checked)}
-            />
-          )
-        }
+        return (
+          <Switch defaultChecked={!!text} checkedChildren={<Icon type="check"/>}
+                  unCheckedChildren={<Icon type="cross"/>}
+                  onChange={(checked) => this.doChecked(record, checked)}
+          />
+        )
+      }
       }, {
         title: '显示顺序', dataIndex: 'showIndex', key: 'showIndex', render: (text, record) => {
           return (
@@ -163,6 +176,17 @@ class CategoryS extends Component {
         <Menu.Item key="clean">清空</Menu.Item>
       </Menu>
     );
+
+    const formItemLayout = {
+      labelCol: {
+        xs: {span: 24},
+        sm: {span: 6},
+      },
+      wrapperCol: {
+        xs: {span: 24},
+        sm: {span: 18},
+      },
+    };
 
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}} width={'50%'}>
@@ -199,16 +223,36 @@ class CategoryS extends Component {
           <Col span={7} push={1}>
             <Card title="添加">
               <Row type='flex'>
-                <Col span={18}>
-                  <Form.Item>
-                    {getFieldDecorator('add', {
-                      initialValue: ''
-                    })(
-                      <Input addonBefore='栏目'/>
+                <Col>
+                  <Form.Item {...formItemLayout} label="父栏目">
+                    {getFieldDecorator('add-cateFirstId', {
+                      rules: [{
+                        required: true, message: '请选择'
+                      }]
+                    }, {})(
+                      <Select placeholder="选择父栏目" style={{width: '200px'}}>
+                        {
+                          this.state.cateFirstList.map(item => {
+                            return <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
+                          })
+                        }
+                      </Select>
                     )}
                   </Form.Item>
                 </Col>
-                <Col span={2} push={2}>
+                <Col span={24}>
+                  <Form.Item {...formItemLayout} label="栏目">
+                    {getFieldDecorator('add', {
+                      initialValue: '',
+                      rules: [{
+                        required: true, message: '不能为空'
+                      }]
+                    })(
+                      <Input/>
+                    )}
+                  </Form.Item>
+                </Col>
+                <Col span={2} push={19}>
                   <Button onClick={() => this.handleActionClick({key: 'add'})}>
                     添加
                   </Button>

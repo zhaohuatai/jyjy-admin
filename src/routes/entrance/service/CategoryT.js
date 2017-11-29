@@ -12,12 +12,14 @@ import {
   message,
   Pagination,
   Row,
+  Select,
   Switch,
   Table
 } from 'antd';
 import {
   createServiceEntranceCateThird,
   deleteServiceEntranceCateThird,
+  loadEntranceCategorySDataSet,
   loadEntranceCategoryTDataSet,
   setEntranceCateThirdIsTop,
   setEntranceCateThirdShowIndex
@@ -101,7 +103,10 @@ class CategoryT extends Component {
     })
   };
   doAdd = () => {
-    createServiceEntranceCateThird({name: this.props.form.getFieldsValue()['add']}).then(data => {
+    createServiceEntranceCateThird({
+      name: this.props.form.getFieldsValue()['add'],
+      cateSecondId: this.props.form.getFieldsValue()['add-cateSecondId'],
+    }).then(data => {
       message.success("添加成功！");
       this.props.form.resetFields(['add']);
       this.doRefresh();
@@ -119,10 +124,16 @@ class CategoryT extends Component {
       table_cur_page: 1,
       table_total: 0,
       recycle: false,
+      cateSecondList: [],
     };
   }
 
   componentDidMount() {
+    loadEntranceCategorySDataSet({rows: 1000}).then(data => {
+      if (data.data.dataSet.rows) {
+        this.setState({cateSecondList: data.data.dataSet.rows});
+      }
+    });
     this.doRefresh();
   }
 
@@ -133,6 +144,7 @@ class CategoryT extends Component {
 
     const table_columns = [
       {title: '序号', dataIndex: 'id', key: 'id'},
+      {title: '父栏目', dataIndex: 'cateSecond', key: 'cateSecond'},
       {title: '栏目', dataIndex: 'name', key: 'name'}, {
         title: '置顶', dataIndex: 'isTop', key: 'isTop', render: (text, record) => {
           return (
@@ -163,6 +175,17 @@ class CategoryT extends Component {
         <Menu.Item key="clean">清空</Menu.Item>
       </Menu>
     );
+
+    const formItemLayout = {
+      labelCol: {
+        xs: {span: 24},
+        sm: {span: 6},
+      },
+      wrapperCol: {
+        xs: {span: 24},
+        sm: {span: 18},
+      },
+    };
 
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}} width={'50%'}>
@@ -199,16 +222,36 @@ class CategoryT extends Component {
           <Col span={7} push={1}>
             <Card title="添加">
               <Row type='flex'>
-                <Col span={18}>
-                  <Form.Item>
-                    {getFieldDecorator('add', {
-                      initialValue: ''
-                    })(
-                      <Input addonBefore='栏目'/>
+                <Col>
+                  <Form.Item {...formItemLayout} label="父栏目">
+                    {getFieldDecorator('add-cateSecondId', {
+                      rules: [{
+                        required: true, message: '请选择'
+                      }]
+                    }, {})(
+                      <Select placeholder="选择父栏目" style={{width: '200px'}}>
+                        {
+                          this.state.cateSecondList.map(item => {
+                            return <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
+                          })
+                        }
+                      </Select>
                     )}
                   </Form.Item>
                 </Col>
-                <Col span={2} push={2}>
+                <Col span={24}>
+                  <Form.Item {...formItemLayout} label="栏目">
+                    {getFieldDecorator('add', {
+                      initialValue: '',
+                      rules: [{
+                        required: true, message: '不能为空'
+                      }]
+                    })(
+                      <Input/>
+                    )}
+                  </Form.Item>
+                </Col>
+                <Col span={2} push={19}>
                   <Button onClick={() => this.handleActionClick({key: 'add'})}>
                     添加
                   </Button>

@@ -128,7 +128,7 @@ class Category extends Component {
                 {getFieldDecorator('name', {
                   initialValue: ''
                 })(
-                  <Input size='default' addonBefore='学科' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
+                  <Input size='default' addonBefore='门类' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
                 )}
               </Form.Item>
             </Col>
