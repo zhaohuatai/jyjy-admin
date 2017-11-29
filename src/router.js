@@ -44,6 +44,9 @@ import Appointment from "./routes/entrance/appointment/index";
 import Interlocution from './routes/qa/interlocution';
 import EnrollSelf from './routes/qa/consultation';
 
+import Award from './routes/enroll-self/award';
+import BigData from './routes/enroll-self/bigdata';
+
 const Routers = () => (
   <Router history={hashHistory}>
     <Route path="/" component={App}>
@@ -74,12 +77,12 @@ const Routers = () => (
         <Route path="appointment" component={Appointment}/>
       </Route>
 
-      {/*<Route path='/enroll-self'>*/}
-      {/*<Route path="award" component={Award}/>*/}
+      <Route path='/enroll-self'>
+      <Route path="award" component={Award}/>
       {/*<Route path="question" component={Question}/>*/}
-      {/*<Route path="big-data" component={BigData}/>*/}
+      <Route path="big-data" component={BigData}/>
       {/*<Route path="admission-brochures" component={AdmissionBrochures}/>*/}
-      {/*</Route>*/}
+      </Route>
 
       <Route path='/qa'>
       <Route path="entrance-service" component={Interlocution}/>
