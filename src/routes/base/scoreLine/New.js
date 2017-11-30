@@ -29,19 +29,19 @@ class New extends Component {
   }
 
   componentDidMount() {
-    loadDataUniversityDataSet({}).then(data => {
+    loadDataUniversityDataSet({rows: 10000}).then(data => {
       this.setState({universityList: data.data.dataSet.rows})
     }).catch((e) => {
       message.error(e);
     });
 
-    loadDicData({code: "FK"}).then(data => {
+    loadDicData({code: "FK", rows: 10000}).then(data => {
       this.setState({liberalScienceList: data.data.dicData})
     }).catch((e) => {
       message.error(e);
     });
 
-    loadDicData({code: "PC"}).then(data => {
+    loadDicData({code: "PC", rows: 10000}).then(data => {
       this.setState({batchList: data.data.dicData})
     }).catch((e) => {
       message.error(e);

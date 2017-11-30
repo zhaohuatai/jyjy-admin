@@ -129,7 +129,7 @@ class CategoryT extends Component {
   }
 
   componentDidMount() {
-    loadEntranceCategorySDataSet({rows: 1000}).then(data => {
+    loadEntranceCategorySDataSet({rows: 10000}).then(data => {
       if (data.data.dataSet.rows) {
         this.setState({cateSecondList: data.data.dataSet.rows});
       }

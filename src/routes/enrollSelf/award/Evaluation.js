@@ -126,7 +126,6 @@ class Category extends Component {
 
     const table_columns = [
       {title: '序号', dataIndex: 'id', key: 'id'},
-      {title: '所属分类', dataIndex: 'category', key: 'category'},
       {title: '竞赛名称', dataIndex: 'competition', key: 'competition'},
       {title: '级别', dataIndex: 'award', key: 'award'},
       {
@@ -167,7 +166,7 @@ class Category extends Component {
                     {required: true, message: '请选择分类'},
                   ]
                 })(
-                  <Select placeholder="选择分类" style={{width: '200px'}}>
+                  <Select size='default' placeholder="选择分类" style={{width: '200px'}}>
                     {
                       this.state.competition.map(item => {
                         return <Select.Option key={item.id} value={`${item.id}`}>{item.competition}</Select.Option>

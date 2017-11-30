@@ -17,7 +17,7 @@ class New extends Component {
   }
 
   componentDidMount() {
-    loadProvinceList({}).then(data => {
+    loadProvinceList({rows: 10000}).then(data => {
       this.setState({ provinceList: data.data.provinceList})
     })
   }

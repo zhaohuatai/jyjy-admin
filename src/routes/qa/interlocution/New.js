@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, Upload} from 'antd';
+import {Button, Col, Form, Input, message, Row, Select} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import {createDataUniversity} from '../../../service/base';
 import LazyLoad from 'react-lazy-load';
 import {createInterlocution, loadInterlocutionCategoryDataSet} from "../../../service/interlocution";
 
@@ -38,7 +37,7 @@ class New extends Component {
   }
 
   componentDidMount() {
-    loadInterlocutionCategoryDataSet().then(data => {
+    loadInterlocutionCategoryDataSet({rows: 10000}).then(data => {
       this.setState({category: data.data.dataSet.rows})
     })
   }

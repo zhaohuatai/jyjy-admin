@@ -1,24 +1,22 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Input, message, Modal, Row} from 'antd';
+import {Button, Col, Form, Input, message, Modal, Row, Select} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import {updateCaseSuccess} from "../../../service/customize";
 import LazyLoad from 'react-lazy-load';
+import {updateEnrollAutoRecruitBrochure} from "../../../service/autoSelf";
 
 const FormItem = Form.Item;
 
 class Update extends Component {
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
+
     formData = {
       ...formData,
       id: this.props.data.id,
-      content: UE.getEditor('update_caseContent').getContent(),
+      content: UE.getEditor('update_brochureContent').getContent(),
     };
-    if (formData.thumbNailImage) {
-      formData.thumbNailImage = formData.thumbNailImage[0].response.data.image;
-    }
 
-    updateCaseSuccess(formData).then(data => {
+    updateEnrollAutoRecruitBrochure(formData).then(data => {
       this.props.form.resetFields();
       this.props.oncancel();
       message.success("更新成功！");
@@ -33,7 +31,7 @@ class Update extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {title, content} = this.props.data;
+    const {title, years, universityId, content, remark} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -51,10 +49,40 @@ class Update extends Component {
         <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
             <FormItem{...formItemLayout} label="标题">
-              {getFieldDecorator('name', {
-                initialValue: name,
+              {getFieldDecorator('title', {
+                initialValue: title,
+                rules: [
+                  {required: true, message: '请输入标题'},
+                ]
+              })(
+                <Input/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="学校">
+              {getFieldDecorator('universityId', {
+                initialValue: universityId,
                 rules: [{
-                  require: true
+                  required: true, message: '请选择'
+                }]
+              })(
+                <Select placeholder="选择学校" style={{width: '200px'}}>
+                  {
+                    this.state.universityList.map(item => {
+                      return <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
+                    })
+                  }
+                </Select>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="年份">
+              {getFieldDecorator('years', {
+                initialValue: years,
+                rules: [{
+                  required: true, message: '请填写年份'
                 }]
               })(
                 <Input/>
@@ -64,8 +92,17 @@ class Update extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="内容">
               <LazyLoad height={370}>
-                <UEditor id="update_caseContent" initValue={content}/>
+                <UEditor id="update_brochureContent" initValue={content}/>
               </LazyLoad>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="备注">
+              {getFieldDecorator('remark', {
+                initialValue: remark,
+              })(
+                <Input/>
+              )}
             </FormItem>
           </Col>
         </Row>

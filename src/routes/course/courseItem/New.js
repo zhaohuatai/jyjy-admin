@@ -17,13 +17,13 @@ class New extends Component {
   }
 
   componentDidMount() {
-    loadServiceCourseDataSet({rows: 1000}).then(data => {
+    loadServiceCourseDataSet({rows: 10000}).then(data => {
       this.setState({channelList: data.data.dataSet.rows})
     }).catch((e) => {
       message.error(e);
     })
 
-    loadMemberTeacherDataSet({rows: 1000}).then(data => {
+    loadMemberTeacherDataSet({rows: 10000}).then(data => {
       this.setState({presenterList: data.data.dataSet.rows})
     }).catch((e) => {
       message.error(e);

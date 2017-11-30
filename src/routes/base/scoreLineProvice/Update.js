@@ -30,15 +30,15 @@ class New extends Component {
   }
 
   componentDidMount() {
-    loadProvinceList({}).then(data => {
+    loadProvinceList({rows: 10000}).then(data => {
       this.setState({provinceList: data.data.provinceList})
     });
 
-    loadDicData({code: "FK"}).then(data => {
+    loadDicData({code: "FK", rows: 10000}).then(data => {
       this.setState({liberalScienceList: data.data.dicData})
     });
 
-    loadDicData({code: "PC"}).then(data => {
+    loadDicData({code: "PC", rows: 10000}).then(data => {
       this.setState({batchList: data.data.dicData})
     })
   }

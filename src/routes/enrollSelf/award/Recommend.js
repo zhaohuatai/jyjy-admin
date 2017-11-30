@@ -122,7 +122,7 @@ class Category extends Component {
 
   componentDidMount() {
     this.doRefresh();
-    loadEnrollautoAwardCompetitionDataSet().then(data => {
+    loadEnrollautoAwardCompetitionDataSet({rows: 10000}).then(data => {
       this.setState({competition: data.data.dataSet.rows})
     })
   }
@@ -134,10 +134,9 @@ class Category extends Component {
 
     const table_columns = [
       {title: '序号', dataIndex: 'id', key: 'id'},
-      {title: '分类名称', dataIndex: 'university', key: 'university'},
-      {title: '分类', dataIndex: 'category', key: 'category'},
       {title: '竞赛', dataIndex: 'competition', key: 'competition'},
       {title: '级别', dataIndex: 'award', key: 'award'},
+      {title: '推荐学校', dataIndex: 'university', key: 'university'},
       {
         title: '操作', key: 'action', render: (text, record) => {
         return (<span>
@@ -210,7 +209,7 @@ class Category extends Component {
                     label='选择竞赛'
                   >
                     {getFieldDecorator('add_competitionId',)(
-                      <Select placeholder="请选择竞赛" style={{width: '200px'}}
+                      <Select size='default' placeholder="请选择竞赛" style={{width: '200px'}}
                               onChange={(value) => this.handleGetAward({competitionId: value})}>
                         {
                           this.state.competition.map(item => {
@@ -226,7 +225,7 @@ class Category extends Component {
                     label='选择奖项'
                   >
                     {getFieldDecorator('add_awardId',)(
-                      <Select placeholder="请选择级别" style={{width: '200px'}}>
+                      <Select placeholder="请选择奖项" style={{width: '200px'}}>
                         {
                           this.state.award.map(item => {
                             return <Select.Option key={item.id} value={`${item.id}`}>{item.award}</Select.Option>

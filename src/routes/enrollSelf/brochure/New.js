@@ -3,13 +3,14 @@ import {Button, Col, Form, Input, message, Row} from 'antd';
 import UEditor from "../../../components/editor/UEditor";
 import LazyLoad from 'react-lazy-load';
 import {createEnrollAutoRecruitBrochure} from "../../../service/autoSelf";
+import {loadDataUniversityDataSet} from "../../../service/base";
 
 
 const FormItem = Form.Item;
 
 class New extends Component {
 
-  handleSubmit = (e) => {
+  handleSubmit = () => {
     let formData = this.props.form.getFieldsValue();
 
     formData = {
@@ -17,16 +18,27 @@ class New extends Component {
       content: UE.getEditor('new_brochureContent').getContent(),
     };
 
-    if (formData.imgUrl) {
-      formData.thumbNailImage = formData.thumbNailImage[0].response.data.image;
-    }
-
     createEnrollAutoRecruitBrochure(formData).then(data => {
       this.props.form.resetFields();
       message.success("创建成功！");
     }).catch((e) => {
       message.error(e);
     })
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      universityList: [],
+    }
+  }
+
+  componentDidMount() {
+    loadDataUniversityDataSet({rows: 10000}).then(data => {
+      this.setState({universityList: data.data.dataSet.rows})
+    }).catch((e) => {
+      message.error(e);
+    });
   }
 
   render() {
@@ -53,6 +65,35 @@ class New extends Component {
                 rules: [
                   {required: true, message: '请输入标题'},
                 ]
+              })(
+                <Input/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="学校">
+              {getFieldDecorator('universityId', {
+                rules: [{
+                  required: true, message: '请选择'
+                }]
+              })(
+                <Select placeholder="选择学校" style={{width: '200px'}}>
+                  {
+                    this.state.universityList.map(item => {
+                      return <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
+                    })
+                  }
+                </Select>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="年份">
+              {getFieldDecorator('years', {
+                initialValue: '',
+                rules: [{
+                  required: true, message: '请填写年份'
+                }]
               })(
                 <Input/>
               )}

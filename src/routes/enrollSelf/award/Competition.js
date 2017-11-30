@@ -114,7 +114,7 @@ class Category extends Component {
 
   componentDidMount() {
     this.doRefresh();
-    loadEnrollAutoAwardCategoryDataSet().then(data => {
+    loadEnrollAutoAwardCategoryDataSet({rows: 10000}).then(data => {
       this.setState({categorys: data.data.dataSet.rows})
     })
   }
