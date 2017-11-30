@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Input, message, Modal, Row, Select} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import { updateEnrollAutoQuestion, loadEnrollAutoQuestionCategoryDataSet} from "../../../service/auto-question";
+import {loadEnrollAutoQuestionCategoryDataSet, updateEnrollAutoQuestion} from "../../../service/autoSelf";
 
 const FormItem = Form.Item;
 
@@ -20,20 +20,19 @@ class New extends Component {
       message.success("更新成功！");
     })
   }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      category: []
-    }
-  }
-
   normFile = (e) => {
     console.log('Upload event:', e);
     if (Array.isArray(e)) {
       return e.file;
     }
     return e && e.fileList;
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      category: []
+    }
   }
 
   componentDidMount() {
@@ -44,7 +43,7 @@ class New extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const { content, title, categoryId, remark} = this.props.data;
+    const {content, title, categoryId, remark} = this.props.data;
 
     const formItemLayout = {
       labelCol: {

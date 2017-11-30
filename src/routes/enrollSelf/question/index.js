@@ -4,7 +4,7 @@ import {
   deleteEnrollAutoQuestion,
   loadEnrollAutoQuestion,
   loadEnrollAutoQuestionDataSet
-} from '../../../service/auto-question';
+} from '../../../service/autoSelf';
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';
@@ -53,6 +53,34 @@ class Interlocution extends Component {
       }
     })
   }
+  // 勾选记录
+  onSelectChange = (selectedRowKeys) => {
+    this.setState({selectedRowKeys});
+  }
+  // 切换页码
+  onChangeTablePage = (currentPage) => {
+    this.setState({table_loading: true, table_cur_page: currentPage});
+    let searchForm = this.state.search_form;
+    searchForm['page'] = currentPage;
+    this.handleRefresh(searchForm)
+  }
+  // 搜索
+  handleSearch = (values) => {
+    this.setState({table_cur_page: 1});
+    this.handleRefresh(values);
+  }
+  // 更新
+  handleUpdate = () => {
+    loadEnrollAutoQuestion({id: this.state.selectedRowKeys[0]}).then(data => {
+      this.setState({update_data: data.data.enrollAutoQuestion, update_display: true})
+    })
+  }
+  // 显示详情
+  handleShowDetail = (record) => {
+    loadEnrollAutoQuestion({id: record.id}).then(data => {
+      this.setState({detail_data: data.data.enrollAutoQuestion, detail_display: true})
+    })
+  }
 
   constructor(props) {
     super(props);
@@ -71,42 +99,8 @@ class Interlocution extends Component {
     };
   }
 
-  // 勾选记录
-  onSelectChange = (selectedRowKeys) => {
-    this.setState({selectedRowKeys});
-  }
-
-
-  // 切换页码
-  onChangeTablePage = (currentPage) => {
-    this.setState({table_loading: true, table_cur_page: currentPage});
-    let searchForm = this.state.search_form;
-    searchForm['page'] = currentPage;
-    this.handleRefresh(searchForm)
-  }
-
-  // 搜索
-  handleSearch = (values) => {
-    this.setState({table_cur_page: 1});
-    this.handleRefresh(values);
-  }
-
   componentDidMount() {
     this.handleRefresh();
-  }
-
-  // 更新
-  handleUpdate = () => {
-    loadEnrollAutoQuestion({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.setState({update_data: data.data.enrollAutoQuestion, update_display: true})
-    })
-  }
-
-  // 显示详情
-  handleShowDetail = (record) => {
-    loadEnrollAutoQuestion({id: record.id}).then(data => {
-      this.setState({detail_data: data.data.enrollAutoQuestion, detail_display: true})
-    })
   }
 
   render() {
@@ -156,7 +150,7 @@ class Interlocution extends Component {
         </Tabs>
 
         <Update show={this.state.update_display} data={this.state.update_data}
-                onCancel={() =>{
+                onCancel={() => {
                   this.handleRefresh();
                   this.setState({update_display: false})
                 }}/>

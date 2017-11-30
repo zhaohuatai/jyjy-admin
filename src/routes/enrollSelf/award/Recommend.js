@@ -1,27 +1,29 @@
 import React, {Component} from 'react';
-import {Button, Card, Col, Dropdown, Form, Icon, Input, Menu, message, Pagination, Row, Table,Modal, Select} from 'antd';
 import {
-  createEnrollautoAwardCompetition,
-  deleteEnrollautoAwardCompetition,
+  Button,
+  Card,
+  Col,
+  Dropdown,
+  Form,
+  Icon,
+  Input,
+  Menu,
+  message,
+  Modal,
+  Pagination,
+  Row,
+  Select,
+  Table
+} from 'antd';
+import {
+  createEnrollAutoAwardRecommend,
+  deleteEnrollAutoAwardRecommend,
   loadEnrollautoAwardCompetitionDataSet,
-  loadEnrollAutoAwardCategoryDataSet
+  loadEnrollAutoAwardEvaluationDataSet,
+  loadEnrollAutoAwardRecommendDataSet
 } from "../../../service/award";
 
 class Category extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      table_loading: false,
-      dataSet: [],
-      search_form: {},
-      table_cur_page: 1,
-      table_total: 0,
-      recycle: false,
-      categorys: []
-    };
-  }
-
   handleActionClick = ({key, record}) => {
     switch (key) {
       case 'clean' :
@@ -30,7 +32,7 @@ class Category extends Component {
       case 'search' :
         this.doSearch({
           name: this.props.form.getFieldsValue()['name'],
-          categoryId: this.props.form.getFieldsValue()['categoryId'],
+          competitionId: this.props.form.getFieldsValue()['competitionId'],
         });
         break;
       case 'refresh' :
@@ -49,18 +51,11 @@ class Category extends Component {
         break;
     }
   };
-
-  componentDidMount() {
-    this.doRefresh();
-    loadEnrollAutoAwardCategoryDataSet().then(data => {
-      this.setState({categorys: data.data.dataSet.rows})
-    })
-  }
   doRefresh = (params) => {
     this.setState({table_loading: true});
     params = {...params};
     params['status'] = (this.state.recycle ? 2 : 1);
-    loadEnrollautoAwardCompetitionDataSet(params).then(data => {
+    loadEnrollAutoAwardRecommendDataSet(params).then(data => {
       this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
     }).catch((e) => {
       message.error(e);
@@ -86,7 +81,7 @@ class Category extends Component {
       title: `确定删除吗？`,
       okType: 'danger',
       onOk: () => {
-        deleteEnrollautoAwardCompetition({id: record.id}).then(data => {
+        deleteEnrollAutoAwardRecommend({id: record.id}).then(data => {
           message.success("删除成功！");
           this.doRefresh();
         });
@@ -94,16 +89,43 @@ class Category extends Component {
     })
   };
   doAdd = () => {
-    createEnrollautoAwardCompetition({
-      competition: this.props.form.getFieldsValue()['add'],
-      categoryId: this.props.form.getFieldsValue()['add_categoryId'],
+    createEnrollAutoAwardRecommend({
+      university: this.props.form.getFieldsValue()['add'],
+      awardId: this.props.form.getFieldsValue()['add_awardId'],
+      competitionId: this.props.form.getFieldsValue()['add_competitionId'],
     }).then(data => {
       message.success("添加成功！");
-      this.props.form.resetFields(['name']);
+      this.props.form.resetFields(['add', 'add_awardId', 'add_competitionId']);
       this.doRefresh();
     });
   };
+  handleGetAward = (params) => {
+    console.log(params);
+    loadEnrollAutoAwardEvaluationDataSet(params).then(data => {
+      this.setState({award: data.data.dataSet.rows})
+    })
+  }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      table_loading: false,
+      dataSet: [],
+      search_form: {},
+      table_cur_page: 1,
+      table_total: 0,
+      recycle: false,
+      competition: [],
+      award: []
+    };
+  }
+
+  componentDidMount() {
+    this.doRefresh();
+    loadEnrollautoAwardCompetitionDataSet().then(data => {
+      this.setState({competition: data.data.dataSet.rows})
+    })
+  }
 
   render() {
     const {table_loading, table_cur_page, table_total} = this.state;
@@ -112,7 +134,10 @@ class Category extends Component {
 
     const table_columns = [
       {title: '序号', dataIndex: 'id', key: 'id'},
-      {title: '竞赛名称', dataIndex: 'competition', key: 'competition'},
+      {title: '分类名称', dataIndex: 'university', key: 'university'},
+      {title: '分类', dataIndex: 'category', key: 'category'},
+      {title: '竞赛', dataIndex: 'competition', key: 'competition'},
+      {title: '级别', dataIndex: 'award', key: 'award'},
       {
         title: '操作', key: 'action', render: (text, record) => {
         return (<span>
@@ -139,21 +164,19 @@ class Category extends Component {
                 {getFieldDecorator('name', {
                   initialValue: ''
                 })(
-                  <Input size='default' addonBefore='竞赛名称' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
+                  <Input size='default' addonBefore='大学名称'
+                         onPressEnter={() => this.handleActionClick({key: 'search'})}/>
                 )}
               </Form.Item>
             </Col>
             <Col span={2} pull={14}>
               <Form.Item>
-                {getFieldDecorator('categoryId', {
-                  rules: [
-                    {required: true, message: '请选择分类'},
-                  ]
-                })(
-                  <Select placeholder="选择分类" style={{width: '200px'}}>
+                {getFieldDecorator('competitionId',)(
+                  <Select placeholder="请选择竞赛" style={{width: '200px'}}>
+                    <Select.Option key='0' value=''>选择竞赛-空</Select.Option>
                     {
-                      this.state.categorys.map(item => {
-                        return <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
+                      this.state.competition.map(item => {
+                        return <Select.Option key={item.id} value={`${item.id}`}>{item.competition}</Select.Option>
                       })
                     }
                   </Select>
@@ -183,16 +206,30 @@ class Category extends Component {
             <Card title="添加">
               <Row type='flex'>
                 <Col span={18}>
-                  <Form.Item>
-                    {getFieldDecorator('add_categoryId', {
-                      rules: [
-                        {required: true, message: '请选择分类'},
-                      ]
-                    })(
-                      <Select placeholder="选择分类" style={{width: '200px'}}>
+                  <Form.Item
+                    label='选择竞赛'
+                  >
+                    {getFieldDecorator('add_competitionId',)(
+                      <Select placeholder="请选择竞赛" style={{width: '200px'}}
+                              onChange={(value) => this.handleGetAward({competitionId: value})}>
                         {
-                          this.state.categorys.map(item => {
-                            return <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
+                          this.state.competition.map(item => {
+                            return <Select.Option key={item.id} value={`${item.id}`}>{item.competition}</Select.Option>
+                          })
+                        }
+                      </Select>
+                    )}
+                  </Form.Item>
+                </Col>
+                <Col span={18}>
+                  <Form.Item
+                    label='选择奖项'
+                  >
+                    {getFieldDecorator('add_awardId',)(
+                      <Select placeholder="请选择级别" style={{width: '200px'}}>
+                        {
+                          this.state.award.map(item => {
+                            return <Select.Option key={item.id} value={`${item.id}`}>{item.award}</Select.Option>
                           })
                         }
                       </Select>
@@ -204,7 +241,7 @@ class Category extends Component {
                     {getFieldDecorator('add', {
                       initialValue: ''
                     })(
-                      <Input addonBefore='竞赛'/>
+                      <Input addonBefore='名称'/>
                     )}
                   </Form.Item>
                 </Col>

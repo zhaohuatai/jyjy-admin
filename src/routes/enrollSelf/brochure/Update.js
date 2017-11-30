@@ -62,34 +62,10 @@ class Update extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="略缩图">
-              {getFieldDecorator('thumbNailImage', {
-                valuePropName: 'fileList',
-                getValueFromEvent: this.normFile,
-              })(
-                <Upload name="file" action={`${API_DOMAIN}admin/pub/pubSlide/uploadImage`} listType="picture"
-                        withCredentials={true}>
-                  <Button>
-                    <Icon type="upload"/> 点击上传
-                  </Button>
-                </Upload>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
             <FormItem{...formItemLayout} label="内容">
               <LazyLoad height={370}>
                 <UEditor id="update_caseContent" initValue={content}/>
               </LazyLoad>
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem{...formItemLayout} label="备注">
-              {getFieldDecorator('remark', {
-                initialValue: '',
-              })(
-                <Input/>
-              )}
             </FormItem>
           </Col>
         </Row>

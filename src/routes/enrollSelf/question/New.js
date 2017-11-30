@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Input, message, Modal, Row, Select} from 'antd';
+import {Button, Col, Form, Input, message, Row, Select} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import {updateInterlocution, loadInterlocutionCategoryDataSet} from "../../../service/interlocution";
+import LazyLoad from 'react-lazy-load';
+import {createEnrollAutoQuestion, loadEnrollAutoQuestionCategoryDataSet} from "../../../service/autoSelf";
 
 const FormItem = Form.Item;
 
@@ -10,15 +11,21 @@ class New extends Component {
     let formData = this.props.form.getFieldsValue();
     formData = {
       ...formData,
-      interAnswer: UE.getEditor('update_interAnswer').getContent(),
-      id: this.props.data.id,
-    }
+      content: UE.getEditor('auto_question_content').getContent(),
+    };
 
-    updateInterlocution(formData).then(data => {
+    createEnrollAutoQuestion(formData).then(data => {
       this.props.form.resetFields();
-      this.props.onCancel();
-      message.success("更新成功！");
+      message.success("创建成功！");
+    }).catch((e) => {
+      message.error(e);
     })
+  }
+  normFile = (e) => {
+    if (Array.isArray(e)) {
+      return e.file;
+    }
+    return e && e.fileList;
   }
 
   constructor(props) {
@@ -28,23 +35,14 @@ class New extends Component {
     }
   }
 
-  normFile = (e) => {
-    console.log('Upload event:', e);
-    if (Array.isArray(e)) {
-      return e.file;
-    }
-    return e && e.fileList;
-  }
-
   componentDidMount() {
-    loadInterlocutionCategoryDataSet().then(data => {
+    loadEnrollAutoQuestionCategoryDataSet().then(data => {
       this.setState({category: data.data.dataSet.rows})
     })
   }
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const { interQuestion, interAnswer, categoryId, remark} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -53,21 +51,21 @@ class New extends Component {
       },
       wrapperCol: {
         xs: {span: 24},
-        sm: {span: 18},
+        sm: {span: 14},
       },
     };
 
     return (
-      <Modal title="更新高校信息" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
+      <div>
         <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="问题">
-              {getFieldDecorator('interQuestion', {
-                initialValue: interQuestion,
+              label="标题">
+              {getFieldDecorator('title', {
+                initialValue: '',
                 rules: [
-                  {required: true, message: '请输入问题'},
+                  {required: true, message: '请输入标题'},
                 ]
               })(
                 <Input/>
@@ -80,7 +78,6 @@ class New extends Component {
               label="所属分类"
             >
               {getFieldDecorator('categoryId', {
-                initialValue: `${categoryId}`,
                 rules: [
                   {required: true, message: '请选择分类'},
                 ]
@@ -97,14 +94,16 @@ class New extends Component {
           </Col>
 
           <Col span={24}>
-            <FormItem{...formItemLayout} label="回答">
-              <UEditor id="update_interAnswer" initValue={interAnswer}/>
+            <FormItem{...formItemLayout} label="内容">
+              <LazyLoad height={370}>
+                <UEditor id="auto_question_content"/>
+              </LazyLoad>
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="备注">
               {getFieldDecorator('remark', {
-                initialValue: remark,
+                initialValue: '',
                 rules: []
               })(
                 <Input/>
@@ -113,9 +112,9 @@ class New extends Component {
           </Col>
         </Row>
         <FormItem wrapperCol={{span: 12, offset: 4}}>
-          <Button type="primary" onClick={this.handleSubmit}>提交更新</Button>
+          <Button type="primary" onClick={this.handleSubmit}>创建</Button>
         </FormItem>
-      </Modal>
+      </div>
     )
   }
 }

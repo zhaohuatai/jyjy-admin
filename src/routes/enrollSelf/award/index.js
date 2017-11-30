@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Tabs } from 'antd';
+import {Tabs} from 'antd';
 import Category from './Category';
 import Competition from './Competition';
 import Evaluation from './Evaluation';

@@ -1,26 +1,12 @@
 import React, {Component} from 'react';
-import {Button, Card, Col, Dropdown, Form, Icon, Input, Menu, message, Pagination, Row, Table,Modal, Select} from 'antd';
+import {Button, Card, Col, Dropdown, Form, Icon, Input, Menu, message, Modal, Pagination, Row, Table} from 'antd';
 import {
-  createEnrollAutoAwardEvaluation,
-  deleteEnrollAutoAwardEvaluation,
-  loadEnrollAutoAwardEvaluationDataSet,
-  loadEnrollautoAwardCompetitionDataSet
+  createEnrollAutoAwardCategory,
+  deleteEnrollAutoAwardCategory,
+  loadEnrollAutoAwardCategoryDataSet
 } from "../../../service/award";
 
 class Category extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      table_loading: false,
-      dataSet: [],
-      search_form: {},
-      table_cur_page: 1,
-      table_total: 0,
-      recycle: false,
-      competition: []
-    };
-  }
 
   handleActionClick = ({key, record}) => {
     switch (key) {
@@ -28,10 +14,7 @@ class Category extends Component {
         this.props.form.resetFields();
         break;
       case 'search' :
-        this.doSearch({
-          name: this.props.form.getFieldsValue()['name'],
-          competitionId: this.props.form.getFieldsValue()['competitionId'],
-        });
+        this.doSearch({name: this.props.form.getFieldsValue()['name']});
         break;
       case 'refresh' :
         this.doRefresh();
@@ -49,18 +32,11 @@ class Category extends Component {
         break;
     }
   };
-
-  componentDidMount() {
-    this.doRefresh();
-    loadEnrollautoAwardCompetitionDataSet().then(data => {
-      this.setState({competition: data.data.dataSet.rows})
-    })
-  }
   doRefresh = (params) => {
     this.setState({table_loading: true});
     params = {...params};
     params['status'] = (this.state.recycle ? 2 : 1);
-    loadEnrollAutoAwardEvaluationDataSet(params).then(data => {
+    loadEnrollAutoAwardCategoryDataSet(params).then(data => {
       this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
     }).catch((e) => {
       message.error(e);
@@ -86,7 +62,7 @@ class Category extends Component {
       title: `确定删除吗？`,
       okType: 'danger',
       onOk: () => {
-        deleteEnrollAutoAwardEvaluation({id: record.id}).then(data => {
+        deleteEnrollAutoAwardCategory({id: record.id}).then(data => {
           message.success("删除成功！");
           this.doRefresh();
         });
@@ -94,16 +70,28 @@ class Category extends Component {
     })
   };
   doAdd = () => {
-    createEnrollAutoAwardEvaluation({
-      award: this.props.form.getFieldsValue()['add'],
-      competitionId: this.props.form.getFieldsValue()['add_competitionId'],
-    }).then(data => {
+    createEnrollAutoAwardCategory({name: this.props.form.getFieldsValue()['add']}).then(data => {
       message.success("添加成功！");
       this.props.form.resetFields(['name']);
       this.doRefresh();
     });
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      table_loading: false,
+      dataSet: [],
+      search_form: {},
+      table_cur_page: 1,
+      table_total: 0,
+      recycle: false,
+    };
+  }
+
+  componentDidMount() {
+    this.doRefresh();
+  }
 
   render() {
     const {table_loading, table_cur_page, table_total} = this.state;
@@ -112,9 +100,7 @@ class Category extends Component {
 
     const table_columns = [
       {title: '序号', dataIndex: 'id', key: 'id'},
-      {title: '所属分类', dataIndex: 'category', key: 'category'},
-      {title: '竞赛名称', dataIndex: 'competition', key: 'competition'},
-      {title: '级别', dataIndex: 'award', key: 'award'},
+      {title: '分类名称', dataIndex: 'name', key: 'name'},
       {
         title: '操作', key: 'action', render: (text, record) => {
         return (<span>
@@ -136,29 +122,13 @@ class Category extends Component {
       <div style={{backgroundColor: '#fff', padding: '10px'}} width={'50%'}>
         <div>
           <Row type='flex' justify='end' gutter={8} style={{marginBottom: '5px'}}>
-            <Col span={4} pull={14}>
+            <Col span={4} pull={16}>
               <Form.Item>
                 {getFieldDecorator('name', {
                   initialValue: ''
                 })(
-                  <Input size='default' addonBefore='竞赛名称' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={2} pull={14}>
-              <Form.Item>
-                {getFieldDecorator('competitionId', {
-                  rules: [
-                    {required: true, message: '请选择分类'},
-                  ]
-                })(
-                  <Select placeholder="选择分类" style={{width: '200px'}}>
-                    {
-                      this.state.competition.map(item => {
-                        return <Select.Option key={item.id} value={`${item.id}`}>{item.competition}</Select.Option>
-                      })
-                    }
-                  </Select>
+                  <Input size='default' addonBefore='分类名称'
+                         onPressEnter={() => this.handleActionClick({key: 'search'})}/>
                 )}
               </Form.Item>
             </Col>
@@ -186,27 +156,10 @@ class Category extends Component {
               <Row type='flex'>
                 <Col span={18}>
                   <Form.Item>
-                    {getFieldDecorator('add_competitionId', {
-                      rules: [
-                        {required: true, message: '请选择竞赛'},
-                      ]
-                    })(
-                      <Select placeholder="选择竞赛" style={{width: '200px'}}>
-                        {
-                          this.state.competition.map(item => {
-                            return <Select.Option key={item.id} value={`${item.id}`}>{item.competition}</Select.Option>
-                          })
-                        }
-                      </Select>
-                    )}
-                  </Form.Item>
-                </Col>
-                <Col span={18}>
-                  <Form.Item>
                     {getFieldDecorator('add', {
                       initialValue: ''
                     })(
-                      <Input addonBefore='奖项'/>
+                      <Input addonBefore='分类'/>
                     )}
                   </Form.Item>
                 </Col>

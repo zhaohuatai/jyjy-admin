@@ -1,51 +1,84 @@
 import React, {Component} from 'react';
-import {message, Modal, Pagination, Table, Tabs} from 'antd';
-import {deleteEnrollAutoBigdata, loadEnrollAutoBigdata, loadEnrollAutoBigdataDataSet} from '../../../service/bigdata';
+import {message, Pagination, Table, Tabs} from 'antd';
 import Filter from './Filter';
-import New from './New';
 import Update from './Update';
 import Detail from './Detail';
-import {IMG_DOMAIN} from "../../../utils/config";
+import {
+  deleteEnrollAutoRecruitBrochure,
+  loadEnrollAutoRecruitBrochure,
+  loadEnrollAutoRecruitBrochureDataSet
+} from "../../../service/autoSelf";
+import New from "./New";
 
 const TabPane = Tabs.TabPane;
 
 const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
+  {title: '大学', dataIndex: 'university', key: 'university'},
+  {title: '年份', dataIndex: 'years', key: 'years'},
   {title: '标题', dataIndex: 'title', key: 'title'},
-  {title: '缩略图', dataIndex: 'thumbnailUrl', key: 'thumbnailUrl', render: (text) => <img style={{width: '40px', height:'40px'}} src={`${IMG_DOMAIN}${text}`} /> },
-  {title: '浏览量', dataIndex: 'browseCount', key: 'browseCount'},
-  {title: '排序', dataIndex: 'showIndex', key: 'showIndex'},
+  {
+    title: '内容', dataIndex: 'content', key: 'content', render: (text) => {
+    text = (text ? text.replace(/<.+\/>/g, ",") : text );
+    return text && text.length > 15 ? text.substr(0, 15) + "..." : text
+  }
+  },
+  {title: '浏览数', dataIndex: 'browseCount', key: 'browseCount'},
   {title: '收藏数', dataIndex: 'favoriteCount', key: 'favoriteCount'},
-  {title: '创建时间', dataIndex: 'createTime', key: 'createTime'},
-  {title: '更新时间', dataIndex: 'updateTime', key: 'updateTime'},
   {title: '备注', dataIndex: 'remark', key: 'remark'},
-]
+];
 
-class BigData extends Component {
+class Brochure extends Component {
   // 获取数据
   handleRefresh = (params) => {
     this.setState({table_loading: true});
     params = {...params};
     params['status'] = (this.state.recycle ? 2 : 1);
-    loadEnrollAutoBigdataDataSet(params).then(data => {
+    loadEnrollAutoRecruitBrochureDataSet(params).then(data => {
       this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
     }).catch((e) => {
       message.error(e);
     })
   }
-
-
+  // 勾选记录
+  onSelectChange = (selectedRowKeys) => {
+    this.setState({selectedRowKeys});
+  }
+  // 切换页码
+  onChangeTablePage = (currentPage) => {
+    this.setState({table_loading: true, table_cur_page: currentPage});
+    let searchForm = this.state.search_form;
+    searchForm['page'] = currentPage;
+    this.handleRefresh(searchForm)
+  }
   // 删除记录
   handleDelete = () => {
-    Modal.confirm({
+    confirm({
       title: `确定删除吗？`,
       okType: 'danger',
       onOk: () => {
-        deleteEnrollAutoBigdata({id: this.state.selectedRowKeys[0]}).then(data => {
+        deleteEnrollAutoRecruitBrochure({id: this.state.selectedRowKeys[0]}).then(data => {
           message.success("删除成功！");
           this.handleRefresh();
         });
       }
+    })
+  }
+  // 搜索
+  handleSearch = (values) => {
+    this.setState({table_cur_page: 1});
+    this.handleRefresh(values);
+  }
+  // 更新
+  handleUpdate = () => {
+    loadEnrollAutoRecruitBrochure({id: this.state.selectedRowKeys[0]}).then(data => {
+      this.setState({update_data: data.data.recruitBrochure, update_display: true})
+    })
+  }
+  // 显示详情
+  handleShowDetail = (record) => {
+    loadEnrollAutoRecruitBrochure({id: record.id}).then(data => {
+      this.setState({detail_data: data.data.recruitBrochure, detail_display: true})
     })
   }
 
@@ -66,42 +99,8 @@ class BigData extends Component {
     };
   }
 
-  // 勾选记录
-  onSelectChange = (selectedRowKeys) => {
-    this.setState({selectedRowKeys});
-  }
-
-
-  // 切换页码
-  onChangeTablePage = (currentPage) => {
-    this.setState({table_loading: true, table_cur_page: currentPage});
-    let searchForm = this.state.search_form;
-    searchForm['page'] = currentPage;
-    this.handleRefresh(searchForm)
-  }
-
-  // 搜索
-  handleSearch = (values) => {
-    this.setState({table_cur_page: 1});
-    this.handleRefresh(values);
-  }
-
   componentDidMount() {
     this.handleRefresh();
-  }
-
-  // 更新
-  handleUpdate = () => {
-    loadEnrollAutoBigdata({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.setState({update_data: data.data.enrollAutoBigdata, update_display: true})
-    })
-  }
-
-  // 显示详情
-  handleShowDetail = (record) => {
-    loadEnrollAutoBigdata({id: record.id}).then(data => {
-      this.setState({detail_data: data.data.enrollAutoBigdata, detail_display: true})
-    })
   }
 
   render() {
@@ -116,7 +115,7 @@ class BigData extends Component {
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
         <Tabs defaultActiveKey="1">
-          <TabPane tab="升学百科问答" key="1">
+          <TabPane tab="招生简章列表" key="1">
             <Filter
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
@@ -127,8 +126,7 @@ class BigData extends Component {
               }}
               doDelete={this.handleDelete}
               doUpdate={this.handleUpdate}
-              recycle={this.state.recycle}
-            />
+              recycle={this.state.recycle}/>
             <Table
               dataSource={this.state.dataSet}
               columns={table_columns}
@@ -137,8 +135,7 @@ class BigData extends Component {
               loading={table_loading}
               bordered
               rowSelection={rowSelection}
-              onRowClick={this.handleShowDetail}
-            />
+              onRowClick={this.handleShowDetail}/>
             <Pagination style={{marginTop: '10px'}} showQuickJumper defaultCurrent={1} current={table_cur_page}
                         defaultPageSize={20} total={table_total} onChange={this.onChangeTablePage}/>,
           </TabPane>
@@ -148,10 +145,7 @@ class BigData extends Component {
         </Tabs>
 
         <Update show={this.state.update_display} data={this.state.update_data}
-                onCancel={() =>{
-                  this.handleRefresh();
-                  this.setState({update_display: false})
-                }}/>
+                onCancel={() => this.setState({update_display: false})}/>
         <Detail show={this.state.detail_display} data={this.state.detail_data}
                 onCancel={() => this.setState({detail_display: false})}/>
       </div>
@@ -159,4 +153,4 @@ class BigData extends Component {
   }
 }
 
-export default BigData;
+export default Brochure;

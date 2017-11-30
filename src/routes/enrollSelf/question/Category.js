@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {Button, Card, Col, Dropdown, Form, Icon, Input, Menu, message, Pagination, Row, Table,Modal} from 'antd';
+import {Button, Card, Col, Dropdown, Form, Icon, Input, Menu, message, Modal, Pagination, Row, Table} from 'antd';
 import {
-  createEnrollAutoAwardCategory,
-  deleteEnrollAutoAwardCategory,
-  loadEnrollAutoAwardCategoryDataSet
-} from "../../../service/award";
+  createEnrollAutoQuestionCategory,
+  deleteEnrollAutoQuestionCategory,
+  loadEnrollAutoQuestionCategoryDataSet
+} from "../../../service/autoSelf";
 
 class Category extends Component {
 
@@ -14,7 +14,7 @@ class Category extends Component {
         this.props.form.resetFields();
         break;
       case 'search' :
-        this.doSearch({ name: this.props.form.getFieldsValue()['name']});
+        this.doSearch(this.props.form.getFieldsValue());
         break;
       case 'refresh' :
         this.doRefresh();
@@ -32,24 +32,11 @@ class Category extends Component {
         break;
     }
   };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      table_loading: false,
-      dataSet: [],
-      search_form: {},
-      table_cur_page: 1,
-      table_total: 0,
-      recycle: false,
-    };
-  }
-
   doRefresh = (params) => {
     this.setState({table_loading: true});
     params = {...params};
     params['status'] = (this.state.recycle ? 2 : 1);
-    loadEnrollAutoAwardCategoryDataSet(params).then(data => {
+    loadEnrollAutoQuestionCategoryDataSet(params).then(data => {
       this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
     }).catch((e) => {
       message.error(e);
@@ -75,7 +62,7 @@ class Category extends Component {
       title: `确定删除吗？`,
       okType: 'danger',
       onOk: () => {
-        deleteEnrollAutoAwardCategory({id: record.id}).then(data => {
+        deleteEnrollAutoQuestionCategory({id: record.id}).then(data => {
           message.success("删除成功！");
           this.doRefresh();
         });
@@ -83,12 +70,24 @@ class Category extends Component {
     })
   };
   doAdd = () => {
-    createEnrollAutoAwardCategory({name: this.props.form.getFieldsValue()['add']}).then(data => {
+    createEnrollAutoQuestionCategory({categoryName: this.props.form.getFieldsValue()['add_categoryName']}).then(data => {
       message.success("添加成功！");
-      this.props.form.resetFields(['name']);
+      this.props.form.resetFields(['categoryName']);
       this.doRefresh();
     });
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      table_loading: false,
+      dataSet: [],
+      search_form: {},
+      table_cur_page: 1,
+      table_total: 0,
+      recycle: false,
+    };
+  }
 
   componentDidMount() {
     this.doRefresh();
@@ -101,7 +100,7 @@ class Category extends Component {
 
     const table_columns = [
       {title: '序号', dataIndex: 'id', key: 'id'},
-      {title: '分类名称', dataIndex: 'name', key: 'name'},
+      {title: '分类', dataIndex: 'categoryName', key: 'categoryName'},
       {
         title: '操作', key: 'action', render: (text, record) => {
         return (<span>
@@ -125,10 +124,11 @@ class Category extends Component {
           <Row type='flex' justify='end' gutter={8} style={{marginBottom: '5px'}}>
             <Col span={4} pull={16}>
               <Form.Item>
-                {getFieldDecorator('name', {
+                {getFieldDecorator('categoryName', {
                   initialValue: ''
                 })(
-                  <Input size='default' addonBefore='分类名称' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
+                  <Input size='default' addonBefore='分类名称'
+                         onPressEnter={() => this.handleActionClick({key: 'search'})}/>
                 )}
               </Form.Item>
             </Col>
@@ -156,7 +156,7 @@ class Category extends Component {
               <Row type='flex'>
                 <Col span={18}>
                   <Form.Item>
-                    {getFieldDecorator('add', {
+                    {getFieldDecorator('add_categoryName', {
                       initialValue: ''
                     })(
                       <Input addonBefore='分类'/>

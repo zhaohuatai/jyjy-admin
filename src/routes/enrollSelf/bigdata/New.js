@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, Upload} from 'antd';
+import {Button, Col, Form, Icon, Input, message, Row, Upload} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import {createDataUniversity} from '../../../service/base';
 import LazyLoad from 'react-lazy-load';
 import {createEnrollAutoBigdata} from "../../../service/bigdata";
 import {API_DOMAIN} from '../../../utils/config';
@@ -26,19 +25,18 @@ class New extends Component {
       message.error(e);
     })
   }
+  normFile = (e) => {
+    if (Array.isArray(e)) {
+      return e.file;
+    }
+    return e && e.fileList;
+  }
 
   constructor(props) {
     super(props);
     this.state = {
       category: []
     }
-  }
-
-  normFile = (e) => {
-    if (Array.isArray(e)) {
-      return e.file;
-    }
-    return e && e.fileList;
   }
 
   render() {

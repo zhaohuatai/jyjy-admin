@@ -55,6 +55,7 @@ export function deleteEnrollAutoQuestionCategory(param) {
     });
   });
 }
+
 export function createEnrollAutoQuestionCategory(param) {
   return new Promise((resolve, reject) => {
     post(`${API_DOMAIN}admin/enroll/enrollAutoQuestionCategory/createEnrollAutoQuestionCategory`, param).then((data) => {
@@ -63,3 +64,45 @@ export function createEnrollAutoQuestionCategory(param) {
   });
 }
 
+///////////////////////////////////////////////
+
+
+export function createEnrollAutoRecruitBrochure(param) {
+  return new Promise((resolve, reject) => {
+    post(`${API_DOMAIN}admin/enroll/enrollAutoRecruitBrochure/createEnrollAutoRecruitBrochure`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+export function deleteEnrollAutoRecruitBrochure(param) {
+  return new Promise((resolve, reject) => {
+    post(`${API_DOMAIN}admin/enroll/enrollAutoRecruitBrochure/deleteEnrollAutoRecruitBrochure`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+export function loadEnrollAutoRecruitBrochure(param) {
+  return new Promise((resolve, reject) => {
+    post(`${API_DOMAIN}admin/enroll/enrollAutoRecruitBrochure/loadEnrollAutoRecruitBrochure`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+export function loadEnrollAutoRecruitBrochureDataSet(param) {
+  return new Promise((resolve, reject) => {
+    post(`${API_DOMAIN}admin/enroll/enrollAutoRecruitBrochure/loadEnrollAutoRecruitBrochureDataSet`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+export function updateEnrollAutoRecruitBrochure(param) {
+  return new Promise((resolve, reject) => {
+    post(`${API_DOMAIN}admin/enroll/enrollAutoRecruitBrochure/updateEnrollAutoRecruitBrochure`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}

@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import {API_DOMAIN} from '../../../utils/config';
-import {Button, Col, Form, Icon, Input, message, Row, Upload} from 'antd';
+import {Button, Col, Form, Input, message, Row} from 'antd';
 import UEditor from "../../../components/editor/UEditor";
 import LazyLoad from 'react-lazy-load';
-import {createCaseSuccess} from "../../../service/customize";
+import {createEnrollAutoRecruitBrochure} from "../../../service/autoSelf";
 
 
 const FormItem = Form.Item;
@@ -15,14 +14,14 @@ class New extends Component {
 
     formData = {
       ...formData,
-      content: UE.getEditor('new_caseContent').getContent(),
-    }
+      content: UE.getEditor('new_brochureContent').getContent(),
+    };
 
-    if (formData.thumbNailImage) {
+    if (formData.imgUrl) {
       formData.thumbNailImage = formData.thumbNailImage[0].response.data.image;
     }
 
-    createCaseSuccess(formData).then(data => {
+    createEnrollAutoRecruitBrochure(formData).then(data => {
       this.props.form.resetFields();
       message.success("创建成功！");
     }).catch((e) => {
@@ -60,24 +59,9 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="略缩图">
-              {getFieldDecorator('thumbNailImage', {
-                valuePropName: 'fileList',
-                getValueFromEvent: this.normFile,
-              })(
-                <Upload name="file" action={`${API_DOMAIN}admin/pub/pubSlide/uploadImage`} listType="picture"
-                        withCredentials={true}>
-                  <Button>
-                    <Icon type="upload"/> 点击上传
-                  </Button>
-                </Upload>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
             <FormItem{...formItemLayout} label="内容">
               <LazyLoad height={370}>
-                <UEditor id="new_caseContent"/>
+                <UEditor id="new_brochureContent"/>
               </LazyLoad>
             </FormItem>
           </Col>
