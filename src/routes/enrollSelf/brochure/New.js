@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Input, message, Row} from 'antd';
+import {Button, Col, Form, Input, message, Row, Select} from 'antd';
 import UEditor from "../../../components/editor/UEditor";
 import LazyLoad from 'react-lazy-load';
 import {createEnrollAutoRecruitBrochure} from "../../../service/autoSelf";
 import {loadDataUniversityDataSet} from "../../../service/base";
-
 
 const FormItem = Form.Item;
 
@@ -60,7 +59,7 @@ class New extends Component {
         <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
             <FormItem{...formItemLayout} label="标题">
-              {getFieldDecorator('name', {
+              {getFieldDecorator('title', {
                 initialValue: '',
                 rules: [
                   {required: true, message: '请输入标题'},

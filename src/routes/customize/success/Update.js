@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Input, message, Modal, Row} from 'antd';
+import {Button, Col, Form, Icon, Input, message, Modal, Row, Upload} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
 import {updateCaseSuccess} from "../../../service/customize";
 import LazyLoad from 'react-lazy-load';
+import {API_DOMAIN} from "../../../utils/config";
 
 const FormItem = Form.Item;
 
@@ -20,7 +21,7 @@ class Update extends Component {
 
     updateCaseSuccess(formData).then(data => {
       this.props.form.resetFields();
-      this.props.oncancel();
+      this.props.onCancel();
       message.success("更新成功！");
     }).catch((e) => {
       message.error(e);

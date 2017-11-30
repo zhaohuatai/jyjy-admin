@@ -2,39 +2,42 @@ import React, {Component} from 'react';
 
 // http://fex.baidu.com/ueditor/#start-toolbar
 class UEditor extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {};
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.initEditor();
   }
 
   componentWillUnmount() {
-    // 组件卸载后，清除放入库的id
     UE.delEditor(this.props.id);
   }
 
   initEditor() {
-    const {initValue, uploadAPI, id} = this.props;
+    const {initValue, id, module} = this.props;
 
-    const ueEditor = UE.getEditor(this.props.id, {
-      serverUrl: uploadAPI,
+    const UEditor = UE.getEditor(this.props.id, {
+      // serverUrl: ATT_DOMAIN,
     });
 
     const self = this;
-    ueEditor.ready((ueditor) => {
+    UEditor.ready((ueditor) => {
       if (!ueditor) {
         UE.delEditor(id);
         self.initEditor();
       }
-      if(initValue){
-        ueEditor.setContent(initValue);
+      if (initValue) {
+        UEditor.setContent(initValue);
       }
+      UEditor.execCommand('serverparam', {
+        module: module ? 'default' : module
+      })
     })
   }
-  render(){
+
+  render() {
     return (
       <div id={this.props.id} name="content" type="text/plain" style={{width: '100%'}}/>
     )

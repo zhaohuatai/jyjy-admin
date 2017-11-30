@@ -12,10 +12,7 @@ const table_columns = [
   {title: '键值', dataIndex: 'keyStr', key: 'keyStr'},
   {title: '标题', dataIndex: 'title', key: 'title'},
   {
-    title: '内容', dataIndex: 'content', key: 'content', render: (text) => {
-    text = (text ? text.replace(/<.+\/>/g, "") : text );
-    return text && text.length > 15 ? text.substr(0, 15) + "..." : text
-  }
+    title: '内容', dataIndex: 'content', key: 'content', render: (text) => '点击查看'
   },
 ]
 

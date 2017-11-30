@@ -20,10 +20,7 @@ const table_columns = [
   {title: '授予学位', dataIndex: 'degree', key: 'degree'},
   {title: '毕业5年', dataIndex: 'salary', key: 'salary'},
   {
-    title: '开设院校', dataIndex: 'offer', key: 'offer', render: (text) => {
-    text = (text ? text.replace(/<.+\/>/g, ",") : text );
-    return text && text.length > 15 ? text.substr(0, 15) + "..." : text
-  }
+    title: '开设院校', dataIndex: 'offer', key: 'offer', render: (text) => '点击查看'
   },
   {title: '本科专业', dataIndex: 'undergradPro', key: 'undergradPro'},
   {title: '备注', dataIndex: 'remark', key: 'remark'},

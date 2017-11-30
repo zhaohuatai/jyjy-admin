@@ -49,8 +49,8 @@ class Filter extends Component {
 
     const menu = (
       <Menu disabled={this.props.recycle} onClick={this.handleActionClick}>
-        <Menu.Item key="delete">删除</Menu.Item>
-        <Menu.Item key="update">更新</Menu.Item>
+        <Menu.Item key="delete" disabled>删除</Menu.Item>
+        <Menu.Item key="update" disabled>更新</Menu.Item>
       </Menu>
     );
 
@@ -64,21 +64,12 @@ class Filter extends Component {
     return (
       <div>
         <Row type='flex' justify='end' style={{marginBottom: '5px'}}>
-          <Col span={4} pull={10}>
+          <Col span={4} pull={14}>
             <FormItem>
-              {getFieldDecorator('nickName', {
+              {getFieldDecorator('title', {
                 initialValue: ''
               })(
-                <Input size='default' addonBefore='昵称' onPressEnter={() => this.handleActionClick({key: 'nickName'})}/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={4} pull={10}>
-            <FormItem>
-              {getFieldDecorator('name', {
-                initialValue: ''
-              })(
-                <Input size='default' addonBefore='姓名' onPressEnter={() => this.handleActionClick({key: 'name'})}/>
+                <Input size='default' addonBefore='服务' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
               )}
             </FormItem>
           </Col>
@@ -98,7 +89,7 @@ class Filter extends Component {
           </Col>
 
           <Col span={2}>
-            <Button onClick={() => {
+            <Button disbaled onClick={() => {
               this.handleActionClick({key: 'recycle'});
             }
             }>

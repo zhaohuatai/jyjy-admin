@@ -64,3 +64,11 @@ export function loadMemberTeacherAppointmentDataSet(param) {
     });
   });
 }
+
+export function doAppointmentReturn(param) {
+  return new Promise((resolve) => {
+    post(`${API_DOMAIN}admin/member/memberTeacher/doAppointmentReturn`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}

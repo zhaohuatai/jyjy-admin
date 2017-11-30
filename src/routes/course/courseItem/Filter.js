@@ -112,7 +112,7 @@ class Filter extends Component {
               })(
                 <Select placeholder="选择课程" style={{width: '150px'}}>{
                   this.state.courseList.map(item =>
-                    <Select.Option key={item.id} value={`${item.id}`}>{item.title}</Select.Option>
+                    <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
                   )
                 }
                 </Select>

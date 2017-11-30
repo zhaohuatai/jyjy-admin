@@ -76,7 +76,7 @@ const Routers = () => (
 
       <Route path='/entrance'>
         <Route path="service" component={ServiceContent}/>
-        <Route path="appointment" component={Appointment}/>
+        <Route path="entrance-appointment" component={Appointment}/>
       </Route>
 
       <Route path='/enroll-self'>
@@ -94,7 +94,7 @@ const Routers = () => (
       <Route path='/member'>
         <Route path="management" component={Member}/>
         <Route path="teacher" component={Teacher}/>
-        <Route path="appointment" component={TeacherAppointment}/>
+        <Route path="teacher-appointment" component={TeacherAppointment}/>
         <Route path="coupon" component={Coupon}/>
       </Route>
 

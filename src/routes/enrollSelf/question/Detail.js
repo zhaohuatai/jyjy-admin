@@ -46,11 +46,7 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="所属分类"
-            >
-
+            <FormItem{...formItemLayout} label="所属分类">
               <Select placeholder="选择省份" style={{width: '200px'}} value={`${categoryId}`} disabled={true}>
                 {
                   this.state.category.map(item => {

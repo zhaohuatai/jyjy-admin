@@ -54,7 +54,7 @@ class New extends Component {
 
     updateColumnChannelItem(formData).then(data => {
       this.props.form.resetFields();
-      this.props.oncancel();
+      this.props.onCancel();
       message.success("更新成功！");
     }).catch((e) => {
       message.error(e);
@@ -123,7 +123,7 @@ class New extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="所属专栏">
               {getFieldDecorator('channelId', {
-                initialValue: channelId,
+                initialValue: channelId + '',
                 rules: [
                   {required: true, message: '请选择'},
                 ]
@@ -149,15 +149,14 @@ class New extends Component {
           <Col span={24}>
             <FormItem {...formItemLayout} label="内容">
               <LazyLoad height={370}>
-                <UEditor id="update_columnItemContent" initValue={content}
-                         uploadAPI={`${API_DOMAIN}admin/channel/columnChannel/uploadAttachment`}/>
+                <UEditor id="update_columnItemContent" initValue={content}/>
               </LazyLoad>
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="主讲人">
               {getFieldDecorator('presenterId', {
-                initialValue: presenterId,
+                initialValue: presenterId + '',
                 rules: [
                   {required: true, message: '请选择'},
                 ]

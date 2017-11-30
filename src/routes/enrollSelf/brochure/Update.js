@@ -3,10 +3,12 @@ import {Button, Col, Form, Input, message, Modal, Row, Select} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
 import LazyLoad from 'react-lazy-load';
 import {updateEnrollAutoRecruitBrochure} from "../../../service/autoSelf";
+import {loadDataUniversityDataSet} from "../../../service/base";
 
 const FormItem = Form.Item;
 
 class Update extends Component {
+
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
 
@@ -18,7 +20,7 @@ class Update extends Component {
 
     updateEnrollAutoRecruitBrochure(formData).then(data => {
       this.props.form.resetFields();
-      this.props.oncancel();
+      this.props.onCancel();
       message.success("更新成功！");
     }).catch((e) => {
       message.error(e);
@@ -27,6 +29,17 @@ class Update extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      universityList: [],
+    }
+  }
+
+  componentDidMount() {
+    loadDataUniversityDataSet({rows: 10000}).then(data => {
+      this.setState({universityList: data.data.dataSet.rows})
+    }).catch((e) => {
+      message.error(e);
+    });
   }
 
   render() {
@@ -62,7 +75,7 @@ class Update extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="学校">
               {getFieldDecorator('universityId', {
-                initialValue: universityId,
+                initialValue: universityId + '',
                 rules: [{
                   required: true, message: '请选择'
                 }]

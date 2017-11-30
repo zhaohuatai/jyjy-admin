@@ -13,7 +13,7 @@ class New extends Component {
 
     updateDataScoreLineProvince(formData).then(data => {
       this.props.form.resetFields();
-      this.props.oncancel();
+      this.props.onCancel();
       message.success("更新成功！");
     }).catch((e) => {
       message.error(e);
@@ -64,7 +64,7 @@ class New extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="省份">
               {getFieldDecorator('provinceCode', {
-                initialValue: provinceCode,
+                initialValue: provinceCode + '',
                 rules: [{
                   required: true, message: '请选择'
                 }]
@@ -82,7 +82,7 @@ class New extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="分科">
               {getFieldDecorator('subjectCode', {
-                initialValue: subjectCode,
+                initialValue: subjectCode + '',
                 rules: [{
                   required: true, message: '请选择'
                 }]
@@ -112,7 +112,7 @@ class New extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="招生批次">
               {getFieldDecorator('batchCode', {
-                initialValue: batchCode,
+                initialValue: batchCode + '',
                 rules: [{
                   required: true, message: '请选择'
                 }]

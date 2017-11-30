@@ -105,7 +105,7 @@ class Update extends Component {
 
     updateServiceCourseItem(formData).then(data => {
       this.props.form.resetFields();
-      this.props.oncancel();
+      this.props.onCancel();
       message.success("更新成功！");
     }).catch((e) => {
       message.error(e);
@@ -120,7 +120,7 @@ class Update extends Component {
     const {getFieldDecorator} = this.props.form;
     const {
       freePay, name, hint, courseId, introduction, tryVideoUrl,
-      presenterName, remark, videoAliId, videoDesc, price, priceVIP,
+      presenterId, remark, videoAliId, videoDesc, price, priceVIP,
       videoName, videoSize, videoTags, videoTime, itemOrder,
       videoTitle, videoUrl
     } = this.props.data;
@@ -189,7 +189,7 @@ class Update extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="所属课程">
               {getFieldDecorator('courseId', {
-                initialValue: courseId,
+                initialValue: courseId + '',
                 rules: [
                   {required: true, message: '请选择所属课程'},
                 ]
@@ -207,7 +207,7 @@ class Update extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="主讲人">
               {getFieldDecorator('type', {
-                initialValue: presenterName,
+                initialValue: presenterId + '',
                 rules: [
                   {required: true, message: '请选择主讲人'},
                 ]

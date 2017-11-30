@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Input, message, Modal, Row} from 'antd';
-import {entranceAppointmentReturn} from "../../../service/entrance";
+import {doAppointmentReturn} from "../../../service/member";
 
 const {TextArea} = Input;
 const FormItem = Form.Item;
@@ -14,7 +14,7 @@ class New extends Component {
       id: this.props.data.id,
     }
 
-    entranceAppointmentReturn(formData).then(data => {
+    doAppointmentReturn(formData).then(data => {
       this.props.form.resetFields();
       this.props.onCancel();
       message.success("更新状态成功！");

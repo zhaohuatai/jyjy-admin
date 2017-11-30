@@ -49,7 +49,7 @@ class New extends Component {
 
     updateDataUniversity(formData).then(data => {
       this.props.form.resetFields();
-      this.props.oncancel();
+      this.props.onCancel();
       message.success("更新成功！");
     }).catch((e) => {
       message.error(e);

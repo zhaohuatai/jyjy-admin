@@ -9,20 +9,25 @@ const TabPane = Tabs.TabPane;
 
 const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
-  {title: '头像', dataIndex: 'profilePicture', key: 'profilePicture',  render: (text) => <img src={text} style={{height: '40px', width: '40px'}} /> },
+  {
+    title: '头像',
+    dataIndex: 'profilePicture',
+    key: 'profilePicture',
+    render: (text) => <img src={text} style={{height: '40px', width: '40px'}}/>
+  },
   {title: '昵称', dataIndex: 'nickName', key: 'nickName',},
   {title: '姓名', dataIndex: 'name', key: 'name'},
-  {title: '性别', dataIndex: 'sex', key: 'sex',  render: (text) => text === 1 ? '男' : '女'},
+  {title: '性别', dataIndex: 'sex', key: 'sex', render: (text) => text === 1 ? '男' : '女'},
   {title: '余额', dataIndex: 'currentMoney', key: 'currentMoney'},
-  {title: 'VIP级别', dataIndex: 'vipLevel', key: 'vipLevel'},
+  {title: 'VIP级别', dataIndex: 'vipLevel', key: 'vipLevel', render: (text) => text === 0 ? '普通会员' : '高级会员'},
   {title: '电话', dataIndex: 'phone', key: 'phone'},
   {title: '学校', dataIndex: 'schoolName', key: 'schoolName'},
   {title: '年级', dataIndex: 'clazz', key: 'clazz'},
   {title: '邮箱', dataIndex: 'email', key: 'email'},
-  {title: 'openid', dataIndex: 'openId', key: 'openId'},
+  {title: '绑定微信', dataIndex: 'openId', key: 'openId', render: (text) => (text ? '是' : '否')},
   {title: '邀请码', dataIndex: 'invitationCode', key: 'invitationCode'},
   {title: '状态', dataIndex: 'status', key: 'status'},
-  {title: '创建时间', dataIndex: 'createTime', key: 'createTime'},
+  {title: '注册时间', dataIndex: 'createTime', key: 'createTime'},
 ]
 
 class ServiceContent extends Component {

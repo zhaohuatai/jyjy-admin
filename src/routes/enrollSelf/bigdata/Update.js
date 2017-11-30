@@ -79,7 +79,7 @@ class New extends Component {
               label="所属分类"
             >
               {getFieldDecorator('categoryId', {
-                initialValue: `${categoryId}`,
+                initialValue: categoryId + '',
                 rules: [
                   {required: true, message: '请选择分类'},
                 ]

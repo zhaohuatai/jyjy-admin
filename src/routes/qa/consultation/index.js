@@ -18,8 +18,6 @@ const table_columns = [
   {title: '电话', dataIndex: 'phone', key: 'phone'},
   {title: '在线回复', dataIndex: 'onlineReply', key: 'onlineReply'},
   {title: '用户id', dataIndex: 'memberId', key: 'memberId'},
-  {title: '更新时间', dataIndex: 'updateTime', key: 'updateTime'},
-  {title: '创建时间', dataIndex: 'createTime', key: 'createTime'},
   {title: '备注', dataIndex: 'remark', key: 'remark'},
 ]
 

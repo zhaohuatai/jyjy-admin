@@ -1,27 +1,10 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs} from 'antd';
+import {Button, message, Pagination, Table, Tabs} from 'antd';
 import Filter from './Filter';
 import Update from './Update';
-import {
-  deleteServiceEntrance,
-  loadServiceEntrance,
-  loadServiceEntranceAppointmentDataSet
-} from "../../../service/entrance";
+import {loadServiceEntranceAppointmentDataSet} from "../../../service/entrance";
 
 const TabPane = Tabs.TabPane;
-
-const table_columns = [
-  {title: '序号', dataIndex: 'id', key: 'id'},
-  {title: '名称', dataIndex: 'title', key: 'title'},
-  {title: '栏目', dataIndex: 'cateName', key: 'cateName'},
-  {title: '当前预约人数', dataIndex: 'appointCount', key: 'appointCount'},
-  {title: '最大可预约数', dataIndex: 'maxAppointCount', key: 'maxAppointCount'},
-  {title: '是否免费', dataIndex: 'freePay', key: 'freePay', render: (text) => text === 1 ? '收费' : '免费'},
-  {title: '价格', dataIndex: 'price', key: 'price'},
-  {title: '会员价格', dataIndex: 'priceVIP', key: 'priceVIP'},
-  {title: '留言数', dataIndex: 'consultationCount', key: 'consultationCount'},
-  {title: '收藏数', dataIndex: 'favoriteCount', key: 'favoriteCount'},
-]
 
 class Appointment extends Component {
 
@@ -37,19 +20,6 @@ class Appointment extends Component {
     })
   }
 
-  // 删除记录
-  handleDelete = () => {
-    confirm({
-      title: `确定删除吗？`,
-      okType: 'danger',
-      onOk: () => {
-        deleteServiceEntrance({id: this.state.selectedRowKeys[0]}).then(data => {
-          message.success("删除成功！");
-          this.handleRefresh();
-        });
-      }
-    })
-  }
   // 勾选记录
   onSelectChange = (selectedRowKeys) => {
     this.setState({selectedRowKeys});
@@ -66,11 +36,10 @@ class Appointment extends Component {
     this.setState({table_cur_page: 1});
     this.handleRefresh(values);
   }
+
   // 更新
-  handleUpdate = () => {
-    loadServiceEntrance({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.setState({update_data: data.data.serviceEntrance, update_display: true})
-    })
+  handleReturnOver = (record) => {
+    this.setState({update_data: record, update_display: true})
   }
 
   constructor(props) {
@@ -103,6 +72,27 @@ class Appointment extends Component {
       onChange: this.onSelectChange,
     };
 
+    const table_columns = [
+      {title: '序号', dataIndex: 'id', key: 'id'},
+      {title: '预约服务', dataIndex: 'entrance', key: 'entrance'},
+      {title: '姓名', dataIndex: 'appointUserName', key: 'appointUserName'},
+      {title: '电话', dataIndex: 'phone', key: 'phone'},
+      {title: '其他信息', dataIndex: 'qq', key: 'qq'},
+      {title: '会员ID', dataIndex: 'memberId', key: 'memberId', render: (text) => text ? text : "游客"},
+      {title: '回访状态', dataIndex: 'returnStatus', key: 'returnStatus', render: (text) => text ? "已回访" : "未回访"},
+      {title: '回访结果', dataIndex: 'returnResult', key: 'returnResult'},
+      {title: '回访人', dataIndex: 'returnServerId', key: 'returnServerId'},
+      {
+        title: '操作', key: 'action', render: (text, record) => {
+        return record.returnStatus === 1 ? (
+          <Button type='primary' icon='check-circle-o' size='small'
+                  onClick={() => this.handleReturnOver(record)}>
+            回访结束
+          </Button>) : (<Button size='small' onClick={() => this.handleReturnOver(record)}>修改回访结果</Button>)
+      }
+      },
+    ];
+
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
         <Tabs defaultActiveKey="1">
@@ -115,7 +105,6 @@ class Appointment extends Component {
                   this.handleRefresh();
                 })
               }}
-              doDelete={this.handleDelete}
               doUpdate={this.handleUpdate}
               recycle={this.state.recycle}
             />

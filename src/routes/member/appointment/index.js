@@ -1,31 +1,13 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs} from 'antd';
-import Detail from './Detail';
+import {Button, message, Pagination, Table, Tabs} from 'antd';
 import Filter from './Filter';
-import {loadServiceEntrance} from "../../../service/entrance";
+import Update from './Update';
 import {loadMemberTeacherAppointmentDataSet} from "../../../service/member";
 
 const TabPane = Tabs.TabPane;
 
-const table_columns = [
-  {title: '序号', dataIndex: 'id', key: 'id'},
-  {title: '头像', dataIndex: 'profilePicture', key: 'profilePicture',  render: (text) => <img src={text} style={{height: '40px', width: '40px'}} /> },
-  {title: '昵称', dataIndex: 'nickName', key: 'nickName',},
-  {title: '姓名', dataIndex: 'name', key: 'name'},
-  {title: '性别', dataIndex: 'sex', key: 'sex',  render: (text) => text === 1 ? '男' : '女'},
-  {title: '余额', dataIndex: 'currentMoney', key: 'currentMoney'},
-  {title: 'VIP级别', dataIndex: 'vipLevel', key: 'vipLevel'},
-  {title: '电话', dataIndex: 'phone', key: 'phone'},
-  {title: '学校', dataIndex: 'schoolName', key: 'schoolName'},
-  {title: '年级', dataIndex: 'clazz', key: 'clazz'},
-  {title: '邮箱', dataIndex: 'email', key: 'email'},
-  {title: 'openid', dataIndex: 'openId', key: 'openId'},
-  {title: '邀请码', dataIndex: 'invitationCode', key: 'invitationCode'},
-  {title: '状态', dataIndex: 'status', key: 'status'},
-  {title: '创建时间', dataIndex: 'createTime', key: 'createTime'},
-]
-
 class TeacherAppointment extends Component {
+
   // 获取数据
   handleRefresh = (params) => {
     this.setState({table_loading: true});
@@ -36,6 +18,28 @@ class TeacherAppointment extends Component {
     }).catch((e) => {
       message.error(e);
     })
+  }
+
+  // 勾选记录
+  onSelectChange = (selectedRowKeys) => {
+    this.setState({selectedRowKeys});
+  }
+  // 切换页码
+  onChangeTablePage = (currentPage) => {
+    this.setState({table_loading: true, table_cur_page: currentPage});
+    let searchForm = this.state.search_form;
+    searchForm['page'] = currentPage;
+    this.handleRefresh(searchForm)
+  }
+  // 搜索
+  handleSearch = (values) => {
+    this.setState({table_cur_page: 1});
+    this.handleRefresh(values);
+  }
+
+  // 更新
+  handleReturnOver = (record) => {
+    this.setState({update_data: record, update_display: true})
   }
 
   constructor(props) {
@@ -55,42 +59,8 @@ class TeacherAppointment extends Component {
     };
   }
 
-  // 勾选记录
-  onSelectChange = (selectedRowKeys) => {
-    this.setState({selectedRowKeys});
-  }
-
-
-  // 切换页码
-  onChangeTablePage = (currentPage) => {
-    this.setState({table_loading: true, table_cur_page: currentPage});
-    let searchForm = this.state.search_form;
-    searchForm['page'] = currentPage;
-    this.handleRefresh(searchForm)
-  }
-
-  // 搜索
-  handleSearch = (values) => {
-    this.setState({table_cur_page: 1});
-    this.handleRefresh(values);
-  }
-
   componentDidMount() {
     this.handleRefresh();
-  }
-
-  // 更新
-  handleUpdate = () => {
-    loadServiceEntrance({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.setState({update_data: data.data.serviceEntrance, update_display: true})
-    })
-  }
-
-  // 显示详情
-  handleShowDetail = (record) => {
-    loadServiceEntrance({id: record.id}).then(data => {
-      this.setState({detail_data: data.data.serviceEntrance, detail_display: true})
-    })
   }
 
   render() {
@@ -102,10 +72,31 @@ class TeacherAppointment extends Component {
       onChange: this.onSelectChange,
     };
 
+    const table_columns = [
+      {title: '序号', dataIndex: 'id', key: 'id'},
+      {title: '预约教师', dataIndex: 'teacher', key: 'teacher'},
+      {title: '姓名', dataIndex: 'appointUserName', key: 'appointUserName'},
+      {title: '电话', dataIndex: 'phone', key: 'phone'},
+      {title: '其他信息', dataIndex: 'qq', key: 'qq'},
+      {title: '会员ID', dataIndex: 'appointUserId', key: 'appointUserId', render: (text) => text ? text : "游客"},
+      {title: '回访状态', dataIndex: 'returnStatus', key: 'returnStatus', render: (text) => text ? "已回访" : "未回访"},
+      {title: '回访结果', dataIndex: 'returnResult', key: 'returnResult'},
+      {title: '回访人', dataIndex: 'returnServerId', key: 'returnServerId'},
+      {
+        title: '操作', key: 'action', render: (text, record) => {
+        return record.returnStatus === 1 ? (
+          <Button type='primary' icon='check-circle-o' size='small'
+                  onClick={() => this.handleReturnOver(record)}>
+            回访结束
+          </Button>) : (<Button size='small' onClick={() => this.handleReturnOver(record)}>修改回访结果</Button>)
+      }
+      },
+    ];
+
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
         <Tabs defaultActiveKey="1">
-          <TabPane tab="会员列表" key="1">
+          <TabPane tab="预约管理" key="1">
             <Filter
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
@@ -114,9 +105,7 @@ class TeacherAppointment extends Component {
                   this.handleRefresh();
                 })
               }}
-              doDelete={this.handleDelete}
-              doUpdate={this.handleUpdate}
-
+              recycle={this.state.recycle}
             />
             <Table
               dataSource={this.state.dataSet}
@@ -126,15 +115,13 @@ class TeacherAppointment extends Component {
               loading={table_loading}
               bordered
               rowSelection={rowSelection}
-              // onRowClick={this.handleShowDetail}
-            />
+              onRowClick={this.handleShowDetail}/>
             <Pagination style={{marginTop: '10px'}} showQuickJumper defaultCurrent={1} current={table_cur_page}
                         defaultPageSize={20} total={table_total} onChange={this.onChangeTablePage}/>,
           </TabPane>
         </Tabs>
-
-        <Detail show={this.state.detail_display} data={this.state.detail_data}
-                onCancel={() => this.setState({detail_display: false})}/>
+        <Update show={this.state.update_display} data={this.state.update_data}
+                onCancel={() => this.setState({update_display: false})}/>
       </div>
     );
   }

@@ -17,12 +17,7 @@ const table_columns = [
   {title: '大学', dataIndex: 'university', key: 'university'},
   {title: '年份', dataIndex: 'years', key: 'years'},
   {title: '标题', dataIndex: 'title', key: 'title'},
-  {
-    title: '内容', dataIndex: 'content', key: 'content', render: (text) => {
-    text = (text ? text.replace(/<.+\/>/g, ",") : text );
-    return text && text.length > 15 ? text.substr(0, 15) + "..." : text
-  }
-  },
+  {title: '内容', dataIndex: 'content', key: 'content', render: (text) => '点击查看'},
   {title: '浏览数', dataIndex: 'browseCount', key: 'browseCount'},
   {title: '收藏数', dataIndex: 'favoriteCount', key: 'favoriteCount'},
   {title: '备注', dataIndex: 'remark', key: 'remark'},
@@ -72,13 +67,13 @@ class Brochure extends Component {
   // 更新
   handleUpdate = () => {
     loadEnrollAutoRecruitBrochure({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.setState({update_data: data.data.recruitBrochure, update_display: true})
+      this.setState({update_data: data.data.enrollAutoRecruitBrochure, update_display: true})
     })
   }
   // 显示详情
   handleShowDetail = (record) => {
     loadEnrollAutoRecruitBrochure({id: record.id}).then(data => {
-      this.setState({detail_data: data.data.recruitBrochure, detail_display: true})
+      this.setState({detail_data: data.data.enrollAutoRecruitBrochure, detail_display: true})
     })
   }
 

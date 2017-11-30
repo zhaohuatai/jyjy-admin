@@ -22,7 +22,7 @@ class Update extends Component {
 
     updateDataUniversity(formData).then(data => {
       this.props.form.resetFields();
-      this.props.oncancel();
+      this.props.onCancel();
       message.success("更新成功！");
     }).catch((e) => {
       message.error(e);
@@ -96,7 +96,7 @@ class Update extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="所属学科">
               {getFieldDecorator('subjectCode', {
-                initialValue: subjectCode,
+                initialValue: subjectCode + '',
                 rules: [{
                   required: true, message: '请选择'
                 }]
@@ -114,7 +114,7 @@ class Update extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="所属门类">
               {getFieldDecorator('categoryCode', {
-                initialValue: categoryCode,
+                initialValue: categoryCode + '',
                 rules: [{
                   required: true, message: '请选择'
                 }]

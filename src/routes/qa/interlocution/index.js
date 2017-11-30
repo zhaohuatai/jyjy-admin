@@ -14,9 +14,6 @@ const table_columns = [
   {title: '问题', dataIndex: 'interQuestion', key: 'interQuestion'},
   {title: '回答', dataIndex: 'interAnswer', key: 'interAnswer', render: (text) => '点击查看'},
   {title: '所属分类', dataIndex: 'categoryId', key: 'categoryId'},
-  {title: '排序', dataIndex: 'showIndex', key: 'showIndex'},
-  {title: '创建时间', dataIndex: 'createTime', key: 'createTime'},
-  {title: '更新时间', dataIndex: 'updateTime', key: 'updateTime'},
   {title: '备注', dataIndex: 'remark', key: 'remark'},
 ]
 

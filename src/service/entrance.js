@@ -188,3 +188,12 @@ export function setEntranceCateThirdShowIndex(param) {
   });
 }
 
+
+export function entranceAppointmentReturn(param) {
+  return new Promise((resolve, reject) => {
+    post(`${API_DOMAIN}admin/entrance/appointmentReturn`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+

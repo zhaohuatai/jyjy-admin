@@ -49,8 +49,8 @@ class Filter extends Component {
 
     const menu = (
       <Menu disabled={this.props.recycle} onClick={this.handleActionClick}>
-        <Menu.Item key="delete">删除</Menu.Item>
-        <Menu.Item key="update">更新</Menu.Item>
+        <Menu.Item key="delete" disabled>删除</Menu.Item>
+        <Menu.Item key="update" disabled>更新</Menu.Item>
       </Menu>
     );
 
@@ -89,7 +89,7 @@ class Filter extends Component {
           </Col>
 
           <Col span={2}>
-            <Button onClick={() => {
+            <Button disbaled onClick={() => {
               this.handleActionClick({key: 'recycle'});
             }
             }>
