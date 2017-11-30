@@ -3,6 +3,8 @@
  * 可以在这里配置整个编辑器的特性
  */
 
+import {API_DOMAIN} from "../config";
+
 /**************************提示********************************
  * 所有被注释的配置项均为UEditor默认值。
  * 修改默认配置请首先确保已经完全明确该参数的真实用途。
@@ -20,8 +22,9 @@
    * 因此，UEditor提供了针对不同页面的编辑器可单独配置的根路径，具体来说，在需要实例化编辑器的页面最顶部写上如下代码即可。当然，需要令此处的URL等于对应的配置。
    * window.UEDITOR_HOME_URL = "/xxxx/xxxx/";
    */
-  var URL = (window.UEDITOR_HOME_URL || getUEBasePath()) + "ueditor/";
-  // var URL = "//172.25.253.159:81/ueditor/";
+    // var URL = (window.UEDITOR_HOME_URL || getUEBasePath()) + "ueditor/";
+    // var URL = "//172.25.253.159:81/ueditor/";
+  var URL = API_DOMAIN + "ueditor/";
 
   /**
    * 配置项主体。注意，此处所有涉及到路径的配置别遗漏URL变量。
