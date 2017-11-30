@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs, Modal} from 'antd';
+import {message, Modal, Pagination, Table, Tabs} from 'antd';
 import {deleteInterlocution, loadInterlocution, loadInterlocutionDataSet} from '../../../service/interlocution';
 import Filter from './Filter';
 import New from './New';
@@ -107,6 +107,7 @@ class Interlocution extends Component {
     const {table_loading, selectedRowKeys, table_cur_page, table_total} = this.state;
 
     const rowSelection = {
+      type: 'radio',
       selectedRowKeys,
       onChange: this.onSelectChange,
     };

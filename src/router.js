@@ -79,15 +79,15 @@ const Routers = () => (
       </Route>
 
       <Route path='/enroll-self'>
-      <Route path="award" component={Award}/>
-      <Route path="question" component={Question}/>
-      <Route path="big-data" component={BigData}/>
-      {/*<Route path="admission-brochures" component={AdmissionBrochures}/>*/}
+        <Route path="award" component={Award}/>
+        <Route path="question" component={Question}/>
+        <Route path="big-data" component={BigData}/>
+        {/*<Route path="admission-brochures" component={AdmissionBrochures}/>*/}
       </Route>
 
       <Route path='/qa'>
-      <Route path="entrance-service" component={Interlocution}/>
-      <Route path="enroll-self" component={EnrollSelf}/>
+        <Route path="entrance-service" component={Interlocution}/>
+        <Route path="enroll-self" component={EnrollSelf}/>
       </Route>
 
       <Route path='/member'>

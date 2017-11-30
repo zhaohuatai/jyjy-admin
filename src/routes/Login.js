@@ -76,7 +76,7 @@ class NormalLoginForm extends React.Component {
             {getFieldDecorator('captcha', {
               rules: [{required: true, message: '请输入验证码'}],
             })(
-              <Input prefix={<Icon type="wallet" style={{fontSize: 13}}/>} autoComlete='false' placeholder="验证码"/>
+              <Input prefix={<Icon type="wallet" style={{fontSize: 13}}/>} placeholder="验证码"/>
             )}
           </FormItem>
           <img onClick={this.refesh} style={{height: '40px'}} src={this.state.captcha}/>

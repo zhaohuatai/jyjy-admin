@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs, Modal} from 'antd';
-import {deleteInterlocutionConsultation, loadInterlocutionConsultation, loadInterlocutionConsultationDataSet} from '../../../service/interlocution';
+import {message, Modal, Pagination, Table, Tabs} from 'antd';
+import {
+  deleteInterlocutionConsultation,
+  loadInterlocutionConsultation,
+  loadInterlocutionConsultationDataSet
+} from '../../../service/interlocution';
 import Filter from './Filter';
 import Replay from './Replay';
 import Detail from './Detail';
@@ -108,6 +112,7 @@ class Interlocution extends Component {
     const {table_loading, selectedRowKeys, table_cur_page, table_total} = this.state;
 
     const rowSelection = {
+      type: 'radio',
       selectedRowKeys,
       onChange: this.onSelectChange,
     };

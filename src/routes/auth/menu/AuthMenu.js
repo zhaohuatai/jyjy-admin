@@ -110,6 +110,7 @@ class AuthMenu extends Component {
       ];
 		
     const rowSelection = {
+      type: 'radio',
       selectedRowKeys,
       onChange: this.onSelectChange,
     };

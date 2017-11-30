@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs, Modal} from 'antd';
-import {loadEnrollAutoQuestion, deleteEnrollAutoQuestion, loadEnrollAutoQuestionDataSet} from '../../../service/auto-question';
+import {message, Modal, Pagination, Table, Tabs} from 'antd';
+import {
+  deleteEnrollAutoQuestion,
+  loadEnrollAutoQuestion,
+  loadEnrollAutoQuestionDataSet
+} from '../../../service/auto-question';
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';
@@ -109,6 +113,7 @@ class Interlocution extends Component {
     const {table_loading, selectedRowKeys, table_cur_page, table_total} = this.state;
 
     const rowSelection = {
+      type: 'radio',
       selectedRowKeys,
       onChange: this.onSelectChange,
     };

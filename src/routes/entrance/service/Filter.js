@@ -43,30 +43,42 @@ class Filter extends Component {
     switch (targetOption.cate) {
       case 'First' :
         loadEntranceCategorySDataSet({rows: 1000, cateFirstId: targetOption.value}).then(data => {
-          if (!data.data.dataSet.total)
+          if (data.data.dataSet.total) {
+            targetOption.children = this.renderData(data.data.dataSet.rows, 'Second');
+          } else {
             targetOption.isLeaf = true;
-          targetOption.children = this.renderData(data.data.dataSet.rows, 'Second');
+          }
         }).then(() => {
-          targetOption.loading = false;
-          this.setState({options: [...this.state.options]});
+          setTimeout(() => {
+            targetOption.loading = false;
+            this.setState({options: [...this.state.options]});
+          }, 500)
         });
         break;
       case 'Second' :
         loadEntranceCategoryTDataSet({rows: 1000, cateSecondId: targetOption.value}).then(data => {
-          if (!data.data.dataSet.total)
+          if (data.data.dataSet.total) {
+            targetOption.children = this.renderData(data.data.dataSet.rows, 'Third');
+          } else {
             targetOption.isLeaf = true;
-          targetOption.children = this.renderData(data.data.dataSet.rows, 'Third');
+          }
         }).then(() => {
-          targetOption.loading = false;
-          this.setState({options: [...this.state.options]});
+          setTimeout(() => {
+            targetOption.loading = false;
+            this.setState({options: [...this.state.options]});
+          }, 500)
         });
         break;
     }
   }
 
   onCateChange = (value, selectedOptions) => {
-    this.handleActionClick({key: 'search', cate: selectedOptions[0].cate, value: selectedOptions[0].value})
-  }
+    this.handleActionClick({
+      key: 'search',
+      cate: selectedOptions[selectedOptions.length - 1].cate,
+      value: selectedOptions[selectedOptions.length - 1].value
+    })
+  };
 
   constructor(props) {
     super(props);

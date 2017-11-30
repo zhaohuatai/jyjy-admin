@@ -13,8 +13,8 @@ const TabPane = Tabs.TabPane;
 
 const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
-  {title: '名称', dataIndex: 'title', key: 'title'},
   {title: '栏目', dataIndex: 'cateName', key: 'cateName'},
+  {title: '名称', dataIndex: 'title', key: 'title'},
   {title: '当前预约人数', dataIndex: 'appointCount', key: 'appointCount'},
   {title: '最大可预约数', dataIndex: 'maxAppointCount', key: 'maxAppointCount'},
   {title: '是否免费', dataIndex: 'freePay', key: 'freePay', render: (text) => text === 1 ? '收费' : '免费'},
@@ -111,6 +111,7 @@ class ServiceContent extends Component {
 
     const rowSelection = {
       selectedRowKeys,
+      type: 'radio',
       onChange: this.onSelectChange,
     };
 

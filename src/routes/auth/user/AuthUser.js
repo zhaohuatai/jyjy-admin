@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import style from './menu.scss';
-import { message, Tabs , Table, Button, Dropdown, Menu, Pagination, Input, Col, Row, RangePicker, Icon} from 'antd';
-import {loadAuthUserList,loadUpdateData} from '../../../service/auth';
+import {Pagination, RangePicker, Table} from 'antd';
+import {loadAuthUserList, loadUpdateData} from '../../../service/auth';
 import ProductFilter from './Filter';
-import Item from './Item';
 import ItemAdd from './ItemAdd';
 import ItemEdit from './ItemEdit';
 import UserAddRole from './UserAddRole';
@@ -122,6 +121,7 @@ class AuthUser extends Component {
       ];
 
     const rowSelection = {
+      type: 'radio',
       selectedRowKeys,
       onChange: this.onSelectChange,
     };

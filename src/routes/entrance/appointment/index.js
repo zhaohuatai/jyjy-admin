@@ -98,6 +98,7 @@ class Appointment extends Component {
     const {table_loading, selectedRowKeys, table_cur_page, table_total} = this.state;
 
     const rowSelection = {
+      type: 'radio',
       selectedRowKeys,
       onChange: this.onSelectChange,
     };

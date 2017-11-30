@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import style from './menu.scss';
-import { message, Tabs , Table, Button, Dropdown, Menu, Pagination, Input, Col, Row, RangePicker, Icon} from 'antd';
+import {Pagination, RangePicker, Table} from 'antd';
 import {loadAuthPermissionList} from '../../../service/auth';
 import ProductFilter from './Filter';
 import Item from './Item';
@@ -88,6 +88,7 @@ class AuthPermission extends Component {
       ];
 		
     const rowSelection = {
+      type: 'radio',
       selectedRowKeys,
       onChange: this.onSelectChange,
     };

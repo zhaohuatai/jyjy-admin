@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import style from './menu.scss';
-import { message, Tabs , Table, Button, Dropdown, Menu, Pagination, Input, Col, Row, RangePicker, Icon} from 'antd';
-import {loadAuthRoleList,deletAuthRole,addPermsToRole,loadPermDataSetForRoleAssign} from '../../../service/auth';
+import {message, Pagination, RangePicker, Table} from 'antd';
+import {addPermsToRole, deletAuthRole, loadAuthRoleList, loadPermDataSetForRoleAssign} from '../../../service/auth';
 import ProductFilter from './Filter';
 import Item from './Item';
 import ItemAdd from './ItemAdd';
@@ -122,6 +122,7 @@ class AuthRole extends Component {
       ];
 
     const rowSelection = {
+      type: 'radio',
       selectedRowKeys,
       onChange: this.onSelectChange,
     };
