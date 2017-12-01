@@ -119,49 +119,53 @@ class New extends Component {
 
   componentDidMount() {
     let form = this.props.form;
-    if (this.props.data.cateFirstId) {
-      this.setState({cate: 'First', cateValue: this.props.data.cateFirstId})
-      form.setFieldsValue({
-        cateId: this.props.data.cateFirstId,
-      })
-    }
     loadEntranceCategoryFDataSet({rows: 1000}).then(data => {
-      if (data.data.dataSet.total) {
-        this.setState({options: this.renderData(data.data.dataSet.rows, 'First')});
-        this.state.options.forEach((cateFirst) => {
-          loadEntranceCategorySDataSet({rows: 1000, cateFirstId: cateFirst.value}).then(data => {
-            if (data.data.dataSet.total) {
-              cateFirst.children = this.renderData(data.data.dataSet.rows, 'Second');
-              cateFirst.children.forEach((cateSecond) => {
-                if (this.props.data.cateSecondId && this.props.data.cateSecondId === cateSecond.value) {
-                  this.setState({cate: 'Second', cateValue: this.props.data.cateSecondId})
-                  form.setFieldsValue({
-                    cateId: `${cateFirst.value},${cateSecond.value}`,
-                  })
-                }
-                loadEntranceCategoryTDataSet({rows: 1000, cateSecondId: cateSecond.value}).then(data => {
-                  if (data.data.dataSet.total) {
-                    cateSecond.children = this.renderData(data.data.dataSet.rows, 'Third');
-                    cateSecond.children.forEach((cateThird) => {
-                      if (this.props.data.cateThirdId && this.props.data.cateThirdId === cateThird.value) {
-                        this.setState({cate: 'Third', cateValue: this.props.data.cateThirdId})
-                        form.setFieldsValue({
-                          cateId: `${cateFirst.value},${cateSecond.value},${cateThird.value}`,
-                        })
-                      }
-                    })
-                  } else {
-                    cateSecond.isLeaf = true;
-                  }
-                })
-              })
-            } else {
-              cateFirst.isLeaf = true;
-            }
-          })
+      if (this.props.data.cateFirstId) {
+        this.setState({cate: 'First', cateValue: this.props.data.cateFirstId})
+        form.setFieldsValue({
+          cateId: this.props.data.cateFirstId,
         })
       }
+      if (data.data.dataSet.total) {
+        this.setState({options: this.renderData(data.data.dataSet.rows, 'First')}, () => {
+          //这里有瑕疵
+          this.state.options.map((cateFirst) => {
+            loadEntranceCategorySDataSet({rows: 1000, cateFirstId: cateFirst.value}).then(data => {
+              if (data.data.dataSet.total) {
+                cateFirst.children = this.renderData(data.data.dataSet.rows, 'Second').map((cateSecond) => {
+                  console.log(cateSecond);
+                  if (this.props.data.cateSecondId && this.props.data.cateSecondId === cateSecond.value) {
+                    this.setState({cate: 'Second', cateValue: this.props.data.cateSecondId})
+                    form.setFieldsValue({
+                      cateId: `${cateFirst.value},${cateSecond.value}`,
+                    })
+                  }
+                  loadEntranceCategoryTDataSet({rows: 1000, cateSecondId: cateSecond.value}).then(data => {
+                    if (data.data.dataSet.total) {
+                      cateSecond.children = this.renderData(data.data.dataSet.rows, 'Third').map((cateThird) => {
+                        console.log(cateThird);
+                        if (this.props.data.cateThirdId && this.props.data.cateThirdId === cateThird.value) {
+                          this.setState({cate: 'Third', cateValue: this.props.data.cateThirdId})
+                          form.setFieldsValue({
+                            cateId: `${cateFirst.value},${cateSecond.value},${cateThird.value}`,
+                          })
+                        }
+                      })
+                    } else {
+                      cateSecond.isLeaf = true;
+                    }
+                  })
+                })
+              } else {
+                cateFirst.isLeaf = true;
+              }
+            })
+          })
+        });
+
+      }
     }).then(() => {
+      console.log(this.state.options);
       this.setState({options: [...this.state.options]});
     }).catch((e) => {
         message.error(e);

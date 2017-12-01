@@ -154,7 +154,7 @@ class ServiceContent extends Component {
               onRowClick={this.handleShowDetail}
             />
             <Pagination style={{marginTop: '10px'}} showQuickJumper defaultCurrent={1} current={table_cur_page}
-                        defaultPageSize={20} total={table_total} onChange={this.onChangeTablePage}/>,
+                        defaultPageSize={20} total={table_total} onChange={this.onChangeTablePage}/>
           </TabPane>
           <TabPane tab="新建" key="5">
             <New/>
