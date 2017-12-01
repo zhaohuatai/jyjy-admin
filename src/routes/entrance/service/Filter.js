@@ -73,11 +73,17 @@ class Filter extends Component {
   }
 
   onCateChange = (value, selectedOptions) => {
-    this.handleActionClick({
-      key: 'search',
-      cate: selectedOptions[selectedOptions.length - 1].cate,
-      value: selectedOptions[selectedOptions.length - 1].value
-    })
+    if (selectedOptions.length) {
+      this.handleActionClick({
+        key: 'search',
+        cate: selectedOptions[selectedOptions.length - 1].cate,
+        value: selectedOptions[selectedOptions.length - 1].value
+      })
+    } else {
+      this.handleActionClick({
+        key: 'search',
+      })
+    }
   };
 
   constructor(props) {
