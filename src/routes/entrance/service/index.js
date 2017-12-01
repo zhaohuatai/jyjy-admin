@@ -17,11 +17,13 @@ const table_columns = [
   {title: '名称', dataIndex: 'title', key: 'title'},
   {title: '当前预约人数', dataIndex: 'appointCount', key: 'appointCount'},
   {title: '最大可预约数', dataIndex: 'maxAppointCount', key: 'maxAppointCount'},
-  {title: '是否免费', dataIndex: 'freePay', key: 'freePay', render: (text) => text === 1 ? '收费' : '免费'},
+  {title: '费用', dataIndex: 'freePay', key: 'freePay', render: (text) => text === 1 ? '收费' : '免费'},
   {title: '价格', dataIndex: 'price', key: 'price'},
   {title: '会员价格', dataIndex: 'priceVIP', key: 'priceVIP'},
   {title: '留言数', dataIndex: 'consultationCount', key: 'consultationCount'},
   {title: '收藏数', dataIndex: 'favoriteCount', key: 'favoriteCount'},
+  {title: '置顶', dataIndex: 'isTop', key: 'isTop', render: (text) => text === 1 ? '是' : '否'},
+  {title: '显示顺序', dataIndex: 'showIndex', key: 'showIndex'},
 ]
 
 class ServiceContent extends Component {

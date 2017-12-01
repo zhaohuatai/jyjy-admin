@@ -1,30 +1,105 @@
 import React, {Component} from 'react';
 import {API_DOMAIN} from '../../../utils/config';
-import {Button, Col, Form, Icon, Input, message, Modal, Row, Select, Switch, Upload} from 'antd';
+import {Button, Cascader, Col, Form, Icon, Input, message, Modal, Row, Switch, Upload} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import {updateDataUniversity} from '../../../service/base';
-import {loadProvinceList} from '../../../service/dic';
 import LazyLoad from 'react-lazy-load';
+import {
+  loadEntranceCategoryFDataSet,
+  loadEntranceCategorySDataSet,
+  loadEntranceCategoryTDataSet,
+  updateServiceEntrance
+} from "../../../service/entrance";
 
 const FormItem = Form.Item;
 
 class New extends Component {
+
+  renderData = (data, cate) => {
+    if (!data) return;
+    let options = [];
+    data.forEach((row) => {
+      let isLeaf = false;
+      switch (cate) {
+        case 'First' :
+          loadEntranceCategorySDataSet({rows: 1, cateFirstId: row['id']}).then(d => {
+            if (!d.data.dataSet.total)
+              isLeaf = true;
+            options.push({value: `${row['id']}`, label: row['name'], isLeaf: isLeaf, cate})
+          });
+          break;
+        case 'Second' :
+          loadEntranceCategoryTDataSet({rows: 1, cateSecondId: row['id']}).then(d => {
+            if (!d.data.dataSet.total)
+              isLeaf = true;
+            options.push({value: `${row['id']}`, label: row['name'], isLeaf: isLeaf, cate})
+          });
+          break;
+        case 'Third' :
+          options.push({value: `${row['id']}`, label: row['name'], isLeaf: true, cate})
+      }
+    });
+    return options;
+  };
+
+  normFile = (e) => {
+    if (Array.isArray(e)) {
+      return e.file;
+    }
+    return e && e.fileList;
+  }
+  loadCateData = (selectedOptions) => {
+    const targetOption = selectedOptions[selectedOptions.length - 1];
+    targetOption.loading = true;
+    switch (targetOption.cate) {
+      case 'First' :
+        loadEntranceCategorySDataSet({rows: 1000, cateFirstId: targetOption.value}).then(data => {
+          if (data.data.dataSet.total) {
+            targetOption.children = this.renderData(data.data.dataSet.rows, 'Second');
+          } else {
+            targetOption.isLeaf = true;
+          }
+        }).then(() => {
+          setTimeout(() => {
+            targetOption.loading = false;
+            this.setState({options: [...this.state.options]});
+          }, 500)
+        });
+        break;
+      case 'Second' :
+        loadEntranceCategoryTDataSet({rows: 1000, cateSecondId: targetOption.value}).then(data => {
+          if (data.data.dataSet.total) {
+            targetOption.children = this.renderData(data.data.dataSet.rows, 'Third');
+          } else {
+            targetOption.isLeaf = true;
+          }
+        }).then(() => {
+          setTimeout(() => {
+            targetOption.loading = false;
+            this.setState({options: [...this.state.options]});
+          }, 500)
+        });
+        break;
+    }
+  }
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
+
     formData = {
       ...formData,
-      detail: UE.getEditor('update_faculty').getContent(),
-      specialProfession: UE.getEditor('update_specialProfession').getContent(),
-      introduction: UE.getEditor('update_introduction').getContent(),
-      firstRate: formData.firstRate ? 1 : 0,
-      id: this.props.data.id,
+      introduction: UE.getEditor('update_serviceEntrance').getContent(),
+      freePay: formData.freePay ? 0 : 1,
+      isTop: formData.isTop ? 1 : 0,
+    };
+
+    if (this.state.cate) {
+      formData[`cate${this.state.cate}Id`] = this.state.cateValue;
     }
 
-    if (formData.imgUrl) {
-      formData.imgUrl = formData.imgUrl[0].response.data.image;
+    if (formData.coverUrl) {
+      formData.coverUrl = formData.coverUrl[0].response.data.image;
     }
 
-    updateDataUniversity(formData).then(data => {
+    updateServiceEntrance(formData).then(data => {
       this.props.form.resetFields();
       this.props.onCancel();
       message.success("更新成功！");
@@ -36,31 +111,68 @@ class New extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      provinceList: []
+      options: [],
+      cate: [],
+      cateValue: [],
     }
-  }
-
-  normFile = (e) => {
-    console.log('Upload event:', e);
-    if (Array.isArray(e)) {
-      return e.file;
-    }
-    return e && e.fileList;
   }
 
   componentDidMount() {
-    loadProvinceList({}).then(data => {
-      this.setState({provinceList: data.data.provinceList})
-    })
+    let form = this.props.form;
+    if (this.props.data.cateFirstId) {
+      this.setState({cate: 'First', cateValue: this.props.data.cateFirstId})
+      form.setFieldsValue({
+        cateId: this.props.data.cateFirstId,
+      })
+    }
+    loadEntranceCategoryFDataSet({rows: 1000}).then(data => {
+      if (data.data.dataSet.total) {
+        this.setState({options: this.renderData(data.data.dataSet.rows, 'First')});
+        this.state.options.forEach((cateFirst) => {
+          loadEntranceCategorySDataSet({rows: 1000, cateFirstId: cateFirst.value}).then(data => {
+            if (data.data.dataSet.total) {
+              cateFirst.children = this.renderData(data.data.dataSet.rows, 'Second');
+              cateFirst.children.forEach((cateSecond) => {
+                if (this.props.data.cateSecondId && this.props.data.cateSecondId === cateSecond.value) {
+                  this.setState({cate: 'Second', cateValue: this.props.data.cateSecondId})
+                  form.setFieldsValue({
+                    cateId: `${cateFirst.value},${cateSecond.value}`,
+                  })
+                }
+                loadEntranceCategoryTDataSet({rows: 1000, cateSecondId: cateSecond.value}).then(data => {
+                  if (data.data.dataSet.total) {
+                    cateSecond.children = this.renderData(data.data.dataSet.rows, 'Third');
+                    cateSecond.children.forEach((cateThird) => {
+                      if (this.props.data.cateThirdId && this.props.data.cateThirdId === cateThird.value) {
+                        this.setState({cate: 'Third', cateValue: this.props.data.cateThirdId})
+                        form.setFieldsValue({
+                          cateId: `${cateFirst.value},${cateSecond.value},${cateThird.value}`,
+                        })
+                      }
+                    })
+                  } else {
+                    cateSecond.isLeaf = true;
+                  }
+                })
+              })
+            } else {
+              cateFirst.isLeaf = true;
+            }
+          })
+        })
+      }
+    }).then(() => {
+      this.setState({options: [...this.state.options]});
+    }).catch((e) => {
+        message.error(e);
+      }
+    );
   }
 
   render() {
     const {getFieldDecorator} = this.props.form;
     const {
-      attached, establishTime, faculty, academicianNum,
-      firstRate, introduction, location, masterNum,
-      name, phone, provinceCode, rank,
-      remark, doctor, specialProfession, stage, studentNum, type
+      title, remark, freePay, isTop, showIndex, introduction, price, priceVIP, cateFirstId, cateSecondId, cateThirdId
     } = this.props.data;
 
     const formItemLayout = {
@@ -75,14 +187,14 @@ class New extends Component {
     };
 
     return (
-      <Modal title="更新高校信息" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
+      <Modal title="更新服务" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
         <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="校名">
-              {getFieldDecorator('name', {
-                initialValue: name,
+            <FormItem{...formItemLayout} label="服务名">
+              {getFieldDecorator('title', {
+                initialValue: title,
                 rules: [
-                  {required: true, message: '请输入学校名称'},
+                  {required: true, message: '请输入'},
                 ]
               })(
                 <Input/>
@@ -90,29 +202,17 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="选择省份">
-              {getFieldDecorator('provinceCode', {
-                initialValue: provinceCode + '',
-                rules: []
-              })(
-                <Select placeholder="选择省份" style={{width: '200px'}}>
-                  {
-                    this.state.provinceList.map(item => {
-                      return <Select.Option key={item.id} value={`${item.code}`}>{item.name}</Select.Option>
-                    })
-                  }
-                </Select>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem{...formItemLayout} label="校徽图片">
-              {getFieldDecorator('badge', {
+            <FormItem{...formItemLayout} label="封面">
+              {getFieldDecorator('coverUrl', {
                 valuePropName: 'fileList',
                 getValueFromEvent: this.normFile,
               })(
-                <Upload name="file" action={`${API_DOMAIN}admin/data/dataUniversity/uploadBadge`} listType="picture"
-                        withCredentials={true}>
+                <Upload
+                  name="file"
+                  action={`${API_DOMAIN}admin/service/entrance/uploadCover`}
+                  listType="picture"
+                  withCredentials={true}
+                >
                   <Button>
                     <Icon type="upload"/> 点击上传
                   </Button>
@@ -121,19 +221,48 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="是否双一流">
-              {getFieldDecorator('firstRate', {
+            <FormItem{...formItemLayout} label="栏目">
+              {getFieldDecorator('cateId', {
+                rules: [
+                  {required: true, message: '请选择'},
+                ]
+              })(
+                <Cascader placeholder="选择栏目" options={this.state.options} loadData={this.loadCateData}
+                          style={{width: 270}} onChange={this.onCateChange} changeOnSelect/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="图文简介">
+              <LazyLoad height={370}>
+                <UEditor id="update_serviceEntrance" initValue={introduction}/>
+              </LazyLoad>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="免费服务">
+              {getFieldDecorator('freePay', {
                 valuePropName: 'checked',
-                initialValue: !!firstRate,
+                initialValue: !freePay,
+                rules: []
               })(
                 <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="学校层次">
-              {getFieldDecorator('stage', {
-                initialValue: stage,
+            <FormItem{...formItemLayout} label="价格">
+              {getFieldDecorator('price', {
+                initialValue: price,
+              })(
+                <Input/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="会员价格">
+              {getFieldDecorator('priceVIP', {
+                initialValue: priceVIP,
                 rules: []
               })(
                 <Input/>
@@ -141,124 +270,23 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="办学类型">
-              {getFieldDecorator('type', {
-                initialValue: type,
-                rules: []
+            <FormItem {...formItemLayout} label="是否置顶">
+              {getFieldDecorator('isTop', {
+                valuePropName: 'checked',
+                initialValue: !!isTop,
               })(
-                <Input/>
+                <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="招生办电话">
-              {getFieldDecorator('phone', {
-                initialValue: phone,
+            <FormItem {...formItemLayout} label="显示顺序">
+              {getFieldDecorator('showIndex', {
+                initialValue: showIndex,
                 rules: []
               })(
                 <Input/>
               )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem{...formItemLayout} label="学校地址">
-              {getFieldDecorator('location', {
-                initialValue: location,
-                rules: []
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem{...formItemLayout} label="博士点数">
-              {getFieldDecorator('doctor', {
-                initialValue: doctor,
-                rules: []
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem{...formItemLayout} label="硕士点数">
-              {getFieldDecorator('masterNum', {
-                initialValue: masterNum,
-                rules: []
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem{...formItemLayout} label="院士人数">
-              {getFieldDecorator('academicianNum', {
-                initialValue: academicianNum,
-                rules: []
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem{...formItemLayout} label="学生人数">
-              {getFieldDecorator('studentNum', {
-                initialValue: studentNum,
-                rules: []
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem{...formItemLayout} label="院校排名">
-              {getFieldDecorator('rank', {
-                initialValue: rank,
-                rules: []
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem{...formItemLayout} label="建校时间">
-              {getFieldDecorator('establishTime', {
-                initialValue: establishTime,
-                rules: []
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem{...formItemLayout} label="学校隶属">
-              {getFieldDecorator('attached', {
-                initialValue: attached,
-                rules: []
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem{...formItemLayout} label="特色专业">
-              <LazyLoad height={370}>
-                <UEditor id="update_specialProfession" initValue={specialProfession}/>
-              </LazyLoad>
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem{...formItemLayout} label="学校简介">
-              <LazyLoad height={370}>
-                <UEditor id="update_introduction" initValue={introduction}/>
-              </LazyLoad>
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem{...formItemLayout} label="师资力量">
-              <LazyLoad height={370}>
-                <UEditor id="update_faculty" initValue={faculty}/>
-              </LazyLoad>
             </FormItem>
           </Col>
           <Col span={24}>
@@ -270,6 +298,7 @@ class New extends Component {
                 <Input/>
               )}
             </FormItem>
+
           </Col>
         </Row>
         <FormItem wrapperCol={{span: 12, offset: 4}}>

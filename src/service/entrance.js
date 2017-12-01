@@ -25,6 +25,22 @@ export function deleteServiceEntrance(param) {
   });
 }
 
+export function createServiceEntrance(param) {
+  return new Promise((resolve, reject) => {
+    post(`${API_DOMAIN}admin/entrance/createServiceEntrance`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+export function updateServiceEntrance(param) {
+  return new Promise((resolve, reject) => {
+    post(`${API_DOMAIN}admin/entrance/updateServiceEntrance`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
 //预约===============================================================================================
 
 export function loadServiceEntranceAppointmentDataSet(param) {
