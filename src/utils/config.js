@@ -5,4 +5,4 @@ export const API_DOMAIN = 'http://yxyz.kingmon.cn/';
 
 export const IMG_DOMAIN = API_DOMAIN;
 
-export const ATT_DOMAIN = API_DOMAIN + "ueditor/controller/";
+export const ATT_DOMAIN = API_DOMAIN + "ueditor/controller";
