@@ -114,7 +114,7 @@ class Teacher extends Component {
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
         <Tabs defaultActiveKey="1">
-          <TabPane tab="学校列表" key="1">
+          <TabPane tab="教师列表" key="1">
             <Filter
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}

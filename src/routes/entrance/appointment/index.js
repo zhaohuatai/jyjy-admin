@@ -84,7 +84,7 @@ class Appointment extends Component {
       {title: '回访人', dataIndex: 'returnServerId', key: 'returnServerId'},
       {
         title: '操作', key: 'action', render: (text, record) => {
-        return record.returnStatus === 1 ? (
+        return record.returnStatus ? (
           <Button type='primary' icon='check-circle-o' size='small'
                   onClick={() => this.handleReturnOver(record)}>
             回访结束

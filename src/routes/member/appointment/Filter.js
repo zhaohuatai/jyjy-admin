@@ -89,7 +89,7 @@ class Filter extends Component {
           </Col>
 
           <Col span={2}>
-            <Button disbaled onClick={() => {
+            <Button disabled onClick={() => {
               this.handleActionClick({key: 'recycle'});
             }
             }>

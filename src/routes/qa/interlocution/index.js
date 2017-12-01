@@ -112,6 +112,9 @@ class Interlocution extends Component {
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
         <Tabs defaultActiveKey="1">
+          <TabPane tab="分类管理" key="3">
+            <Category/>
+          </TabPane>
           <TabPane tab="升学百科问答" key="1">
             <Filter
               doSearch={this.handleSearch}
@@ -140,9 +143,6 @@ class Interlocution extends Component {
           </TabPane>
           <TabPane tab="新建" key="2">
             <New/>
-          </TabPane>
-          <TabPane tab="分类管理" key="3">
-            <Category/>
           </TabPane>
         </Tabs>
 
