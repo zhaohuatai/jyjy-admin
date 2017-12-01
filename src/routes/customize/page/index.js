@@ -124,7 +124,10 @@ class Page extends Component {
         </Tabs>
 
         <Update show={this.state.update_display} data={this.state.update_data}
-                onCancel={() => this.setState({update_display: false})}/>
+                onCancel={() => {
+                  this.handleRefresh();
+                  this.setState({update_display: false})
+                }}/>
         <Detail show={this.state.detail_display} data={this.state.detail_data}
                 onCancel={() => this.setState({detail_display: false})}/>
       </div>

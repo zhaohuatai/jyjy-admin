@@ -165,7 +165,7 @@ class Update extends Component {
       <Modal title="更新" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
         <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="小节名称">
+            <FormItem {...formItemLayout} label="小节名称">
               {getFieldDecorator('name', {
                 initialValue: name,
                 rules: [
@@ -187,7 +187,7 @@ class Update extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="所属课程">
+            <FormItem {...formItemLayout} label="所属课程">
               {getFieldDecorator('courseId', {
                 initialValue: courseId + '',
                 rules: [
@@ -205,7 +205,7 @@ class Update extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="主讲人">
+            <FormItem {...formItemLayout} label="主讲人">
               {getFieldDecorator('type', {
                 initialValue: presenterId + '',
                 rules: [
@@ -223,7 +223,7 @@ class Update extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="免费课程">
+            <FormItem {...formItemLayout} label="免费课程">
               {getFieldDecorator('freePay', {
                 valuePropName: 'checked',
                 initialValue: !freePay,
@@ -233,7 +233,7 @@ class Update extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="普通价格">
+            <FormItem {...formItemLayout} label="普通价格">
               {getFieldDecorator('price', {
                 initialValue: price,
                 rules: []
@@ -243,7 +243,7 @@ class Update extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="会员价格">
+            <FormItem {...formItemLayout} label="会员价格">
               {getFieldDecorator('priceVIP', {
                 initialValue: priceVIP,
                 rules: []
@@ -253,7 +253,7 @@ class Update extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="课程视频">
+            <FormItem {...formItemLayout} label="课程视频">
               <Upload {...uploadProps}>
                 <Button>
                   <Icon type="upload"/> 选择文件
@@ -265,8 +265,8 @@ class Update extends Component {
               </Button>
             </FormItem>
           </Col>
-          <Col span={6}>
-            <FormItem{...formItemLayout} label="视频描述">
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="视频描述">
               {getFieldDecorator('videoDesc', {
                 initialValue: videoDesc,
                 rules: []
@@ -275,8 +275,8 @@ class Update extends Component {
               )}
             </FormItem>
           </Col>
-          <Col span={6}>
-            <FormItem{...formItemLayout} label="视频名称">
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="视频名称">
               {getFieldDecorator('videoName', {
                 initialValue: videoName,
                 rules: []
@@ -285,8 +285,8 @@ class Update extends Component {
               )}
             </FormItem>
           </Col>
-          <Col span={6}>
-            <FormItem{...formItemLayout} label="视频大小">
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="视频大小">
               {getFieldDecorator('studentNum', {
                 initialValue: videoSize,
                 rules: []
@@ -295,8 +295,8 @@ class Update extends Component {
               )}
             </FormItem>
           </Col>
-          <Col span={6}>
-            <FormItem{...formItemLayout} label="视频标签">
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="视频标签">
               {getFieldDecorator('videoTags', {
                 initialValue: videoTags,
                 rules: []
@@ -305,8 +305,8 @@ class Update extends Component {
               )}
             </FormItem>
           </Col>
-          <Col span={6}>
-            <FormItem{...formItemLayout} label="视频时间">
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="视频时间">
               {getFieldDecorator('videoTime', {
                 initialValue: videoTime,
                 rules: []
@@ -315,8 +315,8 @@ class Update extends Component {
               )}
             </FormItem>
           </Col>
-          <Col span={6}>
-            <FormItem{...formItemLayout} label="视频标题">
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="视频标题">
               {getFieldDecorator('videoTitle', {
                 initialValue: videoTitle,
                 rules: []
@@ -325,8 +325,8 @@ class Update extends Component {
               )}
             </FormItem>
           </Col>
-          <Col span={6}>
-            <FormItem{...formItemLayout} label="视频地址">
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="视频地址">
               {getFieldDecorator('tryVideoUrl', {
                 initialValue: tryVideoUrl,
                 rules: []
@@ -336,7 +336,7 @@ class Update extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="课程介绍">
+            <FormItem {...formItemLayout} label="课程介绍">
               <LazyLoad height={370}>
                 <UEditor id="update_courseItemIntroduction" initValue={introduction}/>
               </LazyLoad>

@@ -1,43 +1,63 @@
 import React, {Component} from 'react';
+import {API_DOMAIN} from "../../utils/config";
 
 // http://fex.baidu.com/ueditor/#start-toolbar
 class UEditor extends Component {
-  constructor(props) {
+  constructor(props){
     super(props);
     this.state = {};
+    this.uedeitor = {}
   }
 
-  componentDidMount() {
+  componentDidMount(){
     this.initEditor();
   }
 
   componentWillUnmount() {
+    // 组件卸载后，清除放入库的id
     UE.delEditor(this.props.id);
   }
 
   initEditor() {
-    const {initValue, id, module} = this.props;
+    const {initValue, uploadAPI, id} = this.props;
 
-    const UEditor = UE.getEditor(this.props.id, {
-      // serverUrl: ATT_DOMAIN,
+    this.uedeitor = UE.getEditor(this.props.id, {
+      serverUrl: uploadAPI,
     });
 
+    UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+    UE.Editor.prototype.getActionUrl = function(action) {
+      if (action == "uploadimage" || action == 'uploadscrawl' || action == 'uploadimage') {
+        return `http://yxyz.kingmon.cn/admin/ueditor/attachment/upload`;
+      } else if (action == 'uploadvideo') {
+        return 'http://a.b.com/video.php';
+      } else {
+        return this._bkGetActionUrl.call(this, action);
+      }
+    }
+
+
     const self = this;
-    UEditor.ready((ueditor) => {
+    this.uedeitor.ready((ueditor) => {
       if (!ueditor) {
         UE.delEditor(id);
         self.initEditor();
       }
-      if (initValue) {
-        UEditor.setContent(initValue);
+      if(initValue){
+        this.uedeitor.setContent(initValue);
       }
-      UEditor.execCommand('serverparam', {
-        module: module ? 'default' : module
-      })
     })
   }
+  componentDidUpdate(){
+    const {initValue} = this.props;
+    this.uedeitor.ready((ueditor) => {
 
-  render() {
+      if(initValue){
+        this.uedeitor.setContent(initValue);
+      }
+    })
+  }
+  render(){
     return (
       <div id={this.props.id} name="content" type="text/plain" style={{width: '100%'}}/>
     )

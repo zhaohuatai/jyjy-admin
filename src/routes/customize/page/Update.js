@@ -59,7 +59,7 @@ class Update extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="内容">
               <LazyLoad height={370}>
-                <UEditor id="update_customizeContent" initValue={content}/>
+                <UEditor id={`update_customizeContent`} initValue={content}/>
               </LazyLoad>
             </FormItem>
           </Col>
