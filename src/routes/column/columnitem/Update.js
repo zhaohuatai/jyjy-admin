@@ -46,6 +46,7 @@ class New extends Component {
       freePay: formData.freePay ? 0 : 1,
       content: UE.getEditor("update_columnItemContent").getContent(),
       id: this.props.data.id,
+      status: 1
     };
 
     if (formData.coverUrl) {
@@ -138,7 +139,7 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="期数">
+            <FormItem{...formItemLayout} label="排序">
               {getFieldDecorator('itemOrder', {
                 initialValue: itemOrder,
               })(

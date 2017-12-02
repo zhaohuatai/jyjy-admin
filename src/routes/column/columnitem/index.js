@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import {message, Pagination, Table, Tabs, Modal} from 'antd';
-import {deleteServiceCourseItem} from '../../../service/course';
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';
 import Detail from './Detail';
-import {loadColumnChannel, loadColumnChannelItem, loadColumnChannelItemDataSet} from "../../../service/column";
+import {loadColumnChannel, loadColumnChannelItem, loadColumnChannelItemDataSet, deleteColumnChannelItem} from "../../../service/column";
 
 const TabPane = Tabs.TabPane;
 
@@ -13,13 +12,14 @@ const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
   {title: '标题', dataIndex: 'title', key: 'title'},
   {title: '描述', dataIndex: 'hint', key: 'hint'},
-  {title: '节次', dataIndex: 'itemOrder', key: 'itemOrder'},
   {title: '主讲人', dataIndex: 'presenterName', key: 'presenterName'},
   {title: '费用', dataIndex: 'freePay', key: 'freePay', render: (text) => text === 1 ? '收费' : '免费'},
   {title: '普通价格', dataIndex: 'price', key: 'price'},
   {title: '会员价', dataIndex: 'priceVIP', key: 'priceVip'},
   {title: '评论数', dataIndex: 'commentCount', key: 'commentCount'},
+  {title: '排序', dataIndex: 'itemOrder', key: 'itemOrder'},
   {title: '备注', dataIndex: 'remark', key: 'remark'},
+  {title: '状态', dataIndex: 'status', key: 'status', render: (text) => text === 1 ? '正常' : '删除'},
 ]
 
 class School extends Component {
@@ -29,7 +29,7 @@ class School extends Component {
       title: `确定删除吗？`,
       okType: 'danger',
       onOk: () => {
-        deleteServiceCourseItem({id: this.state.selectedRowKeys[0]}).then(data => {
+        deleteColumnChannelItem({id: this.state.selectedRowKeys[0]}).then(data => {
           message.success("删除成功！");
           this.handleRefresh();
         });

@@ -5,7 +5,7 @@ import {IMG_DOMAIN} from "../../../utils/config";
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;
 
-class New extends Component {
+class Detail extends Component {
 
   render() {
     const {title, coverUrl, introduction, hint, sharePoints, learningCountActual, favoriteCount, presenterName, freePay, price, priceVIP, learningCount, isTop, showIndex, remark} = this.props.data;
@@ -120,4 +120,4 @@ class New extends Component {
   }
 }
 
-export default New;
+export default Detail;

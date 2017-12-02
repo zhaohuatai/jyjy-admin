@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, Uplaod} from 'antd';
+import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, Upload} from 'antd';
 import {createColumnChannel} from "../../../service/column";
 import {loadMemberTeacherDataSet} from "../../../service/member";
 import UEditor from "../../../components/editor/UEditor";
@@ -11,6 +11,13 @@ const FormItem = Form.Item;
 
 class New extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      presenterList: []
+    }
+  }
+
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
 
@@ -21,20 +28,27 @@ class New extends Component {
       isTop: formData.isTop ? 1 : 0,
     };
 
-    createColumnChannel(formData).then(data => {
-      this.props.form.resetFields();
-      message.success("创建成功！");
-    }).catch((e) => {
-      message.error(e);
-    })
+    if (formData.coverUrl) {
+      formData.coverUrl = formData.coverUrl[0].response.data.image;
+    }
+
+    console.log(formData);
+
+    // createColumnChannel(formData).then(data => {
+    //   this.props.form.resetFields();
+    //   message.success("创建成功！");
+    // }).catch((e) => {
+    //   message.error(e);
+    // })
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      presenterList: []
+  normFile = (e) => {
+    if (Array.isArray(e)) {
+      return e.file;
     }
+    return e && e.fileList;
   }
+
 
   componentDidMount() {
     loadMemberTeacherDataSet({rows: 1000}).then(data => {
@@ -88,6 +102,7 @@ class New extends Component {
               {getFieldDecorator('coverUrl', {
                 valuePropName: 'fileList',
                 getValueFromEvent: this.normFile,
+                initialValue: ''
               })(
                 <Upload
                   name="file"
@@ -127,7 +142,7 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem {...formItemLayout} label="免费课程">
+            <FormItem {...formItemLayout} label="是否免费">
               {getFieldDecorator('freePay', {
                 valuePropName: 'checked',
                 initialValue: false,
