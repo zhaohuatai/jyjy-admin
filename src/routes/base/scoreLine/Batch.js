@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Card, Col, Dropdown, Form, Icon, Input, Menu, message, Pagination, Row, Table} from 'antd';
+import {Button, Card, Col, Dropdown, Form, Icon, Input, Menu, message, Pagination, Row, Table, Modal} from 'antd';
 import {createDicData, deleteDicData, loadDicData} from "../../../service/dic";
 
 class Batch extends Component {
@@ -53,7 +53,7 @@ class Batch extends Component {
     this.doRefresh(values);
   };
   doDelete = (record) => {
-    confirm({
+    Modal.confirm({
       title: `确定删除${record.itemValue}吗？`,
       okType: 'danger',
       onOk: () => {

@@ -14,7 +14,8 @@ import {
   Row,
   Select,
   Switch,
-  Table
+  Table,
+  Modal
 } from 'antd';
 import {
   createServiceEntranceCateSecond,
@@ -77,7 +78,7 @@ class CategoryS extends Component {
     this.doRefresh(values);
   };
   doDelete = (record) => {
-    confirm({
+    Modal.confirm({
       title: `确定删除${record.title}吗？`,
       okType: 'danger',
       onOk: () => {

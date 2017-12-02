@@ -103,6 +103,7 @@ class Filter extends Component {
           <Col span={4} pull={9}>
             <FormItem {...formItemLayout}>
               {getFieldDecorator('courseId', {
+                initialValue: '',
                 onChange: (value) => {
                   this.props.form.setFieldsValue({
                     courseId: value
@@ -110,11 +111,13 @@ class Filter extends Component {
                   this.handleActionClick({key: 'search'})
                 }
               })(
-                <Select placeholder="选择课程" style={{width: '150px'}}>{
-                  this.state.courseList.map(item =>
-                    <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
-                  )
-                }
+                <Select placeholder="选择课程" style={{width: '150px'}}>
+                  {
+
+                    this.state.courseList.map(item =>
+                      <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
+                    )
+                  }
                 </Select>
               )}
             </FormItem>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs} from 'antd';
+import {message, Pagination, Table, Tabs, Modal} from 'antd';
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';
@@ -36,7 +36,7 @@ class CourseCategory extends Component {
 
   //删除
   handleDelete = () => {
-    confirm({
+    Modal.confirm({
       title: `确定删除吗？`,
       okType: 'danger',
       onOk: () => {
@@ -146,7 +146,7 @@ class CourseCategory extends Component {
         </Tabs>
 
         <Update show={this.state.update_display} data={this.state.update_data}
-                onCancel={() => this.setState({update_display: false})}/>
+                onCancel={() =>{ this.handleRefresh(); this.setState({update_display: false})}}/>
         <Detail show={this.state.detail_display} data={this.state.detail_data}
                 onCancel={() => this.setState({detail_display: false})}/>
       </div>

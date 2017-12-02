@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs} from 'antd';
-import {deleteServiceCourseItem, loadServiceCourseItem, loadServiceCourseItemDataSet} from '../../../service/course';
+import {message, Pagination, Table, Tabs, Modal} from 'antd';
+import {deleteServiceCourseItem, loadServiceCourseItem, loadServiceCourseItemDataSet, loadServiceCourseDataSet} from '../../../service/course';
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';
@@ -19,22 +19,10 @@ const table_columns = [
   {title: '普通价格', dataIndex: 'price', key: 'price'},
   {title: '会员价', dataIndex: 'priceVIP', key: 'priceVip'},
   {title: '备注', dataIndex: 'remark', key: 'remark'},
+  {title: '状态', dataIndex: 'status', key: 'status' , render: (text) => text === 1 ? '正常' : '删除' },
 ]
 
 class School extends Component {
-  // 删除记录
-  handleDelete = () => {
-    confirm({
-      title: `确定删除吗？`,
-      okType: 'danger',
-      onOk: () => {
-        deleteServiceCourseItem({id: this.state.selectedRowKeys[0]}).then(data => {
-          message.success("删除成功！");
-          this.handleRefresh();
-        });
-      }
-    })
-  }
 
   constructor(props) {
     super(props);
@@ -50,7 +38,26 @@ class School extends Component {
       detail_display: false,
       detail_data: {},
       recycle: false,
+      courses: []
     };
+  }
+
+  componentDidMount() {
+    this.handleRefresh();
+  }
+
+  // 删除记录
+  handleDelete = () => {
+    Modal.confirm({
+      title: `确定删除吗？`,
+      okType: 'danger',
+      onOk: () => {
+        deleteServiceCourseItem({id: this.state.selectedRowKeys[0]}).then(data => {
+          message.success("删除成功！");
+          this.handleRefresh();
+        });
+      }
+    })
   }
 
   // 获取数据
@@ -58,6 +65,7 @@ class School extends Component {
     this.setState({table_loading: true});
     params = {...params};
     params['status'] = (this.state.recycle ? 2 : 1);
+
     loadServiceCourseItemDataSet(params).then(data => {
       this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
     }).catch((e) => {
@@ -84,9 +92,6 @@ class School extends Component {
     this.handleRefresh(values);
   }
 
-  componentDidMount() {
-    this.handleRefresh();
-  }
 
   // 更新
   handleUpdate = () => {

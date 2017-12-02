@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs} from 'antd';
+import {message, Pagination, Table, Tabs, Modal} from 'antd';
 import {deleteDataUniversity, loadDataUniversity, loadDataUniversityDataSet} from '../../../service/base';
 import Filter from './Filter';
 import New from './New';
@@ -40,7 +40,7 @@ class School extends Component {
 
   // 删除记录
   handleDelete = () => {
-    confirm({
+    Modal.confirm({
       title: `确定删除吗？`,
       okType: 'danger',
       onOk: () => {

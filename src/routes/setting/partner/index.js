@@ -50,7 +50,7 @@ class Partner extends Component {
     this.doRefresh(values);
   };
   doDelete = (record) => {
-    confirm({
+    Modal.confirm({
       title: `确定删除${record.name}吗？`,
       okType: 'danger',
       onOk: () => {

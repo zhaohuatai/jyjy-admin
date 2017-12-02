@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs} from 'antd';
+import {message, Pagination, Table, Tabs, Modal} from 'antd';
 import Filter from './Filter';
 import Update from './Update';
 import Detail from './Detail';
@@ -28,7 +28,7 @@ class Course extends Component {
   //删除
 
   handleDelete = () => {
-    confirm({
+    Modal.confirm({
       title: `确定删除吗？`,
       okType: 'danger',
       onOk: () => {

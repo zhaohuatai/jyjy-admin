@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs} from 'antd';
+import {message, Pagination, Table, Tabs, Modal} from 'antd';
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';
@@ -51,7 +51,7 @@ class ScoreLineProvince extends Component {
   }
   // 删除记录
   handleDelete = () => {
-    confirm({
+    Modal.confirm({
       title: `确定删除序号为${this.state.selectedRowkeys[0]}的数据吗？`,
       okType: 'danger',
       onOk: () => {

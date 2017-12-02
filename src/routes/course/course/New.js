@@ -43,7 +43,7 @@ class New extends Component {
 
     formData = {
       ...formData,
-      introduction: UE.getEditor('new_columnIntroduction').getContent(),
+      introduction: UE.getEditor('new_courseIntroduction').getContent(),
       freePay: formData.freePay ? 0 : 1,
       isTop: formData.isTop ? 1 : 0,
     };
@@ -131,7 +131,7 @@ class New extends Component {
                 >
                   {
                     this.state.teacher_list.map(item => {
-                      return <Option key={item.id} value={`${item.id}`}>{item.name}</Option>
+                      return <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
                     })
                   }
                 </Select>
@@ -234,7 +234,7 @@ class New extends Component {
           <Col span={24}>
             <FormItem {...formItemLayout} label="介绍">
               <LazyLoad height={370}>
-                <UEditor id="introduction"/>
+                <UEditor id="new_courseIntroduction"/>
               </LazyLoad>
             </FormItem>
           </Col>

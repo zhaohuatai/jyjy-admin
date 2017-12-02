@@ -8,9 +8,10 @@ class Update extends Component {
 
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
-
+    formData.id = this.props.data.id;
     updateServiceCourseCategory(formData).then(data => {
       this.props.form.resetFields();
+      this.props.onCancel();
       message.success("更新成功！");
     }).catch((e) => {
       message.error(e);

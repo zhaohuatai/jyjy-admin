@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Icon, Input, message, Row, Select, Switch} from 'antd';
+import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, InputNumber} from 'antd';
 import {createServiceCourseItem, loadServiceCourseDataSet} from '../../../service/course';
 import {loadMemberTeacherDataSet} from "../../../service/member";
 import LazyLoad from 'react-lazy-load';
@@ -87,7 +87,7 @@ class New extends Component {
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="所属课程">
-              {getFieldDecorator('stage', {
+              {getFieldDecorator('courseId', {
                 rules: [
                   {required: true, message: '请选择所属课程'},
                 ]
@@ -104,7 +104,7 @@ class New extends Component {
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="主讲人">
-              {getFieldDecorator('type', {
+              {getFieldDecorator('presenterId', {
                 initialValue: '',
                 rules: [
                   {required: true, message: '请选择主讲人'},
@@ -121,7 +121,7 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="免费课程">
+            <FormItem{...formItemLayout} label="是否免费">
               {getFieldDecorator('freePay', {
                 valuePropName: 'checked',
               })(
@@ -130,29 +130,29 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="普通价格">
-              {getFieldDecorator('phone', {
-                initialValue: '',
+            <FormItem{...formItemLayout} label="普通价格/元">
+              {getFieldDecorator('price', {
+                initialValue: 0,
                 rules: []
               })(
-                <Input/>
+                <InputNumber/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="会员价格">
-              {getFieldDecorator('location', {
-                initialValue: '',
+            <FormItem{...formItemLayout} label="会员价格/元">
+              {getFieldDecorator('priceVIP', {
+                initialValue: 0,
                 rules: []
               })(
-                <Input/>
+                <InputNumber />
               )}
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="课程介绍">
               <LazyLoad height={370}>
-                <UEditor id="update_courseItemIntroduction"/>
+                <UEditor id="new_courseItemIntroduction"/>
               </LazyLoad>
             </FormItem>
           </Col>

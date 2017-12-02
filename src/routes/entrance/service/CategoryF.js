@@ -13,7 +13,7 @@ import {
   Pagination,
   Row,
   Switch,
-  Table
+  Table, Modal
 } from 'antd';
 import {
   createServiceEntranceCateFirst,
@@ -75,7 +75,7 @@ class CategoryF extends Component {
     this.doRefresh(values);
   };
   doDelete = (record) => {
-    confirm({
+    Modal.confirm({
       title: `确定删除${record.name}吗？`,
       okType: 'danger',
       onOk: () => {

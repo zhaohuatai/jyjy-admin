@@ -43,7 +43,7 @@ class Update extends Component {
     let formData = this.props.form.getFieldsValue();
     formData = {
       ...formData,
-      update_courseContent: UE.getEditor('update_courseIntroduction').getContent(),
+      introduction: UE.getEditor('update_courseIntroduction').getContent(),
       freePay: formData.freePay ? 0 : 1,
       isTop: formData.isTop ? 1 : 0,
       id: this.props.data.id
@@ -82,7 +82,7 @@ class Update extends Component {
     )
 
     return(
-      <Modal title="更新高校信息" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
+      <Modal title="更新课程信息" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
         <Row type='flex' style={{ marginBottom: '5px'}}>
           <Col span={24}>
             <FormItem{...formItemLayout} label="课程名">
@@ -109,7 +109,7 @@ class Update extends Component {
           <Col span={24}>
             <FormItem {...formItemLayout} label="选择分类">
               {getFieldDecorator('categoryId', {
-                initialValue: categoryId,
+                initialValue: `${categoryId}`,
                 rules: [
                   {required: true, message: '请选择分类'},
                 ]
@@ -235,7 +235,7 @@ class Update extends Component {
           <Col span={24}>
             <FormItem {...formItemLayout} label="介绍">
               <LazyLoad height={370}>
-                <UEditor id="introduction" initValue={introduction}/>
+                <UEditor id="update_courseIntroduction" initValue={introduction}/>
               </LazyLoad>
             </FormItem>
           </Col>
