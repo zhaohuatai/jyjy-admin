@@ -14,7 +14,7 @@ const TabPane = Tabs.TabPane;
 
 const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
-  {title: '大学', dataIndex: 'university', key: 'university'},
+  {title: '大学id', dataIndex: 'universityId', key: 'universityId'},
   {title: '年份', dataIndex: 'years', key: 'years'},
   {title: '标题', dataIndex: 'title', key: 'title'},
   {title: '内容', dataIndex: 'content', key: 'content', render: (text) => '点击查看'},
