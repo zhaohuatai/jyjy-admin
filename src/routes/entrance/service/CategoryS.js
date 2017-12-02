@@ -79,7 +79,7 @@ class CategoryS extends Component {
   };
   doDelete = (record) => {
     Modal.confirm({
-      title: `确定删除${record.title}吗？`,
+      title: `确定删除吗？`,
       okType: 'danger',
       onOk: () => {
         deleteServiceEntranceCateSecond({id: record.id}).then(data => {
@@ -130,7 +130,7 @@ class CategoryS extends Component {
   }
 
   componentDidMount() {
-    loadEntranceCategoryFDataSet({rows: 1000}).then(data => {
+    loadEntranceCategoryFDataSet({rows: 1000, status: 1}).then(data => {
       if (data.data.dataSet.rows) {
         this.setState({cateFirstList: data.data.dataSet.rows});
       }

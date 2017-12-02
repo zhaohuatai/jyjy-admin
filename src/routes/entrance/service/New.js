@@ -170,7 +170,7 @@ class New extends Component {
               })(
                 <Upload
                   name="file"
-                  action={`${API_DOMAIN}admin/service/entrance/uploadCover`}
+                  action={`${API_DOMAIN}admin/entrance/uploadCover`}
                   listType="picture"
                   withCredentials={true}
                 >

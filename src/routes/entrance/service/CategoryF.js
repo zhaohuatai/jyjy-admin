@@ -74,12 +74,12 @@ class CategoryF extends Component {
     this.setState({table_cur_page: 1});
     this.doRefresh(values);
   };
-  doDelete = (record) => {
+  doDelete = (id) => {
     Modal.confirm({
-      title: `确定删除${record.name}吗？`,
+      title: `确定删除吗？`,
       okType: 'danger',
       onOk: () => {
-        deleteServiceEntranceCateFirst({id: record.id}).then(data => {
+        deleteServiceEntranceCateFirst({id: id}).then(data => {
           message.success("删除成功！");
           this.doRefresh();
         }).catch((e) => {
@@ -152,7 +152,7 @@ class CategoryF extends Component {
         title: '操作', key: 'action', render: (text, record) => {
           return (
             <Button shape="circle" type='danger' icon='minus' size='small'
-                    onClick={() => this.handleActionClick({key: 'delete', record: record})}/>)
+                    onClick={() => this.handleActionClick({key: 'delete', id: record.id})}/>)
         }
       }
     ];
