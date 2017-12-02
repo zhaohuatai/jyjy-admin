@@ -8,22 +8,34 @@ import {
   updateServiceCourseItem
 } from '../../../service/course';
 import LazyLoad from 'react-lazy-load';
-import '../../../utils/aliupload/aliyun-sdk.min';
-import '../../../utils/aliupload/vod-sdk-upload-1.0.6.min';
+
+// import '../../../utils/aliupload/aliyun-sdk.min';
+// import '../../../utils/aliupload/vod-sdk-upload-1.1.0.min';
+
 import {loadMemberTeacherDataSet} from "../../../service/member";
 
 const FormItem = Form.Item;
 
+// 创建 上传实例 变量
+var uploader;
+
 class Update extends Component {
   constructor(props) {
     super(props);
-    this.uploader = {};
+    //this.uploader = {};
     this.state = {
       fileList: [],
       courseList: [],
       presenterList: [],
       uploading: false,
       videoId: {},
+      aliVideoAuthDto: {
+        requestId: '',
+        uploadAddress: '',
+        uploadAuth: '',
+        videoId: ''
+      },
+      upload_progress: ''
     }
   }
 
@@ -41,44 +53,36 @@ class Update extends Component {
     })
 
     let _this = this;
-    this.uploader = new VODUpload({
-      // 开始上传
-      'onUploadstarted': function (uploadInfo) {
-        loadUploadVideoAuth({
-          courseItemId: _this.props.data.id,
-          videoName: uploadInfo.file.name + '.mp4',
-          videoTitle: uploadInfo.file.name + '.mp4',
-          videoTags: uploadInfo.file.name + '.mp4',
-          videoDesc: uploadInfo.file.name + '.mp4',
-        }).then(data => {
-          _this.state.videoId = data.data.aliVideoAuthDto.videoId;
-          _this.uploader.setUploadAuthAndAddress(uploadInfo, data.data.aliVideoAuthDto.uploadAuth, data.data.aliVideoAuthDto.uploadAddress);
-          console.log("onUploadStarted:" + uploadInfo.file.name + ", endpoint:" + uploadInfo.endpoint + ", bucket:" + uploadInfo.bucket + ", object:" + uploadInfo.object);
-        });
-      },
-      // 文件上传成功
-      'onUploadSucceed': function (uploadInfo) {
-        console.log("onUploadSucceed: " + uploadInfo.file.name + ", endpoint:" + uploadInfo.endpoint + ", bucket:" + uploadInfo.bucket + ", object:" + JSON.stringify(uploadInfo.object));
-      },
+
+    uploader = new VODUpload({
       // 文件上传失败
       'onUploadFailed': function (uploadInfo, code, message) {
-        console.log("onUploadFailed: file:" + uploadInfo.file.name + ",code:" + code + ", message:" + JSON.stringify(message));
+        message.fail('上传失败，请稍后再试');
+        //console.log("onUploadFailed: file:" + uploadInfo.file.name + ",code:" + code + ", message:" + message);
       },
-      // 文件上传进度，单位：字节
+      // 文件上传完成
+      'onUploadSucceed': function (uploadInfo) {
+        _this.setState({ uploading: false})
+        message.success('上传成功');
+        //console.log("onUploadSucceed: " + uploadInfo.file.name + ", endpoint:" + uploadInfo.endpoint + ", bucket:" + uploadInfo.bucket + ", object:" + uploadInfo.object);
+      },
+      // 文件上传进度
       'onUploadProgress': function (uploadInfo, totalSize, uploadedSize) {
-        console.log("onUploadProgress:file:" + uploadInfo.file.name + ", fileSize:" + totalSize + ", percent:" + Math.ceil(uploadedSize * 100 / totalSize) + "%");
+        //console.log("onUploadProgress:file:" + uploadInfo.file.name + ", fileSize:" + totalSize + ", percent:" + Math.ceil(uploadedSize * 100 / totalSize) + "%");
+        _this.setState({ upload_progress: Math.ceil(uploadedSize * 100 / totalSize) + "%"})
       },
-      // 上传凭证超时
+      // STS临时账号会过期，过期时触发函数
       'onUploadTokenExpired': function () {
-        console.log("onUploadTokenExpired");
-        reloadUploadVideoAuth({
-          videoId: _this.videoId,
-        }).then(data => {
-          _this.uploader.resumeUploadWithAuth(data.data.aliVideoAuth);
-        })
+        message.success('上传凭证过期，请重试');
+        //console.log("onUploadTokenExpired");
+      },
+      // 开始上传
+      'onUploadstarted': function (uploadInfo) {
+        _this.setState({ uploading: true });
+        uploader.setUploadAuthAndAddress(uploadInfo, _this.state.aliVideoAuthDto.uploadAuth, _this.state.aliVideoAuthDto.uploadAddress);
       }
     });
-    this.uploader.init();
+    uploader.init();
   }
 
   normFile = (e) => {
@@ -113,7 +117,8 @@ class Update extends Component {
   }
 
   doUpload = () => {
-    this.uploader.startUpload();
+    console.log('start');
+    uploader.startUpload();
   };
 
   render() {
@@ -151,11 +156,29 @@ class Update extends Component {
       beforeUpload: (file) => {
         let userData = '{"Vod":{"UserData":"{"IsShowWaterMark":"false","Priority":"7"}"}}';
 
-        this.uploader.addFile(file, null, null, null, userData);
+        console.log(file);
+
+        uploader.addFile(file, null, null, null, userData);
+
+        // 获取上传凭证
+        loadUploadVideoAuth({
+          courseItemId: this.props.data.id,
+          videoName: file.name,
+          videoTitle: file.name,
+          videoTags: file.name,
+          videoDesc: file.name,
+        }).then(data => {
+          console.log(data);
+          //_this.state.videoId = data.data.aliVideoAuthDto.videoId;
+          //uploader.setUploadAuthAndAddress(uploadInfo, data.data.aliVideoAuthDto.uploadAuth, data.data.aliVideoAuthDto.uploadAddress);
+          //console.log("onUploadStarted:" + uploadInfo.file.name + ", endpoint:" + uploadInfo.endpoint + ", bucket:" + uploadInfo.bucket + ", object:" + uploadInfo.object);
+          this.setState({aliVideoAuthDto: data.data.aliVideoAuthDto});
+        });
 
         this.setState(({fileList}) => ({
           fileList: [...fileList, file],
         }));
+
         return false;
       },
       fileList: this.state.fileList,
@@ -259,9 +282,9 @@ class Update extends Component {
                   <Icon type="upload"/> 选择文件
                 </Button>
               </Upload>
-              <Button type="primary" onClick={() => this.doUpload} disabled={this.state.fileList.length === 0}
+              <Button type="primary" onClick={this.doUpload} disabled={this.state.fileList.length === 0}
                       loading={this.state.uploading}>
-                {this.state.uploading ? '正在上传...' : '开始上传'}
+                {this.state.uploading ? this.state.upload_progress : '开始上传'}
               </Button>
             </FormItem>
           </Col>
