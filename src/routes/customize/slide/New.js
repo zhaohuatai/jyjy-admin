@@ -59,6 +59,18 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
+            <FormItem{...formItemLayout} label="显示位置">
+              {getFieldDecorator('location',{
+                initialValue: '',
+                rules: [
+                  { required: true, message: '请输入显示位置id' },
+                ]
+              })(
+                <Input />
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
             <FormItem{...formItemLayout} label="图片">
               {getFieldDecorator('imgUrl', {
                 valuePropName: 'fileList',

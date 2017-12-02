@@ -4,6 +4,7 @@ import {deleteCaseSuccess, loadCaseSuccess, loadCaseSuccessDataSet} from '../../
 import Filter from './Filter';
 import Update from './Update';
 import Detail from './Detail';
+import New from './New';
 import {IMG_DOMAIN} from "../../../utils/config";
 
 const TabPane = Tabs.TabPane;
@@ -132,8 +133,10 @@ class Success extends Component {
             <Pagination style={{marginTop: '10px'}} showQuickJumper defaultCurrent={1} current={table_cur_page}
                         defaultPageSize={20} total={table_total} onChange={this.onChangeTablePage}/>,
           </TabPane>
+          <TabPane tab="新建" key="2">
+            <New />
+          </TabPane>
         </Tabs>
-
         <Update show={this.state.update_display} data={this.state.update_data}
                 onCancel={() => this.setState({update_display: false})}/>
         <Detail show={this.state.detail_display} data={this.state.detail_data}
