@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Input, message, Modal, Row} from 'antd';
+import {Button, Col, Form, Input, message, Modal, Row, Upload} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
 import {updateMemberTeacher} from '../../../service/member';
 import LazyLoad from 'react-lazy-load';
@@ -39,7 +39,7 @@ class New extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const { rank, introduction} = this.props.data.memberTeacher;
+    const {rank, introduction} = this.props.data.memberTeacher;
 
     const formItemLayout = {
       labelCol: {
@@ -97,7 +97,7 @@ class New extends Component {
                 initialValue: '',
                 rules: []
               })(
-                <Input />
+                <Input/>
               )}
             </FormItem>
           </Col>
