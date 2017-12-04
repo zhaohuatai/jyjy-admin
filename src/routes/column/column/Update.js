@@ -46,7 +46,7 @@ class New extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {title, introduction, hint, presenterId, sharePoints, freePay, price, priceVIP, learningCount, isTop, showIndex, remark} = this.props.data;
+    const {title, introduction, hint, presenterId, sharePoints, learningCount, isTop, showIndex, remark} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -126,37 +126,6 @@ class New extends Component {
               <LazyLoad height={370}>
                 <UEditor id="update_columnIntroduction" initValue={introduction}/>
               </LazyLoad>
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem {...formItemLayout} label="免费课程">
-              {getFieldDecorator('freePay', {
-                valuePropName: 'checked',
-                initialValue: !freePay,
-                rules: []
-              })(
-                <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem {...formItemLayout} label="价格">
-              {getFieldDecorator('price', {
-                initialValue: price,
-                rules: []
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem {...formItemLayout} label="会员价格">
-              {getFieldDecorator('priceVIP', {
-                initialValue: priceVIP,
-                rules: []
-              })(
-                <Input/>
-              )}
             </FormItem>
           </Col>
           <Col span={24}>

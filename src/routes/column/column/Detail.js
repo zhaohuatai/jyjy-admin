@@ -8,7 +8,7 @@ const Panel = Collapse.Panel;
 class Detail extends Component {
 
   render() {
-    const {title, coverUrl, introduction, hint, sharePoints, learningCountActual, favoriteCount, presenterName, freePay, price, priceVIP, learningCount, isTop, showIndex, remark} = this.props.data;
+    const {title, coverUrl, introduction, hint, sharePoints, learningCountActual, favoriteCount, presenterName, learningCount, isTop, showIndex, remark} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -62,22 +62,6 @@ class Detail extends Component {
               </Collapse>
             </FormItem>
           </Col>
-          <Col span={24}>
-            <FormItem{...formItemLayout} label="免费">
-              {freePay ? "否" : "是"}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem{...formItemLayout} label="普通价格">
-              <p>{price}</p>
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem{...formItemLayout} label="会员价格">
-              <p>{priceVIP}</p>
-            </FormItem>
-          </Col>
-
           <Col span={24}>
             <FormItem{...formItemLayout} label="前台显示学习人数">
               <p>{learningCount}</p>
