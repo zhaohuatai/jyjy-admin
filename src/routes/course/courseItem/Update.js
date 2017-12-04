@@ -1,18 +1,12 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Icon, Input, message, Modal, Row, Select, Switch, Upload} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import {
-  loadServiceCourseDataSet,
-  loadUploadVideoAuth,
-  reloadUploadVideoAuth,
-  updateServiceCourseItem
-} from '../../../service/course';
+import {loadServiceCourseDataSet, loadUploadVideoAuth, updateServiceCourseItem} from '../../../service/course';
 import LazyLoad from 'react-lazy-load';
+import {loadMemberTeacherDataSet} from "../../../service/member";
 
 // import '../../../utils/aliupload/aliyun-sdk.min';
 // import '../../../utils/aliupload/vod-sdk-upload-1.1.0.min';
-
-import {loadMemberTeacherDataSet} from "../../../service/member";
 
 const FormItem = Form.Item;
 
@@ -103,7 +97,7 @@ class Update extends Component {
       isTop: formData.isTop ? 1 : 0,
     };
 
-    if (formData.coverUrl) {
+    if (Object.prototype.toString.call(formData.coverUrl) === '[object Array]') {
       formData.coverUrl = formData.coverUrl[0].response.data.image;
     }
 

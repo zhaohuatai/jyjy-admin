@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, Upload} from 'antd';
-import {createColumnChannel} from "../../../service/column";
 import {loadMemberTeacherDataSet} from "../../../service/member";
 import UEditor from "../../../components/editor/UEditor";
 import LazyLoad from 'react-lazy-load';
@@ -28,7 +27,7 @@ class New extends Component {
       isTop: formData.isTop ? 1 : 0,
     };
 
-    if (formData.coverUrl) {
+    if (Object.prototype.toString.call(formData.coverUrl) === '[object Array]') {
       formData.coverUrl = formData.coverUrl[0].response.data.image;
     }
 

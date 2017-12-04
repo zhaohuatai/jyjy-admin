@@ -12,8 +12,14 @@ class New extends Component {
     let formData = this.props.form.getFieldsValue();
     formData = {
       ...formData,
-      detail: UE.getEditor('teacher_introduction').getContent(),
+      introduction: UE.getEditor('teacher_updateIntroduction').getContent(),
       id: this.props.data.id,
+    }
+
+    if (Object.prototype.toString.call(formData.profilePicture) === '[object Array]') {
+      formData.profilePicture = formData.profilePicture[0].response.data.image;
+    } else {
+      formData.profilePicture = ''
     }
 
     updateMemberTeacher(formData).then(data => {
@@ -31,7 +37,6 @@ class New extends Component {
   }
 
   normFile = (e) => {
-    console.log('Upload event:', e);
     if (Array.isArray(e)) {
       return e.file;
     }

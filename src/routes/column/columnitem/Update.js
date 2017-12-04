@@ -49,7 +49,7 @@ class New extends Component {
       status: 1
     };
 
-    if (formData.coverUrl) {
+    if (Object.prototype.toString.call(formData.coverUrl) === '[object Array]') {
       formData.coverUrl = formData.coverUrl[0].response.data.image;
     }
 
