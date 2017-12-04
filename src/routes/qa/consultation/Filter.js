@@ -31,7 +31,6 @@ class Filter extends Component {
         this.props.doReplay();
         break;
       case 'recycle' :
-        this.setState({recycleStr: !this.state.recycleStr});
         this.props.doRecycle();
         break;
       default :

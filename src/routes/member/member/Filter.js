@@ -23,7 +23,6 @@ class Filter extends Component {
         this.props.doUpdate();
         break;
       case 'recycle' :
-        this.setState({recycleStr: !this.state.recycleStr});
         this.props.doRecycle();
         break;
       default :
@@ -64,16 +63,7 @@ class Filter extends Component {
     return (
       <div>
         <Row type='flex' justify='end' style={{marginBottom: '5px'}}>
-          <Col span={4} pull={10}>
-            <FormItem>
-              {getFieldDecorator('nickName', {
-                initialValue: ''
-              })(
-                <Input size='default' addonBefore='昵称' onPressEnter={() => this.handleActionClick({key: 'nickName'})}/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={4} pull={10}>
+          <Col span={4} pull={14}>
             <FormItem>
               {getFieldDecorator('name', {
                 initialValue: ''
