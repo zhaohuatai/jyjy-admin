@@ -64,7 +64,7 @@ class New extends Component {
               {getFieldDecorator('name', {
                 initialValue: '',
                 rules: [
-                  {required: true, message: '教师姓名'},
+                  {required: true, message: '请输入'},
                 ]
               })(
                 <Input/>
@@ -105,6 +105,30 @@ class New extends Component {
               {getFieldDecorator('phone', {
                 initialValue: '',
                 rules: []
+              })(
+                <Input/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="账号">
+              {getFieldDecorator('username', {
+                initialValue: '',
+                rules: [
+                  {required: true, message: '请输入'},
+                ]
+              })(
+                <Input/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="密码">
+              {getFieldDecorator('password', {
+                initialValue: '',
+                rules: [
+                  {required: true, message: '请输入'},
+                ]
               })(
                 <Input/>
               )}
