@@ -38,7 +38,7 @@ class IndexLayout extends React.Component {
 
   componentDidMount() {
     let path = hashHistory.getCurrentLocation().pathname;
-    loadCategoryTree({sort: 'showIndex', rows: 10000}, data => {
+    loadCategoryTree({}, data => {
       this.setState({
         menudata: data.data.navMenuData,
         selectedkey: [path]

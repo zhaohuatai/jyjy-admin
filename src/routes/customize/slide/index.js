@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs, Modal} from 'antd';
+import {message, Modal, Pagination, Table, Tabs} from 'antd';
 import {deletePubSlide, loadPubSlide, loadPubSlideDataSet} from '../../../service/slide';
 import Filter from './Filter';
 import New from './New';
@@ -11,7 +11,7 @@ const TabPane = Tabs.TabPane;
 const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
   {title: '标题', dataIndex: 'title', key: 'title'},
-  {title: '图片路径', dataIndex: 'imgUrl', key: 'imgUrl', render: () => '点击查看' },
+  {title: '图片', dataIndex: 'imgUrl', key: 'imgUrl', render: () => '点击查看'},
   {title: '位置', dataIndex: 'location', key: 'location'},
   {title: '权重', dataIndex: 'showWeight', key: 'showWeight'},
   {title: '备注', dataIndex: 'remark', key: 'remark'},
