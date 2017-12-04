@@ -15,7 +15,6 @@ class New extends Component {
       id: this.props.data.memberTeacher.id,
     }
 
-
     updateMemberTeacher(formData).then(data => {
       this.props.form.resetFields();
       this.props.onCancel();
@@ -59,19 +58,61 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="排名"
+              label="教师姓名">
+              {getFieldDecorator('name', {
+                initialValue: '',
+                rules: [
+                  {required: true, message: '教师姓名'},
+                ]
+              })(
+                <Input/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem
+              {...formItemLayout}
+              label="头像"
             >
-              {getFieldDecorator('rank', {
-                initialValue: rank,
+              {getFieldDecorator('profilePicture', {
+                valuePropName: 'fileList',
+                getValueFromEvent: this.normFile,
+              })(
+                <Upload
+                  name="file"
+                  action={`${API_DOMAIN}admin/member/memberTeacher/uploadProfilePicture`}
+                  listType="picture"
+                  withCredentials={true}
+                >
+                  <Button>
+                    <Icon type="upload"/> 点击上传
+                  </Button>
+                </Upload>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="电话">
+              {getFieldDecorator('phone', {
+                initialValue: '',
                 rules: []
               })(
                 <Input />
               )}
             </FormItem>
           </Col>
-
           <Col span={24}>
-            <FormItem{...formItemLayout} label="学校简介">
+            <FormItem{...formItemLayout} label="排名">
+              {getFieldDecorator('rank', {
+                initialValue: rank,
+                rules: []
+              })(
+                <Input/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="教师简介">
               <LazyLoad height={370}>
                 <UEditor id="teacher_introduction" initValue={introduction}/>
               </LazyLoad>

@@ -32,8 +32,7 @@ class New extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-    }
+    this.state = {}
   }
 
   normFile = (e) => {
@@ -61,9 +60,7 @@ class New extends Component {
       <div>
         <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="教师姓名">
+            <FormItem{...formItemLayout} label="教师姓名">
               {getFieldDecorator('name', {
                 initialValue: '',
                 rules: [
@@ -75,10 +72,7 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="头像"
-            >
+            <FormItem{...formItemLayout} label="头像">
               {getFieldDecorator('profilePicture', {
                 valuePropName: 'fileList',
                 getValueFromEvent: this.normFile,
@@ -97,75 +91,27 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="排名"
-            >
+            <FormItem{...formItemLayout} label="排名">
               {getFieldDecorator('rank', {
                 initialValue: '',
                 rules: []
               })(
-                <Input />
+                <Input/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="电话"
-            >
+            <FormItem{...formItemLayout} label="电话">
               {getFieldDecorator('phone', {
                 initialValue: '',
                 rules: []
               })(
-                <Input />
+                <Input/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="邮箱"
-            >
-              {getFieldDecorator('email', {
-                initialValue: '',
-                rules: []
-              })(
-                <Input />
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="账号"
-            >
-              {getFieldDecorator('account', {
-                initialValue: '',
-                rules: []
-              })(
-                <Input />
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="密码"
-            >
-              {getFieldDecorator('password', {
-                initialValue: '',
-                rules: []
-              })(
-                <Input />
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label=" 个人简介"
-            >
+            <FormItem{...formItemLayout} label="教师简介">
               <LazyLoad height={370}>
                 <UEditor id="teacher_introduction"/>
               </LazyLoad>
