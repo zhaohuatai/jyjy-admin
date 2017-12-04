@@ -37,7 +37,7 @@ class New extends Component {
   }
 
   componentDidMount() {
-    loadInterlocutionCategoryDataSet({rows: 10000}).then(data => {
+    loadInterlocutionCategoryDataSet({rows: 10000, status: 1}).then(data => {
       this.setState({category: data.data.dataSet.rows})
     })
   }

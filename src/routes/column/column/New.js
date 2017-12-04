@@ -34,12 +34,12 @@ class New extends Component {
 
     console.log(formData);
 
-    // createColumnChannel(formData).then(data => {
-    //   this.props.form.resetFields();
-    //   message.success("创建成功！");
-    // }).catch((e) => {
-    //   message.error(e);
-    // })
+    createColumnChannel(formData).then(data => {
+      this.props.form.resetFields();
+      message.success("创建成功！");
+    }).catch((e) => {
+      message.error(e);
+    })
   }
 
   normFile = (e) => {
@@ -139,37 +139,6 @@ class New extends Component {
               <LazyLoad height={370}>
                 <UEditor id="new_columnIntroduction"/>
               </LazyLoad>
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem {...formItemLayout} label="是否免费">
-              {getFieldDecorator('freePay', {
-                valuePropName: 'checked',
-                initialValue: false,
-                rules: []
-              })(
-                <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem {...formItemLayout} label="价格">
-              {getFieldDecorator('price', {
-                initialValue: '',
-                rules: []
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem {...formItemLayout} label="会员价格">
-              {getFieldDecorator('priceVIP', {
-                initialValue: '',
-                rules: []
-              })(
-                <Input/>
-              )}
             </FormItem>
           </Col>
           <Col span={24}>
