@@ -26,12 +26,7 @@ class Teacher extends Component {
       table_total: 0,
       search_form: {},
       update_display: false,
-      update_data: {
-        memberTeacher:{
-          rank: '',
-          introduction: ''
-        }
-      },
+      update_data: {},
       detail_display: false,
       detail_data: {},
       recycle: false,

@@ -40,7 +40,7 @@ class New extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {rank, id, name, introduction} = this.props.data;
+    const {rank, name, introduction} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
