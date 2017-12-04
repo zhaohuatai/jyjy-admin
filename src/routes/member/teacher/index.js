@@ -4,6 +4,7 @@ import {deleteMemberTeacher, loadMemberTeacher, loadMemberTeacherDataSet} from '
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';
+import {IMG_DOMAIN} from "../../../utils/config";
 
 const TabPane = Tabs.TabPane;
 
@@ -12,7 +13,12 @@ const table_columns = [
   {title: '姓名', dataIndex: 'name', key: 'name'},
   {title: '电话', dataIndex: 'phone', key: 'phone'},
   {title: '排名', dataIndex: 'rank', key: 'rank'},
-  {title: '头像', dataIndex: 'profilePicture', key: 'profilePicture', render: (text) => <img src={text} style={{height: '40px', width: '40px'}} />},
+  {
+    title: '头像',
+    dataIndex: 'profilePicture',
+    key: 'profilePicture',
+    render: (text) => <img src={IMG_DOMAIN + text} style={{height: '40px', width: '40px'}}/>
+  },
 ]
 
 class Teacher extends Component {
@@ -144,7 +150,7 @@ class Teacher extends Component {
                 onCancel={() => {
                   this.setState({update_display: false});
                   this.handleRefresh();
-                  }
+                }
                 }/>
       </div>
     );

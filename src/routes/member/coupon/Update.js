@@ -26,7 +26,7 @@ class Update extends Component {
       formData.mainImage = formData.mainImage[0].response.data.image;
     }
 
-    if (formData.thumbNailImage) {
+    if (Object.prototype.toString.call(formData.thumbNailImage) === '[object Array]') {
       formData.thumbNailImage = formData.thumbNailImage[0].response.data.image;
     }
 
