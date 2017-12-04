@@ -86,7 +86,6 @@ class New extends Component {
     formData = {
       ...formData,
       introduction: UE.getEditor('new_serviceEntrance').getContent(),
-      freePay: formData.freePay ? 0 : 1,
       isTop: formData.isTop ? 1 : 0,
     };
 
@@ -198,45 +197,6 @@ class New extends Component {
               <LazyLoad height={370}>
                 <UEditor id="new_serviceEntrance"/>
               </LazyLoad>
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem {...formItemLayout} label="免费服务">
-              {getFieldDecorator('freePay', {
-                valuePropName: 'checked',
-                rules: []
-              })(
-                <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem{...formItemLayout} label="价格">
-              {getFieldDecorator('price', {
-                initialValue: '',
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem{...formItemLayout} label="会员价格">
-              {getFieldDecorator('priceVIP', {
-                initialValue: '',
-                rules: []
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem {...formItemLayout} label="是否置顶">
-              {getFieldDecorator('isTop', {
-                valuePropName: 'checked',
-                initialValue: false,
-              })(
-                <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
-              )}
             </FormItem>
           </Col>
           <Col span={24}>
