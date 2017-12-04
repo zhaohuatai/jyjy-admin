@@ -10,9 +10,9 @@ const TabPane = Tabs.TabPane;
 const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
   {title: '姓名', dataIndex: 'name', key: 'name'},
+  {title: '电话', dataIndex: 'phone', key: 'phone'},
   {title: '排名', dataIndex: 'rank', key: 'rank'},
   {title: '头像', dataIndex: 'profilePicture', key: 'profilePicture', render: (text) => <img src={text} style={{height: '40px', width: '40px'}} />},
-  {title: '创建时间', dataIndex: 'createTime', key: 'createTime'},
 ]
 
 class Teacher extends Component {
@@ -26,12 +26,7 @@ class Teacher extends Component {
       table_total: 0,
       search_form: {},
       update_display: false,
-      update_data: {
-        memberTeacher:{
-          rank: '',
-          introduction: ''
-        }
-      },
+      update_data: {},
       detail_display: false,
       detail_data: {},
       recycle: false,

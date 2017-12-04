@@ -23,7 +23,6 @@ class Filter extends Component {
         this.props.doUpdate();
         break;
       case 'recycle' :
-        this.setState({recycleStr: !this.state.recycleStr});
         this.props.doRecycle();
         break;
       default :

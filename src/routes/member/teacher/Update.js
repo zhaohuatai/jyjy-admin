@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Input, message, Modal, Row} from 'antd';
+import {Button, Col, Form, Icon, Input, message, Modal, Row, Upload} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
 import {updateMemberTeacher} from '../../../service/member';
 import LazyLoad from 'react-lazy-load';
+import {API_DOMAIN} from "../../../utils/config";
 
 const FormItem = Form.Item;
 
@@ -12,9 +13,8 @@ class New extends Component {
     formData = {
       ...formData,
       detail: UE.getEditor('teacher_introduction').getContent(),
-      id: this.props.data.memberTeacher.id,
+      id: this.props.data.id,
     }
-
 
     updateMemberTeacher(formData).then(data => {
       this.props.form.resetFields();
@@ -40,7 +40,7 @@ class New extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const { rank, introduction} = this.props.data.memberTeacher;
+    const {rank, name, introduction} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -57,21 +57,48 @@ class New extends Component {
       <Modal title="更新教师信息" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
         <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="排名"
-            >
+            <FormItem{...formItemLayout} label="教师姓名">
+              {getFieldDecorator('name', {
+                initialValue: name,
+                rules: [
+                  {required: true, message: '教师姓名'},
+                ]
+              })(
+                <Input/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="头像">
+              {getFieldDecorator('profilePicture', {
+                valuePropName: 'fileList',
+                getValueFromEvent: this.normFile,
+              })(
+                <Upload
+                  name="file"
+                  action={`${API_DOMAIN}admin/member/memberTeacher/uploadProfilePicture`}
+                  listType="picture"
+                  withCredentials={true}
+                >
+                  <Button>
+                    <Icon type="upload"/> 点击上传
+                  </Button>
+                </Upload>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="排名">
               {getFieldDecorator('rank', {
                 initialValue: rank,
                 rules: []
               })(
-                <Input />
+                <Input/>
               )}
             </FormItem>
           </Col>
-
           <Col span={24}>
-            <FormItem{...formItemLayout} label="学校简介">
+            <FormItem{...formItemLayout} label="教师简介">
               <LazyLoad height={370}>
                 <UEditor id="teacher_introduction" initValue={introduction}/>
               </LazyLoad>
