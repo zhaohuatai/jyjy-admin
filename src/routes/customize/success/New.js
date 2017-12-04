@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {API_DOMAIN} from '../../../utils/config';
 import {Button, Col, Form, Icon, Input, message, Row, Upload} from 'antd';
-import UEditor from "../../../components/editor/UEditor";
-import LazyLoad from 'react-lazy-load';
 import {createCaseSuccess} from "../../../service/customize";
 
 
@@ -18,7 +16,7 @@ class New extends Component {
       content: UE.getEditor('new_caseContent').getContent(),
     }
 
-    if (formData.thumbNailImage) {
+    if (Object.prototype.toString.call(formData.thumbNailImage) === '[object Array]') {
       formData.thumbNailImage = formData.thumbNailImage[0].response.data.image;
     }
 

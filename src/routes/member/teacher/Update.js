@@ -12,8 +12,14 @@ class New extends Component {
     let formData = this.props.form.getFieldsValue();
     formData = {
       ...formData,
-      detail: UE.getEditor('teacher_introduction').getContent(),
+      introduction: UE.getEditor('teacher_updateIntroduction').getContent(),
       id: this.props.data.id,
+    }
+
+    if (Object.prototype.toString.call(formData.profilePicture) === '[object Array]') {
+      formData.profilePicture = formData.profilePicture[0].response.data.image;
+    } else {
+      formData.profilePicture = ''
     }
 
     updateMemberTeacher(formData).then(data => {
@@ -31,7 +37,6 @@ class New extends Component {
   }
 
   normFile = (e) => {
-    console.log('Upload event:', e);
     if (Array.isArray(e)) {
       return e.file;
     }
@@ -40,7 +45,7 @@ class New extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {rank, name, introduction} = this.props.data;
+    const {rank, name, phone, introduction} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -56,18 +61,6 @@ class New extends Component {
     return (
       <Modal title="更新教师信息" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
         <Row type='flex' style={{marginBottom: '5px'}}>
-          <Col span={24}>
-            <FormItem{...formItemLayout} label="教师姓名">
-              {getFieldDecorator('name', {
-                initialValue: name,
-                rules: [
-                  {required: true, message: '教师姓名'},
-                ]
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="头像">
               {getFieldDecorator('profilePicture', {
@@ -98,9 +91,19 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
+            <FormItem{...formItemLayout} label="电话">
+              {getFieldDecorator('phone', {
+                initialValue: phone,
+                rules: []
+              })(
+                <Input/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
             <FormItem{...formItemLayout} label="教师简介">
               <LazyLoad height={370}>
-                <UEditor id="teacher_introduction" initValue={introduction}/>
+                <UEditor id="teacher_updateIntroduction" initValue={introduction}/>
               </LazyLoad>
             </FormItem>
           </Col>

@@ -42,8 +42,7 @@ class New extends Component {
     formData.firstRate ? formData.firstRate = 1 : formData.firstRate = 0;
     formData.id = this.props.data.id;
 
-    console.log(formData);
-    if (formData.imgUrl) {
+    if (Object.prototype.toString.call(formData.imgUrl) === '[object Array]') {
       formData.imgUrl = formData.imgUrl[0].response.data.image;
     }
 

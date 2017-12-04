@@ -64,7 +64,7 @@ class Partner extends Component {
   doAdd = () => {
     let formData = this.props.form.getFieldsValue();
 
-    if (formData.addImgUrl) {
+    if (Object.prototype.toString.call(formData.addImgUrl) === '[object Array]') {
       formData.addImgUrl = formData.addImgUrl[0].response.data.image;
     }
 

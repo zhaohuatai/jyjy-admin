@@ -12,15 +12,14 @@ class New extends Component {
     let formData = this.props.form.getFieldsValue();
     formData = {
       ...formData,
-      introduction: UE.getEditor('teacher_introduction').getContent(),
+      introduction: UE.getEditor('teacher_newIntroduction').getContent(),
     };
 
-    if (formData.profilePicture) {
+    if (Object.prototype.toString.call(formData.profilePicture) === '[object Array]') {
       formData.profilePicture = formData.profilePicture[0].response.data.image;
     } else {
       formData.profilePicture = ''
     }
-    console.log(formData);
 
     createMemberTeacher(formData).then(data => {
       this.props.form.resetFields();
@@ -137,7 +136,7 @@ class New extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="教师简介">
               <LazyLoad height={370}>
-                <UEditor id="teacher_introduction"/>
+                <UEditor id="teacher_newIntroduction"/>
               </LazyLoad>
             </FormItem>
           </Col>

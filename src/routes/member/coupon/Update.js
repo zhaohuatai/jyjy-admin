@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {API_DOMAIN} from '../../../utils/config';
-import {Button, Col, Form, Icon, Input, message, Modal, Row, Upload, Switch} from 'antd';
+import {Button, Col, Form, Icon, Input, message, Modal, Row, Switch, Upload} from 'antd';
 import {up} from "../../../service/coupon";
 
 const FormItem = Form.Item;
@@ -22,7 +22,7 @@ class Update extends Component {
       isEnabled: formData.isEnabled ? 0 : 1,
     };
 
-    if (formData.mainImage) {
+    if (Object.prototype.toString.call(formData.mainImage) === '[object Array]') {
       formData.mainImage = formData.mainImage[0].response.data.image;
     }
 

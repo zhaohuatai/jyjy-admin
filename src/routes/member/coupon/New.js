@@ -9,13 +9,13 @@ class New extends Component {
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
 
-    if (formData.mainImage) {
+    if (Object.prototype.toString.call(formData.mainImage) === '[object Array]') {
       formData.mainImage = formData.mainImage[0].response.data.image;
     } else {
       formData.mainImage = ''
     }
 
-    if (formData.thumbNailImage) {
+    if (Object.prototype.toString.call(formData.thumbNailImage) === '[object Array]') {
       formData.thumbNailImage = formData.thumbNailImage[0].response.data.image;
     } else {
       formData.thumbNailImage = ''
