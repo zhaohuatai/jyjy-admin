@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs, Modal} from 'antd';
+import {message, Modal, Pagination, Table, Tabs} from 'antd';
 import {deleteDataUniversity, loadDataUniversity, loadDataUniversityDataSet} from '../../../service/base';
 import Filter from './Filter';
 import New from './New';
@@ -14,7 +14,11 @@ const table_columns = [
   {title: '排名', dataIndex: 'rank', key: 'rank'},
   {title: '省份', dataIndex: 'province', key: 'province'},
   {title: '学校层次', dataIndex: 'stage', key: 'stage'},
-  {title: '双一流', dataIndex: 'firstRate', key: 'firstRate'},
+  {
+    title: '双一流', dataIndex: 'firstRate', key: 'firstRate', render: (text) => {
+    return text === 1 ? "是" : "否"
+  }
+  },
   {title: '招生电话', dataIndex: 'phone', key: 'phone'},
   {title: '学校隶属', dataIndex: 'attached', key: 'attached'},
   {title: '地址', dataIndex: 'location', key: 'location'},

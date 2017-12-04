@@ -41,8 +41,8 @@ import VipCard from "./routes/setting/card";
 
 import Appointment from "./routes/entrance/appointment/index";
 
-import Interlocution from './routes/qa/interlocution';
-import EnrollSelf from './routes/qa/consultation';
+import Entrance from './routes/qa/entrance';
+import EnrollSelf from './routes/qa/enrollSelf';
 
 import Award from './routes/enrollSelf/award';
 import BigData from './routes/enrollSelf/bigdata';
@@ -87,7 +87,7 @@ const Routers = () => (
       </Route>
 
       <Route path='/qa'>
-        <Route path="entrance-service" component={Interlocution}/>
+        <Route path="entrance-service" component={Entrance}/>
         <Route path="enroll-self" component={EnrollSelf}/>
       </Route>
 

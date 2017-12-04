@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Input, message, Modal, Row, Select} from 'antd';
+import {Button, Col, Form, message, Modal, Row} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
 import {answerConsultation} from "../../../service/interlocution";
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Card, Col, Dropdown, Form, Icon, Input, Menu, message, Pagination, Row, Table, Modal} from 'antd';
+import {Button, Card, Col, Dropdown, Form, Icon, Input, Menu, message, Modal, Pagination, Row, Table} from 'antd';
 import {
   createInterlocutionCategory,
   deleteInterlocutionCategory,
@@ -83,7 +83,7 @@ class Category extends Component {
     })
   };
   doAdd = () => {
-    createInterlocutionCategory({categoryName: this.props.form.getFieldsValue()['categoryName']}).then(data => {
+    createInterlocutionCategory({categoryName: this.props.form.getFieldsValue()['add-categoryName']}).then(data => {
       message.success("添加成功！");
       this.props.form.resetFields(['categoryName']);
       this.doRefresh();
@@ -128,7 +128,8 @@ class Category extends Component {
                 {getFieldDecorator('categoryName', {
                   initialValue: ''
                 })(
-                  <Input size='default' addonBefore='分类名称' onPressEnter={() => this.handleActionClick({key: 'search'})}/>
+                  <Input size='default' addonBefore='分类名称'
+                         onPressEnter={() => this.handleActionClick({key: 'search'})}/>
                 )}
               </Form.Item>
             </Col>
@@ -156,7 +157,7 @@ class Category extends Component {
               <Row type='flex'>
                 <Col span={18}>
                   <Form.Item>
-                    {getFieldDecorator('categoryName', {
+                    {getFieldDecorator('add-categoryName', {
                       initialValue: ''
                     })(
                       <Input addonBefore='分类'/>

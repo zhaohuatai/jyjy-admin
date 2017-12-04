@@ -1,29 +1,51 @@
 import React, {Component} from 'react';
 import {message, Modal, Pagination, Table, Tabs} from 'antd';
-import {deleteInterlocution, loadInterlocution, loadInterlocutionDataSet} from '../../../service/interlocution';
+import {
+  deleteInterlocutionConsultation,
+  loadInterlocutionConsultation,
+  loadInterlocutionConsultationDataSet
+} from '../../../service/interlocution';
 import Filter from './Filter';
-import New from './New';
-import Update from './Update';
+import Replay from './Replay';
 import Detail from './Detail';
-import Category from './Category';
 
 const TabPane = Tabs.TabPane;
 
 const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
-  {title: '问题', dataIndex: 'interQuestion', key: 'interQuestion'},
-  {title: '回答', dataIndex: 'interAnswer', key: 'interAnswer', render: (text) => '点击查看'},
-  {title: '所属分类', dataIndex: 'categoryId', key: 'categoryId'},
+  {title: '标题', dataIndex: 'consultorName', key: 'consultorName'},
+  {title: '内容', dataIndex: 'content', key: 'content', render: (text) => '点击查看'},
+  {title: '电话', dataIndex: 'phone', key: 'phone'},
+  {title: '在线回复', dataIndex: 'onlineReply', key: 'onlineReply'},
+  {title: '用户id', dataIndex: 'memberId', key: 'memberId'},
   {title: '备注', dataIndex: 'remark', key: 'remark'},
 ]
 
-class Interlocution extends Component {
+class EnrollSelf extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataSet: [],
+      table_loading: false,
+      selectedRowKeys: [],
+      table_cur_page: 1,
+      table_total: 0,
+      search_form: {},
+      replay_display: false,
+      replay_data: {},
+      detail_display: false,
+      detail_data: {},
+      recycle: false,
+    };
+  }
+
   // 获取数据
   handleRefresh = (params) => {
     this.setState({table_loading: true});
     params = {...params};
     params['status'] = (this.state.recycle ? 2 : 1);
-    loadInterlocutionDataSet(params).then(data => {
+    loadInterlocutionConsultationDataSet(params).then(data => {
       this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
     }).catch((e) => {
       message.error(e);
@@ -37,7 +59,7 @@ class Interlocution extends Component {
       title: `确定删除吗？`,
       okType: 'danger',
       onOk: () => {
-        deleteInterlocution({id: this.state.selectedRowKeys[0]}).then(data => {
+        deleteInterlocutionConsultation({id: this.state.selectedRowKeys[0]}).then(data => {
           message.success("删除成功！");
           this.handleRefresh();
         });
@@ -45,22 +67,6 @@ class Interlocution extends Component {
     })
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      dataSet: [],
-      table_loading: false,
-      selectedRowKeys: [],
-      table_cur_page: 1,
-      table_total: 0,
-      search_form: {},
-      update_display: false,
-      update_data: {},
-      detail_display: false,
-      detail_data: {},
-      recycle: false,
-    };
-  }
 
   // 勾选记录
   onSelectChange = (selectedRowKeys) => {
@@ -87,16 +93,16 @@ class Interlocution extends Component {
   }
 
   // 更新
-  handleUpdate = () => {
-    loadInterlocution({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.setState({update_data: data.data.interlocution, update_display: true})
+  handleReplay = () => {
+    loadInterlocutionConsultation({id: this.state.selectedRowKeys[0]}).then(data => {
+      this.setState({replay_data: data.data.interlocutionConsultation, replay_display: true})
     })
   }
 
   // 显示详情
   handleShowDetail = (record) => {
-    loadInterlocution({id: record.id}).then(data => {
-      this.setState({detail_data: data.data.interlocution, detail_display: true})
+    loadInterlocutionConsultation({id: record.id}).then(data => {
+      this.setState({detail_data: data.data.interlocutionConsultation, detail_display: true})
     })
   }
 
@@ -112,10 +118,7 @@ class Interlocution extends Component {
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
         <Tabs defaultActiveKey="1">
-          <TabPane tab="分类管理" key="3">
-            <Category/>
-          </TabPane>
-          <TabPane tab="升学百科问答" key="1">
+          <TabPane tab="自主招生问答" key="1">
             <Filter
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
@@ -125,8 +128,9 @@ class Interlocution extends Component {
                 })
               }}
               doDelete={this.handleDelete}
-              doUpdate={this.handleUpdate}
+              doReplay={this.handleReplay}
               recycle={this.state.recycle}
+
             />
             <Table
               dataSource={this.state.dataSet}
@@ -141,15 +145,12 @@ class Interlocution extends Component {
             <Pagination style={{marginTop: '10px'}} showQuickJumper defaultCurrent={1} current={table_cur_page}
                         defaultPageSize={20} total={table_total} onChange={this.onChangeTablePage}/>,
           </TabPane>
-          <TabPane tab="新建" key="2">
-            <New/>
-          </TabPane>
         </Tabs>
 
-        <Update show={this.state.update_display} data={this.state.update_data}
+        <Replay show={this.state.replay_display} data={this.state.replay_data}
                 onCancel={() =>{
                   this.handleRefresh();
-                  this.setState({update_display: false})
+                  this.setState({replay_display: false})
                 }}/>
         <Detail show={this.state.detail_display} data={this.state.detail_data}
                 onCancel={() => this.setState({detail_display: false})}/>
@@ -158,4 +159,4 @@ class Interlocution extends Component {
   }
 }
 
-export default Interlocution;
+export default EnrollSelf;

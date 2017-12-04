@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Input, message, Modal, Row, Select} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import {updateInterlocution, loadInterlocutionCategoryDataSet} from "../../../service/interlocution";
+import {loadInterlocutionCategoryDataSet, updateInterlocution} from "../../../service/interlocution";
 
 const FormItem = Form.Item;
 
