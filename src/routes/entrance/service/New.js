@@ -93,7 +93,7 @@ class New extends Component {
       formData[`cate${this.state.cate}Id`] = this.state.cateValue;
     }
 
-    if (Object.prototype.toString.call(formData.coverUrl) === '[object Array]') {
+    if (formData.coverUrl) {
       formData.coverUrl = formData.coverUrl[0].response.data.image;
     }
 

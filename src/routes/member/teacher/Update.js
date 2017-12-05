@@ -16,7 +16,7 @@ class New extends Component {
       id: this.props.data.id,
     }
 
-    if (Object.prototype.toString.call(formData.profilePicture) === '[object Array]') {
+    if (formData.profilePicture) {
       formData.profilePicture = formData.profilePicture[0].response.data.image;
     } else {
       formData.profilePicture = ''

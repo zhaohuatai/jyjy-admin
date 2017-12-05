@@ -20,8 +20,8 @@ class New extends Component {
 
     formData.firstRate ? formData.firstRate = 1 : formData.firstRate = 0;
 
-    if (Object.prototype.toString.call(formData.imgUrl) === '[object Array]') {
-      formData.imgUrl = formData.imgUrl[0].response.data.image;
+    if (formData.badge) {
+      formData.badge = formData.badge[0].response.data.image;
     }
 
     createDataUniversity(formData).then(data => {
@@ -111,6 +111,7 @@ class New extends Component {
               {getFieldDecorator('badge', {
                 valuePropName: 'fileList',
                 getValueFromEvent: this.normFile,
+                initialValue: '',
               })(
                 <Upload
                   name="file"

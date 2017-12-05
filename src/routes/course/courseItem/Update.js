@@ -97,7 +97,7 @@ class Update extends Component {
       isTop: formData.isTop ? 1 : 0,
     };
 
-    if (Object.prototype.toString.call(formData.coverUrl) === '[object Array]') {
+    if (formData.coverUrl) {
       formData.coverUrl = formData.coverUrl[0].response.data.image;
     }
 

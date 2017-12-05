@@ -15,7 +15,7 @@ class New extends Component {
       introduction: UE.getEditor('teacher_newIntroduction').getContent(),
     };
 
-    if (Object.prototype.toString.call(formData.profilePicture) === '[object Array]') {
+    if (formData.profilePicture) {
       formData.profilePicture = formData.profilePicture[0].response.data.image;
     } else {
       formData.profilePicture = ''

@@ -14,7 +14,7 @@ class New extends Component {
       ...formData,
       content: UE.getEditor('bigdata_content').getContent(),
     };
-    if (Object.prototype.toString.call(formData.thumbnailUrl) === '[object Array]') {
+    if (formData.thumbnailUrl) {
       formData.thumbnailUrl = formData.thumbnailUrl[0].response.data.image;
     }
 

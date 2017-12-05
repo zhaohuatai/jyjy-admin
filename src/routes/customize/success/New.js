@@ -16,7 +16,7 @@ class New extends Component {
       content: UE.getEditor('new_caseContent').getContent(),
     }
 
-    if (Object.prototype.toString.call(formData.thumbNailImage) === '[object Array]') {
+    if (formData.thumbNailImage) {
       formData.thumbNailImage = formData.thumbNailImage[0].response.data.image;
     }
 

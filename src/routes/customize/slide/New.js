@@ -17,7 +17,7 @@ class New extends Component {
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
 
-    if (Object.prototype.toString.call(formData.imgUrl) === '[object Array]') {
+    if (formData.imgUrl) {
       formData.imgUrl = formData.imgUrl[0].response.data.image;
     }
 

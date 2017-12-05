@@ -33,15 +33,12 @@ class UEditor extends Component {
 
     UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
     UE.Editor.prototype.getActionUrl = function(action) {
-      if (action == "uploadimage" || action == 'uploadscrawl' || action == 'uploadimage') {
-        return `http://yxyz.kingmon.cn/admin/ueditor/attachment/upload`;
-      } else if (action == 'uploadvideo') {
-        return 'http://a.b.com/video.php';
+      if (action == "uploadimage" || action == 'uploadscrawl' || action == 'uploadimage' || action == 'uploadvideo') {
+        return `http://wei.sinogood.com/admin/ueditor/attachment/upload`;
       } else {
         return this._bkGetActionUrl.call(this, action);
       }
     }
-
 
     const self = this;
     this.uedeitor.ready((ueditor) => {

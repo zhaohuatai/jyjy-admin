@@ -15,7 +15,7 @@ class Update extends Component {
       id: this.props.data.id,
       content: UE.getEditor('update_caseContent').getContent(),
     };
-    if (Object.prototype.toString.call(formData.thumbNailImage) === '[object Array]') {
+    if (formData.thumbNailImage) {
       formData.thumbNailImage = formData.thumbNailImage[0].response.data.image;
     }
 

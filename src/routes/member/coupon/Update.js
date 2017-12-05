@@ -22,11 +22,11 @@ class Update extends Component {
       isEnabled: formData.isEnabled ? 0 : 1,
     };
 
-    if (Object.prototype.toString.call(formData.mainImage) === '[object Array]') {
+    if (formData.mainImage) {
       formData.mainImage = formData.mainImage[0].response.data.image;
     }
 
-    if (Object.prototype.toString.call(formData.thumbNailImage) === '[object Array]') {
+    if (formData.thumbNailImage) {
       formData.thumbNailImage = formData.thumbNailImage[0].response.data.image;
     }
 

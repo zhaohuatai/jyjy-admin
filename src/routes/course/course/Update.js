@@ -49,7 +49,7 @@ class Update extends Component {
       id: this.props.data.id
     };
 
-    if (Object.prototype.toString.call(formData.coverUrl) === '[object Array]') {
+    if (formData.coverUrl) {
       formData.coverUrl = formData.coverUrl[0].response.data.image;
     }
 

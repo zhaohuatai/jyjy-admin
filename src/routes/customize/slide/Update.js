@@ -21,7 +21,7 @@ class Update extends Component {
       id: this.props.data.id,
     };
 
-    if (Object.prototype.toString.call(formData.imgUrl) === '[object Array]') {
+    if (formData.imgUrl) {
       formData.imgUrl = formData.imgUrl[0].response.data.image;
     }
 
