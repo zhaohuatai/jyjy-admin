@@ -5,7 +5,7 @@ import {updateDataScoreLineProvince} from "../../../service/base";
 
 const FormItem = Form.Item;
 
-class New extends Component {
+class Update extends Component {
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
 
@@ -156,4 +156,4 @@ class New extends Component {
   }
 }
 
-export default Form.create()(New);
+export default Form.create()(Update);
