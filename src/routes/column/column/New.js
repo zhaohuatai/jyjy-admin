@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, Upload} from 'antd';
 import {loadMemberTeacherDataSet} from "../../../service/member";
+import { createColumnChannel } from '../../../service/column';
 import UEditor from "../../../components/editor/UEditor";
 import LazyLoad from 'react-lazy-load';
 import {API_DOMAIN} from "../../../utils/config";
-
 
 const FormItem = Form.Item;
 

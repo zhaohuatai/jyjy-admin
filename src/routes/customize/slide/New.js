@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {API_DOMAIN} from '../../../utils/config';
-import {Button, Col, Form, Icon, Input, message, Row, Upload} from 'antd';
+import {Button, Col, Form, Icon, Input, message, Row, Upload, Select} from 'antd';
 import {createPubSlide} from '../../../service/slide';
 
 const FormItem = Form.Item;
@@ -60,13 +60,15 @@ class New extends Component {
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="显示位置">
-              {getFieldDecorator('location',{
-                initialValue: '',
+              {getFieldDecorator('locationCode', {
                 rules: [
-                  { required: true, message: '请输入显示位置id' },
+                  {required: true, message: '请选显示位置'},
                 ]
               })(
-                <Input />
+                <Select placeholder="请选显示位置" style={{width: '200px'}}>
+                  <Select.Option key='SY' value='SY'>首页</Select.Option>
+                  <Select.Option key='ZZ' value='ZZ'>自招大数据</Select.Option>
+                </Select>
               )}
             </FormItem>
           </Col>

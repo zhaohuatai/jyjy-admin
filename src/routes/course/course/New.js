@@ -162,36 +162,6 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem {...formItemLayout} label="免费课程">
-              {getFieldDecorator('freePay', {
-                valuePropName: 'checked',
-                rules: []
-              })(
-                <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem {...formItemLayout} label="普通价格">
-              {getFieldDecorator('price', {
-                initialValue: '',
-                rules: []
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem {...formItemLayout} label="会员价格">
-              {getFieldDecorator('priceVIP', {
-                initialValue: '',
-                rules: []
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
             <FormItem {...formItemLayout} label="前台显示学习人数">
               {getFieldDecorator('learningCount', {
                 initialValue: '',
