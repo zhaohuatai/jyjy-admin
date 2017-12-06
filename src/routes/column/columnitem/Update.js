@@ -46,11 +46,8 @@ class New extends Component {
       ...formData,
       freePay: formData.freePay ? 0 : 1,
       content: UE.getEditor("update_columnItemContent").getContent(),
+      coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : this.props.data.coverUrl,
     };
-
-    if (formData.coverUrl) {
-      formData.coverUrl = formData.coverUrl[0].response.data.image;
-    }
 
     updateColumnChannelItem(formData).then(data => {
       this.props.form.resetFields();

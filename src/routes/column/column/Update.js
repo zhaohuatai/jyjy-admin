@@ -33,6 +33,7 @@ class New extends Component {
       update_courseContent: UE.getEditor('update_courseIntroduction').getContent(),
       freePay: formData.freePay ? 0 : 1,
       isTop: formData.isTop ? 1 : 0,
+      coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : '',
     };
 
     updateColumnChannel(formData).then(data => {

@@ -58,7 +58,8 @@ class Update extends Component {
     let form = this.props.form;
     loadEntranceCategoryFDataSet({rows: 1000}).then(data => {
       if (data.data.dataSet.total) {
-        this.setState({options: this.renderData(data.data.dataSet.rows, 'First')}, () => {
+        let d = this.renderData(data.data.dataSet.rows, 'First');
+        this.setState({options: d}, () => {
           this.state.options.map((cateFirst, index) => {
             if (this.props.data.cateFirstId && this.props.data.cateFirstId === cateFirst.value) {
               this.setState({cate: 'First', cateValue: this.props.data.cateFirstId})
