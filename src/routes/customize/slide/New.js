@@ -1,25 +1,21 @@
 import React, {Component} from 'react';
 import {API_DOMAIN} from '../../../utils/config';
-import {Button, Col, Form, Icon, Input, message, Row, Upload, Select} from 'antd';
+import {Button, Col, Form, Icon, Input, message, Row, Select, Upload} from 'antd';
 import {createPubSlide} from '../../../service/slide';
+import {loadDicData} from "../../../service/dic";
 
 const FormItem = Form.Item;
 
 class New extends Component {
 
-  normFile = (e) => {
-    if (Array.isArray(e)) {
-      return e.file;
-    }
-    return e && e.fileList;
-  }
-
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
 
-    if (formData.imgUrl) {
-      formData.imgUrl = formData.imgUrl[0].response.data.image;
-    }
+    formData = {
+      ...formData,
+      introduction: UE.getEditor('new_courseIntroduction').getContent(),
+      imgUrl: formData.imgUrl ? formData.imgUrl[0].response.data.image : '',
+    };
 
     createPubSlide(formData).then(data => {
       this.props.form.resetFields();
@@ -29,32 +25,54 @@ class New extends Component {
     })
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      locationList: []
+    }
+  }
+
+  normFile = (e) => {
+    if (Array.isArray(e)) {
+      return e.file;
+    }
+    return e && e.fileList;
+  }
+
+  componentDidMount() {
+    loadDicData({code: 'SWZ', rows: 10000}).then(data => {
+      this.setState({locationList: data.data.dicData})
+    }).catch((e) => {
+      message.error(e);
+    })
+  }
+
   render() {
-    const { getFieldDecorator } = this.props.form;
+    const {getFieldDecorator} = this.props.form;
 
     const formItemLayout = {
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 4 },
+        xs: {span: 24},
+        sm: {span: 4},
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 14 },
+        xs: {span: 24},
+        sm: {span: 14},
       },
     };
 
-    return(
+    return (
       <div>
-        <Row type='flex' style={{ marginBottom: '5px'}}>
+        <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
             <FormItem{...formItemLayout} label="标题">
-              {getFieldDecorator('title',{
+              {getFieldDecorator('title', {
                 initialValue: '',
                 rules: [
-                  { required: true, message: '请输入标题' },
+                  {required: true, message: '请输入标题'},
                 ]
               })(
-                <Input />
+                <Input/>
               )}
             </FormItem>
           </Col>
@@ -62,12 +80,15 @@ class New extends Component {
             <FormItem{...formItemLayout} label="显示位置">
               {getFieldDecorator('locationCode', {
                 rules: [
-                  {required: true, message: '请选显示位置'},
+                  {required: true},
                 ]
               })(
-                <Select placeholder="请选显示位置" style={{width: '200px'}}>
-                  <Select.Option key='SY' value='SY'>首页</Select.Option>
-                  <Select.Option key='ZZ' value='ZZ'>自招大数据</Select.Option>
+                <Select placeholder="请选择" style={{width: '200px'}}>
+                  {
+                    this.state.locationList.map((item) => {
+                      return <Select.Option key={item.id} value={`${item.itemCode}`}>{item.itemValue}</Select.Option>
+                    })
+                  }
                 </Select>
               )}
             </FormItem>
@@ -81,7 +102,7 @@ class New extends Component {
                 <Upload name="file" action={`${API_DOMAIN}admin/pub/pubSlide/uploadImage`} listType="picture"
                         withCredentials={true}>
                   <Button>
-                    <Icon type="upload" /> 点击上传
+                    <Icon type="upload"/> 点击上传
                   </Button>
                 </Upload>
               )}

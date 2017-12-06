@@ -42,11 +42,10 @@ class New extends Component {
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
     formData = {
+      ...this.props.data,
       ...formData,
       freePay: formData.freePay ? 0 : 1,
       content: UE.getEditor("update_columnItemContent").getContent(),
-      id: this.props.data.id,
-      status: 1
     };
 
     if (formData.coverUrl) {

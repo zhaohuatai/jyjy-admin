@@ -13,10 +13,8 @@ class New extends Component {
     formData = {
       ...formData,
       content: UE.getEditor('bigdata_content').getContent(),
+      thumbnailUrl: formData.thumbnailUrl ? formData.thumbnailUrl[0].response.data.image : this.props.data.thumbnailUrl,
     };
-    if (formData.thumbnailUrl) {
-      formData.thumbnailUrl = formData.thumbnailUrl[0].response.data.image;
-    }
 
     createEnrollAutoBigdata(formData).then(data => {
       this.props.form.resetFields();

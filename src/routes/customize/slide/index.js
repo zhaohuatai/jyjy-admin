@@ -12,7 +12,7 @@ const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
   {title: '标题', dataIndex: 'title', key: 'title'},
   {title: '图片', dataIndex: 'imgUrl', key: 'imgUrl', render: () => '点击查看'},
-  {title: '位置', dataIndex: 'location', key: 'location'},
+  {title: '位置', dataIndex: 'locationName', key: 'locationName'},
   {title: '权重', dataIndex: 'showWeight', key: 'showWeight'},
   {title: '备注', dataIndex: 'remark', key: 'remark'},
 ]

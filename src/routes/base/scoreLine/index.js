@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs, Modal} from 'antd';
+import {message, Modal, Pagination, Table, Tabs} from 'antd';
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';
@@ -63,16 +63,18 @@ class ScoreLine extends Component {
       }
     })
   }
+
   // 更新
   handleUpdate = () => {
     loadDataScoreLine({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.setState({update_data: data.data.data, update_display: true})
+      this.setState({update_data: data.data.dataScoreLine, update_display: true})
     })
   }
+
   // 显示详情
   handleShowDetail = (record) => {
     loadDataScoreLine({id: record.id}).then(data => {
-      this.setState({detail_data: data.data.daraScoreLine, detail_display: true})
+      this.setState({detail_data: data.data.dataScoreLine, detail_display: true})
     })
   }
 

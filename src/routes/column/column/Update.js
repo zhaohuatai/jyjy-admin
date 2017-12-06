@@ -28,11 +28,11 @@ class New extends Component {
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
     formData = {
+      ...this.props.data,
       ...formData,
       update_courseContent: UE.getEditor('update_courseIntroduction').getContent(),
       freePay: formData.freePay ? 0 : 1,
       isTop: formData.isTop ? 1 : 0,
-      id: this.props.data.id
     };
 
     updateColumnChannel(formData).then(data => {

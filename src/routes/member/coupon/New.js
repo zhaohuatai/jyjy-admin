@@ -9,21 +9,11 @@ class New extends Component {
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
 
-    if (formData.mainImage) {
-      formData.mainImage = formData.mainImage[0].response.data.image;
-    } else {
-      formData.mainImage = ''
+    formData = {
+      ...formData,
+      mainImage: formData.mainImage ? formData.mainImage[0].response.data.image : '',
+      thumbNailImage: formData.thumbNailImage ? formData.thumbNailImage[0].response.data.image : '',
     }
-
-    if (formData.thumbNailImage) {
-      formData.thumbNailImage = formData.thumbNailImage[0].response.data.image;
-    } else {
-      formData.thumbNailImage = ''
-    }
-
-    formData.status = '1';
-
-    console.log(formData);
 
     createCoupon(formData).then(data => {
       this.props.form.resetFields();
@@ -35,8 +25,7 @@ class New extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-    }
+    this.state = {}
   }
 
   normFile = (e) => {

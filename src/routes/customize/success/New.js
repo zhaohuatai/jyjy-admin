@@ -14,10 +14,7 @@ class New extends Component {
     formData = {
       ...formData,
       content: UE.getEditor('new_caseContent').getContent(),
-    }
-
-    if (formData.thumbNailImage) {
-      formData.thumbNailImage = formData.thumbNailImage[0].response.data.image;
+      thumbNailImage: formData.thumbNailImage ? formData.thumbNailImage[0].response.data.image : '',
     }
 
     createCaseSuccess(formData).then(data => {

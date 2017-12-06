@@ -41,8 +41,6 @@ class New extends Component {
       local: UE.getEditor('career_local').getContent(),
     };
 
-    console.log(formData);
-
     createDataCareer(formData).then(data => {
       this.props.form.resetFields();
       message.success("创建成功！");

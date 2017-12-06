@@ -17,13 +17,10 @@ class Update extends Component {
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
     formData = {
+      ...this.props.data,
       ...formData,
-      id: this.props.data.id,
+      imgUrl: formData.imgUrl ? formData.imgUrl[0].response.data.image : this.props.data.imgUrl,
     };
-
-    if (formData.imgUrl) {
-      formData.imgUrl = formData.imgUrl[0].response.data.image;
-    }
 
     updatePubSlide(formData).then(data => {
       this.props.form.resetFields();
@@ -51,7 +48,7 @@ class Update extends Component {
 
     return (
       <Modal title="更新幻灯片信息" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
-        <Row type='flex' style={{ marginBottom: '5px'}}>
+        <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
             <FormItem{...formItemLayout} label="标题">
               {getFieldDecorator('title', {
@@ -73,7 +70,7 @@ class Update extends Component {
                 <Upload name="file" action={`${API_DOMAIN}admin/pub/pubSlide/uploadImage`} listType="picture"
                         withCredentials={true}>
                   <Button>
-                    <Icon type="upload" /> 点击上传
+                    <Icon type="upload"/> 点击上传
                   </Button>
                 </Upload>
               )}
@@ -90,7 +87,7 @@ class Update extends Component {
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="备注">
-              {getFieldDecorator('remark',{
+              {getFieldDecorator('remark', {
                 initialValue: remark,
               })(
                 <Input/>

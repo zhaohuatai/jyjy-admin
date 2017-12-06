@@ -13,13 +13,8 @@ class New extends Component {
     formData = {
       ...formData,
       introduction: UE.getEditor('teacher_newIntroduction').getContent(),
+      profilePicture: formData.profilePicture ? formData.profilePicture[0].response.data.image : '',
     };
-
-    if (formData.profilePicture) {
-      formData.profilePicture = formData.profilePicture[0].response.data.image;
-    } else {
-      formData.profilePicture = ''
-    }
 
     createMemberTeacher(formData).then(data => {
       this.props.form.resetFields();

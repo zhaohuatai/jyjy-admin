@@ -38,12 +38,8 @@ class New extends Component {
       ...formData,
       freePay: formData.freePay ? 0 : 1,
       content: UE.getEditor("new_columnItemIntroduction").getContent(),
-      status: 1
+      coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : '',
     };
-
-    if (formData.coverUrl) {
-      formData.coverUrl = formData.coverUrl[0].response.data.image;
-    }
 
     createColumnChannelItem(formData).then(data => {
       this.props.form.resetFields();

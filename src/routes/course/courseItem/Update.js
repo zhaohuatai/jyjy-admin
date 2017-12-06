@@ -95,11 +95,8 @@ class Update extends Component {
       id: this.props.data.id,
       freePay: formData.freePay ? 0 : 1,
       isTop: formData.isTop ? 1 : 0,
+      coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : this.props.data.coverUrl,
     };
-
-    if (formData.coverUrl) {
-      formData.coverUrl = formData.coverUrl[0].response.data.image;
-    }
 
     updateServiceCourseItem(formData).then(data => {
       this.props.form.resetFields();

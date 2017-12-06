@@ -46,11 +46,8 @@ class New extends Component {
       introduction: UE.getEditor('new_courseIntroduction').getContent(),
       freePay: formData.freePay ? 0 : 1,
       isTop: formData.isTop ? 1 : 0,
+      coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : '',
     };
-
-    if (formData.coverUrl) {
-      formData.coverUrl = formData.coverUrl[0].response.data.image;
-    }
 
     createServiceCourse(formData).then(data => {
       this.props.form.resetFields();

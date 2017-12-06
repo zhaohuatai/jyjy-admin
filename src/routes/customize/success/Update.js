@@ -11,13 +11,11 @@ class Update extends Component {
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
     formData = {
+      ...this.props.data,
       ...formData,
-      id: this.props.data.id,
       content: UE.getEditor('update_caseContent').getContent(),
+      thumbNailImage: formData.thumbNailImage ? formData.thumbNailImage[0].response.data.image : this.props.data.thumbNailImage,
     };
-    if (formData.thumbNailImage) {
-      formData.thumbNailImage = formData.thumbNailImage[0].response.data.image;
-    }
 
     updateCaseSuccess(formData).then(data => {
       this.props.form.resetFields();

@@ -9,9 +9,9 @@ class New extends Component {
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
     formData = {
+      ...this.props.data,
       ...formData,
       content: UE.getEditor('auto_question_content_update').getContent(),
-      id: this.props.data.id,
     }
 
     updateEnrollAutoQuestion(formData).then(data => {

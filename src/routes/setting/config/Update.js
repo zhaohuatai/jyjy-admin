@@ -9,11 +9,8 @@ class Update extends Component {
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
     formData = {
+      ...this.props.data,
       ...formData,
-      update_courseContent: UE.getEditor('update_courseIntroduction').getContent(),
-      freePay: formData.freePay ? 0 : 1,
-      isTop: formData.isTop ? 1 : 0,
-      id: this.props.data.id
     };
 
     updateDicSysconfig(formData).then(data => {
@@ -34,14 +31,6 @@ class Update extends Component {
     return (
       <Modal visible={visible} title="修改系统参数" okText="提交" width='600px' onCancel={onCancel} onOk={onCreate}>
         <Form layout="vertical">
-          <FormItem label="序号">
-            {getFieldDecorator('confCode', {
-              initialValue: formData.id
-            })(
-              <Input readOnly/>
-            )}
-          </FormItem>
-
           <FormItem label="配置码">
             {getFieldDecorator('confCode', {
               initialValue: formData.id
@@ -61,7 +50,7 @@ class Update extends Component {
 
           <FormItem label="值">
             {getFieldDecorator('confValue', {
-              rules: [{required: true, message: '请输入名 值'}],
+              rules: [{required: true, message: '请输入值'}],
               initialValue: formData.confValue
             })(
               <Input/>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {API_DOMAIN} from '../../../utils/config';
-import {Button, Cascader, Col, Form, Icon, Input, message, Row, Switch, Upload} from 'antd';
+import {Button, Cascader, Col, Form, Icon, Input, message, Row, Upload} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
 import LazyLoad from 'react-lazy-load';
 import {
@@ -13,6 +13,33 @@ import {
 const FormItem = Form.Item;
 
 class New extends Component {
+
+  handleSubmit = (e) => {
+    let formData = this.props.form.getFieldsValue();
+    formData = {
+      ...formData,
+      introduction: UE.getEditor('new_serviceEntrance').getContent(),
+      isTop: formData.isTop ? 1 : 0,
+      coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : this.props.data.coverUrl,
+    };
+
+    if (this.state.cate) {
+      formData[`cate${this.state.cate}Id`] = this.state.cateValue;
+    }
+
+    createServiceEntrance(formData).then(data => {
+      this.props.form.resetFields();
+      message.success("创建成功！");
+    }).catch((e) => {
+      message.error(e);
+    })
+  }
+  onCateChange = (value, selectedOptions) => {
+    this.setState({
+      cate: selectedOptions[selectedOptions.length - 1].cate,
+      cateValue: selectedOptions[selectedOptions.length - 1].value
+    })
+  };
 
   renderData = (data, cate) => {
     if (!data) return;
@@ -81,29 +108,6 @@ class New extends Component {
         break;
     }
   }
-  handleSubmit = (e) => {
-    let formData = this.props.form.getFieldsValue();
-    formData = {
-      ...formData,
-      introduction: UE.getEditor('new_serviceEntrance').getContent(),
-      isTop: formData.isTop ? 1 : 0,
-    };
-
-    if (this.state.cate) {
-      formData[`cate${this.state.cate}Id`] = this.state.cateValue;
-    }
-
-    if (formData.coverUrl) {
-      formData.coverUrl = formData.coverUrl[0].response.data.image;
-    }
-
-    createServiceEntrance(formData).then(data => {
-      this.props.form.resetFields();
-      message.success("创建成功！");
-    }).catch((e) => {
-      message.error(e);
-    })
-  }
 
   constructor(props) {
     super(props);
@@ -113,13 +117,6 @@ class New extends Component {
       cateValue: [],
     }
   }
-
-  // onCateChange = (value, selectedOptions) => {
-  //   this.setState({
-  //     cate: selectedOptions[selectedOptions.length - 1].cate,
-  //     cateValue: selectedOptions[selectedOptions.length - 1].value
-  //   })
-  // };
 
   componentDidMount() {
     loadEntranceCategoryFDataSet({rows: 1000}).then(data => {

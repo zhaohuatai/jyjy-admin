@@ -12,16 +12,13 @@ class New extends Component {
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
     formData = {
+      ...this.props.data,
       ...formData,
       detail: UE.getEditor('update_faculty').getContent(),
       specialProfession: UE.getEditor('update_specialProfession').getContent(),
       introduction: UE.getEditor('update_introduction').getContent(),
       firstRate: formData.firstRate ? 1 : 0,
-      id: this.props.data.id,
-    }
-
-    if (formData.imgUrl) {
-      formData.imgUrl = formData.imgUrl[0].response.data.image;
+      imgUrl: formData.imgUrl ? formData.imgUrl[0].response.data.image : this.props.data.imgUrl,
     }
 
     updateDataUniversity(formData).then(data => {

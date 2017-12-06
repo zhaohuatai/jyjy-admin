@@ -16,13 +16,9 @@ class New extends Component {
       faculty: UE.getEditor('faculty').getContent(),
       specialProfession: UE.getEditor('specialProfession').getContent(),
       introduction: UE.getEditor('introduction').getContent(),
+      badge: formData.badge ? formData.badge[0].response.data.image : '',
+      firstRate: formData.firstRate ? 1 : 0,
     };
-
-    formData.firstRate ? formData.firstRate = 1 : formData.firstRate = 0;
-
-    if (formData.badge) {
-      formData.badge = formData.badge[0].response.data.image;
-    }
 
     createDataUniversity(formData).then(data => {
       this.props.form.resetFields();

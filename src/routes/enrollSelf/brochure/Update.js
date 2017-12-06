@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Input, message, Modal, Row, Select} from 'antd';
+import {Button, Col, Form, Input, message, Modal, Row} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
 import LazyLoad from 'react-lazy-load';
 import {updateEnrollAutoRecruitBrochure} from "../../../service/autoSelf";
@@ -13,8 +13,8 @@ class Update extends Component {
     let formData = this.props.form.getFieldsValue();
 
     formData = {
+      ...this.props.data,
       ...formData,
-      id: this.props.data.id,
       content: UE.getEditor('update_brochureContent').getContent(),
     };
 
@@ -44,7 +44,7 @@ class Update extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {title, years, universityId, content, remark} = this.props.data;
+    const {title, content, remark} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -67,36 +67,6 @@ class Update extends Component {
                 rules: [
                   {required: true, message: '请输入标题'},
                 ]
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem{...formItemLayout} label="学校">
-              {getFieldDecorator('universityId', {
-                initialValue: universityId + '',
-                rules: [{
-                  required: true, message: '请选择'
-                }]
-              })(
-                <Select placeholder="选择学校" style={{width: '200px'}}>
-                  {
-                    this.state.universityList.map(item => {
-                      return <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
-                    })
-                  }
-                </Select>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem{...formItemLayout} label="年份">
-              {getFieldDecorator('years', {
-                initialValue: years,
-                rules: [{
-                  required: true, message: '请填写年份'
-                }]
               })(
                 <Input/>
               )}

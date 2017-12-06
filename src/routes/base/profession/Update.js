@@ -14,10 +14,10 @@ class Update extends Component {
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
     formData = {
+      ...this.props.data,
       ...formData,
       detail: UE.getEditor('detail').getContent(),
       offer: UE.getEditor('offer').getContent(),
-      id: this.props.data.id,
     };
 
     updateDataUniversity(formData).then(data => {
@@ -194,9 +194,7 @@ class Update extends Component {
             </FormItem>
           </Col>
         </Row>
-        <FormItem
-          wrapperCol={{span: 12, offset: 4}}
-        >
+        <FormItem wrapperCol={{span: 12, offset: 4}}>
           <Button type="primary" onClick={this.handleSubmit}>提交更新</Button>
         </FormItem>
       </Modal>

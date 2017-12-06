@@ -42,16 +42,13 @@ class Update extends Component {
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
     formData = {
+      ...this.props.data,
       ...formData,
       introduction: UE.getEditor('update_courseIntroduction').getContent(),
       freePay: formData.freePay ? 0 : 1,
       isTop: formData.isTop ? 1 : 0,
-      id: this.props.data.id
+      coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : this.props.coverUrl,
     };
-
-    if (formData.coverUrl) {
-      formData.coverUrl = formData.coverUrl[0].response.data.image;
-    }
 
     updateServiceCourse(formData).then(data => {
       this.props.form.resetFields();
@@ -68,12 +65,12 @@ class Update extends Component {
 
     const formItemLayout = {
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 4 },
+        xs: {span: 24},
+        sm: {span: 4},
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 18 },
+        xs: {span: 24},
+        sm: {span: 18},
       },
     };
 
@@ -81,9 +78,9 @@ class Update extends Component {
       this.state
     )
 
-    return(
+    return (
       <Modal title="更新课程信息" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
-        <Row type='flex' style={{ marginBottom: '5px'}}>
+        <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
             <FormItem{...formItemLayout} label="课程名">
               {getFieldDecorator('name', {

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, Upload} from 'antd';
 import {loadMemberTeacherDataSet} from "../../../service/member";
-import { createColumnChannel } from '../../../service/column';
+import {createColumnChannel} from '../../../service/column';
 import UEditor from "../../../components/editor/UEditor";
 import LazyLoad from 'react-lazy-load';
 import {API_DOMAIN} from "../../../utils/config";
@@ -25,13 +25,8 @@ class New extends Component {
       introduction: UE.getEditor('new_columnIntroduction').getContent(),
       freePay: formData.freePay ? 0 : 1,
       isTop: formData.isTop ? 1 : 0,
+      coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : this.props.data.coverUrl,
     };
-
-    if (formData.coverUrl) {
-      formData.coverUrl = formData.coverUrl[0].response.data.image;
-    }
-
-    console.log(formData);
 
     createColumnChannel(formData).then(data => {
       this.props.form.resetFields();

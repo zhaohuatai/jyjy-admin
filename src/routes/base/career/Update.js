@@ -33,18 +33,14 @@ class New extends Component {
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
     formData = {
+      ...this.props.data,
       ...formData,
       detail: UE.getEditor('update_faculty').getContent(),
       specialProfession: UE.getEditor('update_specialProfession').getContent(),
       introduction: UE.getEditor('update_introduction').getContent(),
+      imgUrl: formData.imgUrl ? formData.imgUrl[0].response.data.image : this.props.data.imgUrl,
+      firstRate: formData.firstRate ? 1 : 0,
     };
-
-    formData.firstRate ? formData.firstRate = 1 : formData.firstRate = 0;
-    formData.id = this.props.data.id;
-
-    if (formData.imgUrl) {
-      formData.imgUrl = formData.imgUrl[0].response.data.image;
-    }
 
     updateDataUniversity(formData).then(data => {
       this.props.form.resetFields();

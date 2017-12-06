@@ -12,7 +12,36 @@ import {
 
 const FormItem = Form.Item;
 
-class New extends Component {
+class Update extends Component {
+
+  onCateChange = (value, selectedOptions) => {
+    this.setState({
+      cate: selectedOptions[selectedOptions.length - 1].cate,
+      cateValue: selectedOptions[selectedOptions.length - 1].value
+    })
+  };
+  handleSubmit = (e) => {
+    let formData = this.props.form.getFieldsValue();
+
+    formData = {
+      ...formData,
+      introduction: UE.getEditor('update_serviceEntrance').getContent(),
+      isTop: formData.isTop ? 1 : 0,
+      coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : this.props.data.coverUrl,
+    };
+
+    if (this.state.cate) {
+      formData[`cate${this.state.cate}Id`] = this.state.cateValue;
+    }
+
+    updateServiceEntrance(formData).then(data => {
+      this.props.form.resetFields();
+      this.props.onCancel();
+      message.success("更新成功！");
+    }).catch((e) => {
+      message.error(e);
+    })
+  }
 
   renderData = (data, cate) => {
     if (!data) return;
@@ -81,31 +110,6 @@ class New extends Component {
         break;
     }
   }
-  handleSubmit = (e) => {
-    let formData = this.props.form.getFieldsValue();
-
-    formData = {
-      ...formData,
-      introduction: UE.getEditor('update_serviceEntrance').getContent(),
-      isTop: formData.isTop ? 1 : 0,
-    };
-
-    if (this.state.cate) {
-      formData[`cate${this.state.cate}Id`] = this.state.cateValue;
-    }
-
-    if (formData.coverUrl) {
-      formData.coverUrl = formData.coverUrl[0].response.data.image;
-    }
-
-    updateServiceEntrance(formData).then(data => {
-      this.props.form.resetFields();
-      this.props.onCancel();
-      message.success("更新成功！");
-    }).catch((e) => {
-      message.error(e);
-    })
-  }
 
   constructor(props) {
     super(props);
@@ -127,7 +131,6 @@ class New extends Component {
       }
       if (data.data.dataSet.total) {
         this.setState({options: this.renderData(data.data.dataSet.rows, 'First')}, () => {
-          //这里有瑕疵
           this.state.options.map((cateFirst) => {
             loadEntranceCategorySDataSet({rows: 1000, cateFirstId: cateFirst.value}).then(data => {
               if (data.data.dataSet.total) {
@@ -175,7 +178,7 @@ class New extends Component {
   render() {
     const {getFieldDecorator} = this.props.form;
     const {
-      title, remark, freePay, isTop, showIndex, introduction, price, priceVIP, cateFirstId, cateSecondId, cateThirdId
+      title, remark, isTop, showIndex, introduction, price, priceVIP, cateFirstId, cateSecondId, cateThirdId
     } = this.props.data;
 
     const formItemLayout = {
@@ -282,4 +285,4 @@ class New extends Component {
   }
 }
 
-export default Form.create()(New);
+export default Form.create()(Update);

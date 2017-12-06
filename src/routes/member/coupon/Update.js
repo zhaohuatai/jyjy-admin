@@ -20,15 +20,9 @@ class Update extends Component {
       ...formData,
       id: this.props.data.id,
       isEnabled: formData.isEnabled ? 0 : 1,
+      mainImage: formData.mainImage ? formData.mainImage[0].response.data.image : this.props.data.mainImage,
+      thumbNailImage: formData.thumbNailImage ? formData.thumbNailImage[0].response.data.image : this.props.data.thumbNailImage,
     };
-
-    if (formData.mainImage) {
-      formData.mainImage = formData.mainImage[0].response.data.image;
-    }
-
-    if (formData.thumbNailImage) {
-      formData.thumbNailImage = formData.thumbNailImage[0].response.data.image;
-    }
 
     updatePubSlide(formData).then(data => {
       this.props.form.resetFields();
