@@ -19,12 +19,12 @@ class Update extends Component {
   }
 
   componentDidMount() {
-    loadServiceCourseCategoryDataSet({rows: 1000}).then(data => {
+    loadServiceCourseCategoryDataSet({rows: 1000, status: 1}).then(data => {
       this.setState({categoryList: data.data.dataSet.rows})
     }).catch((e) => {
       message.error(e);
     })
-    loadMemberTeacherDataSet({rows: 1000}).then(data => {
+    loadMemberTeacherDataSet({rows: 1000, status: 1}).then(data => {
       this.setState({teacher_list: data.data.dataSet.rows})
     }).catch((e) => {
       message.error(e);
@@ -32,7 +32,6 @@ class Update extends Component {
   }
 
   normFile = (e) => {
-    console.log('Upload event:', e);
     if (Array.isArray(e)) {
       return e.file;
     }
@@ -73,10 +72,6 @@ class Update extends Component {
         sm: {span: 18},
       },
     };
-
-    let provinceMenu = (
-      this.state
-    )
 
     return (
       <Modal title="更新课程信息" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
@@ -166,26 +161,6 @@ class Update extends Component {
                 rules: []
               })(
                 <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem {...formItemLayout} label="普通价格">
-              {getFieldDecorator('price', {
-                initialValue: price,
-                rules: []
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem {...formItemLayout} label="会员价格">
-              {getFieldDecorator('priceVIP', {
-                initialValue: priceVIP,
-                rules: []
-              })(
-                <Input/>
               )}
             </FormItem>
           </Col>

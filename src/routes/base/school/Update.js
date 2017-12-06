@@ -18,7 +18,7 @@ class New extends Component {
       specialProfession: UE.getEditor('update_specialProfession').getContent(),
       introduction: UE.getEditor('update_introduction').getContent(),
       firstRate: formData.firstRate ? 1 : 0,
-      imgUrl: formData.imgUrl ? formData.imgUrl[0].response.data.image : this.props.data.imgUrl,
+      badge: formData.badge ? formData.badge[0].response.data.image : this.props.data.badge,
     }
 
     updateDataUniversity(formData).then(data => {

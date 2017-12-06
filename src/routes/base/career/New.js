@@ -26,19 +26,19 @@ class New extends Component {
     let formData = this.props.form.getFieldsValue();
     formData = {
       ...formData,
-      back: UE.getEditor('career_back').getContent(),
-      dataSet: UE.getEditor('career_course').getContent(),
-      definition: UE.getEditor('career_definition').getContent(),
-      duty: UE.getEditor('career_duty').getContent(),
-      fore: UE.getEditor('career_fore').getContent(),
-      intro: UE.getEditor('career_intro').getContent(),
-      money: UE.getEditor('career_money').getContent(),
-      moral: UE.getEditor('career_moral').getContent(),
-      qualify: UE.getEditor('career_qualify').getContent(),
-      skill: UE.getEditor('career_skill').getContent(),
-      tools: UE.getEditor('career_tools').getContent(),
-      claim: UE.getEditor('career_claim').getContent(),
-      local: UE.getEditor('career_local').getContent(),
+      back: UE.getEditor('new_career_back').getContent(),
+      dataSet: UE.getEditor('new_career_course').getContent(),
+      definition: UE.getEditor('new_career_definition').getContent(),
+      duty: UE.getEditor('new_career_duty').getContent(),
+      fore: UE.getEditor('new_career_fore').getContent(),
+      intro: UE.getEditor('new_career_intro').getContent(),
+      money: UE.getEditor('new_career_money').getContent(),
+      moral: UE.getEditor('new_career_moral').getContent(),
+      qualify: UE.getEditor('new_career_qualify').getContent(),
+      skill: UE.getEditor('new_career_skill').getContent(),
+      tools: UE.getEditor('new_career_tools').getContent(),
+      claim: UE.getEditor('new_career_claim').getContent(),
+      local: UE.getEditor('new_career_local').getContent(),
     };
 
     createDataCareer(formData).then(data => {
@@ -69,7 +69,7 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="校名"
+              label="职业"
             >
               {getFieldDecorator('name',{
                 initialValue: '',
@@ -87,7 +87,6 @@ class New extends Component {
               label="选择分类"
             >
               {getFieldDecorator('categoryId',{
-                initialValue: '',
                 rules: [
                   { required: true, message: '请选择分类' },
                 ]
@@ -120,35 +119,35 @@ class New extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="学历要求">
               <LazyLoad height={370}>
-                <UEditor id="career_back"/>
+                <UEditor id="new_career_back"/>
               </LazyLoad>
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="主要课程">
               <LazyLoad height={370}>
-                <UEditor id="career_course"/>
+                <UEditor id="new_career_course"/>
               </LazyLoad>
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="职业定义">
               <LazyLoad height={370}>
-                <UEditor id="career_definition"/>
+                <UEditor id="new_career_definition"/>
               </LazyLoad>
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="工作内容">
               <LazyLoad height={370}>
-                <UEditor id="career_duty"/>
+                <UEditor id="new_career_duty"/>
               </LazyLoad>
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="个人发展路径">
               <LazyLoad height={370}>
-                <UEditor id="career_fore"/>
+                <UEditor id="new_career_fore"/>
               </LazyLoad>
             </FormItem>
           </Col>
@@ -158,7 +157,7 @@ class New extends Component {
               label="简介"
             >
               <LazyLoad height={370}>
-                <UEditor id="career_intro"/>
+                <UEditor id="new_career_intro"/>
               </LazyLoad>
             </FormItem>
           </Col>
@@ -168,7 +167,7 @@ class New extends Component {
               label="薪酬结构"
             >
               <LazyLoad height={370}>
-                <UEditor id="career_money"/>
+                <UEditor id="new_career_money"/>
               </LazyLoad>
             </FormItem>
           </Col>
@@ -178,7 +177,7 @@ class New extends Component {
               label="主要职责"
             >
               <LazyLoad height={370}>
-                <UEditor id="career_moral"/>
+                <UEditor id="new_career_moral"/>
               </LazyLoad>
             </FormItem>
           </Col>
@@ -188,7 +187,7 @@ class New extends Component {
               label="资格"
             >
               <LazyLoad height={370}>
-                <UEditor id="career_qualify"/>
+                <UEditor id="new_career_qualify"/>
               </LazyLoad>
             </FormItem>
           </Col>
@@ -198,7 +197,7 @@ class New extends Component {
               label="技能"
             >
               <LazyLoad height={370}>
-                <UEditor id="career_skill"/>
+                <UEditor id="new_career_skill"/>
               </LazyLoad>
             </FormItem>
           </Col>
@@ -208,7 +207,7 @@ class New extends Component {
               label="工具"
             >
               <LazyLoad height={370}>
-                <UEditor id="career_tools"/>
+                <UEditor id="new_career_tools"/>
               </LazyLoad>
             </FormItem>
           </Col>
@@ -218,7 +217,7 @@ class New extends Component {
               label="要求"
             >
               <LazyLoad height={370}>
-                <UEditor id="career_claim"/>
+                <UEditor id="new_career_claim"/>
               </LazyLoad>
             </FormItem>
           </Col>
@@ -228,7 +227,7 @@ class New extends Component {
               label="工作地点"
             >
               <LazyLoad height={370}>
-                <UEditor id="career_local"/>
+                <UEditor id="new_career_local"/>
               </LazyLoad>
             </FormItem>
           </Col>

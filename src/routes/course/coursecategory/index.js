@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs, Modal} from 'antd';
+import {message, Modal, Pagination, Table, Tabs} from 'antd';
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';
-import Detail from './Detail';
 import {
   deleteServiceCourseCategory,
   loadServiceCourseCategory,
@@ -147,8 +146,6 @@ class CourseCategory extends Component {
 
         <Update show={this.state.update_display} data={this.state.update_data}
                 onCancel={() =>{ this.handleRefresh(); this.setState({update_display: false})}}/>
-        <Detail show={this.state.detail_display} data={this.state.detail_data}
-                onCancel={() => this.setState({detail_display: false})}/>
       </div>
     );
   }

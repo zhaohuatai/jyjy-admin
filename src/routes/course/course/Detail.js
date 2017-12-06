@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Col, Collapse, Form, Modal, Row, Switch} from 'antd';
+import {Col, Collapse, Form, Modal, Row} from 'antd';
 
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;
@@ -139,7 +139,8 @@ class New extends Component {
             {...formItemLayout}
             label="置顶"
           >
-            <Switch checked={!!isTop}/>
+            <p>{!!isTop ? "是" : "否"}</p>
+
           </FormItem>
         </Col><Col span={24}>
           <FormItem

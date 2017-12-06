@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, InputNumber} from 'antd';
+import {Button, Col, Form, Icon, Input, InputNumber, message, Row, Select, Switch} from 'antd';
 import {createServiceCourseItem, loadServiceCourseDataSet} from '../../../service/course';
 import {loadMemberTeacherDataSet} from "../../../service/member";
 import LazyLoad from 'react-lazy-load';
@@ -12,7 +12,7 @@ class New extends Component {
     super(props);
     this.state = {
       channelList: [],
-      presenterList :[]
+      presenterList: []
     }
   }
 
@@ -47,22 +47,22 @@ class New extends Component {
   };
 
   render() {
-    const { getFieldDecorator } = this.props.form;
+    const {getFieldDecorator} = this.props.form;
 
     const formItemLayout = {
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 4 },
+        xs: {span: 24},
+        sm: {span: 4},
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 14 },
+        xs: {span: 24},
+        sm: {span: 14},
       },
     };
 
-    return(
+    return (
       <div>
-        <Row type='flex' style={{ marginBottom: '5px'}}>
+        <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
             <FormItem{...formItemLayout} label="小节名称">
               {getFieldDecorator('name', {
@@ -105,7 +105,6 @@ class New extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="主讲人">
               {getFieldDecorator('presenterId', {
-                initialValue: '',
                 rules: [
                   {required: true, message: '请选择主讲人'},
                 ]
@@ -125,12 +124,12 @@ class New extends Component {
               {getFieldDecorator('freePay', {
                 valuePropName: 'checked',
               })(
-                <Switch checkedChildren={<Icon type="check" />} unCheckedChildren={<Icon type="cross" />} />
+                <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="普通价格/元">
+            <FormItem{...formItemLayout} label="普通价格/分">
               {getFieldDecorator('price', {
                 initialValue: 0,
                 rules: []
@@ -140,12 +139,12 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="会员价格/元">
+            <FormItem{...formItemLayout} label="会员价格/分">
               {getFieldDecorator('priceVIP', {
                 initialValue: 0,
                 rules: []
               })(
-                <InputNumber />
+                <InputNumber/>
               )}
             </FormItem>
           </Col>
@@ -177,7 +176,7 @@ class New extends Component {
             </FormItem>
           </Col>
         </Row>
-        <FormItem wrapperCol={{ span: 12, offset: 4 }}>
+        <FormItem wrapperCol={{span: 12, offset: 4}}>
           <Button type="primary" onClick={this.handleSubmit}>创建</Button>
         </FormItem>
       </div>
@@ -185,4 +184,5 @@ class New extends Component {
   }
 }
 
-export default Form.create()(New);;
+export default Form.create()(New);
+;

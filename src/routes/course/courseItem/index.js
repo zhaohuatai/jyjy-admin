@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs, Modal} from 'antd';
-import {deleteServiceCourseItem, loadServiceCourseItem, loadServiceCourseItemDataSet, loadServiceCourseDataSet} from '../../../service/course';
+import {message, Modal, Pagination, Table, Tabs} from 'antd';
+import {deleteServiceCourseItem, loadServiceCourseItem, loadServiceCourseItemDataSet} from '../../../service/course';
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';
@@ -10,19 +10,19 @@ const TabPane = Tabs.TabPane;
 
 const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
-  {title: '标题', dataIndex: 'title', key: 'title'},
-  {title: '所属课程', dataIndex: 'courseId', key: 'courseId'},
+  {title: '标题', dataIndex: 'name', key: 'name'},
+  {title: '所属课程', dataIndex: 'courseName', key: 'courseName'},
   {title: '描述', dataIndex: 'hint', key: 'hint'},
   {title: '节次', dataIndex: 'itemOrder', key: 'itemOrder'},
   {title: '主讲人', dataIndex: 'presenterName', key: 'presenterName'},
   {title: '费用', dataIndex: 'freePay', key: 'freePay', render: (text) => text === 1 ? '收费' : '免费'},
-  {title: '普通价格', dataIndex: 'price', key: 'price'},
-  {title: '会员价', dataIndex: 'priceVIP', key: 'priceVip'},
+  {title: '价格/分', dataIndex: 'price', key: 'price'},
+  {title: '会员价/分', dataIndex: 'priceVIP', key: 'priceVip'},
   {title: '备注', dataIndex: 'remark', key: 'remark'},
   {title: '状态', dataIndex: 'status', key: 'status' , render: (text) => text === 1 ? '正常' : '删除' },
 ]
 
-class School extends Component {
+class CourseItem extends Component {
 
   constructor(props) {
     super(props);
@@ -159,4 +159,4 @@ class School extends Component {
   }
 }
 
-export default School;
+export default CourseItem;

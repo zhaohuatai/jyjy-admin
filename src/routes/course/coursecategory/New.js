@@ -13,10 +13,6 @@ class New extends Component {
     }
   }
 
-  componentDidMount() {
-
-  }
-
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
 

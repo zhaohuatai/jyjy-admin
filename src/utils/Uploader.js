@@ -1,12 +1,11 @@
-import React, {Component} from 'react';
-import {API_DOMAIN} from '../../../utils/config';
-import {Button, Col, Form, Icon, Input, message, Row, Select, Upload} from 'antd';
-import {createServiceCourseItem, loadUploadVideoAuth} from '../../../service/course';
-import '../../../utils/aliupload/aliyun-sdk';
-import '../../../utils/aliupload/vod-sdk-upload';
+// import React, {Component} from 'react';
+// import {API_DOMAIN} from '../../../utils/config';
+// import {Button, Col, Form, Icon, Input, message, Row, Select, Upload} from 'antd';
+// import {createServiceCourseItem, loadUploadVideoAuth} from '../../../service/course';
+// import '../../../utils/aliupload/aliyun-sdk';
+// import '../../../utils/aliupload/vod-sdk-upload';
 
 const FormItem = Form.Item;
-const Option = Select.Option;
 
 class New extends Component {
   constructor(props) {

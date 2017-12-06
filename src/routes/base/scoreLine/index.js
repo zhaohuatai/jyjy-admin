@@ -53,7 +53,7 @@ class ScoreLine extends Component {
   // 删除记录
   handleDelete = () => {
     Modal.confirm({
-      title: `确定删除序号为${this.state.selectedRowkeys[0]}的数据吗？`,
+      title: `确定删除吗？`,
       okType: 'danger',
       onOk: () => {
         deleteDataScoreLine({id: this.state.selectedRowKeys[0]}).then(data => {

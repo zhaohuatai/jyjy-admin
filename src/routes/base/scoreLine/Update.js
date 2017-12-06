@@ -30,7 +30,7 @@ class New extends Component {
   }
 
   componentDidMount() {
-    loadDataUniversityDataSet({rows: 10000}).then(data => {
+    loadDataUniversityDataSet({rows: 10000, status: 1}).then(data => {
       this.setState({universityList: data.data.dataSet.rows})
     }).catch((e) => {
       message.error(e);

@@ -38,13 +38,13 @@ class Update extends Component {
   }
 
   componentDidMount() {
-    loadDataProfessionCategoryDataSet({}).then(data => {
+    loadDataProfessionCategoryDataSet({rows: 10000, status: 1}).then(data => {
       this.setState({categoryList: data.data.dataSet.rows})
     }).catch((e) => {
       message.error(e);
     })
 
-    loadDataProfessionSubjectDataSet({}).then(data => {
+    loadDataProfessionSubjectDataSet({rows: 10000, status: 1}).then(data => {
       this.setState({subjectList: data.data.dataSet.rows})
     }).catch((e) => {
       message.error(e);

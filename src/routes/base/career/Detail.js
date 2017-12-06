@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Form, Col, Row, Modal,Collapse} from 'antd';
+import React, {Component} from 'react';
+import {Col, Collapse, Form, Modal, Row} from 'antd';
 
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;
@@ -41,7 +41,7 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="名称"
+              label="职业"
             >
               <p>{name}</p>
             </FormItem>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs, Modal} from 'antd';
+import {message, Modal, Pagination, Table, Tabs} from 'antd';
 import Filter from './Filter';
 import Update from './Update';
 import Detail from './Detail';
@@ -14,8 +14,6 @@ const table_columns = [
   {title: '描述', dataIndex: 'hint', key: 'hint'},
   {title: '分类', dataIndex: 'categoryName', key: 'categoryName'},
   {title: '主讲人', dataIndex: 'presenterName', key: 'presenterName'},
-  {title: '价格', dataIndex: 'price', key: 'price'},
-  {title: '会员价格', dataIndex: 'priceVIP', key: 'priceVIP'},
   {title: '留言数', dataIndex: 'consultationCount', key: 'consultationCount'},
   {title: '收藏数', dataIndex: 'favoriteCount', key: 'favoriteCount'},
   {title: '实际学习人数', dataIndex: 'learningCountActual', key: 'learningCountActual'},
