@@ -85,7 +85,7 @@ class TeacherAppointment extends Component {
       {
         title: '操作', key: 'action', render: (text, record) => {
         return record.returnStatus ? (
-          <Button size='small' onClick={() => this.handleReturnOver(record)}>修改回访结果</Button>
+          <Button size='small' onClick={() => this.handleReturnOver(record)}>修改结果</Button>
         ) : (<Button type='primary' icon='check-circle-o' size='small'
                      onClick={() => this.handleReturnOver(record)}>回访完毕</Button>)
       }
