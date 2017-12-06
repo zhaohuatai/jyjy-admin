@@ -76,6 +76,16 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
+            <FormItem {...formItemLayout} label="节次">
+              {getFieldDecorator('itemOrder', {
+                initialValue: 1,
+                rules: []
+              })(
+                <Input/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
             <FormItem {...formItemLayout} label="描述">
               {getFieldDecorator('hint', {
                 initialValue: '',
@@ -153,16 +163,6 @@ class New extends Component {
               <LazyLoad height={370}>
                 <UEditor id="new_courseItemIntroduction"/>
               </LazyLoad>
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem {...formItemLayout} label="显示顺序">
-              {getFieldDecorator('itemOrder', {
-                initialValue: '',
-                rules: []
-              })(
-                <Input/>
-              )}
             </FormItem>
           </Col>
           <Col span={24}>

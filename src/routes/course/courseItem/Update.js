@@ -7,7 +7,32 @@ import {loadMemberTeacherDataSet} from "../../../service/member";
 import '../../../utils/aliupload/aliyun-sdk.min';
 import '../../../utils/aliupload/vod-sdk-upload-1.1.0.min';
 
-let uploader;
+var uploader = new VODUpload({
+  // 文件上传失败
+  'onUploadFailed': function (uploadInfo, code, message) {
+    message.fail('上传失败，请稍后再试');
+    //console.log("onUploadFailed: file:" + uploadInfo.file.name + ",code:" + code + ", message:" + message);
+  },
+  // 文件上传完成
+  'onUploadSucceed': function (uploadInfo) {
+    message.success('上传成功');
+    //console.log("onUploadSucceed: " + uploadInfo.file.name + ", endpoint:" + uploadInfo.endpoint + ", bucket:" + uploadInfo.bucket + ", object:" + uploadInfo.object);
+  },
+  // 文件上传进度
+  'onUploadProgress': function (uploadInfo, totalSize, uploadedSize) {
+    //console.log("onUploadProgress:file:" + uploadInfo.file.name + ", fileSize:" + totalSize + ", percent:" + Math.ceil(uploadedSize * 100 / totalSize) + "%");
+    message.info("正在上传：" + Math.ceil(uploadedSize * 100 / totalSize) + "%");
+  },
+  // STS临时账号会过期，过期时触发函数
+  'onUploadTokenExpired': function () {
+    message.success('上传凭证过期，请重试');
+    //console.log("onUploadTokenExpired");
+  },
+  // 开始上传
+  'onUploadstarted': function (uploadInfo) {
+    uploader.setUploadAuthAndAddress(uploadInfo, _this.state.aliVideoAuthDto.uploadAuth, _this.state.aliVideoAuthDto.uploadAddress);
+  }
+});
 const FormItem = Form.Item;
 
 class Update extends Component {
@@ -44,36 +69,6 @@ class Update extends Component {
       message.error(e);
     })
 
-    let _this = this;
-
-    uploader = new VODUpload({
-      // 文件上传失败
-      'onUploadFailed': function (uploadInfo, code, message) {
-        message.fail('上传失败，请稍后再试');
-        //console.log("onUploadFailed: file:" + uploadInfo.file.name + ",code:" + code + ", message:" + message);
-      },
-      // 文件上传完成
-      'onUploadSucceed': function (uploadInfo) {
-        _this.setState({uploading: false})
-        message.success('上传成功');
-        //console.log("onUploadSucceed: " + uploadInfo.file.name + ", endpoint:" + uploadInfo.endpoint + ", bucket:" + uploadInfo.bucket + ", object:" + uploadInfo.object);
-      },
-      // 文件上传进度
-      'onUploadProgress': function (uploadInfo, totalSize, uploadedSize) {
-        //console.log("onUploadProgress:file:" + uploadInfo.file.name + ", fileSize:" + totalSize + ", percent:" + Math.ceil(uploadedSize * 100 / totalSize) + "%");
-        _this.setState({upload_progress: Math.ceil(uploadedSize * 100 / totalSize) + "%"})
-      },
-      // STS临时账号会过期，过期时触发函数
-      'onUploadTokenExpired': function () {
-        message.success('上传凭证过期，请重试');
-        //console.log("onUploadTokenExpired");
-      },
-      // 开始上传
-      'onUploadstarted': function (uploadInfo) {
-        _this.setState({uploading: true});
-        uploader.setUploadAuthAndAddress(uploadInfo, _this.state.aliVideoAuthDto.uploadAuth, _this.state.aliVideoAuthDto.uploadAddress);
-      }
-    });
     uploader.init();
   }
 
@@ -154,8 +149,8 @@ class Update extends Component {
           courseItemId: this.props.data.id,
           videoName: file.name,
           videoTitle: file.name,
-          videoTags: file.name,
-          videoDesc: file.name,
+          videoTags: "标签",
+          videoDesc: "描述",
         }).then(data => {
           console.log(data);
           //_this.state.videoId = data.data.aliVideoAuthDto.videoId;
@@ -183,6 +178,16 @@ class Update extends Component {
                 rules: [
                   {required: true, message: '请输入小节名称'},
                 ]
+              })(
+                <Input/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="节次">
+              {getFieldDecorator('itemOrder', {
+                initialValue: itemOrder,
+                rules: []
               })(
                 <Input/>
               )}
@@ -218,7 +223,7 @@ class Update extends Component {
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} label="主讲人">
-              {getFieldDecorator('type', {
+              {getFieldDecorator('presenterId', {
                 initialValue: presenterId + '',
                 rules: [
                   {required: true, message: '请选择'},
@@ -278,30 +283,10 @@ class Update extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem {...formItemLayout} label="视频名称">
-              {getFieldDecorator('videoName', {
-                initialValue: videoName,
-                rules: []
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
             <FormItem {...formItemLayout} label="课程介绍">
               <LazyLoad height={370}>
                 <UEditor id="update_courseItemIntroduction" initValue={introduction}/>
               </LazyLoad>
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem {...formItemLayout} label="显示顺序">
-              {getFieldDecorator('itemOrder', {
-                initialValue: itemOrder,
-                rules: []
-              })(
-                <Input/>
-              )}
             </FormItem>
           </Col>
           <Col span={24}>

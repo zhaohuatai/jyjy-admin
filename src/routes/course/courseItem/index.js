@@ -19,7 +19,6 @@ const table_columns = [
   {title: '价格/分', dataIndex: 'price', key: 'price'},
   {title: '会员价/分', dataIndex: 'priceVIP', key: 'priceVip'},
   {title: '备注', dataIndex: 'remark', key: 'remark'},
-  {title: '状态', dataIndex: 'status', key: 'status' , render: (text) => text === 1 ? '正常' : '删除' },
 ]
 
 class CourseItem extends Component {

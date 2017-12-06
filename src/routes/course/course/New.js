@@ -181,7 +181,7 @@ class New extends Component {
           <Col span={24}>
             <FormItem {...formItemLayout} label="显示顺序">
               {getFieldDecorator('showIndex', {
-                initialValue: '',
+                initialValue: 1,
                 rules: []
               })(
                 <Input/>
