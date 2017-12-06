@@ -4,6 +4,7 @@ import {deleteMemberTeacher, loadMemberTeacher, loadMemberTeacherDataSet} from '
 import Filter from './Filter';
 import New from './New';
 import Update from './Update';
+import Detail from './Detail';
 import {IMG_DOMAIN} from "../../../utils/config";
 
 const TabPane = Tabs.TabPane;
@@ -12,13 +13,16 @@ const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
   {title: '姓名', dataIndex: 'name', key: 'name'},
   {title: '电话', dataIndex: 'phone', key: 'phone'},
-  {title: '排名', dataIndex: 'rank', key: 'rank'},
+  {title: '热门', dataIndex: 'rank', key: 'rank'},
   {
     title: '头像',
     dataIndex: 'profilePicture',
     key: 'profilePicture',
     render: (text) => <img src={IMG_DOMAIN + text} style={{height: '40px', width: '40px'}}/>
   },
+  {title: '创建时间', dataIndex: 'createTime', key: 'createTime'},
+  {title: '更新时间', dataIndex: 'updateTime', key: 'updateTime'},
+
 ]
 
 class Teacher extends Component {
@@ -149,6 +153,12 @@ class Teacher extends Component {
         <Update show={this.state.update_display} data={this.state.update_data}
                 onCancel={() => {
                   this.setState({update_display: false});
+                  this.handleRefresh();
+                }
+                }/>
+        <Detail show={this.state.detail_display} data={this.state.detail_data}
+                onCancel={() => {
+                  this.setState({detail_display: false});
                   this.handleRefresh();
                 }
                 }/>

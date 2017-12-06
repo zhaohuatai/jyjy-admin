@@ -31,7 +31,7 @@ class School extends Component {
       onOk: () => {
         deleteColumnChannelItem({id: this.state.selectedRowKeys[0]}).then(data => {
           message.success("删除成功！");
-          this.handleRefresh();
+          this.handleRefresh(this.state.search_form);
         });
       }
     })
@@ -81,7 +81,7 @@ class School extends Component {
 
   // 搜索
   handleSearch = (values) => {
-    this.setState({table_cur_page: 1});
+    this.setState({table_cur_page: 1, search_form: values});
     this.handleRefresh(values);
   }
 

@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Input, message, Modal, Row, Select} from 'antd';
+import {Button, Col, Form, Input, message, Modal, Row, Upload, Icon} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import {loadInterlocutionCategoryDataSet, updateInterlocution} from "../../../service/interlocution";
+import { updateEnrollAutoBigdata } from "../../../service/bigdata";
+import { API_DOMAIN} from '../../../utils/config';
 
 const FormItem = Form.Item;
 
@@ -10,11 +11,12 @@ class New extends Component {
     let formData = this.props.form.getFieldsValue();
     formData = {
       ...formData,
-      interAnswer: UE.getEditor('update_interAnswer').getContent(),
+      content: UE.getEditor('update_bigdata_content').getContent(),
       id: this.props.data.id,
+      thumbnailUrl: formData.thumbnailUrl ? formData.thumbnailUrl[0].response.data.image : this.props.data.imgUrl,
     }
 
-    updateInterlocution(formData).then(data => {
+    updateEnrollAutoBigdata(formData).then(data => {
       this.props.form.resetFields();
       this.props.onCancel();
       message.success("更新成功！");
@@ -36,14 +38,11 @@ class New extends Component {
   }
 
   componentDidMount() {
-    loadInterlocutionCategoryDataSet().then(data => {
-      this.setState({category: data.data.dataSet.rows})
-    })
   }
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {interQuestion, interAnswer, categoryId, remark} = this.props.data;
+    const {content, interAnswer, title, remark} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -57,47 +56,42 @@ class New extends Component {
     };
 
     return (
-      <Modal title="更新高校信息" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
+      <Modal title="更新" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
         <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="问题">
-              {getFieldDecorator('interQuestion', {
-                initialValue: interQuestion,
+              label="标题">
+              {getFieldDecorator('title', {
+                initialValue: title,
                 rules: [
-                  {required: true, message: '请输入问题'},
+                  {required: true, message: '请输入标题'},
                 ]
               })(
                 <Input/>
               )}
             </FormItem>
           </Col>
+
           <Col span={24}>
-            <FormItem
-              {...formItemLayout}
-              label="所属分类"
-            >
-              {getFieldDecorator('categoryId', {
-                initialValue: categoryId + '',
-                rules: [
-                  {required: true, message: '请选择分类'},
-                ]
+            <FormItem{...formItemLayout} label="校徽图片">
+              {getFieldDecorator('thumbnailUrl', {
+                valuePropName: 'fileList',
+                getValueFromEvent: this.normFile,
               })(
-                <Select placeholder="选择分类" style={{width: '200px'}}>
-                  {
-                    this.state.category.map(item => {
-                      return <Select.Option key={item.id} value={`${item.id}`}>{item.categoryName}</Select.Option>
-                    })
-                  }
-                </Select>
+                <Upload name="file" action={`${API_DOMAIN}admin/enroll/enrollAutoBigdata/uploadThumbnailUrl`} listType="picture"
+                        withCredentials={true}>
+                  <Button>
+                    <Icon type="upload"/> 点击上传
+                  </Button>
+                </Upload>
               )}
             </FormItem>
           </Col>
 
           <Col span={24}>
-            <FormItem{...formItemLayout} label="回答">
-              <UEditor id="update_interAnswer" initValue={interAnswer}/>
+            <FormItem{...formItemLayout} label="内容">
+              <UEditor id="update_bigdata_content" initValue={content}/>
             </FormItem>
           </Col>
           <Col span={24}>

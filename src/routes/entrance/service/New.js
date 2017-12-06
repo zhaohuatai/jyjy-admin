@@ -74,6 +74,7 @@ class New extends Component {
     }
     return e && e.fileList;
   }
+
   loadCateData = (selectedOptions) => {
     const targetOption = selectedOptions[selectedOptions.length - 1];
     targetOption.loading = true;

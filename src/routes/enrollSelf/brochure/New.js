@@ -87,18 +87,6 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="年份">
-              {getFieldDecorator('years', {
-                initialValue: '',
-                rules: [{
-                  required: true, message: '请填写年份'
-                }]
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
             <FormItem{...formItemLayout} label="内容">
               <LazyLoad height={370}>
                 <UEditor id="new_brochureContent"/>
