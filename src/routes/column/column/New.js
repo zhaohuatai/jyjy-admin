@@ -25,7 +25,7 @@ class New extends Component {
       introduction: UE.getEditor('new_columnIntroduction').getContent(),
       freePay: formData.freePay ? 0 : 1,
       isTop: formData.isTop ? 1 : 0,
-      coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : this.props.data.coverUrl,
+      coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : '',
     };
 
     createColumnChannel(formData).then(data => {
