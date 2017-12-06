@@ -28,7 +28,7 @@ class New extends Component {
     };
 
     return (
-      <Modal title="高校信息" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
+      <Modal title="详情" visible={this.props.show} onCancel={this.props.onCancel} footer={null} width={'80%'}>
         <Row type='flex' style={{marginBottom: '5px'}}>
           <Col span={24}>
             <FormItem{...formItemLayout} label="标题">

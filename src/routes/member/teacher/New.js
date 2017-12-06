@@ -85,7 +85,7 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="排名">
+            <FormItem{...formItemLayout} label="热门">
               {getFieldDecorator('rank', {
                 initialValue: '',
                 rules: []

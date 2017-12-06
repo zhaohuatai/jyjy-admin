@@ -36,7 +36,7 @@ class New extends Component {
   }
 
   componentDidMount() {
-    loadEnrollAutoQuestionCategoryDataSet({rows: 10000}).then(data => {
+    loadEnrollAutoQuestionCategoryDataSet({rows: 10000, status: 1}).then(data => {
       this.setState({category: data.data.dataSet.rows})
     })
   }

@@ -29,6 +29,8 @@ class Update extends Component {
       formData[`cate${this.state.cate}Id`] = this.state.cateValue;
     }
 
+    console.log(formData);
+
     updateServiceEntrance(formData).then(data => {
       this.props.form.resetFields();
       this.props.onCancel();
@@ -55,56 +57,14 @@ class Update extends Component {
   };
 
   componentDidMount() {
-    let form = this.props.form;
     loadEntranceCategoryFDataSet({rows: 1000}).then(data => {
-      if (data.data.dataSet.total) {
-        let d = this.renderData(data.data.dataSet.rows, 'First');
-        this.setState({options: d}, () => {
-          this.state.options.map((cateFirst, index) => {
-            if (this.props.data.cateFirstId && this.props.data.cateFirstId === cateFirst.value) {
-              this.setState({cate: 'First', cateValue: this.props.data.cateFirstId})
-              form.setFieldsValue({
-                cateId: this.props.data.cateFirstId,
-              })
-            }
-            loadEntranceCategorySDataSet({rows: 1000, cateFirstId: cateFirst.value}).then(data => {
-              if (data.data.dataSet.total) {
-                this.state.options[index].children = this.renderData(data.data.dataSet.rows, 'Second').map((cateSecond) => {
-                  if (this.props.data.cateSecondId && this.props.data.cateSecondId === cateSecond.value) {
-                    this.setState({cate: 'Second', cateValue: this.props.data.cateSecondId})
-                    form.setFieldsValue({
-                      cateId: [`${cateFirst.value}`, `${cateSecond.value}`],
-                    })
-                  }
-                  loadEntranceCategoryTDataSet({rows: 1000, cateSecondId: cateSecond.value}).then(data => {
-                    if (data.data.dataSet.total) {
-                      this.state.options[index].children = this.renderData(data.data.dataSet.rows, 'Third').map((cateThird) => {
-                        if (this.props.data.cateThirdId && this.props.data.cateThirdId === cateThird.value) {
-                          this.setState({cate: 'Third', cateValue: this.props.data.cateThirdId})
-                          form.setFieldsValue({
-                            cateId: [`${cateFirst.value}`, `${cateSecond.value}`, `${cateThird.value}`],
-                          })
-                        }
-                      })
-                    }
-                  }).then(() => {
-
-                  })
-                })
-              }
-            }).then(() => {
-
-            })
-          })
-        })
+      if (data.data.dataSet.rows) {
+        this.setState({options: this.renderData(data.data.dataSet.rows, 'First')});
       }
-    }).then(() => {
-      console.log(this.state.options);
-      this.setState({options: [...this.state.options]});
     }).catch((e) => {
-        console.log(e);
+        message.error(e);
       }
-    );
+    )
   }
 
   renderData = (data, cate) => {
@@ -141,10 +101,45 @@ class Update extends Component {
     return e && e.fileList;
   }
 
+  loadCateData = (selectedOptions) => {
+    const targetOption = selectedOptions[selectedOptions.length - 1];
+    targetOption.loading = true;
+    switch (targetOption.cate) {
+      case 'First' :
+        loadEntranceCategorySDataSet({rows: 1000, cateFirstId: targetOption.value}).then(data => {
+          if (data.data.dataSet.total) {
+            targetOption.children = this.renderData(data.data.dataSet.rows, 'Second');
+          } else {
+            targetOption.isLeaf = true;
+          }
+        }).then(() => {
+          setTimeout(() => {
+            targetOption.loading = false;
+            this.setState({options: [...this.state.options]});
+          }, 500)
+        });
+        break;
+      case 'Second' :
+        loadEntranceCategoryTDataSet({rows: 1000, cateSecondId: targetOption.value}).then(data => {
+          if (data.data.dataSet.total) {
+            targetOption.children = this.renderData(data.data.dataSet.rows, 'Third');
+          } else {
+            targetOption.isLeaf = true;
+          }
+        }).then(() => {
+          setTimeout(() => {
+            targetOption.loading = false;
+            this.setState({options: [...this.state.options]});
+          }, 500)
+        });
+        break;
+    }
+  }
+
   render() {
     const {getFieldDecorator} = this.props.form;
     const {
-      title, remark, isTop, showIndex, introduction, price, priceVIP, cateFirstId, cateSecondId, cateThirdId
+      title, remark, isTop, showIndex, introduction, cateName,
     } = this.props.data;
 
     const formItemLayout = {
@@ -197,10 +192,13 @@ class Update extends Component {
               {getFieldDecorator('cateId', {
                 rules: [
                   {required: true, message: '请选择'},
-                ]
+                ],
               })(
-                <Cascader placeholder="选择栏目" options={this.state.options}
-                          style={{width: 270}} onChange={this.onCateChange} changeOnSelect/>
+                <div>
+                  <span>{cateName}  </span>
+                  <Cascader placeholder="选择新栏目" options={this.state.options} loadData={this.loadCateData}
+                            style={{width: 270}} onChange={this.onCateChange} changeOnSelect/>
+                </div>
               )}
             </FormItem>
           </Col>

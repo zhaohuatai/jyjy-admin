@@ -15,7 +15,7 @@ class Filter extends Component {
   }
 
   componentDidMount() {
-    loadColumnChannelDataSet({rows: 10000}).then(data => {
+    loadColumnChannelDataSet({rows: 10000, status: 1}).then(data => {
       this.setState({channelList: data.data.dataSet.rows});
       if (data.data.dataSet.rows) {
         this.props.form.setFieldsValue({

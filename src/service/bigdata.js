@@ -36,3 +36,11 @@ export function loadEnrollAutoBigdata(param) {
   });
 }
 
+export function updateEnrollAutoBigdata(param) {
+  return new Promise((resolve, reject) => {
+    post(`${API_DOMAIN}admin/enroll/enrollAutoBigdata/updateEnrollAutoBigdata`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+

@@ -115,7 +115,7 @@ class BigData extends Component {
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
         <Tabs defaultActiveKey="1">
-          <TabPane tab="升学百科问答" key="1">
+          <TabPane tab="自招大数据" key="1">
             <Filter
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
