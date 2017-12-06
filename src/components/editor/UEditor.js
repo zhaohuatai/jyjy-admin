@@ -3,13 +3,13 @@ import {API_DOMAIN} from "../../utils/config";
 
 // http://fex.baidu.com/ueditor/#start-toolbar
 class UEditor extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {};
     this.uedeitor = {}
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.initEditor();
   }
 
@@ -32,9 +32,9 @@ class UEditor extends Component {
     // });
 
     UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
-    UE.Editor.prototype.getActionUrl = function(action) {
-      if (action == "uploadimage" || action == 'uploadscrawl' || action == 'uploadimage' || action == 'uploadvideo') {
-        return `http://wei.sinogood.com/admin/ueditor/attachment/upload`;
+    UE.Editor.prototype.getActionUrl = function (action) {
+      if (action === "uploadimage" || action === 'uploadscrawl' || action === 'uploadimage' || action === 'uploadvideo') {
+        return API_DOMAIN + 'admin/ueditor/attachment/upload';
       } else {
         return this._bkGetActionUrl.call(this, action);
       }
@@ -46,21 +46,23 @@ class UEditor extends Component {
         UE.delEditor(id);
         self.initEditor();
       }
-      if(initValue){
+      if (initValue) {
         this.uedeitor.setContent(initValue);
       }
     })
   }
-  componentDidUpdate(){
+
+  componentDidUpdate() {
     const {initValue} = this.props;
     this.uedeitor.ready((ueditor) => {
 
-      if(initValue){
+      if (initValue) {
         this.uedeitor.setContent(initValue);
       }
     })
   }
-  render(){
+
+  render() {
     return (
       <div id={this.props.id} name="content" type="text/plain" style={{width: '100%'}}/>
     )
