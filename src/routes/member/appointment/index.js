@@ -81,14 +81,13 @@ class TeacherAppointment extends Component {
       {title: '会员ID', dataIndex: 'appointUserId', key: 'appointUserId', render: (text) => text ? text : "游客"},
       {title: '回访状态', dataIndex: 'returnStatus', key: 'returnStatus', render: (text) => text ? "已回访" : "未回访"},
       {title: '回访结果', dataIndex: 'returnResult', key: 'returnResult'},
-      {title: '回访人', dataIndex: 'returnServerId', key: 'returnServerId'},
+      {title: '回访客服', dataIndex: 'returnServerId', key: 'returnServerId'},
       {
         title: '操作', key: 'action', render: (text, record) => {
         return record.returnStatus ? (
-          <Button type='primary' icon='check-circle-o' size='small'
-                  onClick={() => this.handleReturnOver(record)}>
-            回访结束
-          </Button>) : (<Button size='small' onClick={() => this.handleReturnOver(record)}>修改回访结果</Button>)
+          <Button size='small' onClick={() => this.handleReturnOver(record)}>修改回访结果</Button>
+        ) : (<Button type='primary' icon='check-circle-o' size='small'
+                     onClick={() => this.handleReturnOver(record)}>回访完毕</Button>)
       }
       },
     ];
