@@ -1,19 +1,25 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Icon, Input, message, Modal, Row, Select, Switch, Upload} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import {loadServiceCourseDataSet, loadUploadVideoAuth, updateServiceCourseItem} from '../../../service/course';
+import {
+  loadServiceCourseDataSet,
+  loadUploadVideoAuth,
+  reloadUploadVideoAuth,
+  updateServiceCourseItem
+} from '../../../service/course';
 import LazyLoad from 'react-lazy-load';
-import {loadMemberTeacherDataSet} from "../../../service/member";
-import '../../../utils/aliupload/aliyun-sdk.min';
-import '../../../utils/aliupload/vod-sdk-upload-1.1.0.min';
 
+// import '../../../utils/aliupload/aliyun-sdk.min';
+// import '../../../utils/aliupload/vod-sdk-upload-1.1.0.min';
+
+import {loadMemberTeacherDataSet} from "../../../service/member";
 
 const FormItem = Form.Item;
 
-var uploader = {};
+// 创建 上传实例 变量
+var uploader;
 
 class Update extends Component {
-
   constructor(props) {
     super(props);
     //this.uploader = {};
@@ -23,6 +29,7 @@ class Update extends Component {
       presenterList: [],
       uploading: false,
       videoId: {},
+      videoSize: 0,
       aliVideoAuthDto: {
         requestId: '',
         uploadAddress: '',
@@ -34,17 +41,19 @@ class Update extends Component {
   }
 
   componentDidMount() {
-    loadServiceCourseDataSet({rows: 10000, status: 1}).then(data => {
+    loadServiceCourseDataSet({rows: 10000}).then(data => {
       this.setState({courseList: data.data.dataSet.rows})
     }).catch((e) => {
       message.error(e);
     })
 
-    loadMemberTeacherDataSet({rows: 10000, status: 1}).then(data => {
+    loadMemberTeacherDataSet({rows: 10000}).then(data => {
       this.setState({presenterList: data.data.dataSet.rows})
     }).catch((e) => {
       message.error(e);
     })
+
+    let _this = this;
 
     uploader = new VODUpload({
       // 文件上传失败
@@ -54,13 +63,14 @@ class Update extends Component {
       },
       // 文件上传完成
       'onUploadSucceed': function (uploadInfo) {
+        _this.setState({ uploading: false})
         message.success('上传成功');
         //console.log("onUploadSucceed: " + uploadInfo.file.name + ", endpoint:" + uploadInfo.endpoint + ", bucket:" + uploadInfo.bucket + ", object:" + uploadInfo.object);
       },
       // 文件上传进度
       'onUploadProgress': function (uploadInfo, totalSize, uploadedSize) {
         //console.log("onUploadProgress:file:" + uploadInfo.file.name + ", fileSize:" + totalSize + ", percent:" + Math.ceil(uploadedSize * 100 / totalSize) + "%");
-        message.info("正在上传：" + Math.ceil(uploadedSize * 100 / totalSize) + "%");
+        _this.setState({ upload_progress: Math.ceil(uploadedSize * 100 / totalSize) + "%"})
       },
       // STS临时账号会过期，过期时触发函数
       'onUploadTokenExpired': function () {
@@ -69,11 +79,10 @@ class Update extends Component {
       },
       // 开始上传
       'onUploadstarted': function (uploadInfo) {
-        console.log(this.state);
-        uploader.setUploadAuthAndAddress(uploadInfo, this.state.aliVideoAuthDto.uploadAuth, this.state.aliVideoAuthDto.uploadAddress);
+        _this.setState({ uploading: true });
+        uploader.setUploadAuthAndAddress(uploadInfo, _this.state.aliVideoAuthDto.uploadAuth, _this.state.aliVideoAuthDto.uploadAddress);
       }
     });
-
     uploader.init();
   }
 
@@ -93,8 +102,12 @@ class Update extends Component {
       id: this.props.data.id,
       freePay: formData.freePay ? 0 : 1,
       isTop: formData.isTop ? 1 : 0,
-      coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : this.props.data.coverUrl,
+      videoSize: this.state.videoSize
     };
+
+    if (formData.coverUrl) {
+      formData.coverUrl = formData.coverUrl[0].response.data.image;
+    }
 
     updateServiceCourseItem(formData).then(data => {
       this.props.form.resetFields();
@@ -147,6 +160,8 @@ class Update extends Component {
 
         console.log(file);
 
+        this.setState({videoSize: file.size})
+
         uploader.addFile(file, null, null, null, userData);
 
         // 获取上传凭证
@@ -154,13 +169,9 @@ class Update extends Component {
           courseItemId: this.props.data.id,
           videoName: file.name,
           videoTitle: file.name,
-          videoTags: "标签",
-          videoDesc: "描述",
+          videoTags: file.name,
+          videoDesc: file.name,
         }).then(data => {
-          console.log(data);
-          //_this.state.videoId = data.data.aliVideoAuthDto.videoId;
-          //uploader.setUploadAuthAndAddress(uploadInfo, data.data.aliVideoAuthDto.uploadAuth, data.data.aliVideoAuthDto.uploadAddress);
-          //console.log("onUploadStarted:" + uploadInfo.file.name + ", endpoint:" + uploadInfo.endpoint + ", bucket:" + uploadInfo.bucket + ", object:" + uploadInfo.object);
           this.setState({aliVideoAuthDto: data.data.aliVideoAuthDto});
         });
 
@@ -183,16 +194,6 @@ class Update extends Component {
                 rules: [
                   {required: true, message: '请输入小节名称'},
                 ]
-              })(
-                <Input/>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem {...formItemLayout} label="节次">
-              {getFieldDecorator('itemOrder', {
-                initialValue: itemOrder,
-                rules: []
               })(
                 <Input/>
               )}
@@ -228,10 +229,10 @@ class Update extends Component {
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} label="主讲人">
-              {getFieldDecorator('presenterId', {
+              {getFieldDecorator('type', {
                 initialValue: presenterId + '',
                 rules: [
-                  {required: true, message: '请选择'},
+                  {required: true, message: '请选择主讲人'},
                 ]
               })(
                 <Select placeholder="选择主讲人" style={{width: '200px'}}>
@@ -255,7 +256,7 @@ class Update extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem {...formItemLayout} label="价格/分">
+            <FormItem {...formItemLayout} label="普通价格">
               {getFieldDecorator('price', {
                 initialValue: price,
                 rules: []
@@ -265,7 +266,7 @@ class Update extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem {...formItemLayout} label="会员价/分">
+            <FormItem {...formItemLayout} label="会员价格">
               {getFieldDecorator('priceVIP', {
                 initialValue: priceVIP,
                 rules: []
@@ -281,7 +282,7 @@ class Update extends Component {
                   <Icon type="upload"/> 选择文件
                 </Button>
               </Upload>
-              <Button type="primary" onClick={this.doUpload} disabled={!this.state.fileList.length}
+              <Button type="primary" onClick={this.doUpload} disabled={this.state.fileList.length === 0}
                       loading={this.state.uploading}>
                 {this.state.uploading ? this.state.upload_progress : '开始上传'}
               </Button>
@@ -292,6 +293,16 @@ class Update extends Component {
               <LazyLoad height={370}>
                 <UEditor id="update_courseItemIntroduction" initValue={introduction}/>
               </LazyLoad>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="显示顺序">
+              {getFieldDecorator('itemOrder', {
+                initialValue: itemOrder,
+                rules: []
+              })(
+                <Input/>
+              )}
             </FormItem>
           </Col>
           <Col span={24}>
