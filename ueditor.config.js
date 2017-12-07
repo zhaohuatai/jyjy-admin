@@ -3,7 +3,7 @@
  * 可以在这里配置整个编辑器的特性
  */
 
-import {API_DOMAIN} from "../config";
+var API_DOMAIN = "http://jywxsitex.sinogood.com/";
 
 /**************************提示********************************
  * 所有被注释的配置项均为UEditor默认值。
