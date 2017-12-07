@@ -8,7 +8,9 @@ const Panel = Collapse.Panel;
 class Detail extends Component {
 
   render() {
-    const {imgUrl, title, showWeight, remark, locationName} = this.props.data;
+    const {imgUrl, title, showWeight, remark, locationName, content} = this.props.data;
+
+    console.log(content);
 
     const formItemLayout = {
       labelCol: {
@@ -45,6 +47,18 @@ class Detail extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="权重">
               <p>{showWeight}</p>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem
+              {...formItemLayout}
+              label="内容"
+            >
+              <Collapse>
+                <Panel header="点击查看详情" key="1">
+                  <div dangerouslySetInnerHTML={{ __html: content }} />
+                </Panel>
+              </Collapse>
             </FormItem>
           </Col>
           <Col span={24}>

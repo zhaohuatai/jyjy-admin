@@ -36,6 +36,7 @@ const checkCode = (statusCode, message) => {
  * fetch.get请求封装
  */
 export function get(url, params = '') {
+  let paramsurl;
   if (params) {
     const paramsArray = [];
     // encodeURIComponent
@@ -45,10 +46,14 @@ export function get(url, params = '') {
     } else {
       url += `&${paramsArray.join('&')}`;
     }
+
+    paramsurl = Object.keys(params).map(function(k) {
+      return encodeURIComponent(k) + '=' + encodeURIComponent(params[k])
+    }).join('&')
   }
 
   return new Promise(((resolve, reject) => {
-    fetch(url, {
+    fetch(url+paramsurl, {
       method: 'get',
     }).then((response) => {
       response.json();
@@ -74,11 +79,15 @@ export function post(url, params = '') {
 
   // json 序列化
   if (params) {
-    const paramsArray = [];
-    // encodeURIComponent
-    Object.keys(params).forEach(key => paramsArray.push(`${key}=${params[key]}`));
+    // const paramsArray = [];
+    // // encodeURIComponent
+    // Object.keys(params).forEach(key => paramsArray.push(`${key}=${params[key]}`));
+    //
+    // paramsurl += paramsArray.join('&');
 
-    paramsurl += paramsArray.join('&');
+    paramsurl = Object.keys(params).map(function(k) {
+      return encodeURIComponent(k) + '=' + encodeURIComponent(params[k])
+    }).join('&')
   }
 
   return new Promise(((resolve, reject) => {

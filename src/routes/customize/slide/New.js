@@ -3,6 +3,7 @@ import {API_DOMAIN} from '../../../utils/config';
 import {Button, Col, Form, Icon, Input, message, Row, Select, Upload} from 'antd';
 import {createPubSlide} from '../../../service/slide';
 import {loadDicData} from "../../../service/dic";
+import UEditor from '../../../components/editor/UEditor';
 
 const FormItem = Form.Item;
 
@@ -13,9 +14,11 @@ class New extends Component {
 
     formData = {
       ...formData,
-      introduction: UE.getEditor('new_courseIntroduction').getContent(),
+      content: UE.getEditor('new_customize_slide_Content').getContent(),
       imgUrl: formData.imgUrl ? formData.imgUrl[0].response.data.image : '',
     };
+
+    console.log(formData);
 
     createPubSlide(formData).then(data => {
       this.props.form.resetFields();
@@ -115,6 +118,11 @@ class New extends Component {
               })(
                 <Input type='number'/>
               )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="内容">
+              <UEditor id={`new_customize_slide_Content`} />
             </FormItem>
           </Col>
           <Col span={24}>

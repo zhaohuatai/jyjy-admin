@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {API_DOMAIN} from '../../../utils/config';
 import {Button, Col, Form, Icon, Input, message, Modal, Row, Upload} from 'antd';
 import {updatePubSlide} from "../../../service/slide";
+import UEditor from '../../../components/editor/UEditor';
 
 const FormItem = Form.Item;
 
@@ -19,8 +20,11 @@ class Update extends Component {
     formData = {
       ...this.props.data,
       ...formData,
+      content: `${UE.getEditor('update_customize_slide_Content').getContent()}`,
       imgUrl: formData.imgUrl ? formData.imgUrl[0].response.data.image : this.props.data.imgUrl,
     };
+
+    console.log(formData)
 
     updatePubSlide(formData).then(data => {
       this.props.form.resetFields();
@@ -33,7 +37,7 @@ class Update extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {title, showWeight, remark} = this.props.data;
+    const {title, showWeight, remark, content, locationName} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -77,12 +81,22 @@ class Update extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
+            <FormItem{...formItemLayout} label="位置">
+              <p>{locationName}</p>
+            </FormItem>
+          </Col>
+          <Col span={24}>
             <FormItem{...formItemLayout} label="权重">
               {getFieldDecorator('showWeight', {
                 initialValue: showWeight,
               })(
                 <Input type='number'/>
               )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="内容">
+              <UEditor id={`update_customize_slide_Content`} initValue={content}/>
             </FormItem>
           </Col>
           <Col span={24}>
