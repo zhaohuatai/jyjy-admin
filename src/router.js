@@ -49,6 +49,8 @@ import BigData from './routes/enrollSelf/bigdata';
 import Question from './routes/enrollSelf/question';
 import Brochure from "./routes/enrollSelf/brochure/index";
 
+import EvalDefine from './routes/eval/define';
+
 const Routers = () => (
   <Router history={hashHistory}>
     <Route path="/" component={App}>
@@ -116,6 +118,11 @@ const Routers = () => (
         <Route path="config" component={Setting}/>
         <Route path="partner" component={Partner}/>
         <Route path="vip-card" component={VipCard}/>
+      </Route>
+
+      <Route path="/eval">
+        <Route path="define" component={EvalDefine}/>
+        <Route path="partner" component={Partner}/>
       </Route>
 
     </Route>

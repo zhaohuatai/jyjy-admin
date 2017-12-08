@@ -14,7 +14,7 @@ class New extends Component {
       ...formData,
       introduction: UE.getEditor('teacher_updateIntroduction').getContent(),
       id: this.props.data.id,
-      profilePicture: formData.profilePicture ? formData.profilePicture[0].response.data.image : ''
+      profilePicture: formData.profilePicture ? formData.profilePicture[0].response.data.image : this.props.data.profilePicture
     }
 
     updateMemberTeacher(formData).then(data => {
