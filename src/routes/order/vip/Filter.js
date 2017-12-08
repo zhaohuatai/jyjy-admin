@@ -8,11 +8,6 @@ class Filter extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      search_form: {
-        orderStatusList: '',
-        orderStartTime: '',
-        orderEndTime: '',
-      }
     };
   }
 
@@ -25,7 +20,7 @@ class Filter extends Component {
   handleActionClick = ({item, key, keyPath}) => {
     switch (key) {
       case 'clean' :
-        this.setState({search_form: {orderStatusList: '', orderStartTime: '', orderEndTime: ''}});
+        this.setState({search_form: {orderStatus: '', orderTimeStart: '', orderTimeEnd: ''}});
         break;
       case 'search' :
         this.props.doSearch(this.state.search_form);
@@ -42,16 +37,6 @@ class Filter extends Component {
       default :
         break;
     }
-  }
-
-  setRangeDate = (date, dateString) => {
-    this.setState({
-      search_form: {
-        ...this.state.search_form,
-        orderStartTime: dateString[0],
-        orderEndTime: dateString[1]
-      }
-    })
   }
 
   render() {
@@ -74,27 +59,6 @@ class Filter extends Component {
     return (
       <div>
         <Row type='flex' justify='end' style={{marginBottom: '5px'}}>
-          <Col span={4} pull={11}>
-            <Select
-              defaultValue=""
-              onChange={(value) =>
-                this.setState({
-                    search_form: {...this.state.search_form, orderStatusList: value}
-                  }
-                )}
-              style={{width: '100px'}}
-            >
-              <Option value="">所有</Option>
-              <Option value="1">等待付款</Option>
-              <Option value="2">已完成</Option>
-              <Option value='3'>退款中</Option>
-              <Option value="4">交易关闭</Option>
-            </Select>
-          </Col>
-
-          <Col span={5} pull={12}>
-            <DatePicker.RangePicker onChange={this.setRangeDate}/>
-          </Col>
 
           <Col span={2}>
             <Dropdown.Button onClick={() => this.handleActionClick({key: 'search'})} overlay={searchMenu}>

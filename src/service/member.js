@@ -72,3 +72,27 @@ export function doAppointmentReturn(param) {
     });
   });
 }
+
+// order
+export function loadMemberVipOrderDataSet(param) {
+  return new Promise((resolve) => {
+    post(`${API_DOMAIN}admin/member/memberVipOrder/loadMemberVipOrderDataSet`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+export function loadMemberVipOrder(param) {
+  return new Promise((resolve) => {
+    post(`${API_DOMAIN}admin/member/memberVipOrder/loadMemberVipOrder`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+export function loadMemberCouponDataSet(param) {
+  return new Promise((resolve) => {
+    post(`${API_DOMAIN}admin/member/memberCoupon/loadMemberCouponDataSet`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}

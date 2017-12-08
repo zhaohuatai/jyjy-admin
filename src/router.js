@@ -34,7 +34,7 @@ import Success from "./routes/customize/success/index";
 
 import Member from "./routes/member/member";
 import Teacher from "./routes/member/teacher/index";
-import Coupon from "./routes/member/coupon";
+import Coupon from "./routes/setting/coupon";
 
 import TeacherAppointment from "./routes/member/appointment";
 import VipCard from "./routes/setting/card";
@@ -53,6 +53,9 @@ import EvalDefine from './routes/eval/define';
 
 import ColumnOrder from './routes/order/column';
 import CourseOrder from './routes/order/course';
+import VipOrder from './routes/order/vip';
+import CouponExchange from './routes/order/coupon';
+
 const Routers = () => (
   <Router history={hashHistory}>
     <Route path="/" component={App}>
@@ -99,7 +102,6 @@ const Routers = () => (
         <Route path="management" component={Member}/>
         <Route path="teacher" component={Teacher}/>
         <Route path="teacher-appointment" component={TeacherAppointment}/>
-        <Route path="coupon" component={Coupon}/>
       </Route>
 
       <Route path='/customize'>
@@ -120,6 +122,7 @@ const Routers = () => (
         <Route path="config" component={Setting}/>
         <Route path="partner" component={Partner}/>
         <Route path="vip-card" component={VipCard}/>
+        <Route path="coupon" component={Coupon}/>
       </Route>
 
       <Route path="/eval">
@@ -130,6 +133,8 @@ const Routers = () => (
       <Route path="/order">
         <Route path="course" component={CourseOrder}/>
         <Route path="column" component={ColumnOrder}/>
+        <Route path="vip" component={VipOrder}/>
+        <Route path="coupon" component={CouponExchange}/>
       </Route>
 
     </Route>

@@ -9,9 +9,9 @@ class Filter extends Component {
     super(props);
     this.state = {
       search_form: {
-        orderStatus: '',
-        orderTimeStart: '',
-        orderTimeEnd: '',
+        orderStatusList: '',
+        orderStartTime: '',
+        orderEndTime: '',
       }
     };
   }
@@ -25,7 +25,7 @@ class Filter extends Component {
   handleActionClick = ({item, key, keyPath}) => {
     switch (key) {
       case 'clean' :
-        this.setState({search_form: {orderStatus: '', orderTimeStart: '', orderTimeEnd: ''}});
+        this.setState({search_form: {orderStatusList: '', orderStartTime: '', orderEndTime: ''}});
         break;
       case 'search' :
         this.props.doSearch(this.state.search_form);
@@ -48,8 +48,8 @@ class Filter extends Component {
     this.setState({
       search_form: {
         ...this.state.search_form,
-        orderTimeStart: dateString[0],
-        orderTimeEnd: dateString[1]
+        orderStartTime: dateString[0],
+        orderEndTime: dateString[1]
       }
     })
   }
@@ -79,7 +79,7 @@ class Filter extends Component {
               defaultValue=""
               onChange={(value) =>
                 this.setState({
-                    search_form: {...this.state.search_form, orderStatus: value}
+                    search_form: {...this.state.search_form, orderStatusList: value}
                   }
                 )}
               style={{width: '100px'}}

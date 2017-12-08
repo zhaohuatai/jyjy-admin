@@ -2,14 +2,14 @@ import React, {Component} from 'react';
 import {message, Pagination, Table, Tabs, Modal} from 'antd';
 import Filter from './Filter';
 import Detail from './Detail';
-import {loadColumnChannelOrderDataSet, loadColumnChannelOrder} from "../../../service/column";
+import {loadMemberVipOrderDataSet, loadMemberVipOrder} from "../../../service/member";
 
 const TabPane = Tabs.TabPane;
 
 const table_columns = [
-  {title: '序号', dataIndex: 'columnChannelOrder.id', key: 'id'},
-  {title: '买家', dataIndex: 'columnChannelOrder.memberName', key: 'memberName'},
-  {title: '订单状态', dataIndex: 'columnChannelOrder.orderStatus', key: 'orderStatus', render: (text, record, index) => {
+  {title: '序号', dataIndex: 'id', key: 'id'},
+  {title: '买家', dataIndex: 'memberName', key: 'memberName'},
+  {title: '订单状态', dataIndex: 'orderStatus', key: 'orderStatus', render: (text, record, index) => {
     switch (text) {
       case '1':
         return '等待付款';
@@ -23,10 +23,12 @@ const table_columns = [
         break;
     }
   }},
-  {title: '创建时间', dataIndex: 'columnChannelOrder.createTime', key: 'createTime'},
-  {title: '购买的专栏', dataIndex: 'columnChannel[0].title', key: 'title'},
-  {title: '订单编号', dataIndex: 'columnChannelOrder.ordersn', key: 'ordersn'},
-  {title: '使用优惠券', dataIndex: 'columnChannelOrder.memberCouponIds', key: 'memberCouponIds', render: (text, record, index) => {
+  {title: '创建时间', dataIndex: 'createTime', key: 'createTime'},
+  {title: '购买的课程', dataIndex: 'serviceCourseList[0].name', key: 'name'},
+  {title: '订单编号', dataIndex: 'ordersn', key: 'ordersn'},
+  {title: '使用优惠券', dataIndex: 'memberCouponIds', key: 'memberCouponIds'},
+  {title: '实付款', dataIndex: 'payFee', key: 'payFee'},
+  {title: '支付状态', dataIndex: 'paymentStatus', key: 'paymentStatus', render: (text, record, index) => {
     switch (text) {
       case '1':
         return '未支付';
@@ -40,9 +42,7 @@ const table_columns = [
         break;
     }
   }},
-  {title: '实付款', dataIndex: 'columnChannelOrder.payFee', key: 'payFee'},
-  {title: '支付状态', dataIndex: 'columnChannelOrder.paymentStatus', key: 'paymentStatus'},
-  {title: '支付类型', dataIndex: 'columnChannelOrder.paymentType', key: 'paymentType', render: (text, record, index) => {
+  {title: '支付类型', dataIndex: 'paymentType', key: 'paymentType', render: (text, record, index) => {
     switch (text) {
       case '1':
         return '微信';
@@ -66,8 +66,15 @@ class Course extends Component {
       search_form: {},
       detail_display: false,
       detail_data: {
-        columnChannelItemResDtoList: [],
-        columnChannelOrder: {},
+        serviceCourseOrderItemsList: [],
+        serviceCourseOrder: {
+          ordersn: '',
+          wxPrepayId: '',
+          memberCouponIds: '',
+          orderStatus: '',
+          createTime:'',
+          memo: ''
+        },
         member: {},
       },
       recycle: false
@@ -79,7 +86,7 @@ class Course extends Component {
     this.setState({table_loading: true});
     params = {...params};
     params['status'] = (this.state.recycle ? 2 : 1);
-    loadColumnChannelOrderDataSet(params).then(data => {
+    loadMemberVipOrderDataSet(params).then(data => {
       this.setState({dataSet: data.data.dataSet.rows, table_total: data.data.dataSet.total, table_loading: false})
     }).catch((e) => {
       message.error(e);
@@ -115,8 +122,8 @@ class Course extends Component {
   // 显示详情
   handleShowDetail = (record) => {
     console.log(record);
-    loadColumnChannelOrder({id: record.columnChannelOrder.id}).then(data => {
-      this.setState({detail_data: data.data.columnChannelOrder, detail_display: true})
+    loadMemberVipOrder({id: record.id}).then(data => {
+      this.setState({detail_data: data.data.memberVipOrder, detail_display: true})
     })
   }
 
@@ -132,7 +139,7 @@ class Course extends Component {
     return (
       <div style={{backgroundColor: '#fff', padding: '10px'}}>
         <Tabs defaultActiveKey="1">
-          <TabPane tab="专栏订单列表" key="1">
+          <TabPane tab="VIP购买订单列表" key="1">
             <Filter
               doSearch={this.handleSearch}
               doRefresh={() => this.handleRefresh({page: this.state.table_cur_page, status: '1'})}
