@@ -145,3 +145,20 @@ export function updateServiceCourseCategory(param) {
     });
   });
 }
+
+// orders
+export function loadServiceCourseOrderDataSet(param) {
+  return new Promise((resolve) => {
+    post(`${API_DOMAIN}admin/course/serviceCourseOrder/loadServiceCourseOrderDataSet`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+export function loadServiceCourseOrder(param) {
+  return new Promise((resolve) => {
+    post(`${API_DOMAIN}admin/course/serviceCourseOrder/loadServiceCourseOrder`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}

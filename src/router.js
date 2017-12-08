@@ -51,6 +51,8 @@ import Brochure from "./routes/enrollSelf/brochure/index";
 
 import EvalDefine from './routes/eval/define';
 
+import ColumnOrder from './routes/order/column';
+import CourseOrder from './routes/order/course';
 const Routers = () => (
   <Router history={hashHistory}>
     <Route path="/" component={App}>
@@ -123,6 +125,11 @@ const Routers = () => (
       <Route path="/eval">
         <Route path="define" component={EvalDefine}/>
         <Route path="partner" component={Partner}/>
+      </Route>
+
+      <Route path="/order">
+        <Route path="course" component={CourseOrder}/>
+        <Route path="column" component={ColumnOrder}/>
       </Route>
 
     </Route>

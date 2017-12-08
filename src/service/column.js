@@ -114,3 +114,22 @@ export function uploadColumnItemCover(param) {
     });
   });
 }
+
+
+// orders
+
+export function loadColumnChannelOrderDataSet(param) {
+  return new Promise((resolve) => {
+    post(`${API_DOMAIN}admin/channel/columnChannelOrder/loadColumnChannelOrderDataSet`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
+export function loadColumnChannelOrder(param) {
+  return new Promise((resolve) => {
+    post(`${API_DOMAIN}admin/channel/columnChannelOrder/loadColumnChannelOrder`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
