@@ -20,7 +20,8 @@ class New extends Component {
       ...formData,
       introduction: UE.getEditor('new_serviceEntrance').getContent(),
       isTop: formData.isTop ? 1 : 0,
-      coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : this.props.data.coverUrl,
+      coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : '',
+      thumbnailUrl: formData.thumbnailUrl ? formData.thumbnailUrl[0].response.data.image : '',
     };
 
     if (this.state.cate) {
@@ -48,14 +49,14 @@ class New extends Component {
       let isLeaf = false;
       switch (cate) {
         case 'First' :
-          loadEntranceCategorySDataSet({rows: 1, cateFirstId: row['id']}).then(d => {
+          loadEntranceCategorySDataSet({rows: 1, cateFirstId: row['id'], status: 1}).then(d => {
             if (!d.data.dataSet.total)
               isLeaf = true;
             options.push({value: `${row['id']}`, label: row['name'], isLeaf: isLeaf, cate})
           });
           break;
         case 'Second' :
-          loadEntranceCategoryTDataSet({rows: 1, cateSecondId: row['id']}).then(d => {
+          loadEntranceCategoryTDataSet({rows: 1, cateSecondId: row['id'], status: 1}).then(d => {
             if (!d.data.dataSet.total)
               isLeaf = true;
             options.push({value: `${row['id']}`, label: row['name'], isLeaf: isLeaf, cate})
@@ -80,7 +81,7 @@ class New extends Component {
     targetOption.loading = true;
     switch (targetOption.cate) {
       case 'First' :
-        loadEntranceCategorySDataSet({rows: 1000, cateFirstId: targetOption.value}).then(data => {
+        loadEntranceCategorySDataSet({rows: 1000, cateFirstId: targetOption.value,  status: 1}).then(data => {
           if (data.data.dataSet.total) {
             targetOption.children = this.renderData(data.data.dataSet.rows, 'Second');
           } else {
@@ -94,7 +95,7 @@ class New extends Component {
         });
         break;
       case 'Second' :
-        loadEntranceCategoryTDataSet({rows: 1000, cateSecondId: targetOption.value}).then(data => {
+        loadEntranceCategoryTDataSet({rows: 1000, cateSecondId: targetOption.value,  status: 1}).then(data => {
           if (data.data.dataSet.total) {
             targetOption.children = this.renderData(data.data.dataSet.rows, 'Third');
           } else {
@@ -120,7 +121,7 @@ class New extends Component {
   }
 
   componentDidMount() {
-    loadEntranceCategoryFDataSet({rows: 1000}).then(data => {
+    loadEntranceCategoryFDataSet({rows: 1000, status: 1}).then(data => {
       if (data.data.dataSet.rows) {
         this.setState({options: this.renderData(data.data.dataSet.rows, 'First')});
       }
@@ -168,6 +169,26 @@ class New extends Component {
                 <Upload
                   name="file"
                   action={`${API_DOMAIN}admin/entrance/uploadCover`}
+                  listType="picture"
+                  withCredentials={true}
+                >
+                  <Button>
+                    <Icon type="upload"/> 点击上传
+                  </Button>
+                </Upload>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="缩略图">
+              {getFieldDecorator('thumbnailUrl', {
+                valuePropName: 'fileList',
+                getValueFromEvent: this.normFile,
+                initialValue: ''
+              })(
+                <Upload
+                  name="file"
+                  action={`${API_DOMAIN}admin/entrance/uploadThumbnail`}
                   listType="picture"
                   withCredentials={true}
                 >

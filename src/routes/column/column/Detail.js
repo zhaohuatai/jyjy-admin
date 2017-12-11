@@ -8,7 +8,7 @@ const Panel = Collapse.Panel;
 class Detail extends Component {
 
   render() {
-    const {title, coverUrl, introduction, hint, sharePoints, learningCountActual, favoriteCount, presenterName, learningCount, isTop, showIndex, remark} = this.props.data;
+    const {title,thumbnailUrl, coverUrl, indroduction, hint, sharePoints, learningCountActual, favoriteCount, presenterName, learningCount, isTop, showIndex, remark} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -34,15 +34,21 @@ class Detail extends Component {
       >
         <Row type="flex" style={{marginBottom: '5px'}}>
           <Col span={24}>
+            <FormItem{...formItemLayout} label="标题">
+              <p>{title}</p>
+            </FormItem>
+          </Col>
+          <Col span={24}>
             <FormItem{...formItemLayout} label="封面">
               <img style={{width: '100px', height: '100px'}} src={`${IMG_DOMAIN}${coverUrl}`}/>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="标题">
-              <p>{title}</p>
+            <FormItem{...formItemLayout} label="缩略图">
+              <img style={{width: '100px', height: '100px'}} src={`${IMG_DOMAIN}${thumbnailUrl}`}/>
             </FormItem>
           </Col>
+
           <Col span={24}>
             <FormItem{...formItemLayout} label="描述">
               <p>{hint}</p>
@@ -57,7 +63,7 @@ class Detail extends Component {
             <FormItem{...formItemLayout} label="介绍">
               <Collapse>
                 <Panel header="点击查看详情" key="1">
-                  <div dangerouslySetInnerHTML={{__html: introduction}}/>
+                  <div dangerouslySetInnerHTML={{__html: indroduction}}/>
                 </Panel>
               </Collapse>
             </FormItem>

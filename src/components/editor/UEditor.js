@@ -47,13 +47,13 @@ class UEditor extends Component {
   }
 
   componentDidUpdate() {
-    const {initValue} = this.props;
-    this.uedeitor.ready((ueditor) => {
-
-      if (initValue) {
-        this.uedeitor.setContent(initValue);
-      }
-    })
+    // const {initValue} = this.props;
+    // this.uedeitor.ready((ueditor) => {
+    //
+    //   if (initValue) {
+    //     this.uedeitor.setContent(initValue);
+    //   }
+    // })
   }
 
   render() {

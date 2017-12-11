@@ -13,7 +13,7 @@ class Detail extends Component {
 
   render() {
     const {
-      title, remark, coverUrl, freePay, isTop, showIndex, introduction, price, priceVIP, cateName
+      title, remark, coverUrl, freePay, isTop, showIndex, introduction, price, priceVIP, cateName, thumbnailUrl
     } = this.props.data;
 
     const formItemLayout = {
@@ -41,6 +41,11 @@ class Detail extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="封面">
               <img style={{width: '100px', height: '100px'}} src={`${IMG_DOMAIN}${coverUrl}`}/>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="封面">
+              <img style={{width: '100px', height: '100px'}} src={`${IMG_DOMAIN}${thumbnailUrl}`}/>
             </FormItem>
           </Col>
           <Col span={24}>

@@ -18,7 +18,7 @@ class New extends Component {
   }
 
   componentDidMount() {
-    loadMemberTeacherDataSet({rows: 1000}).then(data => {
+    loadMemberTeacherDataSet({rows: 1000, status: 1}).then(data => {
       this.setState({presenterList: data.data.dataSet.rows})
     }).catch((e) => {
       message.error(e);
@@ -30,10 +30,11 @@ class New extends Component {
     formData = {
       ...this.props.data,
       ...formData,
-      update_courseContent: UE.getEditor('update_courseIntroduction').getContent(),
+      indroduction: UE.getEditor('update_columnIntroduction').getContent(),
       freePay: formData.freePay ? 0 : 1,
       isTop: formData.isTop ? 1 : 0,
-      coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : '',
+      coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : this.props.data.coverUrl,
+      thumbnailUrl: formData.thumbnailUrl ? formData.thumbnailUrl[0].response.data.image : this.props.data.thumbnailUrl,
     };
 
     updateColumnChannel(formData).then(data => {
@@ -45,9 +46,17 @@ class New extends Component {
     })
   }
 
+
+  normFile = (e) => {
+    if (Array.isArray(e)) {
+      return e.file;
+    }
+    return e && e.fileList;
+  }
+
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {title, introduction, hint, presenterId, sharePoints, learningCount, isTop, showIndex, remark} = this.props.data;
+    const {title, indroduction, hint, presenterId, sharePoints, learningCount, isTop, showIndex, remark} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -105,6 +114,26 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
+            <FormItem {...formItemLayout} label="缩略图">
+              {getFieldDecorator('thumbnailUrl', {
+                valuePropName: 'fileList',
+                getValueFromEvent: this.normFile,
+                initialValue: ''
+              })(
+                <Upload
+                  name="file"
+                  action={`${API_DOMAIN}admin/channel/columnChannel/uploadThumbnail`}
+                  listType="picture"
+                  withCredentials={true}
+                >
+                  <Button>
+                    <Icon type="upload"/> 点击上传
+                  </Button>
+                </Upload>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
             <FormItem{...formItemLayout} label="主讲人">
               {getFieldDecorator('presenterId', {
                 initialValue: presenterId + '',
@@ -125,7 +154,7 @@ class New extends Component {
           <Col span={24}>
             <FormItem {...formItemLayout} label="介绍">
               <LazyLoad height={370}>
-                <UEditor id="update_columnIntroduction" initValue={introduction}/>
+                <UEditor id="update_columnIntroduction" initValue={indroduction}/>
               </LazyLoad>
             </FormItem>
           </Col>

@@ -39,6 +39,8 @@ class New extends Component {
       freePay: formData.freePay ? 0 : 1,
       content: UE.getEditor("new_columnItemIntroduction").getContent(),
       coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : '',
+      thumbnailUrl: formData.thumbnailUrl ? formData.thumbnailUrl[0].response.data.image : '',
+      status: 1
     };
 
     createColumnChannelItem(formData).then(data => {
@@ -115,6 +117,26 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
+            <FormItem {...formItemLayout} label="缩略图">
+              {getFieldDecorator('thumbnailUrl', {
+                valuePropName: 'fileList',
+                getValueFromEvent: this.normFile,
+                initialValue: ''
+              })(
+                <Upload
+                  name="file"
+                  action={`${API_DOMAIN}admin/channel/columnChannel/uploadThumbnail`}
+                  listType="picture"
+                  withCredentials={true}
+                >
+                  <Button>
+                    <Icon type="upload"/> 点击上传
+                  </Button>
+                </Upload>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
             <FormItem{...formItemLayout} label="所属专栏">
               {getFieldDecorator('channelId', {
                 rules: [
@@ -131,8 +153,13 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="排序">
-              {getFieldDecorator('itemOrder')(
+            <FormItem{...formItemLayout} label="期数">
+              {getFieldDecorator('itemOrder',
+                {
+                  initialValue: 0,
+                }
+              )(
+
                 <Input type="number"/>
               )}
             </FormItem>

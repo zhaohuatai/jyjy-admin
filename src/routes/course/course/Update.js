@@ -46,7 +46,8 @@ class Update extends Component {
       introduction: UE.getEditor('update_courseIntroduction').getContent(),
       freePay: formData.freePay ? 0 : 1,
       isTop: formData.isTop ? 1 : 0,
-      coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : this.props.coverUrl,
+      coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : this.props.data.coverUrl,
+      thumbnailUrl: formData.thumbnailUrl ? formData.thumbnailUrl[0].response.data.image : this.props.data.thumbnailUrl,
     };
 
     updateServiceCourse(formData).then(data => {
@@ -122,7 +123,7 @@ class Update extends Component {
           <Col span={24}>
             <FormItem {...formItemLayout} label="选择主讲人">
               {getFieldDecorator('presenterId', {
-                initialValue: presenterId,
+                initialValue: `${presenterId}`,
               })(
                 <Select
                   placeholder="选择分类"
@@ -146,6 +147,26 @@ class Update extends Component {
               })(
                 <Upload name="file" action={`${API_DOMAIN}admin/course/serviceCourse/uploadCover`} listType="picture"
                         withCredentials={true}>
+                  <Button>
+                    <Icon type="upload"/> 点击上传
+                  </Button>
+                </Upload>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="缩略图">
+              {getFieldDecorator('thumbnailUrl', {
+                valuePropName: 'fileList',
+                getValueFromEvent: this.normFile,
+                initialValue: ''
+              })(
+                <Upload
+                  name="file"
+                  action={`${API_DOMAIN}admin/course/serviceCourse/uploadThumbnail`}
+                  listType="picture"
+                  withCredentials={true}
+                >
                   <Button>
                     <Icon type="upload"/> 点击上传
                   </Button>

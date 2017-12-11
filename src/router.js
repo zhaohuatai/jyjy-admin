@@ -31,6 +31,7 @@ import Page from "./routes/customize/page/index";
 import Partner from "./routes/setting/partner";
 import ServiceContent from './routes/entrance/service';
 import Success from "./routes/customize/success/index";
+import News from "./routes/customize/news";
 
 import Member from "./routes/member/member";
 import Teacher from "./routes/member/teacher/index";
@@ -108,6 +109,7 @@ const Routers = () => (
         <Route path="slide" component={Slide}/>
         <Route path="page" component={Page}/>
         <Route path="case-success" component={Success}/>
+        <Route path="news" component={News}/>
       </Route>
 
       <Route path="/auth">

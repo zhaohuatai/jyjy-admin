@@ -23,6 +23,7 @@ class Update extends Component {
       introduction: UE.getEditor('update_serviceEntrance').getContent(),
       isTop: formData.isTop ? 1 : 0,
       coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : this.props.data.coverUrl,
+      thumbnailUrl: formData.thumbnailUrl ? formData.thumbnailUrl[0].response.data.image : this.props.data.thumbnailUrl,
     };
 
     if (this.state.cate) {
@@ -176,7 +177,27 @@ class Update extends Component {
               })(
                 <Upload
                   name="file"
-                  action={`${API_DOMAIN}admin/service/entrance/uploadCover`}
+                  action={`${API_DOMAIN}admin/entrance/uploadCover`}
+                  listType="picture"
+                  withCredentials={true}
+                >
+                  <Button>
+                    <Icon type="upload"/> 点击上传
+                  </Button>
+                </Upload>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="缩略图">
+              {getFieldDecorator('thumbnailUrl', {
+                valuePropName: 'fileList',
+                getValueFromEvent: this.normFile,
+                initialValue: ''
+              })(
+                <Upload
+                  name="file"
+                  action={`${API_DOMAIN}admin/entrance/uploadThumbnail`}
                   listType="picture"
                   withCredentials={true}
                 >

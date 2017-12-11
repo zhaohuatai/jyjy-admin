@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Col, Collapse, Form, Modal, Row} from 'antd';
+import {IMG_DOMAIN} from "../../../utils/config";
 
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;
@@ -8,7 +9,7 @@ class New extends Component {
 
   render() {
     const {
-      name, hint, categoryName, presenterName, introduction, price, priceVIP, consultationCount,
+      name, hint, categoryName, presenterName, introduction, price, priceVIP, consultationCount,thumbnailUrl,
       learningCount, learningCountActual, favoriteCount, coverUrl, freePay, remark, isTop, showIndex
     } = this.props.data;
 
@@ -41,6 +42,16 @@ class New extends Component {
               label="课程名"
             >
               <p>{name}</p>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="封面">
+              <img style={{width: '100px', height: '100px'}} src={`${IMG_DOMAIN}${coverUrl}`}/>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="缩略图">
+              <img style={{width: '100px', height: '100px'}} src={`${IMG_DOMAIN}${thumbnailUrl}`}/>
             </FormItem>
           </Col>
           <Col span={24}>

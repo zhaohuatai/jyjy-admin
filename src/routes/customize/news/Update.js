@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Input, message, Modal, Row, Select} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import {loadInterlocutionCategoryDataSet, updateInterlocution} from "../../../service/interlocution";
+import {loadEnrollAutoQuestionCategoryDataSet, updateEnrollAutoQuestion} from "../../../service/autoSelf";
 
 const FormItem = Form.Item;
 
@@ -9,16 +9,23 @@ class New extends Component {
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
     formData = {
+      ...this.props.data,
       ...formData,
-      interAnswer: UE.getEditor('update_interAnswer').getContent(),
-      id: this.props.data.id,
+      content: UE.getEditor('auto_question_content_update').getContent(),
     }
 
-    updateInterlocution(formData).then(data => {
+    updateEnrollAutoQuestion(formData).then(data => {
       this.props.form.resetFields();
       this.props.onCancel();
       message.success("更新成功！");
     })
+  }
+  normFile = (e) => {
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+      return e.file;
+    }
+    return e && e.fileList;
   }
 
   constructor(props) {
@@ -28,23 +35,15 @@ class New extends Component {
     }
   }
 
-  normFile = (e) => {
-    console.log('Upload event:', e);
-    if (Array.isArray(e)) {
-      return e.file;
-    }
-    return e && e.fileList;
-  }
-
   componentDidMount() {
-    loadInterlocutionCategoryDataSet({status: 1}).then(data => {
+    loadEnrollAutoQuestionCategoryDataSet({rows: 10000}).then(data => {
       this.setState({category: data.data.dataSet.rows})
     })
   }
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const { interQuestion, interAnswer, categoryId, remark} = this.props.data;
+    const {content, title, categoryId, remark} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -63,11 +62,11 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="问题">
-              {getFieldDecorator('interQuestion', {
-                initialValue: interQuestion,
+              label="标题">
+              {getFieldDecorator('title', {
+                initialValue: title,
                 rules: [
-                  {required: true, message: '请输入问题'},
+                  {required: true, message: '请输入标题'},
                 ]
               })(
                 <Input/>
@@ -97,8 +96,8 @@ class New extends Component {
           </Col>
 
           <Col span={24}>
-            <FormItem{...formItemLayout} label="回答">
-              <UEditor id="update_interAnswer" initValue={interAnswer}/>
+            <FormItem{...formItemLayout} label="内容">
+              <UEditor id="auto_question_content_update" initValue={content}/>
             </FormItem>
           </Col>
           <Col span={24}>

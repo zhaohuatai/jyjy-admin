@@ -14,7 +14,7 @@ class Detail extends Component {
   }
 
   render() {
-    const {title, channel, coverUrl, hint, content, itemOrder, presenterName, commentCount, freePay, price, priceVIP, remark} = this.props.data;
+    const {title, channel, coverUrl, hint, content, itemOrder, presenterName, commentCount, freePay, price, priceVIP, remark, thumbnailUrl} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -42,6 +42,11 @@ class Detail extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="封面">
               <img style={{width: '100px', height: '100px'}} src={`${IMG_DOMAIN}${coverUrl}`}/>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="封面">
+              <img style={{width: '100px', height: '100px'}} src={`${IMG_DOMAIN}${thumbnailUrl}`}/>
             </FormItem>
           </Col>
           <Col span={24}>

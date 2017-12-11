@@ -26,6 +26,7 @@ class New extends Component {
       freePay: formData.freePay ? 0 : 1,
       isTop: formData.isTop ? 1 : 0,
       coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : '',
+      thumbnailUrl: formData.thumbnailUrl ? formData.thumbnailUrl[0].response.data.image : '',
     };
 
     createColumnChannel(formData).then(data => {
@@ -92,7 +93,7 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem {...formItemLayout} label="封面">
+            <FormItem {...formItemLayout} label="主图">
               {getFieldDecorator('coverUrl', {
                 valuePropName: 'fileList',
                 getValueFromEvent: this.normFile,
@@ -101,6 +102,26 @@ class New extends Component {
                 <Upload
                   name="file"
                   action={`${API_DOMAIN}admin/channel/columnChannel/uploadCover`}
+                  listType="picture"
+                  withCredentials={true}
+                >
+                  <Button>
+                    <Icon type="upload"/> 点击上传
+                  </Button>
+                </Upload>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="缩略图">
+              {getFieldDecorator('thumbnailUrl', {
+                valuePropName: 'fileList',
+                getValueFromEvent: this.normFile,
+                initialValue: ''
+              })(
+                <Upload
+                  name="file"
+                  action={`${API_DOMAIN}admin/channel/columnChannel/uploadThumbnail`}
                   listType="picture"
                   withCredentials={true}
                 >
