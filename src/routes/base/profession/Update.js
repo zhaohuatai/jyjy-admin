@@ -7,6 +7,8 @@ import {
 } from '../../../service/base';
 import LazyLoad from 'react-lazy-load';
 
+const FormItem = Form.Item;
+
 class Update extends Component {
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
