@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import {Button, Col, Form, Input, message, Row, Select} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
 import {
-  createDataProfession,
-  loadDataProfessionCategoryDataSet,
+  createDataProfession, loadDataProfessionCategoryDataSet,
   loadDataProfessionSubjectDataSet
 } from '../../../service/base';
 import LazyLoad from 'react-lazy-load';
@@ -38,12 +37,6 @@ class New extends Component {
   }
 
   componentDidMount() {
-    loadDataProfessionCategoryDataSet({}).then(data => {
-      this.setState({categoryList: data.data.dataSet.rows})
-    }).catch((e) => {
-      message.error(e);
-    })
-
     loadDataProfessionSubjectDataSet({}).then(data => {
       this.setState({subjectList: data.data.dataSet.rows})
     }).catch((e) => {
@@ -95,10 +88,17 @@ class New extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="所属学科">
               {getFieldDecorator('subjectCode', {
-                initialValue: '',
                 rules: [{
                   required: true, message: '请选择'
-                }]
+                }],
+                onChange: (value) => {
+                  this.props.form.resetFields(['categoryCode']);
+                  loadDataProfessionCategoryDataSet({subjectId: value, rows: 10000, status: 1}).then(data => {
+                    this.setState({categoryList: data.data.dataSet.rows})
+                  }).catch((e) => {
+                    message.error(e);
+                  })
+                }
               })(
                 <Select placeholder="选择学科" style={{width: '200px'}}>
                   {
@@ -113,7 +113,6 @@ class New extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="所属门类">
               {getFieldDecorator('categoryCode', {
-                initialValue: '',
                 rules: [{
                   required: true, message: '请选择'
                 }]

@@ -15,8 +15,8 @@ class Update extends Component {
     formData = {
       ...this.props.data,
       ...formData,
-      detail: UE.getEditor('detail').getContent(),
-      offer: UE.getEditor('offer').getContent(),
+      detail: UE.getEditor('update_professionDetail').getContent(),
+      offer: UE.getEditor('update_professionOffer').getContent(),
     };
 
     updateDataProfession(formData).then(data => {
@@ -41,7 +41,7 @@ class Update extends Component {
       this.setState({categoryList: data.data.dataSet.rows})
     }).catch((e) => {
       message.error(e);
-    })
+    });
 
     loadDataProfessionSubjectDataSet({rows: 10000, status: 1}).then(data => {
       this.setState({subjectList: data.data.dataSet.rows})
@@ -98,7 +98,15 @@ class Update extends Component {
                 initialValue: subjectCode + '',
                 rules: [{
                   required: true, message: '请选择'
-                }]
+                }],
+                onChange: (value) => {
+                  this.props.form.resetFields(['categoryCode']);
+                  loadDataProfessionCategoryDataSet({subjectId: value, rows: 10000, status: 1}).then(data => {
+                    this.setState({categoryList: data.data.dataSet.rows})
+                  }).catch((e) => {
+                    message.error(e);
+                  })
+                }
               })(
                 <Select placeholder="选择学科" style={{width: '200px'}}>
                   {
@@ -118,7 +126,7 @@ class Update extends Component {
                   required: true, message: '请选择'
                 }]
               })(
-                <Select placeholder="选择门类" style={{width: '200px'}}>
+                <Select placeholder="请先选择学科" style={{width: '200px'}}>
                   {
                     this.state.categoryList.map(item => {
                       return <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
@@ -171,14 +179,14 @@ class Update extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="专业详情">
               <LazyLoad height={370}>
-                <UEditor id="detail" initValue={detail}/>
+                <UEditor id="update_professionDetail" initValue={detail}/>
               </LazyLoad>
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem{...formItemLayout} label="开设院校">
               <LazyLoad height={370}>
-                <UEditor id="offer" initValue={offer}/>
+                <UEditor id="update_professionOffer" initValue={offer}/>
               </LazyLoad>
             </FormItem>
           </Col>
