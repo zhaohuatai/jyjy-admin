@@ -73,7 +73,7 @@ class Filter extends Component {
         <Row type='flex' justify='end' style={{marginBottom: '5px'}}>
           <Col span={4} pull={14}>
             <FormItem>
-              {getFieldDecorator('categroyId', {
+              {getFieldDecorator('categoryId', {
                 initialValue: '',
               })(
                 <Select placeholder="选择类别" style={{width: '150px'}}>
