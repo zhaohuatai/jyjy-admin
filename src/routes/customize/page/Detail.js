@@ -45,8 +45,8 @@ class Detail extends Component {
                 {...formItemLayout}
                 label="内容"
             >
-              <Collapse>
-                <Panel header="点击查看详情" key="1">
+              <Collapse activeKey='0'>
+                <Panel header="点击查看详情" key="0">
                   <div dangerouslySetInnerHTML={{ __html: content }} />
                 </Panel>
               </Collapse>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {API_DOMAIN} from '../../../utils/config';
-import {Button, Cascader, Col, Form, Icon, Input, message, Modal, Row, Switch, Upload} from 'antd';
+import {Button, Cascader, Col, Form, Icon, Input, message, Modal, Row, Switch, Upload, InputNumber} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
 import LazyLoad from 'react-lazy-load';
 import {
@@ -140,7 +140,7 @@ class Update extends Component {
   render() {
     const {getFieldDecorator} = this.props.form;
     const {
-      title, remark, isTop, showIndex, introduction, cateName,
+      title, remark, isTop, showIndex, introduction, cateName, appointCount, maxAppointCount
     } = this.props.data;
 
     const formItemLayout = {
@@ -237,6 +237,26 @@ class Update extends Component {
                 initialValue: !!isTop,
               })(
                 <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="最大可预约数">
+              {getFieldDecorator('maxAppointCount', {
+                initialValue: maxAppointCount,
+                rules: []
+              })(
+                <InputNumber/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="前台显示可预约数">
+              {getFieldDecorator('appointCount', {
+                initialValue: appointCount,
+                rules: []
+              })(
+                <InputNumber/>
               )}
             </FormItem>
           </Col>

@@ -12,7 +12,6 @@ const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
   {title: '标题', dataIndex: 'title', key: 'title'},
   {title: '描述', dataIndex: 'hint', key: 'hint'},
-  {title: '主讲人', dataIndex: 'presenterName', key: 'presenterName'},
   {title: '费用', dataIndex: 'freePay', key: 'freePay', render: (text) => text === 1 ? '收费' : '免费'},
   {title: '普通价格', dataIndex: 'price', key: 'price'},
   {title: '会员价', dataIndex: 'priceVIP', key: 'priceVip'},

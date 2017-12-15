@@ -14,19 +14,12 @@ class New extends Component {
     super(props);
     this.state = {
       channelList: [],
-      presenterList: []
     }
   }
 
   componentDidMount() {
     loadColumnChannelDataSet({rows: 1000, status: 1}).then(data => {
       this.setState({channelList: data.data.dataSet.rows})
-    }).catch((e) => {
-      message.error(e);
-    })
-
-    loadMemberTeacherDataSet({rows: 1000, status: 1}).then(data => {
-      this.setState({presenterList: data.data.dataSet.rows})
     }).catch((e) => {
       message.error(e);
     })
@@ -169,22 +162,6 @@ class New extends Component {
               <LazyLoad height={370}>
                 <UEditor id="new_columnItemIntroduction"/>
               </LazyLoad>
-            </FormItem>
-          </Col>
-          <Col span={24}>
-            <FormItem{...formItemLayout} label="主讲人">
-              {getFieldDecorator('presenterId', {
-                rules: [
-                  {required: true, message: '请选择'},
-                ]
-              })(
-                <Select placeholder="选择主讲人" style={{width: '200px'}}>{
-                  this.state.presenterList.map(item => {
-                    return <Select.Option key={item.id} value={`${item.id}`}>{item.name}</Select.Option>
-                  })
-                }
-                </Select>
-              )}
             </FormItem>
           </Col>
           <Col span={24}>

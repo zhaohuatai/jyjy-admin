@@ -162,7 +162,7 @@ var API_DOMAIN = "http://jywxsitex.sinogood.com/";
     /* 上传保存路径,可以自定义保存路径和文件名格式 */
     "fileUrlPrefix": API_DOMAIN,
     /* 文件访问路径前缀 */
-    "fileMaxSize": 51200000,
+    "fileMaxSize": 512000000,
     /* 上传大小限制，单位B，默认50MB */
     "fileAllowFiles": [
       ".png",
@@ -437,19 +437,26 @@ var API_DOMAIN = "http://jywxsitex.sinogood.com/";
 
     //fontfamily
     //字体设置 label留空支持多语言自动切换，若配置，则以配置值为准
-    //,'fontfamily':[
-    //    { label:'',name:'songti',val:'宋体,SimSun'},
-    //    { label:'',name:'kaiti',val:'楷体,楷体_GB2312, SimKai'},
-    //    { label:'',name:'yahei',val:'微软雅黑,Microsoft YaHei'},
-    //    { label:'',name:'heiti',val:'黑体, SimHei'},
-    //    { label:'',name:'lishu',val:'隶书, SimLi'},
-    //    { label:'',name:'andaleMono',val:'andale mono'},
-    //    { label:'',name:'arial',val:'arial, helvetica,sans-serif'},
-    //    { label:'',name:'arialBlack',val:'arial black,avant garde'},
-    //    { label:'',name:'comicSansMs',val:'comic sans ms'},
-    //    { label:'',name:'impact',val:'impact,chicago'},
-    //    { label:'',name:'timesNewRoman',val:'times new roman'}
-    //]
+    ,'fontfamily':[
+       { label:'',name:'songti',val:'宋体,SimSun'},
+       { label:'',name:'kaiti',val:'楷体,楷体_GB2312, SimKai'},
+       { label:'',name:'yahei',val:'微软雅黑,Microsoft YaHei'},
+       { label:'',name:'heiti',val:'黑体, SimHei'},
+       { label:'',name:'lishu',val:'隶书, SimLi'},
+       { label:'',name:'andaleMono',val:'andale mono'},
+       { label:'',name:'arial',val:'arial, helvetica,sans-serif'},
+       { label:'',name:'arialBlack',val:'arial black,avant garde'},
+       { label:'',name:'comicSansMs',val:'comic sans ms'},
+       { label:'',name:'impact',val:'impact,chicago'},
+        { label: '', name: 'STXihei', val: 'STXihei' },
+        { label: '', name: 'STKaiti', val: 'STKaiti' },
+        { label: '', name: 'KaiTi_GB2312', val: 'KaiTi_GB2312' },
+        { label: '', name: 'FZShuTi', val: 'FZShuTi' },
+        { label: '', name: 'FZYaoti', val: 'FZYaoti' },
+        { label: '', name: 'STCaiyun', val: 'STCaiyun' },
+        { label: '', name: 'STHupo', val: 'STHupo' },
+        { label: '', name: 'STXingkai', val: 'STXingkai' }
+    ]
 
     //fontsize
     //字号

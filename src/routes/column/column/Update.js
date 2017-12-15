@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Icon, Input, message, Modal, Row, Select, Switch, Upload} from 'antd';
+import {Button, Col, Form, Icon, Input, message, Modal, Row, Select, Switch, Upload, InputNumber} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
 import {loadMemberTeacherDataSet} from "../../../service/member";
 import LazyLoad from 'react-lazy-load';
@@ -56,7 +56,7 @@ class New extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {title, indroduction, hint, presenterId, sharePoints, learningCount, isTop, showIndex, remark} = this.props.data;
+    const {title, indroduction, hint, presenterId, sharePoints, frontAppointCount, isTop, showIndex, remark, totleItemCount, currentItemNum} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -160,11 +160,31 @@ class New extends Component {
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} label="前台显示学习数">
-              {getFieldDecorator('learningCount', {
-                initialValue: learningCount,
+              {getFieldDecorator('frontAppointCount', {
+                initialValue: frontAppointCount,
                 rules: []
               })(
                 <Input type="number"/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="总期数">
+              {getFieldDecorator('totleItemCount', {
+                initialValue: totleItemCount,
+                rules: []
+              })(
+                <InputNumber />
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="当前期数">
+              {getFieldDecorator('currentItemNum', {
+                initialValue: currentItemNum,
+                rules: []
+              })(
+                <InputNumber />
               )}
             </FormItem>
           </Col>

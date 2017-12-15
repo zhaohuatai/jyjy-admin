@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {API_DOMAIN} from '../../../utils/config';
-import {Button, Cascader, Col, Form, Icon, Input, message, Row, Upload} from 'antd';
+import {Button, Cascader, Col, Form, Icon, Input, message, Row, Upload, InputNumber, Switch} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
 import LazyLoad from 'react-lazy-load';
 import {
@@ -216,6 +216,37 @@ class New extends Component {
               <LazyLoad height={370}>
                 <UEditor id="new_serviceEntrance"/>
               </LazyLoad>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="最大可预约数">
+              {getFieldDecorator('maxAppointCount', {
+                initialValue: 0,
+                rules: []
+              })(
+                <InputNumber/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="前台显示可预约数">
+              {getFieldDecorator('appointCount', {
+                initialValue: 0,
+                rules: []
+              })(
+                <InputNumber/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="置顶">
+              {getFieldDecorator('isTop', {
+                valuePropName: 'checked',
+                initialValue: false,
+                rules: []
+              })(
+                <Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross"/>}/>
+              )}
             </FormItem>
           </Col>
           <Col span={24}>

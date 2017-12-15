@@ -70,11 +70,6 @@ class Detail extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="主讲人">
-              <p>{presenterName}</p>
-            </FormItem>
-          </Col>
-          <Col span={24}>
             <FormItem{...formItemLayout} label="介绍">
               <Collapse>
                 <Panel header="点击查看详情" key="1">

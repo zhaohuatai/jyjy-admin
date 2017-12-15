@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, Upload} from 'antd';
+import {Button, Col, Form, Icon, Input, message, Row, Select, Switch, Upload, InputNumber} from 'antd';
 import {loadMemberTeacherDataSet} from "../../../service/member";
 import {createColumnChannel} from '../../../service/column';
 import UEditor from "../../../components/editor/UEditor";
@@ -158,11 +158,31 @@ class New extends Component {
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} label="前台显示学习数">
-              {getFieldDecorator('learningCount', {
-                initialValue: '',
+              {getFieldDecorator('frontAppointCount', {
+                initialValue: 0,
                 rules: []
               })(
-                <Input type="number"/>
+                <InputNumber type="number"/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="总期数">
+              {getFieldDecorator('totleItemCount', {
+                initialValue: 0,
+                rules: []
+              })(
+                <InputNumber />
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="当前期数">
+              {getFieldDecorator('currentItemNum', {
+                initialValue: 0,
+                rules: []
+              })(
+                <InputNumber />
               )}
             </FormItem>
           </Col>
@@ -180,20 +200,20 @@ class New extends Component {
           <Col span={24}>
             <FormItem {...formItemLayout} label="显示顺序">
               {getFieldDecorator('showIndex', {
-                initialValue: '',
+                initialValue: 0,
                 rules: []
               })(
-                <Input type="number"/>
+                <InputNumber/>
               )}
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} label="分享积分">
               {getFieldDecorator('sharePoints', {
-                initialValue: '',
+                initialValue: 0,
                 rules: []
               })(
-                <Input type="number"/>
+                <InputNumber />
               )}
             </FormItem>
           </Col>
