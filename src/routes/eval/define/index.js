@@ -45,16 +45,21 @@ class Career extends Component {
   };
   // 删除记录
   handleDelete = () => {
-    Modal.confirm({
-      title: `确定删除吗？`,
-      okType: 'danger',
-      onOk: () => {
-        loadEvalDefineResultConclusion({id: this.state.selectedRowKeys[0]}).then(data => {
-          message.success("删除成功！");
-          this.handleRefresh();
-        });
-      }
-    })
+    if(this.state.selectedRowKeys.length > 0){
+      Modal.confirm({
+        title: `确定删除吗？`,
+        okType: 'danger',
+        onOk: () => {
+          loadEvalDefineResultConclusion({id: this.state.selectedRowKeys[0]}).then(data => {
+            message.success("删除成功！");
+            this.handleRefresh();
+          });
+        }
+      })
+    } else {
+      message.info('请选择数据')
+    }
+
   };
   // 搜索
   handleSearch = (values) => {
@@ -63,10 +68,14 @@ class Career extends Component {
   };
   // 更新
   handleUpdate = () => {
-    loadEvalDefineResultConclusion({id: this.state.selectedRowKeys[0]}).then(data => {
-      this.setState({update_data: data.data.evalDefineResultConclusion, update_display: true})
-    })
-  };
+    if(this.state.selectedRowKeys.length > 0){
+      loadEvalDefineResultConclusion({id: this.state.selectedRowKeys[0]}).then(data => {
+        this.setState({update_data: data.data.evalDefineResultConclusion, update_display: true})
+      })
+    } else {
+      message.info('请选择数据')
+    }
+  }
 
   constructor(props) {
     super(props);

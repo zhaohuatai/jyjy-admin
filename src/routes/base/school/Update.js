@@ -14,20 +14,22 @@ class New extends Component {
     formData = {
       ...this.props.data,
       ...formData,
-      detail: UE.getEditor('update_faculty').getContent(),
+      faculty: UE.getEditor('update_faculty').getContent(),
       specialProfession: UE.getEditor('update_specialProfession').getContent(),
       introduction: UE.getEditor('update_introduction').getContent(),
       firstRate: formData.firstRate ? 1 : 0,
       badge: formData.badge ? formData.badge[0].response.data.image : this.props.data.badge,
     }
 
-    updateDataUniversity(formData).then(data => {
-      this.props.form.resetFields();
-      this.props.onCancel();
-      message.success("更新成功！");
-    }).catch((e) => {
-      message.error(e);
-    })
+    setTimeout(() => {
+      updateDataUniversity(formData).then(data => {
+        this.props.form.resetFields();
+        this.props.onCancel();
+        message.success("更新成功！");
+      }).catch((e) => {
+        message.error(e);
+      })
+    }, 500)
   }
 
   constructor(props) {

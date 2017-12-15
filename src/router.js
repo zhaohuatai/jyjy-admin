@@ -129,7 +129,6 @@ const Routers = () => (
 
       <Route path="/eval">
         <Route path="define" component={EvalDefine}/>
-        <Route path="partner" component={Partner}/>
       </Route>
 
       <Route path="/order">
