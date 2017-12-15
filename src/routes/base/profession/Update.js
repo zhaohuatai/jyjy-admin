@@ -2,13 +2,10 @@ import React, {Component} from 'react';
 import {Button, Col, Form, Input, message, Modal, Row, Select} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
 import {
-  loadDataProfessionCategoryDataSet,
-  loadDataProfessionSubjectDataSet,
-  updateDataUniversity
+  loadDataProfessionCategoryDataSet, loadDataProfessionSubjectDataSet,
+  updateDataProfession
 } from '../../../service/base';
 import LazyLoad from 'react-lazy-load';
-
-const FormItem = Form.Item;
 
 class Update extends Component {
   handleSubmit = (e) => {
@@ -20,7 +17,7 @@ class Update extends Component {
       offer: UE.getEditor('offer').getContent(),
     };
 
-    updateDataUniversity(formData).then(data => {
+    updateDataProfession(formData).then(data => {
       this.props.form.resetFields();
       this.props.onCancel();
       message.success("更新成功！");
