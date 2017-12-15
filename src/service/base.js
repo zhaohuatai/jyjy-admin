@@ -44,6 +44,16 @@ export function updateDataProfession(param) {
   });
 }
 
+//career
+
+export function updateDataCareer(param) {
+  return new Promise((resolve, reject) => {
+    post(`${API_DOMAIN}admin/data/dataCareer/updateDataCareer`, param).then((data) => {
+      resolve(data);
+    });
+  });
+}
+
 //ProfessionSubject
 export function loadDataProfessionSubject(param) {
   return new Promise((resolve, reject) => {

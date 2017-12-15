@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs, Modal} from 'antd';
+import {message, Modal, Pagination, Table, Tabs} from 'antd';
 import {deleteDataCareer, loadDataCareer, loadDataCareerDataSet} from '../../../service/base';
 import Filter from './Filter';
 import New from './New';
@@ -14,7 +14,7 @@ const table_columns = [
   {title: '名称', dataIndex: 'name', key: 'name'},
   {title: '分类', dataIndex: 'categoryName', key: 'categoryName'},
   {
-    title: '简介', dataIndex: 'intro', key: 'intro', render: (text) => '点击查看'
+    title: '更多...', dataIndex: 'intro', key: 'intro', render: (text) => '点击查看'
   },
   {title: '备注', dataIndex: 'remark', key: 'remark'},
 ]

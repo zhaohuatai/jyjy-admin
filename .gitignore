@@ -63,3 +63,4 @@ build/
 .idea/
 
 .eslintrc
+/.idea

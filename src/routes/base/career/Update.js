@@ -1,27 +1,19 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Input, message, Modal, Row, Select} from 'antd';
 import UEditor from '../../../components/editor/UEditor';
-import {updateDataUniversity} from '../../../service/base';
-import {loadProvinceList} from '../../../service/dic';
+import {loadDataCareerCategoryDataSet, updateDataCareer} from '../../../service/base';
 import LazyLoad from 'react-lazy-load';
 
 const FormItem = Form.Item;
 
 class Update extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      provinceList:[]
-    }
-  }
-
   handleSubmit = (e) => {
     let formData = this.props.form.getFieldsValue();
     formData = {
       ...this.props.data,
       ...formData,
       back: UE.getEditor('update_career_back').getContent(),
-      dataSet: UE.getEditor('update_career_course').getContent(),
+      course: UE.getEditor('update_career_course').getContent(),
       definition: UE.getEditor('update_career_definition').getContent(),
       duty: UE.getEditor('update_career_duty').getContent(),
       fore: UE.getEditor('update_career_fore').getContent(),
@@ -35,13 +27,20 @@ class Update extends Component {
       local: UE.getEditor('update_career_local').getContent(),
     };
 
-    updateDataUniversity(formData).then(data => {
+    updateDataCareer(formData).then(data => {
       this.props.form.resetFields();
       this.props.onCancel();
       message.success("更新成功！");
     }).catch((e) => {
       message.error(e);
     })
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      categoryList: []
+    }
   }
 
   normFile = (e) => {
@@ -53,8 +52,8 @@ class Update extends Component {
   }
 
   componentDidMount() {
-    loadProvinceList({rows: 10000, status: 1}).then(data => {
-      this.setState({provinceList: data.data.provinceList})
+    loadDataCareerCategoryDataSet({rows: 10000, status: 1}).then(data => {
+      this.setState({categoryList: data.data.dataSet.rows})
     })
   }
 
@@ -97,7 +96,7 @@ class Update extends Component {
               label="选择分类"
             >
               {getFieldDecorator('categoryId', {
-                initialValue: categoryId,
+                initialValue: `${categoryId}`,
                 rules: [
                   {required: true, message: '请选择'},
                 ]
