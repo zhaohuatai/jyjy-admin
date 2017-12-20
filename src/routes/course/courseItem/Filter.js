@@ -45,7 +45,7 @@ class Filter extends Component {
   }
 
   componentDidMount() {
-    loadServiceCourseDataSet({rows: 10000}).then(data => {
+    loadServiceCourseDataSet({status: 1, rows: 10000}).then(data => {
       this.setState({courseList: data.data.dataSet.rows});
       if (data.data.dataSet.rows) {
         this.props.form.setFieldsValue({

@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Cascader, Col, Dropdown, Form, Icon, Input, Menu, message, Row} from 'antd';
 import {
-  loadEntranceCategoryFDataSet,
-  loadEntranceCategorySDataSet,
+  loadEntranceCategoryFDataSet, loadEntranceCategorySDataSet,
   loadEntranceCategoryTDataSet
 } from "../../../service/entrance";
 
@@ -17,14 +16,14 @@ class Filter extends Component {
       let isLeaf = false;
       switch (cate) {
         case 'First' :
-          loadEntranceCategorySDataSet({rows: 1, cateFirstId: row['id']}).then(d => {
+          loadEntranceCategorySDataSet({status: 1, rows: 1, cateFirstId: row['id']}).then(d => {
             if (!d.data.dataSet.total)
               isLeaf = true;
             options.push({value: `${row['id']}`, label: row['name'], isLeaf: isLeaf, cate})
           });
           break;
         case 'Second' :
-          loadEntranceCategoryTDataSet({rows: 1, cateSecondId: row['id']}).then(d => {
+          loadEntranceCategoryTDataSet({status: 1, rows: 1, cateSecondId: row['id']}).then(d => {
             if (!d.data.dataSet.total)
               isLeaf = true;
             options.push({value: `${row['id']}`, label: row['name'], isLeaf: isLeaf, cate})
@@ -42,7 +41,7 @@ class Filter extends Component {
     targetOption.loading = true;
     switch (targetOption.cate) {
       case 'First' :
-        loadEntranceCategorySDataSet({rows: 1000, cateFirstId: targetOption.value}).then(data => {
+        loadEntranceCategorySDataSet({status: 1, rows: 1000, cateFirstId: targetOption.value}).then(data => {
           if (data.data.dataSet.total) {
             targetOption.children = this.renderData(data.data.dataSet.rows, 'Second');
           } else {
@@ -56,7 +55,7 @@ class Filter extends Component {
         });
         break;
       case 'Second' :
-        loadEntranceCategoryTDataSet({rows: 1000, cateSecondId: targetOption.value}).then(data => {
+        loadEntranceCategoryTDataSet({status: 1, rows: 1000, cateSecondId: targetOption.value}).then(data => {
           if (data.data.dataSet.total) {
             targetOption.children = this.renderData(data.data.dataSet.rows, 'Third');
           } else {
@@ -124,7 +123,7 @@ class Filter extends Component {
   }
 
   componentDidMount() {
-    loadEntranceCategoryFDataSet({rows: 1000}).then(data => {
+    loadEntranceCategoryFDataSet({status: 1, rows: 1000}).then(data => {
       if (data.data.dataSet.rows) {
         this.setState({options: this.renderData(data.data.dataSet.rows, 'First')});
         this.handleActionClick({key: 'search'})

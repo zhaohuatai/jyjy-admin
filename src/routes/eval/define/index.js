@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs, Modal} from 'antd';
-import {loadEvalDefineResultConclusion, loadEvalDefineResultConclusionDataSet, updateEvalDefineResultConclusion} from '../../../service/eval';
+import {message, Modal, Pagination, Table, Tabs} from 'antd';
+import {loadEvalDefineResultConclusion, loadEvalDefineResultConclusionDataSet} from '../../../service/eval';
 import Filter from './Filter';
-import New from './New';
 import Update from './Update';
 import Detail from './Detail';
-import Category from "./Category";
 
 const TabPane = Tabs.TabPane;
 
@@ -13,13 +11,13 @@ const table_columns = [
   {title: '序号', dataIndex: 'id', key: 'id'},
   {title: '代码', dataIndex: 'resultCode', key: 'resultCode'},
   {
-    title: '结论', dataIndex: 'intro', key: 'intro', render: (text) => '点击查看'
+    title: '结论', dataIndex: 'intro', key: 'intro', render: () => '点击查看'
   },
   {title: '创建时间', dataIndex: 'createTime', key: 'createTime'},
   {title: '更新时间', dataIndex: 'updateTime', key: 'updateTime'},
 ]
 
-class Career extends Component {
+class Eval extends Component {
   // 获取数据
   handleRefresh = (params) => {
     this.setState({table_loading: true});
@@ -41,6 +39,7 @@ class Career extends Component {
     this.setState({table_loading: true, table_cur_page: currentPage});
     let searchForm = this.state.search_form;
     searchForm['page'] = currentPage;
+    console.log(searchForm);
     this.handleRefresh(searchForm)
   };
   // 删除记录
@@ -63,7 +62,7 @@ class Career extends Component {
   };
   // 搜索
   handleSearch = (values) => {
-    this.setState({table_cur_page: 1});
+    this.setState({table_cur_page: 1, search_form: values});
     this.handleRefresh(values);
   };
   // 更新
@@ -153,4 +152,4 @@ class Career extends Component {
   }
 }
 
-export default Career;
+export default Eval;

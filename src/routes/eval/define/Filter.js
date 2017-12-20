@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {Button, Col, Dropdown, Form, Icon, Input, Menu, Row, Select} from 'antd';
+import {Button, Col, Dropdown, Form, Icon, Menu, message, Row, Select} from 'antd';
 import {loadEvalCategoryList} from "../../../service/eval";
+
 const Option = Select.Option;
 const FormItem = Form.Item;
 
@@ -38,11 +39,18 @@ class Filter extends Component {
 
 
   componentDidMount() {
-    loadEvalCategoryList().then(data=>{
-      this.setState({categorys: data.data.evalCategoryList})
+    loadEvalCategoryList({status: 1, rows: 10000}).then(data => {
+      this.setState({categorys: data.data.evalCategoryList});
+      if (data.data.evalCategoryList) {
+        this.props.form.setFieldsValue({
+          categoryId: data.data.evalCategoryList[0]['id'] + '',
+        })
+        this.props.doSearch(this.props.form.getFieldsValue());
+      }
+    }).catch((e) => {
+      message.error(e);
     })
   }
-
 
   constructor(props) {
     super(props);
@@ -73,11 +81,8 @@ class Filter extends Component {
         <Row type='flex' justify='end' style={{marginBottom: '5px'}}>
           <Col span={4} pull={14}>
             <FormItem>
-              {getFieldDecorator('categoryId', {
-                initialValue: '',
-              })(
+              {getFieldDecorator('categoryId')(
                 <Select placeholder="选择类别" style={{width: '150px'}}>
-                  <Select.Option key='0' value=''>选择类别</Select.Option>
                   {
                     this.state.categorys.map(item =>
                       <Select.Option key={item.id} value={`${item.id}`}>{item.title}</Select.Option>
