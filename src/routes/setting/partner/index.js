@@ -51,7 +51,7 @@ class Partner extends Component {
   };
   doDelete = (record) => {
     Modal.confirm({
-      title: `确定删除${record.name}吗？`,
+      title: `确定删除吗？`,
       okType: 'danger',
       onOk: () => {
         deletePubPartner({id: record.id}).then(data => {

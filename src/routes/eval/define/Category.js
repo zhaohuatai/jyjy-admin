@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Card, Col, Dropdown, Form, Icon, Input, Menu, message, Pagination, Row, Table} from 'antd';
+import {Button, Card, Col, Dropdown, Form, Icon, Input, Menu, message, Pagination, Row, Table, Modal} from 'antd';
 import {createDataCareerCategory, deleteDataCareerCategory, loadDataCareerCategoryDataSet} from "../../../service/base";
 
 class Category extends Component {
@@ -30,8 +30,8 @@ class Category extends Component {
     this.doRefresh(values);
   };
   doDelete = (record) => {
-    confirm({
-      title: `确定删除${record.name}吗？`,
+    Modal.confirm({
+      title: `确定删除吗？`,
       okType: 'danger',
       onOk: () => {
         deleteDataCareerCategory({id: record.id}).then(data => {

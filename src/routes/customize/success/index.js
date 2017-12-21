@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {message, Pagination, Table, Tabs} from 'antd';
+import {message, Pagination, Table, Tabs, Modal} from 'antd';
 import {deleteCaseSuccess, loadCaseSuccess, loadCaseSuccessDataSet} from '../../../service/customize';
 import Filter from './Filter';
 import Update from './Update';
@@ -44,7 +44,7 @@ class Success extends Component {
   }
   // 删除记录
   handleDelete = () => {
-    confirm({
+    Modal.confirm({
       title: `确定删除吗？`,
       okType: 'danger',
       onOk: () => {
