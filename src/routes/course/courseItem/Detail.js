@@ -67,13 +67,13 @@ class Detail extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="普通价格">
-              <p>{price}</p>
+            <FormItem{...formItemLayout} label="普通价格/元">
+              <p>{price / 100}</p>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="会员价格">
-              <p>{priceVIP}</p>
+            <FormItem{...formItemLayout} label="会员价格/元">
+              <p>{priceVIP / 100}</p>
             </FormItem>
           </Col>
           <Col span={24}>

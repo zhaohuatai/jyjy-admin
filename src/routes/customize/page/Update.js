@@ -22,6 +22,7 @@ class Update extends Component {
       this.props.form.resetFields();
       this.props.onCancel();
       message.success("更新成功！");
+      //UE.delEditor('update_customizeContent');
     }).catch((e) => {
       message.error(e);
     })

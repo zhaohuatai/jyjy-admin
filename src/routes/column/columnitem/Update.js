@@ -41,7 +41,8 @@ class New extends Component {
       content: UE.getEditor("update_columnItemContent").getContent(),
       coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : this.props.data.coverUrl,
       thumbnailUrl: formData.thumbnailUrl ? formData.thumbnailUrl[0].response.data.image : this.props.data.thumbnailUrl,
-
+      price: formData.price * 100,
+      priceVIP: formData.priceVIP * 100,
     };
 
     updateColumnChannelItem(formData).then(data => {
@@ -178,7 +179,7 @@ class New extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="普通价格">
               {getFieldDecorator('price', {
-                initialValue: price,
+                initialValue: price / 100,
                 rules: []
               })(
                 <Input/>
@@ -188,7 +189,7 @@ class New extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="会员价格">
               {getFieldDecorator('priceVIP', {
-                initialValue: priceVIP,
+                initialValue: priceVIP / 100,
                 rules: []
               })(
                 <Input/>

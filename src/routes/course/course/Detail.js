@@ -95,7 +95,7 @@ class New extends Component {
               {...formItemLayout}
               label="普通价格"
             >
-              <p>{price}</p>
+              <p>{price / 100}</p>
             </FormItem>
           </Col>
           <Col span={24}>
@@ -103,7 +103,7 @@ class New extends Component {
               {...formItemLayout}
               label="会员价格"
             >
-              <p>{priceVIP}</p>
+              <p>{priceVIP / 100}</p>
             </FormItem>
           </Col>
           <Col span={24}>

@@ -36,6 +36,8 @@ class New extends Component {
       ...formData,
       introduction: UE.getEditor('new_courseItemIntroduction').getContent(),
       freePay: formData.freePay ? 0 : 1,
+      price: formData.price * 100,
+      priceVIP: formData.priceVIP * 100,
     };
 
     createServiceCourseItem(formData).then(data => {
@@ -139,7 +141,7 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="普通价格/分">
+            <FormItem{...formItemLayout} label="普通价格/元">
               {getFieldDecorator('price', {
                 initialValue: 0,
                 rules: []
@@ -149,7 +151,7 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem{...formItemLayout} label="会员价格/分">
+            <FormItem{...formItemLayout} label="会员价格/元">
               {getFieldDecorator('priceVIP', {
                 initialValue: 0,
                 rules: []

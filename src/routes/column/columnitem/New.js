@@ -33,6 +33,8 @@ class New extends Component {
       content: UE.getEditor("new_columnItemIntroduction").getContent(),
       coverUrl: formData.coverUrl ? formData.coverUrl[0].response.data.image : '',
       thumbnailUrl: formData.thumbnailUrl ? formData.thumbnailUrl[0].response.data.image : '',
+      price: formData.price * 100,
+      priceVIP: formData.priceVIP * 100,
       status: 1
     };
 

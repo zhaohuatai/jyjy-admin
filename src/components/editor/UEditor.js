@@ -55,11 +55,15 @@ class UEditor extends Component {
     //     this.uedeitor.setContent(initValue);
     //   }
     // })
+    console.log(this.uedeitor);
   }
 
   render() {
     return (
-      <div id={this.props.id} name="content" type="text/plain" style={{width: '100%'}}/>
+        <div>
+          <div id={this.props.id} name="content" type="text/plain" style={{ width: '100%' }} />
+          <button onClick={() => this.uedeitor.setContent(this.props.initValue)} style={{ float: 'right', margin: '10px 0', width: '100px' }}>刷新编辑器</button>
+        </div>
     )
   }
 }

@@ -56,7 +56,7 @@ class New extends Component {
               {...formItemLayout}
               label="学生人数"
             >
-              <p>{price}</p>
+              <p>{price / 100}</p>
             </FormItem>
           </Col>
           <Col span={24}>
@@ -64,7 +64,7 @@ class New extends Component {
               {...formItemLayout}
               label="院校排名"
             >
-              <p>{priceVIP}</p>
+              <p>{priceVIP / 100}</p>
             </FormItem>
           </Col>
 

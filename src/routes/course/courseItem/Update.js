@@ -102,8 +102,10 @@ class Update extends Component {
       id: this.props.data.id,
       freePay: formData.freePay ? 0 : 1,
       isTop: formData.isTop ? 1 : 0,
-      videoSize: this.state.videoSize
-    };
+      videoSize: this.state.videoSize,
+      price: formData.price * 100,
+      priceVIP: formData.priceVIP * 100,};
+
 
     if (formData.coverUrl) {
       formData.coverUrl = formData.coverUrl[0].response.data.image;
@@ -256,9 +258,9 @@ class Update extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem {...formItemLayout} label="普通价格">
+            <FormItem {...formItemLayout} label="普通价格/元">
               {getFieldDecorator('price', {
-                initialValue: price,
+                initialValue: price / 100,
                 rules: []
               })(
                 <Input/>
@@ -266,9 +268,9 @@ class Update extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem {...formItemLayout} label="会员价格">
+            <FormItem {...formItemLayout} label="会员价格/元">
               {getFieldDecorator('priceVIP', {
-                initialValue: priceVIP,
+                initialValue: priceVIP / 100,
                 rules: []
               })(
                 <Input/>

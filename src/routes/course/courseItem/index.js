@@ -16,8 +16,8 @@ const table_columns = [
   {title: '节次', dataIndex: 'itemOrder', key: 'itemOrder'},
   {title: '主讲人', dataIndex: 'presenterName', key: 'presenterName'},
   {title: '费用', dataIndex: 'freePay', key: 'freePay', render: (text) => text === 1 ? '收费' : '免费'},
-  {title: '价格/分', dataIndex: 'price', key: 'price'},
-  {title: '会员价/分', dataIndex: 'priceVIP', key: 'priceVip'},
+  {title: '价格/元', dataIndex: 'price', key: 'price', rneder: text => text/100},
+  {title: '会员价/元', dataIndex: 'priceVIP', key: 'priceVip', rneder: text => text/100},
   {title: '备注', dataIndex: 'remark', key: 'remark'},
 ]
 
