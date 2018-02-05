@@ -27,7 +27,7 @@ class UEditor extends Component {
 
     UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
     UE.Editor.prototype.getActionUrl = function (action) {
-      if (action === "uploadimage" || action === 'uploadscrawl' || action === 'uploadimage' || action === 'uploadvideo') {
+      if (action === 'uploadimage' || action === 'uploadscrawl' || action === 'uploadfile' || action === 'uploadvideo') {
         return API_DOMAIN + 'admin/ueditor/attachment/upload';
       } else {
         return this._bkGetActionUrl.call(this, action);

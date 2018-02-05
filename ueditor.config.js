@@ -41,7 +41,7 @@ var API_DOMAIN = "https://jywxsitex.sinogood.com/";
     /* 执行上传图片的action名称 */
     "imageFieldName": "upfile",
     /* 提交的图片表单名称 */
-    "imageMaxSize": 2048000,
+    "imageMaxSize": 2048000000,
     /* 上传大小限制，单位B */
     "imageAllowFiles": [
       ".png",
@@ -130,7 +130,7 @@ var API_DOMAIN = "https://jywxsitex.sinogood.com/";
     /* 上传保存路径,可以自定义保存路径和文件名格式 */
     "videoUrlPrefix": API_DOMAIN,
     /* 视频访问路径前缀 */
-    "videoMaxSize": 102400000,
+    "videoMaxSize": 102400000000,
     /* 上传大小限制，单位B，默认100MB */
     "videoAllowFiles": [
       ".flv",
@@ -162,7 +162,7 @@ var API_DOMAIN = "https://jywxsitex.sinogood.com/";
     /* 上传保存路径,可以自定义保存路径和文件名格式 */
     "fileUrlPrefix": API_DOMAIN,
     /* 文件访问路径前缀 */
-    "fileMaxSize": 512000000,
+    "fileMaxSize": 512000000000,
     /* 上传大小限制，单位B，默认50MB */
     "fileAllowFiles": [
       ".png",
