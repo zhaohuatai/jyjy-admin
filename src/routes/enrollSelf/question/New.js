@@ -101,6 +101,15 @@ class New extends Component {
             </FormItem>
           </Col>
           <Col span={24}>
+            <FormItem{...formItemLayout} label="浏览数">
+              {getFieldDecorator('browseCount', {
+                initialValue: ''
+              })(
+                <Input/>
+              )}
+            </FormItem>
+          </Col>
+          <Col span={24}>
             <FormItem{...formItemLayout} label="备注">
               {getFieldDecorator('remark', {
                 initialValue: '',

@@ -43,7 +43,7 @@ class New extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {content, title, categoryId, remark} = this.props.data;
+    const {content, title, categoryId, remark, browseCount} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -98,6 +98,15 @@ class New extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="内容">
               <UEditor id="auto_question_content_update" initValue={content}/>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="浏览数">
+              {getFieldDecorator('browseCount', {
+                initialValue: browseCount
+              })(
+                <Input/>
+              )}
             </FormItem>
           </Col>
           <Col span={24}>

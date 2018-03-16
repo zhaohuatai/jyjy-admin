@@ -13,7 +13,7 @@ class New extends Component {
       ...formData,
       content: UE.getEditor('update_bigdata_content').getContent(),
       id: this.props.data.id,
-      thumbnailUrl: formData.thumbnailUrl ? formData.thumbnailUrl[0].response.data.image : this.props.data.imgUrl,
+      thumbnailUrl: formData.thumbnailUrl ? formData.thumbnailUrl[0].response.data.image : this.props.data.thumbnailUrl,
     }
 
     updateEnrollAutoBigdata(formData).then(data => {
@@ -42,7 +42,7 @@ class New extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {content, interAnswer, title, remark} = this.props.data;
+    const {content, title, remark, browseCount, favoriteCount} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -74,7 +74,7 @@ class New extends Component {
           </Col>
 
           <Col span={24}>
-            <FormItem{...formItemLayout} label="校徽图片">
+            <FormItem{...formItemLayout} label="缩略图">
               {getFieldDecorator('thumbnailUrl', {
                 valuePropName: 'fileList',
                 getValueFromEvent: this.normFile,
@@ -92,6 +92,15 @@ class New extends Component {
           <Col span={24}>
             <FormItem{...formItemLayout} label="内容">
               <UEditor id="update_bigdata_content" initValue={content}/>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="浏览数">
+              {getFieldDecorator('browseCount', {
+                initialValue: browseCount
+              })(
+                <Input/>
+              )}
             </FormItem>
           </Col>
           <Col span={24}>

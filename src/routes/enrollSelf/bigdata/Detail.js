@@ -11,7 +11,7 @@ class New extends Component {
   }
 
   render() {
-    const {title, content, remark} = this.props.data;
+    const {title, content, remark, browseCount, favoriteCount} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -50,9 +50,9 @@ class New extends Component {
           <Col span={24}>
             <FormItem
               {...formItemLayout}
-              label="备注"
+              label="浏览数"
             >
-              <p>{remark}</p>
+              <p>{browseCount}</p>
             </FormItem>
           </Col>
         </Row>

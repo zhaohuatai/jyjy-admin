@@ -21,7 +21,7 @@ class New extends Component {
   }
 
   render() {
-    const {categoryId, content, title, remark} = this.props.data;
+    const {categoryId, content, title, remark, browseCount} = this.props.data;
 
     const formItemLayout = {
       labelCol: {
@@ -66,6 +66,11 @@ class New extends Component {
                   <div dangerouslySetInnerHTML={{__html: content}}/>
                 </Panel>
               </Collapse>
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem{...formItemLayout} label="浏览人数">
+              <p>{browseCount}</p>
             </FormItem>
           </Col>
           <Col span={24}>
